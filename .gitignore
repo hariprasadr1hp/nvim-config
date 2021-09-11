@@ -1,0 +1,9 @@
+# directories
+plugin/
+undodir/
+
+
+#files
+vimscript/temp.vim
+.netrwhist
+tags

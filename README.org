@@ -1,0 +1,23 @@
+#+title: nvim-config
+#+AUTHOR: hariprasadr1hp
+
+* nvim-config
+nvim customized for c++ and python development
+
+* Setting up
+** Install ~neovim~
+#+BEGIN_SRC bash
+sudo add-apt-repository ppa:neovim-ppa/unstable
+sudo apt update
+sudo apt install neovim
+#+END_SRC
+
+** Clone the repository
+#+BEGIN_SRC bash
+cd $HOME/.config/
+git clone https://hariprasadr1hp/nvim
+#+END_SRC
+
+** Packer setup
++ [[https://github.com/wbthomason/packer.nvim][https://github.com/wbthomason/packer.nvim]]
+
