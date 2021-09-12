@@ -232,7 +232,8 @@ local mappings = {
 		o = {"<cmd>call Cpp_Flip_Ext()<CR>"			,	"CppFlip"},
 		r = {"<cmd>set ro!<CR>"			,	"read-only"},
 		s = {"<cmd>set spell!<CR>"		,	"spell-check"},
-		t = {"<cmd>FloatermToggle<CR>"	,	"terminal"},
+		t = {"<cmd>highlight Normal guibg=None<CR>"		,	"bg-transparent"},
+		T = {"<cmd>highlight Normal guibg=black<CR>"	,	"bg-black"},
 	},
 
     w = {
