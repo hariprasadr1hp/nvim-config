@@ -36,10 +36,10 @@ return require('packer').startup(
 	-- Packer can manage itself
 	use 'wbthomason/packer.nvim'
 
-	-- theme
+	-- Themes
     use 'joshdick/onedark.vim'
     use 'morhetz/gruvbox'
-    use 'sainnhe/gruvbox-material'
+	use 'marko-cerovac/material.nvim'
 
 	-- Status Line and Bufferline
 	use "glepnir/galaxyline.nvim"
@@ -77,7 +77,6 @@ return require('packer').startup(
 			{'nvim-lua/plenary.nvim'}
 		}
 	}
-
 	use 'nvim-telescope/telescope-media-files.nvim'
 
 	-- Autopairs
@@ -86,10 +85,10 @@ return require('packer').startup(
 	-- highlighted-yank
 	use 'machakann/vim-highlightedyank'
 
-	-- -- Registers
+	-- Registers
 	-- use 'gennaro-tedesco/nvim-peekup'
 
-	-- -- Navigation
+	-- Navigation
 	-- use 'phaazon/hop.nvim'
 
 	-- Ranger

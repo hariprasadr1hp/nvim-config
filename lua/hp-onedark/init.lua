@@ -1,6 +1,7 @@
 -- onedark
 
-vim.cmd("colorscheme onedark")
+-- vim.cmd("colorscheme onedark")
+
 vim.g.airline_theme = 'onedark'
 
 vim.g.onedark_hide_endofbuffer = 1
