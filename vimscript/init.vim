@@ -1,8 +1,8 @@
 "#######################################################################
 " mappings
 " let mapleader = "\<Space>"
-
 " continued visual selection while indenting
+
 vnoremap < <gv
 vnoremap > >gv
 
@@ -31,6 +31,17 @@ nnoremap <M-Down> :move +1<CR>
 
 " visually select text for searching, mapped to //
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
+
+
+" B for [] brackets
+nnoremap caB ca[
+nnoremap ciB ci[
+nnoremap daB da[
+nnoremap diB di[
+nnoremap vaB va[
+nnoremap viB vi[
+nnoremap yaB ya[
+nnoremap yiB yi[
 
 
 " xsel commands
@@ -281,8 +292,5 @@ vnoremap <leader>avJ "Jp
 vnoremap <leader>avK "Kp
 vnoremap <leader>avL "Lp
 
-
-
 "#######################################################################
 
-"#######################################################################
