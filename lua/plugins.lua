@@ -91,9 +91,6 @@ return require('packer').startup(
 	-- Navigation
 	-- use 'phaazon/hop.nvim'
 
-	-- Ranger
-	use 'kevinhwang91/rnvimr'
-
 	-- Icons
     use 'kyazdani42/nvim-web-devicons'
     -- use 'ryanoasis/vim-devicons'
