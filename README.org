@@ -4,18 +4,20 @@
 * nvim-config
 nvim customized for c++ and python development
 
-* Setting up
-** Install ~neovim~
+* Install ~neovim~
 #+BEGIN_SRC bash
 sudo add-apt-repository ppa:neovim-ppa/unstable
 sudo apt update
 sudo apt install neovim
 #+END_SRC
 
-** Clone the repository
+* Setting up
 #+BEGIN_SRC bash
 cd $HOME/.config/
 git clone https://hariprasadr1hp/nvim
+cd nvim/
+touch vimscript/temp.vim
+touch lua/temp.lua
 #+END_SRC
 
 ** Packer setup

@@ -116,24 +116,26 @@ local mappings = {
 
     ["e"] = {
         name = "+edit",
-		["r"] = {"<cmd>luafile $HOME/.config/nvim/init.lua<CR>", "reload"},
-        ["w"] = {"<cmd>e $HOME/.config/nvim/lua/hp-whichkey/init.lua<CR>", "which-key"},
+		["r"] = {"<cmd>luafile $HOME/.config/nvim/init.lua<CR>"				, "reload"},
+        ["w"] = {"<cmd>e $HOME/.config/nvim/lua/hp-whichkey/init.lua<CR>"	, "which-key"},
     },
 
     ["f"] = {
         name = "+file",
-        ["f"] = {"<cmd>Telescope find_files<CR>", "Files"},
-        ["i"] = {"<cmd>e $HOME/.config/nvim/init.lua<CR>", "init.lua"},
-        ["I"] = {"<cmd>e $HOME/.config/nvim/vimscript/init.vim<CR>", "init.vim"},
-        ["p"] = {"<cmd>e $HOME/.config/nvim/lua/plugins.lua<CR>", "plugins.lua"},
-        ["k"] = {"<cmd>e $HOME/.config/nvim/lua/hp-whichkey/init.lua<CR>", "which-key"},
-        ["l"] = {"<cmd>e $HOME/.config/nvim/lua/hp-lsp/init.lua<CR>", "hp-lsp"},
-        ["S"] = {"<cmd>Sex! $HOME/.config/nvim/lua/<CR>", "Sex!"},
-        ["s"] = {"<cmd>update<CR>", "Files"},
-        ["t"] = {"<cmd>e /home/hari/.config/nvim/vimscript/temp.vim<CR>", "temp.vim"},
-        ["w"] = {"<cmd>e $HOME/.config/nvim/lua/hp-whichkey/init.lua<CR>", "which-key"},
-        ["X"] = {"<cmd>! rm -f /home/hari/.config/nvim/undodir/*<CR>", "delete undo files"},
-        ["x"] = {"<cmd>! rm -f $HOME/.local/share/nvim/swap/*<CR>", "delete swap files"},
+        ["f"] = {"<cmd>Telescope find_files<CR>"							, "Files"},
+        ["F"] = {"<cmd>Sex! $HOME/.config/nvim<CR>"							, "Files"},
+        ["i"] = {"<cmd>e $HOME/.config/nvim/init.lua<CR>"					, "init.lua"},
+        ["I"] = {"<cmd>e $HOME/.config/nvim/vimscript/init.vim<CR>"			, "init.vim"},
+        ["p"] = {"<cmd>e $HOME/.config/nvim/lua/plugins.lua<CR>"			, "plugins.lua"},
+        ["k"] = {"<cmd>e $HOME/.config/nvim/lua/hp-whichkey/init.lua<CR>"	, "which-key"},
+        ["l"] = {"<cmd>e $HOME/.config/nvim/lua/hp-lsp/init.lua<CR>"		, "hp-lsp"},
+        ["s"] = {"<cmd>update<CR>"											, "Files"},
+        ["S"] = {"<cmd>e $HOME/.config/nvim/lua/settings.lua<CR>"			, "settings.lua"},
+        ["t"] = {"<cmd>e $HOME/.config/nvim/vimscript/temp.vim<CR>"			, "temp.vim"},
+        ["T"] = {"<cmd>e $HOME/.config/nvim/lua/temp.lua<CR>"				, "temp.lua"},
+        ["w"] = {"<cmd>e $HOME/.config/nvim/lua/hp-whichkey/init.lua<CR>"	, "which-key"},
+        ["x"] = {"<cmd>! rm -f $HOME/.local/share/nvim/swap/*<CR>"			, "delete swap files"},
+        ["X"] = {"<cmd>! rm -f $HOME/.config/nvim/undodir/*<CR>"			, "delete undo files"},
     },
 
     ["g"] = {
@@ -143,7 +145,7 @@ local mappings = {
 		["C"] = {"<cmd>Telescope git_bcommits<CR>"	, "bcommits"},
         ["f"] = {"<cmd>Telescope git_files<CR>"		, "git_Files"},
         ["g"] = {"<cmd>Telescope git_status<CR>"	, "status"},
-        ["s"] = {"<cmd>Telescope git_stash<CR>"	    , "stash"},
+        ["S"] = {"<cmd>Telescope git_stash<CR>"	    , "stash"},
     },
 
     ["h"] = {
@@ -176,10 +178,33 @@ local mappings = {
 
     ["n"] = {
 		name = "+notes",
-		["b"] = {"<cmd>e $HOME/.config/newsboat/rss.yml<CR>"	,	"boat"},
-		["j"] = {"<cmd>Sex! $HOME/my/org/journal/<CR>"			,	"journal"},
-		["r"] = {"<cmd>Sex! $HOME/my/org/roam/<CR>"				,	"roam"},
-		["t"] = {"<cmd>Sex! $HOME/.todo<CR>"					,	"todo"},
+		["b"] = {
+			name = "+boat",
+			["b"] = {"<cmd>e $HOME/.config/newsboat/rss.yml<CR>"			,	"boat/rss.yml"},
+			["r"] = {"<cmd>! python $HOME/.config/newsboat/rss2urls.py<CR>"	,	"boat-compile"},
+			["u"] = {"<cmd>e /home/hari/.config/newsboat/urls<CR>"			,	"boat/urls"},
+		},
+		["c"] = {
+			name = "+codium",
+			["i"] = {"<cmd>e $HOME/.config/VSCodium/User/nvim/init.vim<CR>"		,	"codium/init.vim"},
+			["c"] = {"<cmd>e $HOME/.config/VSCodium/User/nvim/codium.vim<CR>"	,	"codium.vim"},
+			["C"] = {"<cmd>e $HOME/.config/VSCodium/User/nvim/codium.lua<CR>"	,	"codium.lua"},
+			["s"] = {"<cmd>Sex! $HOME/.config/VSCodium/User<CR>"				,	"codium-files"},
+		},
+		["e"] = {"<cmd>e $HOME/.config/espanso/default.yml<CR>"		,	"espanso"},
+		["j"] = {
+			name = "+journal",
+			["s"] = {"<cmd>Sex! $HOME/my/org/journal/<CR>"			,	"journal"},
+		},
+		["r"] = {
+			name = "+roam",
+			["r"] = {"<cmd>Sex! $HOME/my/org/roam/<CR>"				,	"roam"},
+		},
+		["t"] = {
+			name = "+todo",
+			["t"] = {"<cmd>Sex! $HOME/.todo<CR>"					,	"todo-list"},
+			["n"] =														"new-todo",
+		},
 	},
 
     ["o"] = {
@@ -192,29 +217,29 @@ local mappings = {
 
     ["q"] = {
 		name = "+quit",
-		["q"] = {"<cmd>q<CR>"		,	"quit file, unmodified"},
-		["a"] = {"<cmd>qa<CR>"		,	"quit all, unmodified"},
-		["u"] = {"<cmd>update<CR>"	,	"update"},
-		["w"] = {"<cmd>wq<CR>"		,	"save and quit"},
-		["r"] = {"<cmd>luafile $HOME/.config/nvim/init.lua<CR>", "reload"},
+		["q"] = {"<cmd>q<CR>"									,	"quit file, unmodified"},
+		["a"] = {"<cmd>qa<CR>"									,	"quit all, unmodified"},
+		["u"] = {"<cmd>update<CR>"								,	"update"},
+		["w"] = {"<cmd>wq<CR>"									,	"save and quit"},
+		["r"] = {"<cmd>luafile $HOME/.config/nvim/init.lua<CR>"	,	"reload"},
 	},
 
     ["r"] = {
 		name = "+reload",
-		["r"] = {"<cmd>luafile $HOME/.config/nvim/init.lua<CR>", "reload"},
+		["r"] = {"<cmd>luafile $HOME/.config/nvim/init.lua<CR>"	,	"reload"},
 	},
 
     ["s"] = {
         name = "+search",
-        ["b"] = {"<cmd>Telescope git_branches<CR>"	, "File"},
-        ["f"] = {"<cmd>Telescope find_files<CR>"	, "Find File"},
-        ["m"] = {"<cmd>Telescope marks<CR>"			, "Marks"},
-        ["M"] = {"<cmd>Telescope man_pages<CR>"		, "Man Pages"},
-        ["r"] = {"<cmd>Telescope oldfiles<CR>"		, "Open Recent File"},
-        ["R"] = {"<cmd>Telescope registers<CR>"		, "Registers"},
-        ["t"] = {"<cmd>Telescope live_grep<CR>"		, "Text"},
-        ["d"] = {"<cmd>Telescope lsp_document_diagnostics<CR>"	, "Document Diagnostics"},
-        ["D"] = {"<cmd>Telescope lsp_workspace_diagnostics<CR>"	, "Workspace Diagnostics"},
+        ["b"] = {"<cmd>Telescope git_branches<CR>"				,	"File"},
+        ["f"] = {"<cmd>Telescope find_files<CR>"				,	"Find File"},
+        ["m"] = {"<cmd>Telescope marks<CR>"						,	"Marks"},
+        ["M"] = {"<cmd>Telescope man_pages<CR>"					,	"Man Pages"},
+        ["r"] = {"<cmd>Telescope oldfiles<CR>"					,	"Open Recent File"},
+        ["R"] = {"<cmd>Telescope registers<CR>"					,	"Registers"},
+        ["t"] = {"<cmd>Telescope live_grep<CR>"					,	"Text"},
+        ["d"] = {"<cmd>Telescope lsp_document_diagnostics<CR>"	,	"Document Diagnostics"},
+        ["D"] = {"<cmd>Telescope lsp_workspace_diagnostics<CR>"	,	"Workspace Diagnostics"},
     },
 
 	--     ["S"] = {

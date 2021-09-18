@@ -8,7 +8,7 @@
 + deep ocean
 ]]--
 
-vim.cmd("colorscheme material")
+-- vim.cmd("colorscheme material")
 
 -- vim.g.material_style = "darker"
 -- vim.g.material_style = "lighter"

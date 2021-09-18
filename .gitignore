@@ -1,6 +1,7 @@
 # directories
 plugin/
 undodir/
+lua/temp.lua
 
 
 #files

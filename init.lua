@@ -3,6 +3,7 @@ require('settings')
 require('plugins')
 require('keybindings')
 require('functions')
+require('temp')
 
 -- lua plugins
 require('hp-autopairs')

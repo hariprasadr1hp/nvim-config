@@ -106,7 +106,7 @@ vim.o.conceallevel = 0
 --vim.cmd('set iskeyword+=-')
 
 -- Copy paste between vim and everything else
---vim.o.clipboard = "unnamedplus"
+vim.o.clipboard = "unnamed"
 
 -- Make substitution work in realtime
 --vim.cmd('set inccommand=split')
