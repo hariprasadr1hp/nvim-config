@@ -82,6 +82,12 @@ vim.o.splitbelow = true
 vim.o.splitright = true
 
 
+-- DICTIONARY
+-------------------------------------------------------------------
+-- set a dictionary file
+vim.cmd("set dictionary=/usr/share/dict/american-english")
+
+
 -- MISCELLANEOUS
 -------------------------------------------------------------------
 -- Always show the signcolumn, otherwise it would shift the text each time
