@@ -81,6 +81,12 @@ vim.api.nvim_set_keymap("n", "<leader>.", ":Sex!<CR>", {noremap = true, silent =
 local mappings = {
     ["."] = "Sex!",
     ["/"] = "comment",
+    ["a"] = {
+		name = "+action",
+		["c"] = "+copy",
+		["v"] = "+paste",
+		["x"] = "+cut",
+	},
 
     ["b"] = {
 		name = "+buffer",
@@ -96,23 +102,25 @@ local mappings = {
 
 	["c"] = {
         name = "+code",
+        ["b"] = {"<cmd>! make test<CR>"			,	"make test"},
         ["c"] = {"<cmd>! make clean<CR>"		,	"make clean"},
 		["f"] = {"<cmd>Telescope filetypes<CR>"	,	"filetype"},
-        ["m"] = {"<cmd>! make<CR>"				,	"make"},
-        ["t"] = {"<cmd>! ctags -R *<CR>"		,	"ctags"},
+        ["m"] = {"<cmd>! make<CR>"				,	"make all"},
+        ["T"] = {"<cmd>! ctags -R *<CR>"		,	"ctags"},
 		["o"] = {"<cmd>call Cpp_Flip_Ext()<CR>"	,	"CppFlip"},
     },
 
 
---     ["d"] = {
---         name = "+Debug",
---         b = {"<cmd>DebugToggleBreakpoint<CR>"	, "Toggle Breakpoint"},
---         c = {"<cmd>DebugContinue<CR>"			, "Continue"},
---         i = {"<cmd>DebugStepInto<CR>"			, "Step Into"},
---         o = {"<cmd>DebugStepOver<CR>"			, "Step Over"},
---         r = {"<cmd>DebugToggleRepl<CR>"			, "Toggle Repl"},
---         s = {"<cmd>DebugStart<CR>"				, "Start"}
---     },
+    ["d"] = {
+        name = "+debug",
+        -- b = {"<cmd>DebugToggleBreakpoint<CR>"	, "Toggle Breakpoint"},
+        -- c = {"<cmd>DebugContinue<CR>"			, "Continue"},
+        -- i = {"<cmd>DebugStepInto<CR>"			, "Step Into"},
+        m = {"<cmd>!make debug<CR>"				, "make debug"},
+        -- o = {"<cmd>DebugStepOver<CR>"			, "Step Over"},
+        -- r = {"<cmd>DebugToggleRepl<CR>"			, "Toggle Repl"},
+        -- s = {"<cmd>DebugStart<CR>"				, "Start"}
+    },
 
     ["e"] = {
         name = "+edit",
@@ -129,7 +137,7 @@ local mappings = {
         ["p"] = {"<cmd>e $HOME/.config/nvim/lua/plugins.lua<CR>"			, "plugins.lua"},
         ["k"] = {"<cmd>e $HOME/.config/nvim/lua/hp-whichkey/init.lua<CR>"	, "which-key"},
         ["l"] = {"<cmd>e $HOME/.config/nvim/lua/hp-lsp/init.lua<CR>"		, "hp-lsp"},
-        ["s"] = {"<cmd>update<CR>"											, "Files"},
+        ["s"] = {"<cmd>update<CR>"											, "update-file"},
         ["S"] = {"<cmd>e $HOME/.config/nvim/lua/settings.lua<CR>"			, "settings.lua"},
         ["t"] = {"<cmd>e $HOME/.config/nvim/vimscript/temp.vim<CR>"			, "temp.vim"},
         ["T"] = {"<cmd>e $HOME/.config/nvim/lua/temp.lua<CR>"				, "temp.lua"},
@@ -150,9 +158,44 @@ local mappings = {
 
     ["h"] = {
         name = "+help",
-        ["l"] = {"<cmd>help :lua<CR>"				,	":lua"},
-        ["t"] = {"<cmd>Telescope colorscheme<CR>"	,	"Colors"},
+        ["b"] = {"<cmd>! battery<CR>"				,	"battery"},
+        ["t"] = {"<cmd>Telescope colorscheme<CR>"	,	"themes"},
     },
+
+    ["i"] = {
+        name = "+info",
+        ["b"] = {"<cmd> !battery<CR>"	,	"battery"},
+        ["c"] = {"<cmd> !clock<CR>"		,	"clock"},
+        ["d"] = {"<cmd> !date<CR>"		,	"date-time"},
+        ["l"] = {"<cmd> !ls -a<CR>"		,	"list-all-files"},
+        ["m"] = {"<cmd> !memory<CR>"	,	"memory"},
+        ["p"] = {"<cmd> !battery<CR>"	,	"power-percent"},
+        ["r"] = {"<cmd> !memory<CR>"	,	"rar"},
+        ["t"] = {"<cmd> !clock<CR>"		,	"date-time"},
+        ["u"] = {"<cmd> !upt<CR>"		,	"date-uptime"},
+        ["v"] = {"<cmd> !volume<CR>"	,	"volume"},
+    },
+
+    ["j"] = {
+		name = "+tabs",
+		["1"] = {"<cmd>1tabnext<CR>"		,	"tab-1"},
+		["2"] = {"<cmd>2tabnext<CR>"		,	"tab-2"},
+		["3"] = {"<cmd>3tabnext<CR>"		,	"tab-3"},
+		["4"] = {"<cmd>4tabnext<CR>"		,	"tab-4"},
+		["5"] = {"<cmd>5tabnext<CR>"		,	"tab-5"},
+		["6"] = {"<cmd>6tabnext<CR>"		,	"tab-6"},
+		["7"] = {"<cmd>7tabnext<CR>"		,	"tab-7"},
+		["8"] = {"<cmd>8tabnext<CR>"		,	"tab-8"},
+		["0"] = {"<cmd>tabfirst<CR>"		,	"first-tab"},
+		["9"] = {"<cmd>tablast<CR>"			,	"last-tab"},
+		["c"] = {"<cmd>tabclose<CR>"		,	"close-tab"},
+		["h"] = {"<cmd>-tabmove<CR>"		,	"move-left"},
+		["i"] = {"<cmd>tabs<CR>"			,	"info-tabs"},
+		["k"] = {"<cmd>tabclose<CR>"		,	"kill-tab"},
+		["K"] = {"<cmd>tabonly<CR>"			,	"only-open-tab"},
+		["l"] = {"<cmd>+tabmove<CR>"		,	"move-right"},
+		["n"] = {"<cmd>tabnew<CR>"			,	"new-tab"},
+	},
 
     ["l"] = {
         name = "+lsp",
@@ -176,12 +219,21 @@ local mappings = {
         ["x"] = {"<cmd>cclose<CR>"								,	"Close Quickfix"},
     },
 
+	["m"] = {
+        name = "+code",
+        ["c"] = {"<cmd>! make clean<CR>"		,	"make clean"},
+		["d"] = {"<cmd>! make debug<CR>"		,	"make debug"},
+        ["m"] = {"<cmd>! make<CR>"				,	"make all"},
+        ["o"] = {"<cmd>e make<CR>"				,	"open Makefile"},
+        ["t"] = {"<cmd>! make test<CR>"			,	"make test"},
+    },
+
     ["n"] = {
 		name = "+notes",
 		["b"] = {
 			name = "+boat",
 			["b"] = {"<cmd>e $HOME/.config/newsboat/rss.yml<CR>"			,	"boat/rss.yml"},
-			["r"] = {"<cmd>! python $HOME/.config/newsboat/rss2urls.py<CR>"	,	"boat-compile"},
+			["c"] = {"<cmd>! python $HOME/.config/newsboat/rss2urls.py<CR>"	,	"boat-compile"},
 			["u"] = {"<cmd>e /home/hari/.config/newsboat/urls<CR>"			,	"boat/urls"},
 		},
 		["c"] = {
@@ -232,14 +284,13 @@ local mappings = {
     ["s"] = {
         name = "+search",
         ["b"] = {"<cmd>Telescope git_branches<CR>"				,	"File"},
+        ["d"] = {"<cmd>!date<CR>"								,	"show-datetime"},
         ["f"] = {"<cmd>Telescope find_files<CR>"				,	"Find File"},
         ["m"] = {"<cmd>Telescope marks<CR>"						,	"Marks"},
         ["M"] = {"<cmd>Telescope man_pages<CR>"					,	"Man Pages"},
         ["r"] = {"<cmd>Telescope oldfiles<CR>"					,	"Open Recent File"},
         ["R"] = {"<cmd>Telescope registers<CR>"					,	"Registers"},
-        ["t"] = {"<cmd>Telescope live_grep<CR>"					,	"Text"},
-        ["d"] = {"<cmd>Telescope lsp_document_diagnostics<CR>"	,	"Document Diagnostics"},
-        ["D"] = {"<cmd>Telescope lsp_workspace_diagnostics<CR>"	,	"Workspace Diagnostics"},
+        ["t"] = {"<cmd>!date<CR>"								,	"show-datetime"},
     },
 
 	--     ["S"] = {
@@ -252,15 +303,18 @@ local mappings = {
 		name = "+toggle",
 		["c"] = {'<cmd>execute "set colorcolumn=" . (&colorcolumn == "" ? "80" : "")<CR>' , "colorbar"},
 		["g"] = {'<cmd>%norm! g??<CR>'						,	"gibberish-rot13"},
-		["h"] = {"<cmd>set hls!<CR>"						,	"hlsearch"},
+		["h"] = {"<cmd>set hls!<CR>"						,	"hl-search"},
 		["l"] = {"<cmd>LspStart<CR>"						,	"LspStart"},
 		["L"] = {"<cmd>LspStop<CR>"							,	"LspStop"},
+		["n"] = {"<cmd>FloatermNew nighton<CR>"				,	"nightlight on"},
+		["N"] = {"<cmd>FloatermNew nightoff<CR>"			,	"nightlight off"},
 		["o"] = {"<cmd>call Cpp_Flip_Ext()<CR>"				,	"CppFlip"},
 		["p"] = {"<cmd>TSPlaygroundToggle<CR>"				,	"TSPlayground"},
 		["r"] = {"<cmd>set ro!<CR>"							,	"read-only"},
 		["s"] = {"<cmd>set spell!<CR>"						,	"spell-check"},
 		["t"] = {"<cmd>highlight Normal guibg=None<CR>"		,	"bg-transparent"},
 		["T"] = {"<cmd>highlight Normal guibg=black<CR>"	,	"bg-black"},
+		["w"] = {"<cmd>set nowrap!<CR>"						,	"wrap-text"},
 	},
 
     ["w"] = {
