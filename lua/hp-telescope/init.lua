@@ -65,8 +65,8 @@ require('telescope').setup {
 		-- Whether to use less with bat or less/cat if bat not installed
 		use_less = true,
 
-		-- How file paths are displayed
-        path_display = true,
+		-- How file paths are displayed (causing telescope to not show files)
+        -- path_display = true,
 
 		-- Set environment variables for previewer
 		set_env = {['COLORTERM'] = 'truecolor'}, -- default = nil,
