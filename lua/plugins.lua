@@ -42,7 +42,9 @@ return require('packer').startup(
 	use 'marko-cerovac/material.nvim'
 
 	-- Status Line and Bufferline
-	use "glepnir/galaxyline.nvim"
+	use {'hoob3rt/lualine.nvim',
+		requires = {'kyazdani42/nvim-web-devicons', opt = true}
+	}
 	use {"romgrk/barbar.nvim", opt = true}
 
 	-- lsp
@@ -50,6 +52,7 @@ return require('packer').startup(
 	use "glepnir/lspsaga.nvim"
 	use "kabouzeid/nvim-lspinstall"
 	use "nvim-lua/completion-nvim"
+	use "nvim-lua/lsp-status.nvim"
 	-- use 'onsails/lspkind-nvim'
 	-- use 'kosayoda/nvim-lightbulb'
 	-- use 'mfussenegger/nvim-jdtls'
