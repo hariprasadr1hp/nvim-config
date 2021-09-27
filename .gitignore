@@ -1,10 +1,13 @@
 # directories
 plugin/
 undodir/
+node_modules/
 lua/temp.lua
 
 
 #files
+package.json
+package-lock.json
 vimscript/temp.vim
 .netrwhist
 tags
