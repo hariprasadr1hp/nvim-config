@@ -123,9 +123,9 @@ local mappings = {
     },
 
     ["e"] = {
-        name = "+edit",
+        name = "+edit/eval",
+		["l"] = {"<cmd>luafile %<CR>"										, "eval luafile"},
 		["r"] = {"<cmd>luafile $HOME/.config/nvim/init.lua<CR>"				, "reload"},
-        ["w"] = {"<cmd>e $HOME/.config/nvim/lua/hp-whichkey/init.lua<CR>"	, "which-key"},
     },
 
     ["f"] = {
