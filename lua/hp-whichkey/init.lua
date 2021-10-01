@@ -74,6 +74,9 @@ vim.api.nvim_set_keymap("v", "<leader>/", ":CommentToggle<CR>", {noremap = true,
 
 -- Explorer
 vim.api.nvim_set_keymap("n", "<leader>.", ":Sex!<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<leader>,", ":Telescope find_files<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "[e", ":Lspsaga diagnostic_jump_prev<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "]e", ":Lspsaga diagnostic_jump_next<CR>", {noremap = true, silent = true})
 
 -- TODO create entire treesitter section
 
@@ -175,7 +178,7 @@ local mappings = {
         ["b"] = {"<cmd> !battery<CR>"	,	"battery"},
         ["c"] = {"<cmd> !clock<CR>"		,	"clock"},
         ["d"] = {"<cmd> !date<CR>"		,	"date-time"},
-        ["l"] = {"<cmd> !ls -a<CR>"		,	"list-all-files"},
+        ["l"] = {"<cmd> !ls -la<CR>"	,	"list-all-files"},
         ["m"] = {"<cmd> !memory<CR>"	,	"memory"},
         ["p"] = {"<cmd> !battery<CR>"	,	"power-percent"},
         ["r"] = {"<cmd> !memory<CR>"	,	"rar"},
@@ -310,7 +313,8 @@ local mappings = {
     ["t"] = {
 		name = "+toggle",
 		["c"] = {'<cmd>execute "set colorcolumn=" . (&colorcolumn == "" ? "80" : "")<CR>' , "colorbar"},
-		["g"] = {'<cmd>%norm! g??<CR>'						,	"gibberish-rot13"},
+		["g"] = {'<cmd>Gitsigns toggle_signs<CR>'			,	"git-signs"},
+		["G"] = {'<cmd>%norm! g??<CR>'						,	"gibberish-rot13"},
 		["h"] = {"<cmd>set hls!<CR>"						,	"hl-search"},
 		["l"] = {"<cmd>LspStart<CR>"						,	"LspStart"},
 		["L"] = {"<cmd>LspStop<CR>"							,	"LspStop"},
@@ -329,11 +333,13 @@ local mappings = {
 		name = "+window",
 		["c"] = {"<C-w>c"			,	"close-window"},
 		["e"] = {"<C-w>="			, 	"balance-window"},
-		["h"] = {"<C-w>h"			, 	"window-left"},
-		["j"] = {"<C-w>j"			, 	"window-below"},
-		["k"] = {"<C-w>k"			, 	"window-up"},
-		["l"] = {"<C-w>l"			, 	"window-right"},
+		["h"] = {"<C-w>h"			, 	"left-window"},
+		["j"] = {"<C-w>j"			, 	"bottom-window"},
+		["k"] = {"<C-w>k"			, 	"top-window"},
+		["l"] = {"<C-w>l"			, 	"right-window"},
+		["m"] = {"<cmd>only<CR>"	,	"maximize-window"},
 		["n"] = {"<cmd>new<CR>"		,	"new-window"},
+		["o"] = {"<cmd>only<CR>"	,	"only-window"},
 		["q"] = {"<C-w>q"			,	"quit-window"},
 		["s"] = {"<C-w>s"			,	"split-window-below"},
 		["T"] = {"<C-w>s"			,	"break-window-into-tab"},

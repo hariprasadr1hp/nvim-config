@@ -42,6 +42,9 @@ inoremap <M-;> <C-o>;
 inoremap <M-,> <C-o>,
 
 
+" meta key 's' to save/update and go to normal mode
+inoremap <M-s> <C-c>:update<CR>
+
 " meta keys for 'f' for F motion(backward), use <M-;> and <M-,> for next/prev
 inoremap <M-f> <C-o>T
 
