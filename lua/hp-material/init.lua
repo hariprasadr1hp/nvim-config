@@ -48,6 +48,6 @@ require('material').setup({
 
 	custom_highlights = {
 		CursorLine = '#0000FF',
-		LineNr = '#FF0000'
+		LineNr = '#FFFFFF'
 	} -- Overwrite highlights with your own ("https://github.com/marko-cerovac/material.nvim/blob/main/lua/material/theme.lua")
 })

@@ -17,6 +17,7 @@ require('hp-lualine')
 require('hp-material')
 require('hp-onedark')
 require('hp-telescope')
+require('hp-theme')
 require('hp-treesitter')
 require('hp-whichkey')
 
@@ -34,5 +35,4 @@ vim.cmd('source ~/.config/nvim/vimscript/plug-config/completion-nvim.vim')
 
 
 
-
-
+-- local a = require('hp-theme')
