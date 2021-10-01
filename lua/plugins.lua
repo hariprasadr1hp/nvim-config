@@ -37,7 +37,7 @@ return require('packer').startup(
 	use 'wbthomason/packer.nvim'
 
 	-- Themes
-    use 'joshdick/onedark.vim'
+    use {'hariprasadr1hp/onedark.nvim', branch='warmer'}
     use 'morhetz/gruvbox'
 	use 'marko-cerovac/material.nvim'
 
