@@ -85,6 +85,17 @@ return require('packer').startup(
 	-- Autopairs
 	use "windwp/nvim-autopairs"
 
+	-- git gigns
+	use {
+		'lewis6991/gitsigns.nvim',
+		requires = {
+			'nvim-lua/plenary.nvim'
+		},
+		config = function()
+		require('gitsigns').setup()
+	  end
+	}
+
 	-- highlighted-yank
 	use 'machakann/vim-highlightedyank'
 
