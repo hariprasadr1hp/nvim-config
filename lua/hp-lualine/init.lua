@@ -58,36 +58,36 @@ local velvet = {
 }
 
 local function hello()
-  return [[hello world]]
+	return [[hello world]]
 end
 
 
 require'lualine'.setup {
-  options = {
-    icons_enabled = true,
-	padding = 1,
-    theme = velvet,
-    -- theme = 'gruvbox',
-    component_separators = {'', ''},
-    section_separators = {'', ''},
-    disabled_filetypes = {}
-  },
-  sections = {
-    lualine_a = {'mode'},
-    lualine_b = {'filename'},
-	lualine_c = {'','branch','data', require'lsp-status'.status},
-    lualine_x = {'encoding', 'fileformat', 'filetype'},
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
-  },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = {'filename'},
-    lualine_x = {'location'},
-    lualine_y = {},
-    lualine_z = {}
-  },
-  tabline = {},
-  extensions = {}
+	options = {
+		icons_enabled = true,
+		padding = 1,
+		theme = velvet,
+		-- theme = 'gruvbox',
+		component_separators = {'', ''},
+		section_separators = {'', ''},
+		disabled_filetypes = {}
+	},
+	sections = {
+		lualine_a = {'mode'},
+		lualine_b = {'filename'},
+		lualine_c = {'','branch','data', require'lsp-status'.status},
+		lualine_x = {'filetype', 'fileformat', 'encoding'},
+		lualine_y = {'progress'},
+		lualine_z = {'location'}
+	},
+	inactive_sections = {
+		lualine_a = {},
+		lualine_b = {},
+		lualine_c = {'filename'},
+		lualine_x = {'location'},
+		lualine_y = {},
+		lualine_z = {}
+	},
+	tabline = {},
+	extensions = {}
 }
