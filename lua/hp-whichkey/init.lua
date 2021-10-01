@@ -153,6 +153,14 @@ local mappings = {
 		["C"] = {"<cmd>Telescope git_bcommits<CR>"	, "bcommits"},
         ["f"] = {"<cmd>Telescope git_files<CR>"		, "git_Files"},
         ["g"] = {"<cmd>Telescope git_status<CR>"	, "status"},
+		["h"] = {
+			name = "+hunk",
+			["p"] = {"<cmd>Gitsigns preview_hunk<CR>"		, "preview-hunk"},
+			["s"] = {"<cmd>Gitsigns stage_hunk<CR>"			, "stage-hunk"},
+			["u"] = {"<cmd>Gitsigns undo_stage_hunk<CR>"	, "undo-stage-hunk"},
+			["v"] = {"<cmd>Gitsigns select_hunk<CR>"		, "visual-select-hunk"},
+		},
+        ["p"] = {"<cmd>Gitsigns preview_hunk<CR>"	, "preview-hunk"},
         ["S"] = {"<cmd>Telescope git_stash<CR>"	    , "stash"},
     },
 
