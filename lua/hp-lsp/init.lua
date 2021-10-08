@@ -21,18 +21,9 @@ local on_attach = function(client, bufnr)
 	buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
 	buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
 	buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-	-- buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-	-- buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-	-- buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-	-- buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-	-- buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
 	buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-	-- buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
 	buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
 	buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-	-- buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-	-- buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-
 end
 
 
@@ -54,4 +45,25 @@ for _, lsp in ipairs(servers) do
   }
 end
 
+-------------------LSP-STATUS-------------------------------------------
+
+local lsp_status = require('lsp-status')
+-- completion_customize_lsp_label as used in completion-nvim
+-- Optional: customize the kind labels used in identifying the current function.
+-- g:completion_customize_lsp_label is a dict mapping from LSP symbol kind 
+-- to the string you want to display as a label
+-- lsp_status.config { kind_labels = vim.g.completion_customize_lsp_label }
+-- Put this somewhere near lsp_status.register_progress()
+-- Register the progress handler
+lsp_status.register_progress()
+
+lsp_status.config({
+	indicator_errors = 'E',
+	indicator_warnings = 'W',
+	indicator_info = 'i',
+	indicator_hint = '?',
+	indicator_ok = 'Ok',
+})
+
+-- local lspconfig = require('lspconfig')
 

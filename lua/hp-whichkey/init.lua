@@ -4,15 +4,21 @@ require("which-key").setup {
         registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
         --[[ the presets plugin, adds help for a bunch of default keybindings in Neovim
         No actual key bindings are created --]]
-        presets = {
-            motions = true, -- adds help for motions
-            operators = true, -- adds help for operators like d, y, ...
-            windows = true, -- default bindings on <c-w>
-            text_objects = true, -- help for text objects triggered after entering an operator
-            z = true, -- bindings for folds, spelling and others prefixed with z
-            nav = true, -- misc bindings to work with windows
-            g = true -- bindings for prefixed with g
-        }
+		spelling = {
+			enabled = true, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
+			suggestions = 20, -- how many suggestions should be shown in the list?
+		},
+		-- the presets plugin, adds help for a bunch of default keybindings in Neovim
+		-- No actual key bindings are created
+		presets = {
+			operators = true, -- adds help for operators like d, y, ... and registers them for motion / text object completion
+			motions = true, -- adds help for motions
+			text_objects = true, -- help for text objects triggered after entering an operator
+			windows = true, -- default bindings on <c-w>
+			nav = true, -- misc bindings to work with windows
+			z = true, -- bindings for folds, spelling and others prefixed with z
+			g = true, -- bindings for prefixed with g
+		},
     },
     icons = {
         breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
@@ -30,18 +36,10 @@ require("which-key").setup {
         width = {min = 20, max = 50}, -- min and max width of the columns
         spacing = 3 -- spacing between columns
     },
+	ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
     hidden = {"<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ "}, -- hide mapping boilerplate
     show_help = true -- show help message on the command line when the popup is visible
 }
-
--- local opts = {
---     mode = "n", -- NORMAL mode
---     prefix = "<leader>",
---     buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
---     silent = true, -- use `silent` when creating keymaps
---     noremap = true, -- use `noremap` when creating keymaps
---     nowait = false -- use `nowait` when creating keymaps
--- }
 
 local layout_config = {
     mode = "n", -- NORMAL mode
@@ -105,8 +103,6 @@ local mappings = {
 
 	["c"] = {
         name = "+code",
-        ["b"] = {"<cmd>! make test<CR>"			,	"make test"},
-        ["c"] = {"<cmd>! make clean<CR>"		,	"make clean"},
 		["f"] = {"<cmd>Telescope filetypes<CR>"	,	"filetype"},
         ["m"] = {"<cmd>! make<CR>"				,	"make all"},
         ["T"] = {"<cmd>! ctags -R *<CR>"		,	"ctags"},
@@ -231,9 +227,14 @@ local mappings = {
     },
 
 	["m"] = {
-        name = "+code",
+        name = "+make",
         ["c"] = {"<cmd>! make clean<CR>"		,	"make clean"},
 		["d"] = {"<cmd>! make debug<CR>"		,	"make debug"},
+		["l"] = {
+			name = "+link",
+			["l"] = {"<cmd>echo 'does nothing'<CR>"		,	"N/A"},
+			["t"] = {"<cmd>echo 'does nothing'<CR>"		,	"N/A"},
+		},
         ["m"] = {"<cmd>! make<CR>"				,	"make all"},
         ["o"] = {"<cmd>e make<CR>"				,	"open Makefile"},
         ["t"] = {"<cmd>! make test<CR>"			,	"make test"},
@@ -245,7 +246,7 @@ local mappings = {
 			name = "+boat",
 			["b"] = {"<cmd>e $HOME/.config/newsboat/rss.yml<CR>"			,	"boat/rss.yml"},
 			["c"] = {"<cmd>! python $HOME/.config/newsboat/rss2urls.py<CR>"	,	"boat-compile"},
-			["u"] = {"<cmd>e /home/hari/.config/newsboat/urls<CR>"			,	"boat/urls"},
+			["u"] = {"<cmd>e $HOME/.config/newsboat/urls<CR>"				,	"boat/urls"},
 		},
 		["c"] = {
 			name = "+codium",
@@ -254,24 +255,27 @@ local mappings = {
 			["C"] = {"<cmd>e $HOME/.config/VSCodium/User/nvim/codium.lua<CR>"	,	"codium.lua"},
 			["s"] = {"<cmd>Sex! $HOME/.config/VSCodium/User<CR>"				,	"codium-files"},
 		},
-		["e"] = {"<cmd>e $HOME/.config/espanso/default.yml<CR>"		,	"espanso"},
+		["e"] = {"<cmd>e $HOME/.config/espanso/default.yml<CR>"	,	"espanso"},
 		["j"] = {
 			name = "+journal",
-			["s"] = {"<cmd>Sex! $HOME/my/org/journal/<CR>"			,	"journal"},
+			["j"] = {"<cmd>Sex! $HOME/my/org/journal/<CR>"		,	"journal"},
+			["s"] = {"<cmd>Sex! $HOME/my/org/journal/<CR>"		,	"journal"},
 		},
 		["r"] = {
 			name = "+roam",
-			["r"] = {"<cmd>Sex! $HOME/my/org/roam/<CR>"				,	"roam"},
+			["f"] = {"<cmd>Sex! $HOME/my/org/roam/<CR>"			,	"roam"},
+			["i"] = {"<cmd>echo 'does nothing'<CR>"				,	"N/A"},
+			["r"] = {"<cmd>Sex! $HOME/my/org/roam/<CR>"			,	"roam"},
 		},
 		["t"] = {
 			name = "+todo",
-			["t"] = {"<cmd>Sex! $HOME/.todo<CR>"					,	"todo-list"},
-			["n"] =														"new-todo",
+			["t"] = {"<cmd>Sex! $HOME/.todo<CR>"				,	"todo-list"},
 		},
 	},
 
     ["o"] = {
 		name = "+open",
+		["l"] = {"<cmd>FloatermNew lazygit .<CR>"	,	"lazygit"},
 		["m"] = {"<cmd>e Makefile<CR>"				,	"Makefile"},
 		["r"] = {"<cmd>FloatermNew ranger .<CR>"	,	"ranger"},
 		["t"] = {"<cmd>FloatermToggle<CR>"			,	"terminal"},
@@ -294,7 +298,7 @@ local mappings = {
 
     ["s"] = {
         name = "+search",
-        ["b"] = {"<cmd>Telescope git_branches<CR>"				,	"File"},
+        ["b"] = {"<cmd>Gitsigns blame_line<CR>"					,	"blame_line"},
         ["d"] = {"<cmd>!date<CR>"								,	"show-datetime"},
         ["f"] = {"<cmd>Telescope find_files<CR>"				,	"Find File"},
         ["m"] = {"<cmd>Telescope marks<CR>"						,	"Marks"},
@@ -366,7 +370,8 @@ local mappings = {
 		["m"] = {"<cmd>Telescope marks<CR>"				,	"marks"},
 		["M"] = {"<cmd>Telescope man_pages<CR>"			,	"man pages"},
 		["r"] = {"<cmd>Telescope registers<CR>"			,	"registers"},
-		["t"] = {"<cmd>Telescope tags<CR>"				,	"tags"},
+		["t"] = {"<cmd>Telescope treesitter<CR>"				,	"tags"},
+		["T"] = {"<cmd>Telescope tags<CR>"				,	"tags"},
 		["v"] = {"<cmd>Telescope commands<CR>"			,	"vim-commands"},
 		["w"] = {"<cmd>Telescope file_browser<CR>"		,	"file_browser"},
 		["z"] = {"<cmd>Telescope live_grep<CR>"			,	"live_grep"},
@@ -379,5 +384,4 @@ local mappings = {
 }
 
 local wk = require("which-key")
--- wk.register(mappings, opts)
 wk.register(mappings, layout_config)

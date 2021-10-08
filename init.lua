@@ -27,6 +27,7 @@ vim.cmd('source ~/.config/nvim/vimscript/keys_xsel.vim')
 vim.cmd('source ~/.config/nvim/vimscript/keys_surround.vim')
 vim.cmd('source ~/.config/nvim/vimscript/keys_insert.vim')
 vim.cmd('source ~/.config/nvim/vimscript/keys_meta.vim')
+vim.cmd('source ~/.config/nvim/vimscript/keys_terminal.vim')
 vim.cmd('source ~/.config/nvim/vimscript/functions.vim')
 vim.cmd('source ~/.config/nvim/vimscript/temp.vim')
 
