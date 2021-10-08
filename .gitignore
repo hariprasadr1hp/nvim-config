@@ -3,6 +3,7 @@ plugin/
 undodir/
 node_modules/
 lua/temp.lua
+.hypothesis/
 
 
 #files

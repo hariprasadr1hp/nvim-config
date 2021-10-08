@@ -1,6 +1,12 @@
 " assigned meta-keys
 " <M-@@>, @@ = [a,b,d,e,f,g,h,j,k,l,o,t]
 
+" shift key selection
+" starts selecting, but defaults to normal mode
+inoremap <S-Left> <C-c>v
+inoremap <S-Right> <Right><C-c>v
+
+
 " meta(alt) keys in insert and command line mode
 " *warning*: not to use <M-D>
 noremap! <M-h> <Left>
