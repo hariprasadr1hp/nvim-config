@@ -41,8 +41,17 @@ require("which-key").setup {
     show_help = true -- show help message on the command line when the popup is visible
 }
 
-local layout_config = {
+local normal_layout_config = {
     mode = "n", -- NORMAL mode
+    prefix = "<leader>",
+    buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+    silent = true, -- use `silent` when creating keymaps
+    noremap = true, -- use `noremap` when creating keymaps
+    nowait = false -- use `nowait` when creating keymaps
+}
+
+local visual_layout_config = {
+    mode = "v", -- VISUAL mode
     prefix = "<leader>",
     buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
     silent = true, -- use `silent` when creating keymaps
@@ -79,8 +88,9 @@ vim.api.nvim_set_keymap("n", "]e", ":Lspsaga diagnostic_jump_next<CR>", {noremap
 -- TODO create entire treesitter section
 
 
-local mappings = {
+local normal_mappings = {
     ["."] = "Sex!",
+    [","] = "files",
     ["/"] = "comment",
     ["a"] = {
 		name = "+action",
@@ -102,12 +112,12 @@ local mappings = {
     },
 
 	["c"] = {
-        name = "+code",
+	        name = "+code",
 		["f"] = {"<cmd>Telescope filetypes<CR>"	,	"filetype"},
-        ["m"] = {"<cmd>! make<CR>"				,	"make all"},
-        ["T"] = {"<cmd>! ctags -R *<CR>"		,	"ctags"},
+	        ["m"] = {"<cmd>! make<CR>"				,	"make all"},
+	        ["T"] = {"<cmd>! ctags -R *<CR>"		,	"ctags"},
 		["o"] = {"<cmd>call Cpp_Flip_Ext()<CR>"	,	"CppFlip"},
-    },
+	    },
 
 
     ["d"] = {
@@ -123,14 +133,15 @@ local mappings = {
 
     ["e"] = {
         name = "+edit/eval",
-		["l"] = {"<cmd>luafile %<CR>"										, "eval luafile"},
-		["r"] = {"<cmd>luafile $HOME/.config/nvim/init.lua<CR>"				, "reload"},
+		["l"] = {"<cmd>luafile %<CR>"										, "luafile %"},
+		["p"] = {"<cmd>py3file %<CR>"										, "py3file %"},
+		["v"] = {"<cmd>source %<CR>"										, "source %"},
     },
 
     ["f"] = {
         name = "+file",
-        ["f"] = {"<cmd>Telescope find_files<CR>"							, "Files"},
-        ["F"] = {"<cmd>Sex! $HOME/.config/nvim<CR>"							, "Files"},
+        ["f"] = {"<cmd>Telescope file_browser<CR>"							, "file-browser"},
+        ["F"] = {"<cmd>Sex! $HOME/.config/nvim<CR>"							, "files"},
         ["i"] = {"<cmd>e $HOME/.config/nvim/init.lua<CR>"					, "init.lua"},
         ["I"] = {"<cmd>e $HOME/.config/nvim/vimscript/init.vim<CR>"			, "init.vim"},
         ["p"] = {"<cmd>e $HOME/.config/nvim/lua/plugins.lua<CR>"			, "plugins.lua"},
@@ -174,7 +185,7 @@ local mappings = {
         ["b"] = {"<cmd> !battery<CR>"	,	"battery"},
         ["c"] = {"<cmd> !clock<CR>"		,	"clock"},
         ["d"] = {"<cmd> !date<CR>"		,	"date-time"},
-        ["l"] = {"<cmd> !ls -la<CR>"	,	"list-all-files"},
+        ["l"] = {"<cmd> !pwd;ls -la<CR>",	"list-all-files"},
         ["m"] = {"<cmd> !memory<CR>"	,	"memory"},
         ["p"] = {"<cmd> !battery<CR>"	,	"power-percent"},
         ["r"] = {"<cmd> !memory<CR>"	,	"rar"},
@@ -293,7 +304,7 @@ local mappings = {
 
     ["r"] = {
 		name = "+reload",
-		["r"] = {"<cmd>luafile $HOME/.config/nvim/init.lua<CR>"	,	"reload"},
+		["r"] = {"<cmd>source $HOME/.config/nvim/vimscript/init.vim<CR>"	,	"source init.vim"},
 	},
 
     ["s"] = {
@@ -370,11 +381,11 @@ local mappings = {
 		["m"] = {"<cmd>Telescope marks<CR>"				,	"marks"},
 		["M"] = {"<cmd>Telescope man_pages<CR>"			,	"man pages"},
 		["r"] = {"<cmd>Telescope registers<CR>"			,	"registers"},
-		["t"] = {"<cmd>Telescope treesitter<CR>"				,	"tags"},
+		["t"] = {"<cmd>Telescope treesitter<CR>"		,	"treesitter"},
 		["T"] = {"<cmd>Telescope tags<CR>"				,	"tags"},
 		["v"] = {"<cmd>Telescope commands<CR>"			,	"vim-commands"},
 		["w"] = {"<cmd>Telescope file_browser<CR>"		,	"file_browser"},
-		["z"] = {"<cmd>Telescope live_grep<CR>"			,	"live_grep"},
+		["z"] = {"<cmd>FloatermNew rg .<CR>"			,	"live_grep"},
 		["Z"] = {"<cmd>Telescope grep_string<CR>"		,	"grep_string"},
 		["s"] = {
 			name = "+show",
@@ -383,5 +394,9 @@ local mappings = {
 	},
 }
 
+local visual_mappings = {}
+
+
 local wk = require("which-key")
-wk.register(mappings, layout_config)
+wk.register(normal_mappings, normal_layout_config)
+wk.register(visual_mappings, visual_layout_config)

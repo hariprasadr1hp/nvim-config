@@ -1,4 +1,4 @@
--- Floaterm
+-- floaterm, for details, visit https://github.com/voldikss/vim-floaterm
 
 -- vim.g.floaterm_keymap_toggle = '<F1>'
 -- vim.g.floaterm_keymap_next   = '<F2>'
