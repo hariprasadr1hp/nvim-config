@@ -1,4 +1,18 @@
-"#######################################################################
+" #######################################################################
+" files
+
+source ~/.config/nvim/vimscript/keys_xsel.vim
+source ~/.config/nvim/vimscript/keys_surround.vim
+source ~/.config/nvim/vimscript/keys_insert.vim
+source ~/.config/nvim/vimscript/keys_meta.vim
+source ~/.config/nvim/vimscript/keys_terminal.vim
+source ~/.config/nvim/vimscript/functions.vim
+source ~/.config/nvim/vimscript/temp.vim
+
+source ~/.config/nvim/vimscript/plug-config/completion-nvim.vim
+" source ~/.config/nvim/vimscript/plug-config/vim-vsnip.vim
+
+
 " mappings
 " let mapleader = "\<Space>"
 
