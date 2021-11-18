@@ -25,6 +25,7 @@ vim.cmd("highlight Colorcolumn ctermbg=0 guibg=lightgrey")
 -------------------------------------------------------------------
 vim.cmd('set hlsearch')
 vim.cmd('set incsearch')
+vim.cmd('set ignorecase')
 vim.cmd('set smartcase')
 
 
