@@ -115,6 +115,8 @@ return require('packer').startup(
 	-- Commenting code
 	use 'terrortylor/nvim-comment'
 
+	use 'mfussenegger/nvim-dap'
+	use 'mfussenegger/nvim-dap-python'
 	-- which-key
 	use 'folke/which-key.nvim'
 	-- use 'liuchengxu/vim-which-key'

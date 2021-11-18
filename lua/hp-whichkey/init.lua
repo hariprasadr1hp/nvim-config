@@ -122,12 +122,12 @@ local normal_mappings = {
 
     ["d"] = {
         name = "+debug",
-        -- b = {"<cmd>DebugToggleBreakpoint<CR>"	, "Toggle Breakpoint"},
-        -- c = {"<cmd>DebugContinue<CR>"			, "Continue"},
-        -- i = {"<cmd>DebugStepInto<CR>"			, "Step Into"},
+        b = {"<cmd>DebugBreakpoint<CR>"			, "toggle-Breakpoint"},
+        c = {"<cmd>DebugContinue<CR>"			, "continue"},
+        i = {"<cmd>DebugStepInto<CR>"			, "step-into"},
         m = {"<cmd>!make debug<CR>"				, "make debug"},
-        -- o = {"<cmd>DebugStepOver<CR>"			, "Step Over"},
-        -- r = {"<cmd>DebugToggleRepl<CR>"			, "Toggle Repl"},
+        o = {"<cmd>DebugStepOver<CR>"			, "step-over"},
+        r = {"<cmd>DebugReplOpen<CR>"			, "open-repl"},
         -- s = {"<cmd>DebugStart<CR>"				, "Start"}
     },
 
