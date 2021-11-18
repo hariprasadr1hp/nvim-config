@@ -58,7 +58,7 @@ return require('packer').startup(
 	-- use 'mfussenegger/nvim-jdtls'
 
 	-- Autocomplete
-	-- use {"hrsh7th/nvim-compe", opt = true, event="InsertEnter", }
+	use {"hrsh7th/nvim-compe", opt = true, event="InsertEnter", }
 	use "hrsh7th/vim-vsnip"
 	use "hrsh7th/vim-vsnip-integ"
 	-- use "rafamadriz/friendly-snippets"
@@ -115,6 +115,10 @@ return require('packer').startup(
 	-- Commenting code
 	use 'terrortylor/nvim-comment'
 
+	-- floating terminal
+	use 'voldikss/vim-floaterm'
+	use 'akinsho/toggleterm.nvim'
+
 	-- debug
 	use 'mfussenegger/nvim-dap'
 	use 'mfussenegger/nvim-dap-python'
@@ -128,12 +132,10 @@ return require('packer').startup(
 			require'hop'.setup{}
 		end
 	}
+
 	-- which-key
 	use 'folke/which-key.nvim'
 	-- use 'liuchengxu/vim-which-key'
-
-	-- floating terminal
-	use 'voldikss/vim-floaterm'
 
     -- -- Text Navigation
 	-- use 'unblevable/quick-scope'
