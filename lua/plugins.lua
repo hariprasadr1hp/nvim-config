@@ -115,8 +115,19 @@ return require('packer').startup(
 	-- Commenting code
 	use 'terrortylor/nvim-comment'
 
+	-- debug
 	use 'mfussenegger/nvim-dap'
 	use 'mfussenegger/nvim-dap-python'
+
+
+	-- hop
+	use {
+		'phaazon/hop.nvim',
+		as = 'hop',
+		config = function()
+			require'hop'.setup{}
+		end
+	}
 	-- which-key
 	use 'folke/which-key.nvim'
 	-- use 'liuchengxu/vim-which-key'

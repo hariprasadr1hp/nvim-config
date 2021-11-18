@@ -369,6 +369,28 @@ local normal_mappings = {
 		["|"] = {"<C-w><"			,	"max-out-width"},
 	},
 
+    ["x"] = {
+		name = "+hop",
+		["a"] = {"<cmd>HopChar2BC<CR>"			,	"hop-char2-above"},
+		["b"] = {"<cmd>HopChar2AC<CR>"			,	"hop-char2-below"},
+		["c"] = {"<cmd>HopChar2<CR>"			,	"hop-char2"},
+		["C"] = {"<cmd>HopChar1<CR>"			,	"hop-char1"},
+		["l"] = {
+			name = "+lines",
+			["j"] = {"<cmd>HopLineStartAC<CR>"	, 	"hop-lines-below"},
+			["k"] = {"<cmd>HopLineStartBC<CR>"	, 	"hop-lines-above"},
+			["l"] = {"<cmd>HopLineStart<CR>"		, 	"hop-lines"},
+		},
+		["p"] = {"<cmd>HopPattern<CR>"		, 	"hop-pattern"},
+		["w"] = {
+			name = "+words",
+			["j"] = {"<cmd>HopWordAC<CR>"	, 	"hop-words-below"},
+			["k"] = {"<cmd>HopWordBC<CR>"	, 	"hop-words-above"},
+			["w"] = {"<cmd>HopWord<CR>"		, 	"hop-words"},
+		},
+		["x"] = {"<cmd>HopChar2<CR>"			,	"hop-char2"},
+	},
+
     ["z"] = {
 		name = "+telescope",
 		["b"] = {"<cmd>Telescope buffers<CR>"			,	"buffers"},
