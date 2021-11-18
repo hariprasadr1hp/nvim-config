@@ -1,3 +1,9 @@
 #+title: TODO
 
++ Floaterm to ToggleTerm
 + undo meta-key keybindings (Insert mode) 
+
+
+
+
+
