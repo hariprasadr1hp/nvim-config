@@ -1,3 +1,5 @@
+-- for more details, visit https://github.com/lewis6991/gitsigns.nvim
+
 require('gitsigns').setup {
 	signs = {
 		add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
