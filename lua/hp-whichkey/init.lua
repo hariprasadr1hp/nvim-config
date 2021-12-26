@@ -247,7 +247,7 @@ local normal_mappings = {
 			["t"] = {"<cmd>echo 'does nothing'<CR>"		,	"N/A"},
 		},
         ["m"] = {"<cmd>! make<CR>"				,	"make all"},
-        ["o"] = {"<cmd>e make<CR>"				,	"open Makefile"},
+        ["o"] = {"<cmd>e Makefile<CR>"			,	"open Makefile"},
         ["t"] = {"<cmd>! make test<CR>"			,	"make test"},
     },
 
