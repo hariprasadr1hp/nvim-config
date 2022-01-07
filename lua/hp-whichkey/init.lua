@@ -134,7 +134,7 @@ local normal_mappings = {
     ["e"] = {
         name = "+edit/eval",
 		["l"] = {"<cmd>luafile %<CR>"										, "luafile %"},
-		["p"] = {"<cmd>py3file %<CR>"										, "py3file %"},
+		["p"] = {"<cmd>! python %<CR>"										, "python %"},
 		["v"] = {"<cmd>source %<CR>"										, "source %"},
     },
 
