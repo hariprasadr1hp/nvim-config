@@ -7,8 +7,10 @@ lua/temp.lua
 
 
 #files
+temp.lua
 package.json
 package-lock.json
 vimscript/temp.vim
 .netrwhist
 tags
+
