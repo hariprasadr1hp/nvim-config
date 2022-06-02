@@ -38,12 +38,10 @@ return require('packer').startup(
 	-- use 'mattn/emmet-vim'
 
 	-- Treesitter
+	-- treesitter
 	use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
 	use {"windwp/nvim-ts-autotag", opt = true}
-	-- use 'nvim-treesitter/nvim-treesitter-refactor'
 	use 'nvim-treesitter/playground'
-	-- use 'p00f/nvim-ts-rainbow'
-	-- use {'lukas-reineke/indent-blankline.nvim', branch = 'lua'}
 
 	-- Telescope
 	use {
