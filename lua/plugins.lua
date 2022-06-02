@@ -25,7 +25,6 @@ return require('packer').startup(
 	use "neovim/nvim-lspconfig"
 	use "glepnir/lspsaga.nvim"
 	use "kabouzeid/nvim-lspinstall"
-	use "nvim-lua/completion-nvim"
 	use "nvim-lua/lsp-status.nvim"
 	-- use 'onsails/lspkind-nvim'
 	-- use 'kosayoda/nvim-lightbulb'

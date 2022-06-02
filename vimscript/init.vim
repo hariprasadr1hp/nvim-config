@@ -9,7 +9,7 @@ source ~/.config/nvim/vimscript/keys_terminal.vim
 source ~/.config/nvim/vimscript/functions.vim
 source ~/.config/nvim/vimscript/temp.vim
 
-source ~/.config/nvim/vimscript/plug-config/completion-nvim.vim
+" source ~/.config/nvim/vimscript/plug-config/completion-nvim.vim
 " source ~/.config/nvim/vimscript/plug-config/vim-vsnip.vim
 
 
