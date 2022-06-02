@@ -8,42 +8,56 @@ end
 return require('packer').startup(
 	function(use)
 	-- Packer can manage itself
-	use 'wbthomason/packer.nvim'
+	use "wbthomason/packer.nvim"
 
-	-- Themes
+	-- themes
     use {'hariprasadr1hp/onedark.nvim', branch='warmer'}
     use 'morhetz/gruvbox'
 	use 'marko-cerovac/material.nvim'
 
-	-- Status Line and Bufferline
-	use {'hoob3rt/lualine.nvim',
-		requires = {'kyazdani42/nvim-web-devicons', opt = true}
-	}
+	-- tabs(windows) in neovim
 	use {"romgrk/barbar.nvim", opt = true}
 
 	-- lsp
-	use "neovim/nvim-lspconfig"
-	use "glepnir/lspsaga.nvim"
-	use "kabouzeid/nvim-lspinstall"
+	use {
+		"williamboman/nvim-lsp-installer",
+		{
+			"neovim/nvim-lspconfig",
+			config = function()
+				require("nvim-lsp-installer").setup {}
+				local lspconfig = require("lspconfig")
+				lspconfig.sumneko_lua.setup {}
+			end
+		}
+	}
+
 	use "nvim-lua/lsp-status.nvim"
-	-- use 'onsails/lspkind-nvim'
-	-- use 'kosayoda/nvim-lightbulb'
-	-- use 'mfussenegger/nvim-jdtls'
 
-	-- Autocomplete
-	use {"hrsh7th/nvim-compe", opt = true, event="InsertEnter", }
-	use "hrsh7th/vim-vsnip"
-	use "hrsh7th/vim-vsnip-integ"
-	-- use "rafamadriz/friendly-snippets"
-	-- use 'mattn/emmet-vim'
+	-- autocomplete
+	use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
+	use 'hrsh7th/cmp-nvim-lsp' -- LSP source for nvim-cmp
+	use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
+	use 'L3MON4D3/LuaSnip' -- Snippets plugin
 
-	-- Treesitter
+	-- snippets
+	-- use {"hrsh7th/nvim-compe", opt = true, event="InsertEnter", }
+	-- use "hrsh7th/vim-vsnip"
+	-- use "hrsh7th/vim-vsnip-integ"
+
+	-- icons
+    use 'kyazdani42/nvim-web-devicons'
+
+	-- status line and bufferline
+	use {'hoob3rt/lualine.nvim',
+		requires = {'kyazdani42/nvim-web-devicons', opt = true}
+	}
+
 	-- treesitter
 	use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
 	use {"windwp/nvim-ts-autotag", opt = true}
 	use 'nvim-treesitter/playground'
 
-	-- Telescope
+	-- telescope
 	use {
 		'nvim-telescope/telescope.nvim',
 		requires = {
@@ -53,10 +67,10 @@ return require('packer').startup(
 	}
 	use 'nvim-telescope/telescope-media-files.nvim'
 
-	-- Autopairs
+	-- autopairs
 	use "windwp/nvim-autopairs"
 
-	-- git gigns
+	-- git signs
 	use {
 		'lewis6991/gitsigns.nvim',
 		requires = {
@@ -70,20 +84,10 @@ return require('packer').startup(
 	-- highlighted-yank
 	use 'machakann/vim-highlightedyank'
 
-	-- Registers
-	-- use 'gennaro-tedesco/nvim-peekup'
-
-	-- Navigation
-	-- use 'phaazon/hop.nvim'
-
-	-- Icons
-    use 'kyazdani42/nvim-web-devicons'
-    -- use 'ryanoasis/vim-devicons'
-
-	-- Explorer
+	-- explorer
 	--use 'kyazdani42/nvim-tree.lua'
 
-	-- Commenting code
+	-- commenting code
 	use 'terrortylor/nvim-comment'
 
 	-- floating terminal
@@ -108,14 +112,6 @@ return require('packer').startup(
 	use 'folke/which-key.nvim'
 	-- use 'liuchengxu/vim-which-key'
 
-    -- -- Text Navigation
-	-- use 'unblevable/quick-scope'
-
-    -- -- zen mode
-    -- use 'junegunn/goyo.vim'
-
-    -- -- Interactive code
-    -- use 'metakirby5/codi.vim'
 	if packer_bootstrap then
 		require('packer').sync()
 	end
