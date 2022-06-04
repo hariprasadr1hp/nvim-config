@@ -1,69 +1,143 @@
--- Register configs for installed servers in lspconfig.
-require'lspinstall'.setup()
+-- lua/hp-lsp/init.lua
 
-local nvim_lsp = require('lspconfig')
+------------------------------------------------------------------------
+-- lsp-installer
+------------------------------------------------------------------------
+
+require("nvim-lsp-installer").setup({
+    automatic_installation = true, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
+    ui = {
+        icons = {
+            server_installed = "✓",
+            server_pending = "➜",
+            server_uninstalled = "✗"
+        },
+		keymaps = {
+			-- Keymap to expand a server in the UI
+			toggle_server_expand = "<CR>",
+			-- Keymap to install the server under the current cursor position
+			install_server = "i",
+			-- Keymap to reinstall/update the server under the current cursor position
+			update_server = "u",
+			-- Keymap to check for new version for the server under the current cursor position
+			check_server_version = "c",
+			-- Keymap to update all installed servers
+			update_all_servers = "U",
+			-- Keymap to check which installed servers are outdated
+			check_outdated_servers = "C",
+			-- Keymap to uninstall a server
+			uninstall_server = "X",
+		},
+    },
+})
+
+------------------------------------------------------------------------
+-- lsp-setup
+------------------------------------------------------------------------
+
+-- Mappings.
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+local opts = { noremap=true, silent=true }
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-	local function buf_set_keymap(...)	vim.api.nvim_buf_set_keymap(bufnr, ...)	end
-	local function buf_set_option(...)	vim.api.nvim_buf_set_option(bufnr, ...)	end
+  -- Enable completion triggered by <c-x><c-o>
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-	-- Enable completion triggered by <c-x><c-o>
-	buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-	-- Mappings.
-	local opts = { noremap=true, silent=true }
-
-	-- See `:help vim.lsp.*` for documentation on any of the below functions
-	buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-	buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-	buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-	buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-	buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-	buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-	buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-	buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  -- Mappings.
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  local bufopts = { noremap=true, silent=true, buffer=bufnr }
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  -- vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+  -- vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+  -- vim.keymap.set('n', '<space>wl', function()
+  --   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  -- end, bufopts)
 end
 
-
--- Get list of installed servers and then setup each
--- server with lspconfig as usual.
-local servers = require'lspinstall'.installed_servers()
-for _, server in pairs(servers) do
-  require'lspconfig'[server].setup{}
-end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
+
+---------------------------------------------------------
+-- servers with minimal setup
+---------------------------------------------------------
+local servers = {
+	'awk_ls',
+	'bashls',
+	'beancount',
+	-- 'ccls',
+	'clangd',
+	'cmake',
+	'cssmodules_ls',
+	-- 'dartls',
+	'dockerls',
+	'dotls',
+	'emmet_ls',
+	'eslint',
+	-- 'hls',
+	'julials',
+	'ltex',
+	'pyright',
+	'rust_analyzer',
+	'solang',
+	'sqlls',
+	'sqls',
+	'texlab',
+	'tsserver',
+	'vimls',
+	'yamlls',
+}
+
+for _, lsp in pairs(servers) do
+  require('lspconfig')[lsp].setup {
     on_attach = on_attach,
     flags = {
-      debounce_text_changes = 150,
+      debounce_text_changes = 150, -- This will be the default in neovim 0.7+
     }
   }
 end
 
--------------------LSP-STATUS-------------------------------------------
+---------------------------------------------------------
+-- cssls
+---------------------------------------------------------
+--Enable (broadcasting) snippet capability for completion
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-local lsp_status = require('lsp-status')
--- completion_customize_lsp_label as used in completion-nvim
--- Optional: customize the kind labels used in identifying the current function.
--- g:completion_customize_lsp_label is a dict mapping from LSP symbol kind 
--- to the string you want to display as a label
--- lsp_status.config { kind_labels = vim.g.completion_customize_lsp_label }
--- Put this somewhere near lsp_status.register_progress()
--- Register the progress handler
-lsp_status.register_progress()
+require'lspconfig'.cssls.setup {
+  capabilities = capabilities,
+}
 
-lsp_status.config({
-	indicator_errors = 'E',
-	indicator_warnings = 'W',
-	indicator_info = 'i',
-	indicator_hint = '?',
-	indicator_ok = 'Ok',
-})
+---------------------------------------------------------
+-- html
+---------------------------------------------------------
+--Enable (broadcasting) snippet capability for completion
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 
--- local lspconfig = require('lspconfig')
+require'lspconfig'.html.setup {
+  capabilities = capabilities,
+}
+
+---------------------------------------------------------
+-- jsonls
+---------------------------------------------------------
+--Enable (broadcasting) snippet capability for completion
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+require'lspconfig'.jsonls.setup {
+  capabilities = capabilities,
+}
 

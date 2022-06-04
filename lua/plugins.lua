@@ -39,10 +39,8 @@ return require('packer').startup(
 	use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
 	use 'L3MON4D3/LuaSnip' -- Snippets plugin
 
-	-- snippets
-	-- use {"hrsh7th/nvim-compe", opt = true, event="InsertEnter", }
-	-- use "hrsh7th/vim-vsnip"
-	-- use "hrsh7th/vim-vsnip-integ"
+	-- Snippets
+	use "rafamadriz/friendly-snippets"
 
 	-- icons
     use 'kyazdani42/nvim-web-devicons'
@@ -97,7 +95,6 @@ return require('packer').startup(
 	-- debug
 	use 'mfussenegger/nvim-dap'
 	use 'mfussenegger/nvim-dap-python'
-
 
 	-- hop
 	use {
