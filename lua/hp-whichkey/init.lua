@@ -82,8 +82,7 @@ vim.api.nvim_set_keymap("v", "<leader>/", ":CommentToggle<CR>", {noremap = true,
 -- Explorer
 vim.api.nvim_set_keymap("n", "<leader>.", ":Sex!<CR>", {noremap = true, silent = true})
 vim.api.nvim_set_keymap("n", "<leader>,", ":Telescope find_files<CR>", {noremap = true, silent = true})
-vim.api.nvim_set_keymap("n", "[e", ":Lspsaga diagnostic_jump_prev<CR>", {noremap = true, silent = true})
-vim.api.nvim_set_keymap("n", "]e", ":Lspsaga diagnostic_jump_next<CR>", {noremap = true, silent = true})
+
 
 -- TODO create entire treesitter section
 
@@ -176,8 +175,8 @@ local normal_mappings = {
 
     ["h"] = {
         name = "+help",
-        ["b"] = {"<cmd>! battery<CR>"				,	"battery"},
-        ["t"] = {"<cmd>Telescope colorscheme<CR>"	,	"themes"},
+        ["s"] = {"<cmd>lua vim.lsp.buf.signature_help()<CR>"	,	"lsp signature"},
+        ["t"] = {"<cmd>Telescope colorscheme<CR>"				,	"themes"},
     },
 
     ["i"] = {
@@ -217,18 +216,19 @@ local normal_mappings = {
 
     ["l"] = {
         name = "+lsp",
-        ["a"] = {"<cmd>Lspsaga code_action<CR>"					,	"code action"},
-        ["A"] = {"<cmd>Lspsaga range_code_action<CR>"			,	"selected action"},
+        ["a"] = {"<cmd>lua vim.lsp.buf.code_action()<CR>"		,	"code action"},
+        -- ["A"] = {""												,	"selected action"},
         ["d"] = {"<cmd>Telescope lsp_document_diagnostics<CR>"	,	"document diagnostics"},
         ["D"] = {"<cmd>Telescope lsp_workspace_diagnostics<CR>"	,	"workspace diagnostics"},
-        ["f"] = {"<cmd>Lspsaga lsp_finder<CR>"					,	"lsp finder"},
-        ["h"] = {"<cmd>Lspsaga hover_doc<CR>"					,	"hover_doc"},
+        ["f"] = {"<cmd>lua vim.lsp.buf.type_definition()<CR>"	,	"type definition"},
+        ["h"] = {"<cmd>lua vim.lsp.buf.hover()<CR>"				,	"hover"},
         ["i"] = {"<cmd>LspInfo<CR>"								,	"lsp info"},
-        ["l"] = {"<cmd>Lspsaga show_cursor_diagnostics<CR>"		,	"cursor diagnostics"},
-        ["L"] = {"<cmd>Lspsaga show_line_diagnostics<CR>"		,	"line diagnostics"},
-        ["p"] = {"<cmd>Lspsaga preview_definition<CR>"			,	"preview definition"},
+        ["I"] = {"<cmd>LspInstallInfo<CR>"						,	"lsp install info"},
+        -- ["l"] = {""		,	"cursor diagnostics"},
+        -- ["L"] = {""		,	"line diagnostics"},
+        -- ["p"] = {""			,	"preview definition"},
         ["q"] = {"<cmd>Telescope quickfix<CR>"					,	"quickfix"},
-        ["r"] = {"<cmd>Lspsaga rename<CR>"						,	"rename"},
+        ["r"] = {"<cmd>lua vim.lsp.buf.rename()<CR>"			,	"rename"},
         ["R"] = {"<cmd>LspRestart<CR>"							,	"LspRestart"},
         ["s"] = {"<cmd>Telescope lsp_document_symbols<CR>"		,	"doc symbols"},
         ["S"] = {"<cmd>Telescope lsp_workspace_symbols<CR>"		,	"workspace wymbols"},
@@ -331,10 +331,8 @@ local normal_mappings = {
 		["g"] = {'<cmd>Gitsigns toggle_signs<CR>'			,	"git-signs"},
 		["G"] = {'<cmd>%norm! g??<CR>'						,	"gibberish-rot13"},
 		["h"] = {"<cmd>set hls!<CR>"						,	"hl-search"},
-		["l"] = {"<cmd>LspStart<CR>"						,	"LspStart"},
-		["L"] = {"<cmd>LspStop<CR>"							,	"LspStop"},
-		["n"] = {"<cmd>FloatermNew nighton<CR>"				,	"nightlight on"},
-		["N"] = {"<cmd>FloatermNew nightoff<CR>"			,	"nightlight off"},
+		["l"] = {"<cmd>LspRestart<CR>"						,	"lsp-restart"},
+		["n"] = {"<cmd>FloatermNew toggle_night<CR>"		,	"night_filter"},
 		["o"] = {"<cmd>call Cpp_Flip_Ext()<CR>"				,	"CppFlip"},
 		["p"] = {"<cmd>TSPlaygroundToggle<CR>"				,	"TSPlayground"},
 		["r"] = {"<cmd>set ro!<CR>"							,	"read-only"},
