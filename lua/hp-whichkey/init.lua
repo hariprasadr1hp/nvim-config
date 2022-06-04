@@ -286,6 +286,7 @@ local normal_mappings = {
 
     ["o"] = {
 		name = "+open",
+		["e"] = {"<cmd>NvimTreeToggle<CR>"			,	"explorer"},
 		["l"] = {"<cmd>FloatermNew lazygit .<CR>"	,	"lazygit"},
 		["m"] = {"<cmd>e Makefile<CR>"				,	"Makefile"},
 		["r"] = {"<cmd>FloatermNew ranger .<CR>"	,	"ranger"},
@@ -328,6 +329,8 @@ local normal_mappings = {
     ["t"] = {
 		name = "+toggle",
 		["c"] = {'<cmd>execute "set colorcolumn=" . (&colorcolumn == "" ? "80" : "")<CR>' , "colorbar"},
+		["e"] = {"<cmd>NvimTreeToggle<CR>"					,	"explorer"},
+		["f"] = {"<cmd>NvimTreeToggle<CR>"					,	"explorer"},
 		["g"] = {'<cmd>Gitsigns toggle_signs<CR>'			,	"git-signs"},
 		["G"] = {'<cmd>%norm! g??<CR>'						,	"gibberish-rot13"},
 		["h"] = {"<cmd>set hls!<CR>"						,	"hl-search"},
