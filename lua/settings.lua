@@ -121,7 +121,7 @@ vim.o.clipboard = "unnamed"
 
 -- CODING
 -------------------------------------------------------------------
-vim.g.python3_host_prog = '~/anaconda3/bin/python3.8'
+vim.g.python3_host_prog = '~/.pyenv/shims/python'
 
 
 -------------------------------------------------------------------
