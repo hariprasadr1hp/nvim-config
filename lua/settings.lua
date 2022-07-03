@@ -121,7 +121,9 @@ vim.o.clipboard = "unnamed"
 
 -- CODING
 -------------------------------------------------------------------
-vim.g.python3_host_prog = '~/.pyenv/shims/python'
+if vim.fn.has("linux") == 1 then
+	vim.g.python3_host_prog = '~/.pyenv/shims/python'
+end
 
 
 -------------------------------------------------------------------
