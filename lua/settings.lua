@@ -123,6 +123,8 @@ vim.o.clipboard = "unnamed"
 -------------------------------------------------------------------
 if vim.fn.has("linux") == 1 then
 	vim.g.python3_host_prog = '~/.pyenv/shims/python'
+elseif vim.fn.has("macunix") == 1 then
+	vim.g.python3_host_prog = '~/.pyenv/shims/python'
 end
 
 
