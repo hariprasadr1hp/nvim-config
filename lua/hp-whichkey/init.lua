@@ -112,6 +112,7 @@ local normal_mappings = {
 
 	["c"] = {
 	        name = "+code",
+		["b"] = {"<cmd>! git blame %<CR>"					,	"git-blame"},
 		["f"] = {"<cmd>Telescope filetypes<CR>"				,	"filetype"},
 	        ["m"] = {"<cmd>! make<CR>"						,	"make all"},
 	        ["T"] = {"<cmd>! ctags -R *<CR>"				,	"ctags"},
@@ -306,6 +307,8 @@ local normal_mappings = {
 
     ["r"] = {
 		name = "+reload",
+		["e"] = {"<cmd>NvimTreeRefresh<CR>"									,	"explorer"},
+		["f"] = {"<cmd>NvimTreeRefresh<CR>"									,	"explorer"},
 		["r"] = {"<cmd>source $HOME/.config/nvim/vimscript/init.vim<CR>"	,	"source init.vim"},
 	},
 
