@@ -112,7 +112,7 @@ local normal_mappings = {
 
 	["c"] = {
 	        name = "+code",
-		["b"] = {"<cmd>! git blame %<CR>"					,	"git-blame"},
+		["b"] = {"<cmd>FloatermNew git blame %<CR>"					,	"git-blame"},
 		["f"] = {"<cmd>Telescope filetypes<CR>"				,	"filetype"},
 	        ["m"] = {"<cmd>! make<CR>"						,	"make all"},
 	        ["T"] = {"<cmd>! ctags -R *<CR>"				,	"ctags"},
