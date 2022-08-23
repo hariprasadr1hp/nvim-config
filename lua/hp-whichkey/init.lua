@@ -82,6 +82,9 @@ vim.api.nvim_set_keymap("v", "<leader>/", ":CommentToggle<CR>", {noremap = true,
 -- Explorer
 vim.api.nvim_set_keymap("n", "<leader>.", ":Sex!<CR>", {noremap = true, silent = true})
 vim.api.nvim_set_keymap("n", "<leader>,", ":Telescope find_files<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<leader>0", "0", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<leader>1", "^", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<leader>9", "$", {noremap = true, silent = true})
 
 
 -- TODO create entire treesitter section
@@ -91,6 +94,7 @@ local normal_mappings = {
     ["."] = "Sex!",
     [","] = "files",
     ["/"] = "comment",
+
     ["a"] = {
 		name = "+action",
 		["c"] = "+copy",
