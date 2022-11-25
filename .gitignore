@@ -1,6 +1,6 @@
 # directories
 plugin/
-undodir/
+.undodir/
 node_modules/
 lua/temp.lua
 .hypothesis/

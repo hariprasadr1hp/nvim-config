@@ -70,7 +70,7 @@ vim.o.backup = false
 vim.o.writebackup = false
 
 -- undodir
-vim.cmd("set undodir=~/.config/nvim/undodir")
+vim.cmd("set undodir=~/.config/nvim/.undodir")
 vim.cmd("set undofile")
 
 
