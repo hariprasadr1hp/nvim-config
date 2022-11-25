@@ -117,10 +117,10 @@ local normal_mappings = {
 
 	["c"] = {
 	        name = "+code",
-		["b"] = {"<cmd>FloatermNew git blame %<CR>"					,	"git-blame"},
-		["f"] = {"<cmd>Telescope filetypes<CR>"				,	"filetype"},
-	        ["m"] = {"<cmd>! make<CR>"						,	"make all"},
-	        ["T"] = {"<cmd>! ctags -R *<CR>"				,	"ctags"},
+		["b"] = {"<cmd>FloatermNew git blame %<CR>"			,	"git-blame"},
+		["F"] = {"<cmd>Telescope filetypes<CR>"				,	"filetype"},
+		["m"] = {"<cmd>! make<CR>"							,	"make all"},
+		["T"] = {"<cmd>! ctags -R *<CR>"					,	"ctags"},
 		["s"] = {"<cmd>Telescope lsp_document_symbols<CR>"	,	"document-symbols"},
 		["S"] = {"<cmd>Telescope lsp_workspace_symbols<CR>"	,	"workspace-symbols"},
 	    },
