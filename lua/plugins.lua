@@ -26,7 +26,6 @@ return require('packer').startup(
 			config = function()
 				require("nvim-lsp-installer").setup {}
 				local lspconfig = require("lspconfig")
-				lspconfig.sumneko_lua.setup {}
 			end
 		}
 	}
