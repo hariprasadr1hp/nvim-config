@@ -35,8 +35,8 @@ nnoremap [b :bp<CR>
 nnoremap ]b :bn<CR>
 
 " tab chain
-nnoremap [t :tabprevious<CR>
-nnoremap ]t :tabnext<CR>
+nnoremap [j :tabprevious<CR>
+nnoremap ]j :tabnext<CR>
 
 " alias for 'escape' to NORMAL from INSERT
 " inoremap klk <Esc>
