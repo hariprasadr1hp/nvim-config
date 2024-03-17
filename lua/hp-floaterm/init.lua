@@ -16,5 +16,7 @@ vim.g.floaterm_autoclose=1
 vim.g.floaterm_opener='edit'
 vim.g.floaterm_keymap_toggle = '<Leader>ot'
 
+-- custom commands
+vim.cmd("command! FZF FloatermNew fzf")
 
 require("toggleterm").setup{}
