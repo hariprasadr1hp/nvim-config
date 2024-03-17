@@ -73,27 +73,23 @@ vim.g.mapleader = ' '
 
 -- dashboard
 -- Comments
-vim.api.nvim_set_keymap("n", "<leader>/", ":CommentToggle<CR>", {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap("n", "<leader>/", ":CommentToggle<CR>", {noremap = true, silent = true})
 vim.api.nvim_set_keymap("v", "<leader>/", ":CommentToggle<CR>", {noremap = true, silent = true})
 
 -- close buffer
 -- vim.api.nvim_set_keymap("n", "<leader>c", ":BufferClose<CR>", {noremap = true, silent = true})
-
--- Explorer
-vim.api.nvim_set_keymap("n", "<leader>.", ":Sex!<CR>", {noremap = true, silent = true})
-vim.api.nvim_set_keymap("n", "<leader>,", ":Telescope find_files<CR>", {noremap = true, silent = true})
-vim.api.nvim_set_keymap("n", "<leader>0", "0", {noremap = true, silent = true})
-vim.api.nvim_set_keymap("n", "<leader>1", "^", {noremap = true, silent = true})
-vim.api.nvim_set_keymap("n", "<leader>9", "$", {noremap = true, silent = true})
 
 
 -- TODO create entire treesitter section
 
 
 local normal_mappings = {
-    ["."] = "Sex!",
-    [","] = "files",
-    ["/"] = "comment",
+    ["."] = {":Sex!<CR>"			, "Sex!"},
+    [","] = {":FloatermNew fzf<CR>"	, "files"},
+    ["/"] = {":CommentToggle<CR>"	, "comment"},
+	["0"] = {"0" , "0"},
+	["1"] = {"^" , "1"},
+	["9"] = {"$" , "9"},
 
     ["a"] = {
 		name = "+action",
@@ -116,14 +112,14 @@ local normal_mappings = {
     },
 
 	["c"] = {
-	        name = "+code",
+	    name = "+code",
 		["b"] = {"<cmd>FloatermNew git blame %<CR>"			,	"git-blame"},
 		["F"] = {"<cmd>Telescope filetypes<CR>"				,	"filetype"},
 		["m"] = {"<cmd>! make<CR>"							,	"make all"},
 		["T"] = {"<cmd>! ctags -R *<CR>"					,	"ctags"},
 		["s"] = {"<cmd>Telescope lsp_document_symbols<CR>"	,	"document-symbols"},
 		["S"] = {"<cmd>Telescope lsp_workspace_symbols<CR>"	,	"workspace-symbols"},
-	    },
+	},
 
 
     ["d"] = {
@@ -293,12 +289,12 @@ local normal_mappings = {
 
     ["o"] = {
 		name = "+open",
-		["e"] = {"<cmd>NvimTreeToggle<CR>"			,	"explorer"},
-		["l"] = {"<cmd>FloatermNew lazygit<CR>"	,	"lazygit"},
-		["m"] = {"<cmd>e Makefile<CR>"				,	"Makefile"},
-		["r"] = {"<cmd>FloatermNew ranger .<CR>"	,	"ranger"},
-		["t"] = {"<cmd>FloatermToggle<CR>"			,	"terminal"},
-		["z"] = {"<cmd>Telescope builtin<CR>"		,	"telescope"},
+		["e"] = {"<cmd>NvimTreeToggle<CR>"				,	"explorer"},
+		["l"] = {"<cmd>FloatermNew lazygit<CR>"			,	"lazygit"},
+		["m"] = {"<cmd>e Makefile<CR>"					,	"Makefile"},
+		["r"] = {"<cmd>FloatermNew ranger .<CR>"		,	"ranger"},
+		["t"] = {"<cmd>FloatermToggle<CR>"				,	"terminal"},
+		["z"] = {"<cmd>Telescope builtin<CR>"			,	"telescope"},
 	},
 
     ["q"] = {
@@ -417,7 +413,7 @@ local normal_mappings = {
 		["T"] = {"<cmd>Telescope tags<CR>"				,	"tags"},
 		["v"] = {"<cmd>Telescope commands<CR>"			,	"vim-commands"},
 		["w"] = {"<cmd>Telescope file_browser<CR>"		,	"file_browser"},
-		["z"] = {"<cmd>FloatermNew rg .<CR>"			,	"live_grep"},
+		["z"] = {"<cmd>FloatermToggle rg .<CR>"			,	"live_grep"},
 		["Z"] = {"<cmd>Telescope grep_string<CR>"		,	"grep_string"},
 		["s"] = {
 			name = "+show",

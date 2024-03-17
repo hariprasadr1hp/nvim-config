@@ -1,25 +1,34 @@
 #+title: nvim-config
 #+author: hariprasadr1hp
 
-* nvim-config
+** Overview
 nvim customized for c++ and python development
 
-* Install ~neovim~
+** Install ~neovim~
+*** macos
+#+begin_src bash
+brew install neovim
+#+end_src
+
+*** ubuntu
 #+begin_src bash
 sudo add-apt-repository ppa:neovim-ppa/unstable
 sudo apt update
 sudo apt install neovim
 #+end_src
 
-* Setting up
+** Setting up
++ clone the repo as =~/.config/nvim=
 #+begin_src bash
-cd $HOME/.config/
-git clone https://hariprasadr1hp/nvim
-cd nvim/
+cd ~/.config/nvim
 touch vimscript/temp.vim
 touch lua/temp.lua
 #+end_src
++ inside neovim
+  - ~:PackerUpdate~
+  - ~:PackerSync~
+  - ~:TSUpdate~
 
-** Packer setup
+** References
 + [[https://github.com/wbthomason/packer.nvim][https://github.com/wbthomason/packer.nvim]]
 
