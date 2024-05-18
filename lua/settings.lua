@@ -17,7 +17,6 @@ vim.cmd('set colorcolumn=9999')
 vim.go.termguicolors = true
 
 -- Support 256 colors
-vim.go.t_Co = "256"
 vim.cmd("highlight Colorcolumn ctermbg=0 guibg=lightgrey")
 
 
