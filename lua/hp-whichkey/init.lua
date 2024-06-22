@@ -161,7 +161,9 @@ local normal_mappings = {
 
     ["g"] = {
         name = "+git",
-        ["b"] = {"<cmd>Telescope git_branches<CR>"	, "branches"},
+        ["b"] = {"<cmd>Gitsigns blame_line<CR>"		, "blame"},
+        ["B"] = {"<cmd>Gitsigns blame<CR>"			, "BLAME"},
+        ["y"] = {"<cmd>Telescope git_branches<CR>"	, "branches"},
 		["c"] = {"<cmd>Telescope git_commits<CR>"	, "commits"},
 		["C"] = {"<cmd>Telescope git_bcommits<CR>"	, "bcommits"},
         ["f"] = {"<cmd>Telescope git_files<CR>"		, "git_Files"},
