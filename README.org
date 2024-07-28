@@ -1,5 +1,4 @@
 #+title: nvim-config
-#+author: hariprasadr1hp
 
 ** Overview
 nvim customized for c++ and python development
@@ -25,10 +24,8 @@ touch vimscript/temp.vim
 touch lua/temp.lua
 #+end_src
 + inside neovim
-  - ~:PackerUpdate~
-  - ~:PackerSync~
-  - ~:TSUpdate~
+  - ~:Lazy~
 
 ** References
-+ [[https://github.com/wbthomason/packer.nvim][https://github.com/wbthomason/packer.nvim]]
++ [[https://www.lazyvim.org/][https://www.lazyvim.org/]]
 

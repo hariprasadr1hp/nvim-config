@@ -1,9 +1,3 @@
--- empty setup using defaults: add your own options
-require'nvim-tree'.setup {
-}
-
--- OR
-
 -- setup with all defaults
 -- each of these are documented in `:help nvim-tree.OPTION_NAME`
 -- nested options are documented by accessing them with `.` (eg: `:help nvim-tree.view.mappings.list`).
@@ -14,9 +8,6 @@ require'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
 	hijack_cursor = false,
 	hijack_netrw = false,
 	hijack_unnamed_buffer_when_opening = false,
-	ignore_buffer_on_setup = false,
-	open_on_setup = false,
-	open_on_setup_file = false,
 	open_on_tab = false,
 	sort_by = "name",
 	update_cwd = false,
@@ -26,18 +17,11 @@ require'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
 	view = {
 		adaptive_size = false,
 		width = 30,
-		hide_root_folder = false,
 		side = "left",
 		preserve_window_proportions = false,
 		number = false,
 		relativenumber = false,
 		signcolumn = "yes",
-		mappings = {
-			custom_only = false,
-			list = {
-				-- user mappings go here
-			},
-		},
 
 		float = {
 			enable = false,
@@ -125,8 +109,6 @@ require'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
 		ignore_list = {},
 	},
 
-	ignore_ft_on_setup = {},
-
 	system_open = {
 		cmd = "",
 		args = {},
@@ -176,7 +158,6 @@ require'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
 				exclude = {
 					filetype = {
 						"notify",
-						"packer",
 						"qf",
 						"diff",
 						"fugitive",

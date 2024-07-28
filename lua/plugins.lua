@@ -1,25 +1,14 @@
-local fn = vim.fn
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-end
-
-
-return require('packer').startup(
-	function(use)
-	-- Packer can manage itself
-	use "wbthomason/packer.nvim"
-
+local plugins = {
 	-- themes
-    use {'hariprasadr1hp/onedark.nvim', branch='warmer'}
-    use 'morhetz/gruvbox'
-	use 'marko-cerovac/material.nvim'
+    -- {"hariprasadr1hp/onedark.nvim", branch="warmer"},
+    "morhetz/gruvbox",
+	"marko-cerovac/material.nvim",
 
 	-- tabs(windows) in neovim
-	use {"romgrk/barbar.nvim", opt = true}
+	{"romgrk/barbar.nvim", opt = true},
 
 	-- lsp
-	use {
+	{
 		"williamboman/nvim-lsp-installer",
 		{
 			"neovim/nvim-lspconfig",
@@ -28,102 +17,186 @@ return require('packer').startup(
 				local lspconfig = require("lspconfig")
 			end
 		}
-	}
+	},
 
-	use "nvim-lua/lsp-status.nvim"
+	"nvim-lua/lsp-status.nvim",
 
 	-- autocomplete
-	use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
-	use 'hrsh7th/cmp-nvim-lsp' -- LSP source for nvim-cmp
-	use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
-	use 'L3MON4D3/LuaSnip' -- Snippets plugin
+	"hrsh7th/nvim-cmp", -- Autocompletion plugin
+	"hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
+	"saadparwaiz1/cmp_luasnip", -- Snippets source for nvim-cmp
+	"L3MON4D3/LuaSnip", -- Snippets plugin
 
 	-- Snippets
-	use "rafamadriz/friendly-snippets"
+	"rafamadriz/friendly-snippets",
+
+	-- mini
+	{ -- Collection of various small independent plugins/modules
+		'echasnovski/mini.nvim',
+		config = function()
+		  -- Better Around/Inside textobjects
+		  --
+		  -- Examples:
+		  --  - va)  - [V]isually select [A]round [)]paren
+		  --  - yinq - [Y]ank [I]nside [N]ext [Q]uote
+		  --  - ci'  - [C]hange [I]nside [']quote
+		  require('mini.ai').setup { n_lines = 500 }
+
+		  -- Add/delete/replace surroundings (brackets, quotes, etc.)
+		  --
+		  -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
+		  -- - sd'   - [S]urround [D]elete [']quotes
+		  -- - sr)'  - [S]urround [R]eplace [)] [']
+		  require('mini.surround').setup()
+
+		  -- Simple and easy statusline.
+		  --  You could remove this setup call if you don't like it,
+		  --  and try some other statusline plugin
+		  local statusline = require 'mini.statusline'
+		  -- set use_icons to true if you have a Nerd Font
+		  statusline.setup { use_icons = vim.g.have_nerd_font }
+
+		  -- You can configure sections in the statusline by overriding their
+		  -- default behavior. For example, here we set the section for
+		  -- cursor location to LINE:COLUMN
+		  ---@diagnostic disable-next-line: duplicate-set-field
+		  statusline.section_location = function()
+			return '%2l:%-2v'
+		  end
+
+		  -- ... and there is more!
+		  --  Check out: https://github.com/echasnovski/mini.nvim
+		end,
+	  },
+	
 
 	-- icons
-    use 'kyazdani42/nvim-web-devicons'
+    "kyazdani42/nvim-web-devicons",
 
 	-- status line and bufferline
-	use {'hoob3rt/lualine.nvim',
-		requires = {'kyazdani42/nvim-web-devicons', opt = true}
-	}
+	{"hoob3rt/lualine.nvim",
+		dependencies = {"kyazdani42/nvim-web-devicons", opt = true}
+	},
 
 	-- treesitter
-	use {
-		'nvim-treesitter/nvim-treesitter',
+	{
+		"nvim-treesitter/nvim-treesitter",
         run = function()
-            local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+            local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
             ts_update()
         end,
-    }
-	use 'nvim-treesitter/playground'
+    },
+	"nvim-treesitter/playground",
 
 	-- telescope
-	use {
-		'nvim-telescope/telescope.nvim', tag='0.1.8',
-		requires = {
-			{'nvim-lua/popup.nvim'},
-			{'nvim-lua/plenary.nvim'},
-			{'nvim-telescope/telescope-fzf-native.nvim'},
+	{
+		"nvim-telescope/telescope.nvim",
+		tag="0.1.8",
+		dependencies = {
+			{"nvim-lua/popup.nvim"},
+			{"nvim-lua/plenary.nvim"},
+			{"nvim-telescope/telescope-fzf-native.nvim"},
 		}
-	}
-	use 'nvim-telescope/telescope-media-files.nvim'
+	},
+	"nvim-telescope/telescope-media-files.nvim",
 
 	-- autopairs
-	use "windwp/nvim-autopairs"
+	"windwp/nvim-autopairs",
 
 	-- git signs
-	use {
-		'lewis6991/gitsigns.nvim',
-		requires = {
-			'nvim-lua/plenary.nvim'
+	{
+		"lewis6991/gitsigns.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim"
 		},
 		config = function()
-		require('gitsigns').setup()
-	  end
-	}
+			require('gitsigns').setup()
+		end
+	},
 
 	-- highlighted-yank
-	use 'machakann/vim-highlightedyank'
+	"machakann/vim-highlightedyank",
 
 	-- explorer
-	use {
-		'kyazdani42/nvim-tree.lua',
-		requires = {
-		  'kyazdani42/nvim-web-devicons', -- optional, for file icon
+	{
+		"kyazdani42/nvim-tree.lua",
+		dependencies = {
+		  "kyazdani42/nvim-web-devicons", -- optional, for file icon
 		},
-		tag = 'nightly' -- optional, updated every week. (see issue #1193)
-	}
+		tag = "nightly" -- optional, updated every week. (see issue #1193)
+	},
 
 	-- commenting code
-	use 'terrortylor/nvim-comment'
+	"terrortylor/nvim-comment",
 
 	-- floating terminal
-	use 'voldikss/vim-floaterm'
-	use {"akinsho/toggleterm.nvim", tag = '*', config = function()
-	  require("toggleterm").setup()
-	end}
+	"voldikss/vim-floaterm",
+	{
+		"akinsho/toggleterm.nvim", tag = '*',
+		config = function()
+			require("toggleterm").setup()
+		end
+	},
 
 	-- debug
-	use 'mfussenegger/nvim-dap'
-	use 'mfussenegger/nvim-dap-python'
+	"mfussenegger/nvim-dap",
+	"mfussenegger/nvim-dap-python",
 
 	-- hop
-	use {
-		'phaazon/hop.nvim',
-		as = 'hop',
+	{
+		"phaazon/hop.nvim",
+		as = "hop",
 		config = function()
-			require'hop'.setup{}
+			require"hop".setup{}
 		end
-	}
+	},
 
-	-- which-key
-	use 'folke/which-key.nvim'
-	-- use 'liuchengxu/vim-which-key'
 
-	if packer_bootstrap then
-		require('packer').sync()
-	end
+	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		opts = {},
+		keys = {
+			{
+				"<leader>?",
+				function()
+					require("which-key").show({ global = false })
+				end,
+				desc = "Buffer Local Keymaps (which-key)",
+			},
+		},
+	},
+}
 
-end)
+
+
+local ui = {
+    -- If you are using a Nerd Font: set icons to an empty table which will use the
+    -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
+    icons = vim.g.have_nerd_font and {} or {
+      cmd = '⌘',
+      config = '🛠',
+      event = '📅',
+      ft = '📂',
+      init = '⚙',
+      keys = '🗝',
+      plugin = '🔌',
+      runtime = '💻',
+      require = '🌙',
+      source = '📄',
+      start = '🚀',
+      task = '📌',
+      lazy = '💤 ',
+    },
+}
+
+local opts = {
+	ui = ui
+}
+
+require("lazy").setup(
+	plugins,
+	opts
+)
+
+
