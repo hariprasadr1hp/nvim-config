@@ -61,10 +61,11 @@ return require('packer').startup(
 
 	-- telescope
 	use {
-		'nvim-telescope/telescope.nvim',
+		'nvim-telescope/telescope.nvim', tag='0.1.8',
 		requires = {
 			{'nvim-lua/popup.nvim'},
-			{'nvim-lua/plenary.nvim'}
+			{'nvim-lua/plenary.nvim'},
+			{'nvim-telescope/telescope-fzf-native.nvim'},
 		}
 	}
 	use 'nvim-telescope/telescope-media-files.nvim'
