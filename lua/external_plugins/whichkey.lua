@@ -176,8 +176,8 @@ local normal_layout_config = {
 }
 
 -- Set leader
-vim.api.nvim_set_keymap('n', '<Space>', '<NOP>', {noremap = true, silent = true})
-vim.g.mapleader = ' '
+-- vim.api.nvim_set_keymap('n', '<Space>', '<NOP>', {noremap = true, silent = true})
+-- vim.g.mapleader = ' '
 
 -- no hl
 --vim.api.nvim_set_keymap('n', '<Leader>h', ':set hlsearch!<CR>', {noremap = true, silent = true})
@@ -252,7 +252,7 @@ local normal_mappings = {
     { "<leader>fi", "<cmd>e $HOME/.config/nvim/init.lua<CR>", desc = "init.lua", nowait = false, remap = false },
     { "<leader>fk", "<cmd>e $HOME/.config/nvim/lua/hp-whichkey/init.lua<CR>", desc = "which-key", nowait = false, remap = false },
     { "<leader>fl", "<cmd>e $HOME/.config/nvim/lua/hp-lsp/init.lua<CR>", desc = "hp-lsp", nowait = false, remap = false },
-    { "<leader>fp", "<cmd>e $HOME/.config/nvim/lua/lazy_plugins.lua<CR>", desc = "plugins.lua", nowait = false, remap = false },
+    { "<leader>fp", "<cmd>e $HOME/.config/nvim/lua/lazy_settings.lua<CR>", desc = "plugins.lua", nowait = false, remap = false },
     { "<leader>fs", "<cmd>update<CR>", desc = "update-file", nowait = false, remap = false },
     { "<leader>ft", "<cmd>e $HOME/.config/nvim/vimscript/temp.vim<CR>", desc = "temp.vim", nowait = false, remap = false },
     { "<leader>fw", "<cmd>e $HOME/.config/nvim/lua/hp-whichkey/init.lua<CR>", desc = "which-key", nowait = false, remap = false },
@@ -371,6 +371,7 @@ local normal_mappings = {
     { "<leader>oe", "<cmd>NvimTreeToggle<CR>", desc = "explorer", nowait = false, remap = false },
     { "<leader>ol", "<cmd>FloatermNew lazygit<CR>", desc = "lazygit", nowait = false, remap = false },
     { "<leader>om", "<cmd>e Makefile<CR>", desc = "Makefile", nowait = false, remap = false },
+    { "<leader>oP", "<cmd>Lazy<CR>", desc = "plugin-manager", nowait = false, remap = false },
     { "<leader>or", "<cmd>FloatermNew ranger .<CR>", desc = "ranger", nowait = false, remap = false },
     { "<leader>ot", "<cmd>FloatermToggle<CR>", desc = "terminal", nowait = false, remap = false },
     { "<leader>oz", "<cmd>Telescope builtin<CR>", desc = "telescope", nowait = false, remap = false },
@@ -484,6 +485,7 @@ local normal_mappings = {
     { "<leader>zv", "<cmd>Telescope commands<CR>", desc = "vim-commands", nowait = false, remap = false },
     { "<leader>zw", "<cmd>Telescope file_browser<CR>", desc = "file_browser", nowait = false, remap = false },
 }
+
 
 local wk = require("which-key")
 wk.add(normal_mappings)

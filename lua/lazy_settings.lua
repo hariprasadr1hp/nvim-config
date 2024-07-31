@@ -194,4 +194,22 @@ require("lazy").setup(
 	opts
 )
 
+-- lua plugin settings
+require('external_plugins/autopairs')
+require('external_plugins/comment')
+require('external_plugins/completion')
+require('external_plugins/debug')
+require('external_plugins/devicons')
+require('external_plugins/explorer')
+require('external_plugins/floaterm')
+require('external_plugins/git')
+require('external_plugins/lsp')
+require('external_plugins/lualine')
+require('external_plugins/material')
+require('external_plugins/telescope')
+require('external_plugins/theme')
+require('external_plugins/treesitter')
+require('external_plugins/whichkey')
+-- require('hp-onedark')
+-- require('hp-utils')
 

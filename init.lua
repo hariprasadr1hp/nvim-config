@@ -14,7 +14,7 @@ vim.g.maplocalleader = ' '
 
 -- lazy plugin manager
 require('lazy_bootstrap')
-require('lazy_plugins')
+require('lazy_settings')
 
 -- lua settings
 require('settings')
@@ -23,27 +23,5 @@ require('functions')
 require('ollama')
 require('temp')
 
--- lua plugins
-require('hp-autopairs')
-require('hp-comment')
-require('hp-completion')
-require('hp-debug')
-require('hp-devicons')
-require('hp-explorer')
-require('hp-floaterm')
-require('hp-git')
-require('hp-lsp')
-require('hp-lualine')
-require('hp-material')
--- require('hp-onedark')
-require('hp-telescope')
-require('hp-theme')
-require('hp-treesitter')
-require('hp-whichkey')
-
 -- vimscript settings
 vim.cmd('source ~/.config/nvim/vimscript/init.vim')
-
-
-
--- local a = require('hp-theme')
