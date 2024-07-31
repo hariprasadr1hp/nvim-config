@@ -14,3 +14,4 @@ vimscript/temp.vim
 .netrwhist
 tags
 
+lazy-lock.json

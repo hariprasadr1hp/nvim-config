@@ -1,5 +1,7 @@
 -- lua/settings.lua
 
+local opt = vim.opt
+
 -- GUI
 -------------------------------------------------------------------
 vim.cmd('set noerrorbells')
@@ -13,8 +15,8 @@ vim.cmd('syntax on')
 -- fix indentline for now
 vim.cmd('set colorcolumn=9999')
 
--- set term giu colors most terminals support this
-vim.go.termguicolors = true
+-- set term gui colors most terminals support this
+vim.opt.termguicolors = true
 
 -- Support 256 colors
 vim.cmd("highlight Colorcolumn ctermbg=0 guibg=lightgrey")
@@ -22,11 +24,10 @@ vim.cmd("highlight Colorcolumn ctermbg=0 guibg=lightgrey")
 
 -- SEARCH
 -------------------------------------------------------------------
-vim.cmd('set hlsearch')
-vim.cmd('set incsearch')
-vim.cmd('set ignorecase')
-vim.cmd('set smartcase')
-
+opt.hlsearch = true
+opt.incsearch = true
+opt.ignorecase = true
+opt.smartcase = true
 
 -- INDENTATION
 -------------------------------------------------------------------
@@ -47,13 +48,14 @@ vim.bo.smartindent = true
 -- NUMBERING
 -------------------------------------------------------------------
 -- relative numbering
-vim.cmd("set number relativenumber")
+opt.number = true
+opt.relativenumber = true
 
 
 -- WRAP
 -------------------------------------------------------------------
 -- Display long lines as just one line
-vim.wo.wrap = false
+opt.wrap = false
 
 
 -- MOUSE
@@ -76,10 +78,10 @@ vim.cmd("set undofile")
 -- WINDOWS
 -------------------------------------------------------------------
 -- Horizontal splits will automatically be below
-vim.o.splitbelow = true
+opt.splitbelow = true
 
 -- Vertical splits will automatically be to the right
-vim.o.splitright = true
+opt.splitright = true
 
 
 -- DICTIONARY
@@ -112,7 +114,7 @@ vim.o.conceallevel = 0
 --vim.cmd('set iskeyword+=-')
 
 -- Copy paste between vim and everything else
-vim.o.clipboard = "unnamed"
+opt.clipboard = "unnamedplus"
 
 -- Make substitution work in realtime
 --vim.cmd('set inccommand=split')

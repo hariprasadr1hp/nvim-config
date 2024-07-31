@@ -84,10 +84,10 @@ require("which-key").setup {
 		spacing = 3, -- spacing between columns
 	},
 
-	keys = {
-		scroll_down = "<c-d>", -- binding to scroll down inside the popup
-		scroll_up = "<c-u>", -- binding to scroll up inside the popup
-	},
+	-- keys = {
+		-- scroll_down = "<c-d>", -- binding to scroll down inside the popup
+		-- scroll_up = "<c-u>", -- binding to scroll up inside the popup
+	-- },
 
 	---@type (string|wk.Sorter)[]
 	--- Mappings are sorted using configured sorters and natural sort of the keys
@@ -204,11 +204,13 @@ local normal_mappings = {
     { "<leader>0", "0", desc = "0", nowait = false, remap = false },
     { "<leader>1", "^", desc = "1", nowait = false, remap = false },
     { "<leader>9", "$", desc = "9", nowait = false, remap = false },
-    { "<leader>a", group = "action", nowait = false, remap = false },
+    
+	{ "<leader>a", group = "action", nowait = false, remap = false },
     { "<leader>ac", desc = "+copy", nowait = false, remap = false },
     { "<leader>av", desc = "+paste", nowait = false, remap = false },
     { "<leader>ax", desc = "+cut", nowait = false, remap = false },
-    { "<leader>b", group = "buffer", nowait = false, remap = false },
+    
+	{ "<leader>b", group = "buffer", nowait = false, remap = false },
     { "<leader>bB", "<cmd>Telescope buffers<CR>", desc = "fzf-buffer", nowait = false, remap = false },
     { "<leader>bK", "<cmd>w | %bd | e#<CR><CR>", desc = "only-curent-buffer", nowait = false, remap = false },
     { "<leader>bd", "<cmd>bd<CR>", desc = "kill-buffer", nowait = false, remap = false },
@@ -218,25 +220,29 @@ local normal_mappings = {
     { "<leader>bn", "<cmd>bnext<CR>", desc = "next-buffer", nowait = false, remap = false },
     { "<leader>bp", "<cmd>bprevious<CR>", desc = "previous-buffer", nowait = false, remap = false },
     { "<leader>bt", "<C-^>", desc = "toggle-buffer", nowait = false, remap = false },
-    { "<leader>c", group = "code", nowait = false, remap = false },
+    
+	{ "<leader>c", group = "code", nowait = false, remap = false },
     { "<leader>cF", "<cmd>Telescope filetypes<CR>", desc = "filetype", nowait = false, remap = false },
     { "<leader>cS", "<cmd>Telescope lsp_workspace_symbols<CR>", desc = "workspace-symbols", nowait = false, remap = false },
     { "<leader>cT", "<cmd>! ctags -R *<CR>", desc = "ctags", nowait = false, remap = false },
     { "<leader>cb", "<cmd>FloatermNew git blame %<CR>", desc = "git-blame", nowait = false, remap = false },
     { "<leader>cm", "<cmd>! make<CR>", desc = "make all", nowait = false, remap = false },
     { "<leader>cs", "<cmd>Telescope lsp_document_symbols<CR>", desc = "document-symbols", nowait = false, remap = false },
-    { "<leader>d", group = "debug", nowait = false, remap = false },
+    
+	{ "<leader>d", group = "debug", nowait = false, remap = false },
     { "<leader>db", "<cmd>DebugBreakpoint<CR>", desc = "toggle-Breakpoint", nowait = false, remap = false },
     { "<leader>dc", "<cmd>DebugContinue<CR>", desc = "continue", nowait = false, remap = false },
     { "<leader>di", "<cmd>DebugStepInto<CR>", desc = "step-into", nowait = false, remap = false },
     { "<leader>dm", "<cmd>!make debug<CR>", desc = "make debug", nowait = false, remap = false },
     { "<leader>do", "<cmd>DebugStepOver<CR>", desc = "step-over", nowait = false, remap = false },
     { "<leader>dr", "<cmd>DebugReplOpen<CR>", desc = "open-repl", nowait = false, remap = false },
-    { "<leader>e", group = "edit/eval", nowait = false, remap = false },
+    
+	{ "<leader>e", group = "edit/eval", nowait = false, remap = false },
     { "<leader>el", "<cmd>luafile %<CR>", desc = "luafile", nowait = false, remap = false },
     { "<leader>ep", "<cmd>Runme<CR>", desc = "program", nowait = false, remap = false },
     { "<leader>ev", "<cmd>source %<CR>", desc = "source %", nowait = false, remap = false },
-    { "<leader>f", group = "file", nowait = false, remap = false },
+    
+	{ "<leader>f", group = "file", nowait = false, remap = false },
     { "<leader>fF", "<cmd>Sex! $HOME/.config/nvim<CR>", desc = "config-files", nowait = false, remap = false },
     { "<leader>fI", "<cmd>e $HOME/.config/nvim/vimscript/init.vim<CR>", desc = "init.vim", nowait = false, remap = false },
     { "<leader>fS", "<cmd>e $HOME/.config/nvim/lua/settings.lua<CR>", desc = "settings.lua", nowait = false, remap = false },
@@ -246,12 +252,13 @@ local normal_mappings = {
     { "<leader>fi", "<cmd>e $HOME/.config/nvim/init.lua<CR>", desc = "init.lua", nowait = false, remap = false },
     { "<leader>fk", "<cmd>e $HOME/.config/nvim/lua/hp-whichkey/init.lua<CR>", desc = "which-key", nowait = false, remap = false },
     { "<leader>fl", "<cmd>e $HOME/.config/nvim/lua/hp-lsp/init.lua<CR>", desc = "hp-lsp", nowait = false, remap = false },
-    { "<leader>fp", "<cmd>e $HOME/.config/nvim/lua/plugins.lua<CR>", desc = "plugins.lua", nowait = false, remap = false },
+    { "<leader>fp", "<cmd>e $HOME/.config/nvim/lua/lazy_plugins.lua<CR>", desc = "plugins.lua", nowait = false, remap = false },
     { "<leader>fs", "<cmd>update<CR>", desc = "update-file", nowait = false, remap = false },
     { "<leader>ft", "<cmd>e $HOME/.config/nvim/vimscript/temp.vim<CR>", desc = "temp.vim", nowait = false, remap = false },
     { "<leader>fw", "<cmd>e $HOME/.config/nvim/lua/hp-whichkey/init.lua<CR>", desc = "which-key", nowait = false, remap = false },
     { "<leader>fx", "<cmd>! rm -f $HOME/.local/share/nvim/swap/*<CR>", desc = "delete swap files", nowait = false, remap = false },
-    { "<leader>g", group = "git", nowait = false, remap = false },
+    
+	{ "<leader>g", group = "git", nowait = false, remap = false },
     { "<leader>gB", "<cmd>Gitsigns blame<CR>", desc = "BLAME", nowait = false, remap = false },
     { "<leader>gC", "<cmd>Telescope git_bcommits<CR>", desc = "bcommits", nowait = false, remap = false },
     { "<leader>gS", "<cmd>Telescope git_stash<CR>", desc = "stash", nowait = false, remap = false },
@@ -259,17 +266,20 @@ local normal_mappings = {
     { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "commits", nowait = false, remap = false },
     { "<leader>gf", "<cmd>Telescope git_files<CR>", desc = "git_Files", nowait = false, remap = false },
     { "<leader>gg", "<cmd>Telescope git_status<CR>", desc = "status", nowait = false, remap = false },
-    { "<leader>gh", group = "hunk", nowait = false, remap = false },
+    
+	{ "<leader>gh", group = "hunk", nowait = false, remap = false },
     { "<leader>ghp", "<cmd>Gitsigns preview_hunk<CR>", desc = "preview-hunk", nowait = false, remap = false },
     { "<leader>ghs", "<cmd>Gitsigns stage_hunk<CR>", desc = "stage-hunk", nowait = false, remap = false },
     { "<leader>ghu", "<cmd>Gitsigns undo_stage_hunk<CR>", desc = "undo-stage-hunk", nowait = false, remap = false },
     { "<leader>ghv", "<cmd>Gitsigns select_hunk<CR>", desc = "visual-select-hunk", nowait = false, remap = false },
     { "<leader>gp", "<cmd>Gitsigns preview_hunk<CR>", desc = "preview-hunk", nowait = false, remap = false },
     { "<leader>gy", "<cmd>Telescope git_branches<CR>", desc = "branches", nowait = false, remap = false },
-    { "<leader>h", group = "help", nowait = false, remap = false },
+    
+	{ "<leader>h", group = "help", nowait = false, remap = false },
     { "<leader>hs", "<cmd>lua vim.lsp.buf.signature_help()<CR>", desc = "lsp signature", nowait = false, remap = false },
     { "<leader>ht", "<cmd>Telescope colorscheme<CR>", desc = "themes", nowait = false, remap = false },
-    { "<leader>i", group = "info", nowait = false, remap = false },
+    
+	{ "<leader>i", group = "info", nowait = false, remap = false },
     { "<leader>ib", "<cmd> !battery<CR>", desc = "battery", nowait = false, remap = false },
     { "<leader>ic", "<cmd> !clock<CR>", desc = "clock", nowait = false, remap = false },
     { "<leader>id", "<cmd> !date<CR>", desc = "date-time", nowait = false, remap = false },
@@ -280,7 +290,8 @@ local normal_mappings = {
     { "<leader>it", "<cmd> !clock<CR>", desc = "date-time", nowait = false, remap = false },
     { "<leader>iu", "<cmd> !upt<CR>", desc = "date-uptime", nowait = false, remap = false },
     { "<leader>iv", "<cmd> !volume<CR>", desc = "volume", nowait = false, remap = false },
-    { "<leader>j", group = "tabs", nowait = false, remap = false },
+    
+	{ "<leader>j", group = "tabs", nowait = false, remap = false },
     { "<leader>j0", "<cmd>tabfirst<CR>", desc = "first-tab", nowait = false, remap = false },
     { "<leader>j1", "<cmd>1tabnext<CR>", desc = "tab-1", nowait = false, remap = false },
     { "<leader>j2", "<cmd>2tabnext<CR>", desc = "tab-2", nowait = false, remap = false },
@@ -298,7 +309,8 @@ local normal_mappings = {
     { "<leader>jk", "<cmd>tabclose<CR>", desc = "kill-tab", nowait = false, remap = false },
     { "<leader>jl", "<cmd>+tabmove<CR>", desc = "move-right", nowait = false, remap = false },
     { "<leader>jn", "<cmd>tabnew<CR>", desc = "new-tab", nowait = false, remap = false },
-    { "<leader>l", group = "lsp", nowait = false, remap = false },
+    
+	{ "<leader>l", group = "lsp", nowait = false, remap = false },
     { "<leader>lD", "<cmd>Telescope diagnostics<CR>", desc = "workspace diagnostics", nowait = false, remap = false },
     { "<leader>lI", "<cmd>LspInstallInfo<CR>", desc = "lsp install info", nowait = false, remap = false },
     { "<leader>lL", "<cmd>lua vim.diagnostic.open_float()<CR>", desc = "line diagnostics", nowait = false, remap = false },
@@ -318,7 +330,8 @@ local normal_mappings = {
     { "<leader>ls", "<cmd>Telescope lsp_document_symbols<CR>", desc = "doc symbols", nowait = false, remap = false },
     { "<leader>lt", "<cmd>LspStart<CR>", desc = "LspStart", nowait = false, remap = false },
     { "<leader>lx", "<cmd>cclose<CR>", desc = "Close Quickfix", nowait = false, remap = false },
-    { "<leader>m", group = "make", nowait = false, remap = false },
+    
+	{ "<leader>m", group = "make", nowait = false, remap = false },
     { "<leader>mc", "<cmd>! make clean<CR>", desc = "make clean", nowait = false, remap = false },
     { "<leader>md", "<cmd>! make debug<CR>", desc = "make debug", nowait = false, remap = false },
     { "<leader>ml", group = "link", nowait = false, remap = false },
@@ -327,44 +340,54 @@ local normal_mappings = {
     { "<leader>mm", "<cmd>! make<CR>", desc = "make all", nowait = false, remap = false },
     { "<leader>mo", "<cmd>e Makefile<CR>", desc = "open Makefile", nowait = false, remap = false },
     { "<leader>mt", "<cmd>! make test<CR>", desc = "make test", nowait = false, remap = false },
-    { "<leader>n", group = "notes", nowait = false, remap = false },
-    { "<leader>nb", group = "boat", nowait = false, remap = false },
+    
+	{ "<leader>n", group = "notes", nowait = false, remap = false },
+    
+	{ "<leader>nb", group = "boat", nowait = false, remap = false },
     { "<leader>nbb", "<cmd>e $HOME/.config/newsboat/rss.yml<CR>", desc = "boat/rss.yml", nowait = false, remap = false },
     { "<leader>nbc", "<cmd>! python $HOME/.config/newsboat/rss2urls.py<CR>", desc = "boat-compile", nowait = false, remap = false },
     { "<leader>nbu", "<cmd>e $HOME/.config/newsboat/urls<CR>", desc = "boat/urls", nowait = false, remap = false },
-    { "<leader>nc", group = "codium", nowait = false, remap = false },
+    
+	{ "<leader>nc", group = "codium", nowait = false, remap = false },
     { "<leader>ncC", "<cmd>e $HOME/.config/VSCodium/User/nvim/codium.lua<CR>", desc = "codium.lua", nowait = false, remap = false },
     { "<leader>ncc", "<cmd>e $HOME/.config/VSCodium/User/nvim/codium.vim<CR>", desc = "codium.vim", nowait = false, remap = false },
     { "<leader>nci", "<cmd>e $HOME/.config/VSCodium/User/nvim/init.vim<CR>", desc = "codium/init.vim", nowait = false, remap = false },
     { "<leader>ncs", "<cmd>Sex! $HOME/.config/VSCodium/User<CR>", desc = "codium-files", nowait = false, remap = false },
     { "<leader>ne", "<cmd>e $HOME/.config/espanso/default.yml<CR>", desc = "espanso", nowait = false, remap = false },
-    { "<leader>nj", group = "journal", nowait = false, remap = false },
+    
+	{ "<leader>nj", group = "journal", nowait = false, remap = false },
     { "<leader>njj", "<cmd>Sex! $HOME/my/org/journal/<CR>", desc = "journal", nowait = false, remap = false },
     { "<leader>njs", "<cmd>Sex! $HOME/my/org/journal/<CR>", desc = "journal", nowait = false, remap = false },
-    { "<leader>nr", group = "roam", nowait = false, remap = false },
+    
+	{ "<leader>nr", group = "roam", nowait = false, remap = false },
     { "<leader>nrf", "<cmd>Sex! $HOME/my/org/roam/<CR>", desc = "roam", nowait = false, remap = false },
     { "<leader>nri", "<cmd>echo 'does nothing'<CR>", desc = "N/A", nowait = false, remap = false },
     { "<leader>nrr", "<cmd>Sex! $HOME/my/org/roam/<CR>", desc = "roam", nowait = false, remap = false },
-    { "<leader>nt", group = "todo", nowait = false, remap = false },
+    
+	{ "<leader>nt", group = "todo", nowait = false, remap = false },
     { "<leader>ntt", "<cmd>Sex! $HOME/.todo<CR>", desc = "todo-list", nowait = false, remap = false },
-    { "<leader>o", group = "open", nowait = false, remap = false },
+    
+	{ "<leader>o", group = "open", nowait = false, remap = false },
     { "<leader>oe", "<cmd>NvimTreeToggle<CR>", desc = "explorer", nowait = false, remap = false },
     { "<leader>ol", "<cmd>FloatermNew lazygit<CR>", desc = "lazygit", nowait = false, remap = false },
     { "<leader>om", "<cmd>e Makefile<CR>", desc = "Makefile", nowait = false, remap = false },
     { "<leader>or", "<cmd>FloatermNew ranger .<CR>", desc = "ranger", nowait = false, remap = false },
     { "<leader>ot", "<cmd>FloatermToggle<CR>", desc = "terminal", nowait = false, remap = false },
     { "<leader>oz", "<cmd>Telescope builtin<CR>", desc = "telescope", nowait = false, remap = false },
-    { "<leader>q", group = "quit", nowait = false, remap = false },
+    
+	{ "<leader>q", group = "quit", nowait = false, remap = false },
     { "<leader>qa", "<cmd>qa<CR>", desc = "quit all, unmodified", nowait = false, remap = false },
     { "<leader>qq", "<cmd>q<CR>", desc = "quit file, unmodified", nowait = false, remap = false },
     { "<leader>qr", "<cmd>luafile $HOME/.config/nvim/init.lua<CR>", desc = "reload", nowait = false, remap = false },
     { "<leader>qu", "<cmd>update<CR>", desc = "update", nowait = false, remap = false },
     { "<leader>qw", "<cmd>wq<CR>", desc = "save and quit", nowait = false, remap = false },
-    { "<leader>r", group = "reload", nowait = false, remap = false },
+    
+	{ "<leader>r", group = "reload", nowait = false, remap = false },
     { "<leader>re", "<cmd>NvimTreeRefresh<CR>", desc = "explorer", nowait = false, remap = false },
     { "<leader>rf", "<cmd>NvimTreeRefresh<CR>", desc = "explorer", nowait = false, remap = false },
     { "<leader>rr", "<cmd>source $HOME/.config/nvim/vimscript/init.vim<CR>", desc = "source init.vim", nowait = false, remap = false },
-    { "<leader>s", group = "search", nowait = false, remap = false },
+    
+	{ "<leader>s", group = "search", nowait = false, remap = false },
     { "<leader>sM", "<cmd>Telescope man_pages<CR>", desc = "Man Pages", nowait = false, remap = false },
     { "<leader>sR", "<cmd>Telescope registers<CR>", desc = "Registers", nowait = false, remap = false },
     { "<leader>sb", "<cmd>Gitsigns blame_line<CR>", desc = "blame_line", nowait = false, remap = false },
@@ -373,7 +396,8 @@ local normal_mappings = {
     { "<leader>sm", "<cmd>Telescope marks<CR>", desc = "Marks", nowait = false, remap = false },
     { "<leader>sr", "<cmd>Telescope oldfiles<CR>", desc = "Open Recent File", nowait = false, remap = false },
     { "<leader>st", "<cmd>!date<CR>", desc = "show-datetime", nowait = false, remap = false },
-    { "<leader>t", group = "toggle", nowait = false, remap = false },
+    
+	{ "<leader>t", group = "toggle", nowait = false, remap = false },
     { "<leader>tG", "<cmd>%norm! g??<CR>", desc = "gibberish-rot13", nowait = false, remap = false },
     { "<leader>tT", "<cmd>highlight Normal guibg=black<CR>", desc = "bg-black", nowait = false, remap = false },
     { "<leader>tc", '<cmd>execute "set colorcolumn=" . (&colorcolumn == "" ? "80" : "")<CR>', desc = "colorbar", nowait = false, remap = false },
@@ -389,7 +413,8 @@ local normal_mappings = {
     { "<leader>ts", "<cmd>set spell!<CR>", desc = "spell-check", nowait = false, remap = false },
     { "<leader>tt", "<cmd>highlight Normal guibg=None<CR>", desc = "bg-transparent", nowait = false, remap = false },
     { "<leader>tw", "<cmd>set nowrap!<CR>", desc = "wrap-text", nowait = false, remap = false },
-    { "<leader>w", group = "window", nowait = false, remap = false },
+    
+	{ "<leader>w", group = "window", nowait = false, remap = false },
     { "<leader>w+", "<C-w>>", desc = "increase-height", nowait = false, remap = false },
     { "<leader>w-", "<C-w><", desc = "decrease-height", nowait = false, remap = false },
     { "<leader>w<", "<C-w><", desc = "decrease-width", nowait = false, remap = false },
@@ -411,22 +436,28 @@ local normal_mappings = {
     { "<leader>ww", "<C-w>v", desc = "switch-window", nowait = false, remap = false },
     { "<leader>wx", "<C-w>v", desc = "swap-window", nowait = false, remap = false },
     { "<leader>w|", "<C-w><", desc = "max-out-width", nowait = false, remap = false },
-    { "<leader>x", group = "hop", nowait = false, remap = false },
+    
+	{ "<leader>x", group = "hop", nowait = false, remap = false },
     { "<leader>xC", "<cmd>HopChar1<CR>", desc = "hop-char1", nowait = false, remap = false },
     { "<leader>xa", "<cmd>HopChar2BC<CR>", desc = "hop-char2-above", nowait = false, remap = false },
     { "<leader>xb", "<cmd>HopChar2AC<CR>", desc = "hop-char2-below", nowait = false, remap = false },
     { "<leader>xc", "<cmd>HopChar2<CR>", desc = "hop-char2", nowait = false, remap = false },
-    { "<leader>xl", group = "lines", nowait = false, remap = false },
+    
+	{ "<leader>xl", group = "lines", nowait = false, remap = false },
     { "<leader>xlj", "<cmd>HopLineStartAC<CR>", desc = "hop-lines-below", nowait = false, remap = false },
     { "<leader>xlk", "<cmd>HopLineStartBC<CR>", desc = "hop-lines-above", nowait = false, remap = false },
     { "<leader>xll", "<cmd>HopLineStart<CR>", desc = "hop-lines", nowait = false, remap = false },
-    { "<leader>xp", "<cmd>HopPattern<CR>", desc = "hop-pattern", nowait = false, remap = false },
+    
+	{ "<leader>xp", "<cmd>HopPattern<CR>", desc = "hop-pattern", nowait = false, remap = false },
     { "<leader>xw", group = "words", nowait = false, remap = false },
-    { "<leader>xwj", "<cmd>HopWordAC<CR>", desc = "hop-words-below", nowait = false, remap = false },
+    
+	{ "<leader>xwj", "<cmd>HopWordAC<CR>", desc = "hop-words-below", nowait = false, remap = false },
     { "<leader>xwk", "<cmd>HopWordBC<CR>", desc = "hop-words-above", nowait = false, remap = false },
     { "<leader>xww", "<cmd>HopWord<CR>", desc = "hop-words", nowait = false, remap = false },
-    { "<leader>xx", "<cmd>HopChar2<CR>", desc = "hop-char2", nowait = false, remap = false },
-    { "<leader>z", group = "telescope", nowait = false, remap = false },
+    
+	{ "<leader>xx", "<cmd>HopChar2<CR>", desc = "hop-char2", nowait = false, remap = false },
+    
+	{ "<leader>z", group = "telescope", nowait = false, remap = false },
     { "<leader>zC", "<cmd>Telescope colorscheme<CR>", desc = "colors", nowait = false, remap = false },
     { "<leader>zF", "<cmd>Telescope filetypes<CR>", desc = "file type", nowait = false, remap = false },
     { "<leader>zH", "<cmd>Telescope command_history<CR>", desc = "command-history", nowait = false, remap = false },
@@ -435,17 +466,21 @@ local normal_mappings = {
     { "<leader>zZ", "<cmd>Telescope grep_string<CR>", desc = "grep_string", nowait = false, remap = false },
     { "<leader>zb", "<cmd>Telescope buffers<CR>", desc = "buffers", nowait = false, remap = false },
     { "<leader>zf", "<cmd>Telescope find_files<CR>", desc = "files", nowait = false, remap = false },
-    { "<leader>zg", group = "git", nowait = false, remap = false },
+    
+	{ "<leader>zg", group = "git", nowait = false, remap = false },
     { "<leader>zgS", "<cmd>Telescope git_stash<CR>", desc = "stash", nowait = false, remap = false },
     { "<leader>zgb", "<cmd>Telescope git_commits<CR>", desc = "commits", nowait = false, remap = false },
     { "<leader>zgf", "<cmd>Telescope git_files<CR>", desc = "files", nowait = false, remap = false },
     { "<leader>zgs", "<cmd>Telescope git_status<CR>", desc = "status", nowait = false, remap = false },
-    { "<leader>zh", "<cmd>Telescope help_tags<CR>", desc = "Help tags", nowait = false, remap = false },
+    
+	{ "<leader>zh", "<cmd>Telescope help_tags<CR>", desc = "Help tags", nowait = false, remap = false },
     { "<leader>zm", "<cmd>Telescope marks<CR>", desc = "marks", nowait = false, remap = false },
     { "<leader>zr", "<cmd>Telescope registers<CR>", desc = "registers", nowait = false, remap = false },
-    { "<leader>zs", group = "show", nowait = false, remap = false },
+    
+	{ "<leader>zs", group = "show", nowait = false, remap = false },
     { "<leader>zss", "<cmd>Telescope command_history<CR>", desc = "command-history", nowait = false, remap = false },
-    { "<leader>zt", "<cmd>Telescope treesitter<CR>", desc = "treesitter", nowait = false, remap = false },
+    
+	{ "<leader>zt", "<cmd>Telescope treesitter<CR>", desc = "treesitter", nowait = false, remap = false },
     { "<leader>zv", "<cmd>Telescope commands<CR>", desc = "vim-commands", nowait = false, remap = false },
     { "<leader>zw", "<cmd>Telescope file_browser<CR>", desc = "file_browser", nowait = false, remap = false },
 }

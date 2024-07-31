@@ -120,10 +120,10 @@ local plugins = {
 	-- explorer
 	{
 		"kyazdani42/nvim-tree.lua",
+		version = "*",
 		dependencies = {
 		  "kyazdani42/nvim-web-devicons", -- optional, for file icon
 		},
-		tag = "nightly" -- optional, updated every week. (see issue #1193)
 	},
 
 	-- commenting code
@@ -131,12 +131,7 @@ local plugins = {
 
 	-- floating terminal
 	"voldikss/vim-floaterm",
-	{
-		"akinsho/toggleterm.nvim", tag = '*',
-		config = function()
-			require("toggleterm").setup()
-		end
-	},
+	{"akinsho/toggleterm.nvim", version = '*', config = true},
 
 	-- debug
 	"mfussenegger/nvim-dap",
