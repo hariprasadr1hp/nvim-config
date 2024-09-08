@@ -107,12 +107,13 @@ for _, lsp in pairs(servers) do
   }
 end
 
----------------------------------------------------------
--- cssls
----------------------------------------------------------
 --Enable (broadcasting) snippet capability for completion
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+---------------------------------------------------------
+-- css
+---------------------------------------------------------
 
 require'lspconfig'.cssls.setup {
   capabilities = capabilities,
@@ -121,22 +122,44 @@ require'lspconfig'.cssls.setup {
 ---------------------------------------------------------
 -- html
 ---------------------------------------------------------
---Enable (broadcasting) snippet capability for completion
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 require'lspconfig'.html.setup {
   capabilities = capabilities,
 }
 
 ---------------------------------------------------------
--- jsonls
+-- json
 ---------------------------------------------------------
---Enable (broadcasting) snippet capability for completion
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 require'lspconfig'.jsonls.setup {
   capabilities = capabilities,
+}
+
+---------------------------------------------------------
+-- python
+---------------------------------------------------------
+
+require('lspconfig').pyright.setup {
+  settings = {
+    pyright = {
+      -- Using Ruff's import organizer
+      disableOrganizeImports = true,
+    },
+    python = {
+      analysis = {
+        -- Ignore all files for analysis to exclusively use Ruff for linting
+        ignore = { '*' },
+      },
+    },
+  },
+}
+
+require('lspconfig').ruff.setup {
+  trace = 'messages',
+  init_options = {
+    settings = {
+      logLevel = 'debug',
+    }
+  }
 }
 

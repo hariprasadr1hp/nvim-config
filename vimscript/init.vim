@@ -57,3 +57,6 @@ nnoremap <M-Down> :move +1<CR>
 " visually select text for searching, mapped to //
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
  
+
+" `bn` as escape characters
+inoremap bn <Esc>
