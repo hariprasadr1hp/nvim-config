@@ -93,7 +93,7 @@ local servers = {
 	-- 'solang',
 	'sqlls',
 	'texlab',
-	'tsserver',
+	'ts_ls',
 	'vimls',
 	'yamlls',
 }
