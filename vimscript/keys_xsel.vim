@@ -245,3 +245,44 @@ vnoremap <leader>avJ "Jp
 vnoremap <leader>avK "Kp
 vnoremap <leader>avL "Lp
 
+
+nnoremap <leader>av1 "1p
+nnoremap <leader>av2 "2p
+nnoremap <leader>av3 "3p
+nnoremap <leader>av4 "4p
+nnoremap <leader>av5 "5p
+nnoremap <leader>av6 "6p
+nnoremap <leader>av7 "7p
+nnoremap <leader>av8 "8p
+nnoremap <leader>av9 "9p
+nnoremap <leader>av0 "0p
+nnoremap <leader>av- "-p
+nnoremap <leader>av% "%p
+nnoremap <leader>av/ "/p
+nnoremap <leader>av. ".p
+nnoremap <leader>av* "*p
+nnoremap <leader>av+ "+p
+nnoremap <leader>av# "#p
+nnoremap <leader>av= "=p
+nnoremap <leader>av9 "9p
+
+vnoremap <leader>av1 "1p
+vnoremap <leader>av2 "2p
+vnoremap <leader>av3 "3p
+vnoremap <leader>av4 "4p
+vnoremap <leader>av5 "5p
+vnoremap <leader>av6 "6p
+vnoremap <leader>av7 "7p
+vnoremap <leader>av8 "8p
+vnoremap <leader>av9 "9p
+vnoremap <leader>av0 "0p
+vnoremap <leader>av- "-p
+vnoremap <leader>av% "%p
+vnoremap <leader>av/ "/p
+vnoremap <leader>av. ".p
+vnoremap <leader>av* "*p
+vnoremap <leader>av+ "+p
+vnoremap <leader>av# "#p
+vnoremap <leader>av= "=p
+vnoremap <leader>av9 "9p
+

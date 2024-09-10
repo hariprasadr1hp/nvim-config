@@ -371,6 +371,7 @@ local normal_mappings = {
     { "<leader>oe", "<cmd>NvimTreeToggle<CR>", desc = "explorer", nowait = false, remap = false },
     { "<leader>ol", "<cmd>FloatermNew lazygit<CR>", desc = "lazygit", nowait = false, remap = false },
     { "<leader>om", "<cmd>e Makefile<CR>", desc = "Makefile", nowait = false, remap = false },
+    { "<leader>on", "<cmd>messages<CR>", desc = "notifications", nowait = false, remap = false },
     { "<leader>oP", "<cmd>Lazy<CR>", desc = "plugin-manager", nowait = false, remap = false },
     { "<leader>or", "<cmd>FloatermNew ranger .<CR>", desc = "ranger", nowait = false, remap = false },
     { "<leader>ot", "<cmd>FloatermToggle<CR>", desc = "terminal", nowait = false, remap = false },
