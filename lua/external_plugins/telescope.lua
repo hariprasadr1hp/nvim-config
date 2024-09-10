@@ -1,20 +1,20 @@
 -- visit https://github.com/nvim-telescope/telescope.nvim
 
-local actions = require('telescope.actions')
+local actions = require("telescope.actions")
 
 -- Global remapping
 ------------------------------
--- '--color=never',
-require('telescope').load_extension('media_files')
-require('telescope').setup {
+-- "--color=never",
+require("telescope").load_extension("media_files")
+require("telescope").setup {
     defaults = {
         vimgrep_arguments = {
-			'rg',
-			'--no-heading',
-			'--with-filename',
-			'--line-number',
-			'--column',
-			'defaultmart-case'
+			"rg",
+			"--no-heading",
+			"--with-filename",
+			"--line-number",
+			"--column",
+			"defaultmart-case"
 		},
 
 		-- What should the prompt prefix be
@@ -48,16 +48,16 @@ require('telescope').setup {
 		},
 
 		-- sorter
-		file_sorter = require'telescope.sorters'.get_fuzzy_file,
+		file_sorter = require"telescope.sorters".get_fuzzy_file,
         file_ignore_patterns = {},
-        generic_sorter = require'telescope.sorters'.get_generic_fuzzy_sorter,
+        generic_sorter = require"telescope.sorters".get_generic_fuzzy_sorter,
 
 		-- How transparent is the telescope window should be
 		winblend = 0,
 
 		-- The border chars, it gives border telescope window
         border = {},
-        borderchars = {'─', '│', '─', '│', '╭', '╮', '╯', '╰'},
+        borderchars = {"─", "│", "─", "│", "╭", "╮", "╯", "╰"},
 
 		-- Whether to color devicons or not
 		color_devicons = true,
@@ -69,19 +69,19 @@ require('telescope').setup {
         -- path_display = true,
 
 		-- Set environment variables for previewer
-		set_env = {['COLORTERM'] = 'truecolor'}, -- default = nil,
+		set_env = {["COLORTERM"] = "truecolor"}, -- default = nil,
 
 		-- What telescope previewer to use for files
-		file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
+		file_previewer = require"telescope.previewers".vim_buffer_cat.new,
 
 		-- What telescope previewer to use for grep and similar
-		grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
+		grep_previewer = require"telescope.previewers".vim_buffer_vimgrep.new,
 
 		-- What telescope previewer to use for qflist
-		qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
+		qflist_previewer = require"telescope.previewers".vim_buffer_qflist.new,
 
         -- Developer configurations: Not meant for general override
-        buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker,
+        buffer_previewer_maker = require"telescope.previewers".buffer_previewer_maker,
 
 		-- mappings
         mappings = {

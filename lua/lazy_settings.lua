@@ -39,16 +39,22 @@ local plugins = {
     -- SQL ----------------------------------------------------------
 
 	{
-		'kristijanhusak/vim-dadbod-ui',
+		"kristijanhusak/vim-dadbod-ui",
 		dependencies = {
-			{ 'tpope/vim-dadbod', lazy = true },
-			{ 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true },
+			{ "tpope/vim-dadbod", lazy = true },
+			{
+				"kristijanhusak/vim-dadbod-completion",
+				ft = {
+					"sql", "mysql", "plsql",
+				},
+				lazy = true
+			},
 		},
 		cmd = {
-			'DBUI',
-			'DBUIToggle',
-			'DBUIAddConnection',
-			'DBUIFindBuffer',
+			"DBUI",
+			"DBUIToggle",
+			"DBUIAddConnection",
+			"DBUIFindBuffer",
 		},
 		init = function()
 			vim.g.db_ui_use_nerd_fonts = 1
@@ -95,7 +101,7 @@ local plugins = {
 			end
 		end,
 	},
-	
+
     -----------------------------------------------------------------
     -- GUI ----------------------------------------------------------
     -----------------------------------------------------------------
@@ -103,11 +109,13 @@ local plugins = {
     "kyazdani42/nvim-web-devicons",
 
 	-- {"romgrk/barbar.nvim", opt = true}, -- tabs(windows) in neovim
-	
+
 	{
 		"hoob3rt/lualine.nvim",
 		dependencies = {"kyazdani42/nvim-web-devicons", opt = true}
 	},
+
+	"terrortylor/nvim-comment",
 
 	"windwp/nvim-autopairs",
 
@@ -165,7 +173,7 @@ local plugins = {
 			{"nvim-telescope/telescope-fzf-native.nvim"},
 		}
 	},
-	
+
 	"nvim-telescope/telescope-media-files.nvim",
 
 
@@ -180,8 +188,6 @@ local plugins = {
 		  "kyazdani42/nvim-web-devicons", -- optional, for file icon
 		},
 	},
-
-	"terrortylor/nvim-comment",
 
     -----------------------------------------------------------------
     -- TERMINAL -----------------------------------------------------
@@ -278,5 +284,5 @@ require("external_plugins/telescope")
 require("external_plugins/theme")
 require("external_plugins/treesitter")
 require("external_plugins/whichkey")
--- require("hp-plugins/word_count")
+
 

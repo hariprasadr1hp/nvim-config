@@ -2,20 +2,20 @@
 
 `neovim` customized for coding environment
 
-** Install `neovim`
-*** `macos`
+## Install `neovim`
+### `macos`
 ```bash
 brew install neovim
 ```
 
-*** `ubuntu`
+### `ubuntu`
 ```bash
 sudo add-apt-repository ppa:neovim-ppa/unstable
 sudo apt update
 sudo apt install neovim
 ```
 
-** Setting up
+## Setting up
 - clone the repo as `~/.config/nvim`
 
 ```bash
@@ -26,6 +26,6 @@ touch lua/temp.lua
 
 - inside `neovim`, `:Lazy`
 
-** References
+## References
 - [https://www.lazyvim.org/](https://www.lazyvim.org/)
 

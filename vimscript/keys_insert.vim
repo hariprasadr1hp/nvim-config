@@ -8,7 +8,7 @@ inoremap <S-Right> <Right><C-c>v
 
 
 " meta(alt) keys in insert and command line mode
-" *warning*: not to use <M-D>
+" *WARNING*: not to use <M-D> !!!
 noremap! <M-h> <Left>
 noremap! <M-j> <Down>
 noremap! <M-k> <Up>
@@ -48,14 +48,14 @@ inoremap <M-;> <C-o>;
 inoremap <M-,> <C-o>,
 
 
-" meta key 's' to save/update and go to normal mode
+" meta key `s` to save/update and go to normal mode
 inoremap <M-s> <C-c>:update<CR>
 
-" meta keys for 'f' for F motion(backward), use <M-;> and <M-,> for next/prev
+" meta keys for `f` for F motion(backward), use `<M-;>` and `<M-,>` for next/prev
 inoremap <M-f> <C-o>T
 
 
-" meta keys for 't' for deleting till that character(forward)
+" meta keys for `t` for deleting till that character(forward)
 inoremap <M-t> <C-o>dt
 
 

@@ -1,3 +1,12 @@
+" Register Keymaps for both normal and visual mode
+"
+" Format:
+" <space> (+) [a]ction (+) [c]opy | [x]cut | [v]paste (+) register
+"
+" for paste, the registers from 0-9 are added as well.
+" Ex: `<space>a2p` to paste the contents at register `2`
+
+
 nnoremap <leader>avv "+p
 nnoremap <leader>acc V"+y
 nnoremap <leader>axx V"+d

@@ -15,16 +15,22 @@ require("nvim-lsp-installer").setup({
 		keymaps = {
 			-- Keymap to expand a server in the UI
 			toggle_server_expand = "<CR>",
+
 			-- Keymap to install the server under the current cursor position
 			install_server = "i",
+
 			-- Keymap to reinstall/update the server under the current cursor position
 			update_server = "u",
+
 			-- Keymap to check for new version for the server under the current cursor position
 			check_server_version = "c",
+
 			-- Keymap to update all installed servers
 			update_all_servers = "U",
+
 			-- Keymap to check which installed servers are outdated
 			check_outdated_servers = "C",
+
 			-- Keymap to uninstall a server
 			uninstall_server = "X",
 		},
@@ -38,10 +44,10 @@ require("nvim-lsp-installer").setup({
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap=true, silent=true }
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -52,57 +58,57 @@ local on_attach = function(client, bufnr)
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   local bufopts = { noremap=true, silent=true, buffer=bufnr }
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-  -- vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-  -- vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-  -- vim.keymap.set('n', '<space>wl', function()
+  vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+  vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
+  vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
+  vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
+  -- vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
+  -- vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
+  -- vim.keymap.set("n", "<space>wl", function()
   --   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   -- end, bufopts)
 end
 
 
--- Use a loop to conveniently call 'setup' on multiple servers and
+-- Use a loop to conveniently call "setup" on multiple servers and
 -- map buffer local keybindings when the language server attaches
 
 ---------------------------------------------------------
 -- servers with minimal setup
 ---------------------------------------------------------
 local servers = {
-	'awk_ls',
-	'bashls',
-	'beancount',
-	-- 'ccls',
-	'clangd',
-	'cmake',
-	'cssmodules_ls',
-	-- 'dartls',
-	'dockerls',
-	'dotls',
-	'emmet_ls',
-	'eslint',
-	-- 'hls',
-	'julials',
-	'ltex',
-	'pyright',
-	'rust_analyzer',
-	-- 'solang',
-	'sqlls',
-	'texlab',
-	'ts_ls',
-	'vimls',
-	'yamlls',
+	"awk_ls",
+	"bashls",
+	"beancount",
+	-- "ccls",
+	"clangd",
+	"cmake",
+	"cssmodules_ls",
+	-- "dartls",
+	"dockerls",
+	"dotls",
+	"emmet_ls",
+	"eslint",
+	-- "hls",
+	"julials",
+	"ltex",
+	"pyright",
+	"rust_analyzer",
+	-- "solang",
+	"sqlls",
+	"texlab",
+	"ts_ls",
+	"vimls",
+	"yamlls",
 }
 
 for _, lsp in pairs(servers) do
-  require('lspconfig')[lsp].setup {
+  require("lspconfig")[lsp].setup {
     on_attach = on_attach,
     flags = {
-      debounce_text_changes = 150, -- This will be the default in neovim 0.7+
+      debounce_text_changes = 150,
     }
   }
 end
@@ -115,7 +121,7 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 -- css
 ---------------------------------------------------------
 
-require'lspconfig'.cssls.setup {
+require"lspconfig".cssls.setup {
   capabilities = capabilities,
 }
 
@@ -123,7 +129,7 @@ require'lspconfig'.cssls.setup {
 -- html
 ---------------------------------------------------------
 
-require'lspconfig'.html.setup {
+require"lspconfig".html.setup {
   capabilities = capabilities,
 }
 
@@ -131,7 +137,7 @@ require'lspconfig'.html.setup {
 -- json
 ---------------------------------------------------------
 
-require'lspconfig'.jsonls.setup {
+require"lspconfig".jsonls.setup {
   capabilities = capabilities,
 }
 
@@ -139,27 +145,31 @@ require'lspconfig'.jsonls.setup {
 -- python
 ---------------------------------------------------------
 
-require('lspconfig').pyright.setup {
-  settings = {
-    pyright = {
-      -- Using Ruff's import organizer
-      disableOrganizeImports = true,
-    },
-    python = {
-      analysis = {
-        -- Ignore all files for analysis to exclusively use Ruff for linting
-        ignore = { '*' },
-      },
-    },
-  },
+require("lspconfig").pyright.setup {
+	settings = {
+		pyright = {
+		-- Using Ruff"s import organizer
+		disableOrganizeImports = true,
+		},
+    
+		python = {
+			analysis = {
+				-- Ignore all files for analysis to exclusively use Ruff for linting
+				ignore = { "*" },
+			},
+		},
+	},
 }
 
-require('lspconfig').ruff.setup {
-  trace = 'messages',
-  init_options = {
-    settings = {
-      logLevel = 'debug',
-    }
-  }
+require("lspconfig").ruff.setup {
+	trace = "messages",
+	init_options = {
+		settings = {
+			logLevel = "debug",
+		},
+	},
 }
 
+---------------------------------------------------------
+---------------------------------------------------------
+---------------------------------------------------------
