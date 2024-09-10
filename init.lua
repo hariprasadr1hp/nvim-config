@@ -21,6 +21,7 @@ require('settings')
 require('keybindings')
 require('functions')
 require('ollama')
+require('neovide')
 require('temp')
 
 -- vimscript settings
