@@ -1,17 +1,18 @@
--- setup with all defaults
 -- each of these are documented in `:help nvim-tree.OPTION_NAME`
 -- nested options are documented by accessing them with `.` (eg: `:help nvim-tree.view.mappings.list`).
-require 'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
+
+local config = {
 	auto_reload_on_write = true,
 	create_in_closed_folder = false,
 	disable_netrw = false,
-	hijack_cursor = false,
-	hijack_netrw = false,
+	hijack_cursor = true,
+	hijack_netrw = true,
 	hijack_unnamed_buffer_when_opening = false,
+	sync_root_with_cwd = true,
 	open_on_tab = false,
 	sort_by = "name",
 	update_cwd = false,
-	reload_on_bufenter = false,
+	reload_on_bufenter = true,
 	respect_buf_cwd = false,
 
 	view = {
@@ -40,11 +41,15 @@ require 'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
 	renderer = {
 		add_trailing = false,
 		group_empty = false,
-		highlight_git = false,
-		highlight_opened_files = "none",
+		highlight_clipboard = "all",
+		highlight_diagnostics = "all",
+		highlight_git = "all",
+		highlight_hidden = "all",
+		highlight_opened_files = "all",
+		highlight_modified = "all",
 		root_folder_modifier = ":~",
 		indent_markers = {
-			enable = false,
+			enable = true,
 			icons = {
 				corner = "└ ",
 				edge = "│ ",
@@ -54,13 +59,13 @@ require 'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
 
 		icons = {
 			webdev_colors = true,
-			git_placement = "before",
+			git_placement = "signcolumn",
 			padding = " ",
 			symlink_arrow = " ➛ ",
 			show = {
 				file = true,
 				folder = true,
-				folder_arrow = true,
+				folder_arrow = false,
 				git = true,
 			},
 
@@ -115,8 +120,8 @@ require 'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
 	},
 
 	diagnostics = {
-		enable = false,
-		show_on_dirs = false,
+		enable = true,
+		show_on_dirs = true,
 		icons = {
 			hint		= "",
 			info		= "",
@@ -127,22 +132,22 @@ require 'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
 
 	filters = {
 		dotfiles = false,
-		custom = {},
+		custom = {"^.git$"},
 		exclude = {},
 	},
 
 	git = {
 		enable = true,
-		ignore = true,
+		ignore = false,
 		timeout = 400,
 	},
 
 	actions = {
 		use_system_clipboard = true,
 		change_dir = {
-			enable = true,
+			enable = false,
 			global = false,
-			restrict_above_cwd = false,
+			restrict_above_cwd = true,
 		},
 
 		expand_all = {
@@ -184,12 +189,12 @@ require 'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
 
 	live_filter = {
 		prefix = "[FILTER]: ",
-		always_show_folders = true,
+		always_show_folders = false,
 	},
 
 	log = {
 		enable = false,
-		truncate = false,
+		truncate = true,
 		types = {
 			all = false,
 			config = false,
@@ -199,4 +204,9 @@ require 'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
 			profile = false,
 		},
 	},
-} -- END_DEFAULT_OPTS
+
+}
+
+
+require 'nvim-tree'.setup (config)
+

@@ -212,12 +212,13 @@ local normal_mappings = {
 
 	{ "<leader>b", group = "buffer", nowait = false, remap = false },			-- [B]UFFER ----------------
     { "<leader>bB", "<cmd>Telescope buffers<CR>",								desc = "fzf-buffer", nowait = false, remap = false },
-    { "<leader>bK", "<cmd>w | %bd | e#<CR><CR>",								desc = "only-curent-buffer", nowait = false, remap = false },
-    { "<leader>bd", "<cmd>bd<CR>",												desc = "kill-buffer", nowait = false, remap = false },
+    { "<leader>bK", "<cmd>%bd | enew <CR>",										desc = "kill-all-buffers", nowait = false, remap = false },
+    { "<leader>bd", "<cmd>bp | bd #<CR>",										desc = "kill-buffer", nowait = false, remap = false },
     { "<leader>bf", "<cmd>bfirst<CR>",											desc = "first-buffer", nowait = false, remap = false },
     { "<leader>bk", "<cmd>bp | bd #<CR>",										desc = "kill-buffer", nowait = false, remap = false },
     { "<leader>bl", "<cmd>blast<CR>",											desc = "last-buffer", nowait = false, remap = false },
     { "<leader>bn", "<cmd>bnext<CR>",											desc = "next-buffer", nowait = false, remap = false },
+    { "<leader>bO", "<cmd>%bd | e#<CR>",										desc = "kill-other-buffers", nowait = false, remap = false },
     { "<leader>bp", "<cmd>bprevious<CR>",										desc = "previous-buffer", nowait = false, remap = false },
     { "<leader>bt", "<C-^>",													desc = "toggle-buffer", nowait = false, remap = false },
 
@@ -243,20 +244,22 @@ local normal_mappings = {
     { "<leader>ev", "<cmd>source %<CR>",										desc = "source %", nowait = false, remap = false },
 
 	{ "<leader>f", group = "file", nowait = false, remap = false },				-- [F]ILE ------------------- 
-    { "<leader>fF", "<cmd>Sex! $HOME/.config/nvim<CR>",							desc = "config-files", nowait = false, remap = false },
-    { "<leader>fI", "<cmd>e $HOME/.config/nvim/vimscript/init.vim<CR>",			desc = "init.vim", nowait = false, remap = false },
-    { "<leader>fS", "<cmd>e $HOME/.config/nvim/lua/settings.lua<CR>",			desc = "settings.lua", nowait = false, remap = false },
-    { "<leader>fT", "<cmd>e $HOME/.config/nvim/lua/temp.lua<CR>",				desc = "temp.lua", nowait = false, remap = false },
-    { "<leader>fX", "<cmd>! rm -f $HOME/.config/nvim/undodir/*<CR>",			desc = "delete undo files", nowait = false, remap = false },
     { "<leader>ff", "<cmd>Telescope find_files<CR>",							desc = "files", nowait = false, remap = false },
+    { "<leader>fF", "<cmd>Sex! $HOME/.config/nvim<CR>",							desc = "config-files", nowait = false, remap = false },
     { "<leader>fi", "<cmd>e $HOME/.config/nvim/init.lua<CR>",					desc = "init.lua", nowait = false, remap = false },
+    { "<leader>fI", "<cmd>e $HOME/.config/nvim/vimscript/init.vim<CR>",			desc = "init.vim", nowait = false, remap = false },
     { "<leader>fk", "<cmd>e $HOME/.config/nvim/lua/external_plugins/whichkey.lua<CR>",	desc = "which-key", nowait = false, remap = false },
     { "<leader>fl", "<cmd>e $HOME/.config/nvim/lua/external_plugins/lsp.lua<CR>",		desc = "lsp", nowait = false, remap = false },
     { "<leader>fp", "<cmd>e $HOME/.config/nvim/lua/lazy_settings.lua<CR>",		desc = "plugins.lua", nowait = false, remap = false },
-    { "<leader>fs", "<cmd>update<CR>",											desc = "update-file", nowait = false, remap = false },
+    { "<leader>fq", "<cmd>e $HOME/.config/wezterm/wezterm.lua<CR>",				desc = "term-config", nowait = false, remap = false },
+    { "<leader>fs", "<cmd>update<CR>",											desc = "save-file", nowait = false, remap = false },
+    { "<leader>fS", "<cmd>e $HOME/.config/nvim/lua/settings.lua<CR>",			desc = "settings.lua", nowait = false, remap = false },
     { "<leader>ft", "<cmd>e $HOME/.config/nvim/vimscript/temp.vim<CR>",			desc = "temp.vim", nowait = false, remap = false },
+    { "<leader>fT", "<cmd>e $HOME/.config/nvim/lua/temp.lua<CR>",				desc = "temp.lua", nowait = false, remap = false },
+    { "<leader>fx", "<cmd>! rm -f $HOME/.local/share/nvim/swap/*<CR>",			desc = "delete-swap-files", nowait = false, remap = false },
+    { "<leader>fX", "<cmd>! rm -f $HOME/.config/nvim/undodir/*<CR>",			desc = "delete-undo-files", nowait = false, remap = false },
     { "<leader>fw", "<cmd>e $HOME/.config/nvim/lua/external_plugins/whichkey.lua<CR>", desc = "which-key", nowait = false, remap = false },
-    { "<leader>fx", "<cmd>! rm -f $HOME/.local/share/nvim/swap/*<CR>",			desc = "delete swap files", nowait = false, remap = false },
+    { "<leader>fz", "<cmd>e /Users/hari/.config/zellij/config.kdl<CR>",			desc = "which-key", nowait = false, remap = false },
 
 	{ "<leader>g", group = "git", nowait = false, remap = false },				-- [G]IT --------------------  
     { "<leader>gB", "<cmd>Gitsigns blame<CR>",									desc = "BLAME", nowait = false, remap = false },
