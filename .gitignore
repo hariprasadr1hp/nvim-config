@@ -4,7 +4,7 @@ plugin/
 node_modules/
 lua/temp.lua
 .hypothesis/
-
+temp/
 
 #files
 temp.lua

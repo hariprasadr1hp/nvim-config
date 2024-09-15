@@ -1,3 +1,5 @@
+-- lua/lazy_plugins.lua
+
 local plugins = {
 
     -----------------------------------------------------------------
@@ -5,19 +7,20 @@ local plugins = {
     -----------------------------------------------------------------
 
     "morhetz/gruvbox",
+	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 
     -----------------------------------------------------------------
     -- LSP ----------------------------------------------------------
     -----------------------------------------------------------------
 
-	{
-		"williamboman/nvim-lsp-installer",
-		{
-			"neovim/nvim-lspconfig",
-			config = function()
-				require("nvim-lsp-installer").setup {}
-				local lspconfig = require("lspconfig")
-			end
+    {
+		'neovim/nvim-lspconfig',
+		dependencies = {
+			-- Automatically install LSPs to stdpath for neovim
+			'williamboman/mason.nvim',
+			'williamboman/mason-lspconfig.nvim',
+
+			'j-hui/fidget.nvim', -- Useful status updates for LSP 
 		}
 	},
 
@@ -91,6 +94,7 @@ local plugins = {
 
 	{
 		"echasnovski/mini.nvim",
+
 		config = function()
 			require("mini.ai").setup { n_lines = 500 }
 			require("mini.surround").setup()
@@ -117,13 +121,19 @@ local plugins = {
 
 	"terrortylor/nvim-comment",
 
-	"windwp/nvim-autopairs",
-
 	"machakann/vim-highlightedyank",
 
+	{
+		"lukas-reineke/indent-blankline.nvim",
+		main = "ibl",
+		---@module "ibl"
+		---@type ibl.config
+		opts = {},
+	},
 
 	{
 		"rcarriga/nvim-notify",
+
 		config = function()
 			require("notify").setup({
 				background_colour = "#000000",
@@ -138,12 +148,14 @@ local plugins = {
 
 	{
 		"lewis6991/gitsigns.nvim",
+
 		dependencies = {
 			"nvim-lua/plenary.nvim"
 		},
-		config = function()
-			require('gitsigns').setup()
-		end
+
+		-- config = function()
+		-- 	require('gitsigns').setup()
+		-- end
 	},
 
     -----------------------------------------------------------------
@@ -152,10 +164,18 @@ local plugins = {
 
 	{
 		"nvim-treesitter/nvim-treesitter",
-        run = function()
+		build = function()
+			pcall(require('nvim-treesitter.install').update { with_sync = true })
+		end,
+
+		run = function()
             local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
             ts_update()
         end,
+
+		dependencies = {
+			'nvim-treesitter/nvim-treesitter-textobjects',
+		},
     },
 
 	"nvim-treesitter/playground",
@@ -166,16 +186,22 @@ local plugins = {
 
 	{
 		"nvim-telescope/telescope.nvim",
-		tag="0.1.8",
+		-- tag="0.1.8",
+		branch="0.1.x",
 		dependencies = {
 			{"nvim-lua/popup.nvim"},
 			{"nvim-lua/plenary.nvim"},
-			{"nvim-telescope/telescope-fzf-native.nvim"},
 		}
 	},
 
+	'nvim-telescope/telescope-symbols.nvim',
 	"nvim-telescope/telescope-media-files.nvim",
 
+	{
+		'nvim-telescope/telescope-fzf-native.nvim',
+		build = 'make',
+		cond = vim.fn.executable 'make' == 1
+	},
 
     -----------------------------------------------------------------
     -- EXPLORER -----------------------------------------------------
@@ -269,20 +295,20 @@ require("lazy").setup(
 )
 
 
--- lua plugin settings
-require("external_plugins/autopairs")
-require("external_plugins/comment")
-require("external_plugins/completion")
-require("external_plugins/debug")
-require("external_plugins/devicons")
-require("external_plugins/explorer")
-require("external_plugins/floaterm")
-require("external_plugins/git")
-require("external_plugins/lsp")
-require("external_plugins/lualine")
-require("external_plugins/telescope")
 require("external_plugins/theme")
 require("external_plugins/treesitter")
+require("external_plugins/lsp")
+require("external_plugins/completion")
+require("external_plugins/comment")
+require("external_plugins/autopairs")
+require("external_plugins/devicons")
+require("external_plugins/telescope")
+require("external_plugins/explorer")
+require("external_plugins/git")
+require("external_plugins/floaterm")
+require("external_plugins/debug")
+require("external_plugins/theme")
+require("external_plugins/lualine")
 require("external_plugins/whichkey")
 
 

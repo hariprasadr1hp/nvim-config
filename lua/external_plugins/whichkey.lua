@@ -250,7 +250,7 @@ local normal_mappings = {
     { "<leader>fI", "<cmd>e $HOME/.config/nvim/vimscript/init.vim<CR>",			desc = "init.vim", nowait = false, remap = false },
     { "<leader>fk", "<cmd>e $HOME/.config/nvim/lua/external_plugins/whichkey.lua<CR>",	desc = "which-key", nowait = false, remap = false },
     { "<leader>fl", "<cmd>e $HOME/.config/nvim/lua/external_plugins/lsp.lua<CR>",		desc = "lsp", nowait = false, remap = false },
-    { "<leader>fp", "<cmd>e $HOME/.config/nvim/lua/lazy_settings.lua<CR>",		desc = "plugins.lua", nowait = false, remap = false },
+    { "<leader>fp", "<cmd>e $HOME/.config/nvim/lua/lazy_plugins.lua<CR>",		desc = "plugins.lua", nowait = false, remap = false },
     { "<leader>fq", "<cmd>e $HOME/.config/wezterm/wezterm.lua<CR>",				desc = "term-config", nowait = false, remap = false },
     { "<leader>fs", "<cmd>update<CR>",											desc = "save-file", nowait = false, remap = false },
     { "<leader>fS", "<cmd>e $HOME/.config/nvim/lua/settings.lua<CR>",			desc = "settings.lua", nowait = false, remap = false },
@@ -267,7 +267,7 @@ local normal_mappings = {
     { "<leader>gS", "<cmd>Telescope git_stash<CR>",								desc = "stash", nowait = false, remap = false },
     { "<leader>gb", "<cmd>Gitsigns blame_line<CR>",								desc = "blame", nowait = false, remap = false },
     { "<leader>gc", "<cmd>Telescope git_commits<CR>",							desc = "commits", nowait = false, remap = false },
-    { "<leader>gf", "<cmd>Telescope git_files<CR>",								desc = "git_Files", nowait = false, remap = false },
+    { "<leader>gf", "<cmd>Telescope git_files<CR>",								desc = "git-files", nowait = false, remap = false },
     { "<leader>gg", "<cmd>Telescope git_status<CR>",							desc = "status", nowait = false, remap = false },
 
 	{ "<leader>gh", group = "hunk", nowait = false, remap = false },			
@@ -314,25 +314,25 @@ local normal_mappings = {
     { "<leader>jn", "<cmd>tabnew<CR>",   										desc = "new-tab", nowait = false, remap = false },
 
 	{ "<leader>l", group = "lsp", nowait = false, remap = false },				-- [L]ANGUAGE ---------------- 
-    { "<leader>lD", "<cmd>Telescope diagnostics<CR>",							desc = "workspace diagnostics", nowait = false, remap = false },
-    { "<leader>lI", "<cmd>LspInstallInfo<CR>",									desc = "lsp install info", nowait = false, remap = false },
-    { "<leader>lL", "<cmd>lua vim.diagnostic.open_float()<CR>", 				desc = "line diagnostics", nowait = false, remap = false },
-    { "<leader>lR", "<cmd>LspRestart<CR>",										desc = "LspRestart", nowait = false, remap = false },
+    { "<leader>lD", "<cmd>Telescope diagnostics<CR>",							desc = "workspace-diagnostics", nowait = false, remap = false },
+    { "<leader>lI", "<cmd>LspInstallInfo<CR>",									desc = "lsp-install-info", nowait = false, remap = false },
+    { "<leader>lL", "<cmd>lua vim.diagnostic.open_float()<CR>", 				desc = "line-diagnostics", nowait = false, remap = false },
+    { "<leader>lR", "<cmd>LspRestart<CR>",										desc = "lsp-restart", nowait = false, remap = false },
     { "<leader>lS", "<cmd>Telescope lsp_workspace_symbols<CR>", 				desc = "workspace wymbols", nowait = false, remap = false },
-    { "<leader>lT", "<cmd>LspStop<CR>",											desc = "LspStop", nowait = false, remap = false },
-    { "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>",					desc = "code action", nowait = false, remap = false },
-    { "<leader>ld", "",															desc = "document diagnostics", nowait = false, remap = false },
-    { "<leader>lf", "<cmd>lua vim.lsp.buf.type_definition()<CR>",				desc = "type definition", nowait = false, remap = false },
+    { "<leader>lT", "<cmd>LspStop<CR>",											desc = "lsp-stop", nowait = false, remap = false },
+    { "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>",					desc = "code-action", nowait = false, remap = false },
+    { "<leader>ld", "",															desc = "document-diagnostics", nowait = false, remap = false },
+    { "<leader>lf", "<cmd>lua vim.lsp.buf.type_definition()<CR>",				desc = "type-definition", nowait = false, remap = false },
     { "<leader>lh", "<cmd>lua vim.lsp.buf.hover()<CR>",							desc = "hover", nowait = false, remap = false },
-    { "<leader>li", "<cmd>LspInfo<CR>",											desc = "lsp info", nowait = false, remap = false },
-    { "<leader>ll", "<cmd>lua vim.diagnostic.open_float()<CR>",					desc = "cursor diagnostics", nowait = false, remap = false },
-    { "<leader>ln", "<cmd>lua vim.diagnostic.goto_next()",						desc = "next diagnostic", nowait = false, remap = false },
-    { "<leader>lp", "<cmd>lua vim.diagnostic.goto_prev()",						desc = "previous diagnostic", nowait = false, remap = false },
+    { "<leader>li", "<cmd>LspInfo<CR>",											desc = "lsp-info", nowait = false, remap = false },
+    { "<leader>ll", "<cmd>lua vim.diagnostic.open_float()<CR>",					desc = "cursor-diagnostics", nowait = false, remap = false },
+    { "<leader>ln", "<cmd>lua vim.diagnostic.goto_next()",						desc = "next-diagnostic", nowait = false, remap = false },
+    { "<leader>lp", "<cmd>lua vim.diagnostic.goto_prev()",						desc = "prev-diagnostic", nowait = false, remap = false },
     { "<leader>lq", "<cmd>Telescope quickfix<CR>",								desc = "quickfix", nowait = false, remap = false },
     { "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>",						desc = "rename", nowait = false, remap = false },
     { "<leader>ls", "<cmd>Telescope lsp_document_symbols<CR>",					desc = "doc symbols", nowait = false, remap = false },
-    { "<leader>lt", "<cmd>LspStart<CR>",										desc = "LspStart", nowait = false, remap = false },
-    { "<leader>lx", "<cmd>cclose<CR>",											desc = "Close Quickfix", nowait = false, remap = false },
+    { "<leader>lt", "<cmd>LspStart<CR>",										desc = "Lsp-start", nowait = false, remap = false },
+    { "<leader>lx", "<cmd>cclose<CR>",											desc = "close-quickfix", nowait = false, remap = false },
 
 	{ "<leader>m", group = "make", nowait = false, remap = false },				-- [M]AKE -------------------
     { "<leader>mc", "<cmd>! make clean<CR>",									desc = "make clean", nowait = false, remap = false },
@@ -482,11 +482,18 @@ local normal_mappings = {
 
 	{ "<leader>zt", "<cmd>Telescope treesitter<CR>",							desc = "treesitter", nowait = false, remap = false },
     { "<leader>zv", "<cmd>Telescope commands<CR>",								desc = "vim-commands", nowait = false, remap = false },
-    { "<leader>zw", "<cmd>Telescope file_browser<CR>",							desc = "file_browser", nowait = false, remap = false },
+    { "<leader>zw", "<cmd>Telescope file_browser<CR>",							desc = "file-browser", nowait = false, remap = false },
 }
 
+local visual_mappings = {
+	{ "<leader>g", group = "git", nowait = false, remap = false },				-- [G]IT ------------------
+	{ "<leader>gh", group = "git-hunk", nowait = false, remap = false },		---- [h]unk ---------------
+    { "<leader>ghs", "<cmd>Gitsigns stage_hunk<CR>",							desc = "stage-hunk", nowait = false, remap = false },
+    { "<leader>ghr", "<cmd>Gitsigns reset_hunk<CR>",							desc = "reset-hunk", nowait = false, remap = false },
+}
 
 local wk = require("which-key")
 wk.add(normal_mappings)
+-- wk.add(visual_mappings)
 
 

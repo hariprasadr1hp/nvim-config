@@ -1,42 +1,54 @@
 -- lua/settings.lua
 
-local opt = vim.opt
+-- speed: vim.o > vim.opt > vim.cmd
+-- `vim.o` for vim defaults,
+-- `vim.opt` for lua syntax support
+-- `vim.cmd` for only native-support
+
+-- NETRW
+-------------------------------------------------------------------
+-- disable netrw at the very start
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwPlugin = 1
+
+-- LEADER KEYS
+-------------------------------------------------------------------
+-- Make sure to setup `mapleader` and `maplocalleader` before
+-- loading lazy.nvim so that mappings are correct.
+
+vim.api.nvim_set_keymap("n", "<Space>", "<NOP>", {noremap = true, silent = true})
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
 -- GUI
 -------------------------------------------------------------------
-vim.cmd('set noerrorbells')
-
+vim.o.errorbells = false
 
 -- COLORS
 -------------------------------------------------------------------
--- move to next line with theses keys
-vim.cmd('syntax on')
+-- using `vim.cmd` since lua support is not available
+vim.cmd("syntax on")
 
--- fix indentline for now
-vim.cmd('set colorcolumn=9999')
-
--- set term gui colors most terminals support this
+-- set term gui colors (most terminals support 256 colors)
 vim.opt.termguicolors = true
-
--- Support 256 colors
-vim.cmd("highlight Colorcolumn ctermbg=0 guibg=lightgrey")
 
 
 -- SEARCH
 -------------------------------------------------------------------
-opt.hlsearch = true
-opt.incsearch = true
-opt.ignorecase = true
-opt.smartcase = true
+vim.o.hlsearch = true
+vim.o.incsearch = true
+vim.o.ignorecase = true
+vim.o.smartcase = true
+
 
 -- INDENTATION
 -------------------------------------------------------------------
 -- Insert 4 spaces for a tab
-vim.cmd('set tabstop=4')
-vim.cmd('set softtabstop=4')
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
 
 -- Change the number of space characters inserted for indentation
-vim.cmd('set shiftwidth=4')
+vim.o.shiftwidth = 4
 
 -- Converts tabs to spaces
 vim.bo.expandtab = true
@@ -48,14 +60,14 @@ vim.bo.smartindent = true
 -- NUMBERING
 -------------------------------------------------------------------
 -- relative numbering
-opt.number = true
-opt.relativenumber = true
+vim.o.number = true
+vim.o.relativenumber = true
 
 
 -- WRAP
 -------------------------------------------------------------------
 -- Display long lines as just one line
-opt.wrap = false
+vim.o.wrap = false
 
 
 -- MOUSE
@@ -71,23 +83,23 @@ vim.o.backup = false
 vim.o.writebackup = false
 
 -- undodir
-vim.cmd("set undodir=~/.config/nvim/.undodir")
-vim.cmd("set undofile")
+vim.opt.undodir = vim.fn.expand("~/.config/nvim/.undodir")
+vim.o.undofile = true
 
 
 -- WINDOWS
 -------------------------------------------------------------------
 -- Horizontal splits will automatically be below
-opt.splitbelow = true
+vim.o.splitbelow = true
 
 -- Vertical splits will automatically be to the right
-opt.splitright = true
+vim.o.splitright = true
 
 
 -- DICTIONARY
 -------------------------------------------------------------------
 -- set a dictionary file
-vim.cmd("set dictionary=/usr/share/dict/american-english")
+vim.o.dictionary = "/usr/share/dict/american-english"
 
 
 -- MISCELLANEOUS
@@ -98,40 +110,47 @@ vim.wo.signcolumn = "yes"
 -- Faster completion
 vim.o.updatetime = 300
 
+vim.o.completeopt = "menuone,noselect"
+
 -- By default timeout length is 1000 ms
 vim.o.timeoutlen = 500
 
--- Don't pass messages to |ins-completion-menu|.
-vim.cmd('set shortmess+=c')
+-- Don't pass short messages to |ins-completion-menu|. refer `:h shortmess`
+-- vim.opt.shortmess:append("c")
+
 
 -- Required to keep multiple buffers open multiple buffers
 vim.o.hidden = true
 
--- So that I can see `` in markdown files
+-- to see `` in markdown files (no pretty mode)
 vim.o.conceallevel = 0
 
 -- treat dash separated words as a word text object"
---vim.cmd('set iskeyword+=-')
+--vim.cmd("set iskeyword+=-")
+--vim.opt.iskeyword:append("-")
 
 -- Copy paste between vim and everything else
-opt.clipboard = "unnamedplus"
+vim.o.clipboard = "unnamedplus"
 
 -- Make substitution work in realtime
---vim.cmd('set inccommand=split')
+--vim.o.inccommand = "split"
+
+-- providing support for various icons (https://www.nerdfonts.com/)
+vim.g.have_nerd_font = true
 
 
 -- CODING
 -------------------------------------------------------------------
 if vim.fn.has("linux") == 1 then
-	vim.g.python3_host_prog = '~/.pyenv/shims/python'
+	vim.g.python3_host_prog = "~/.pyenv/shims/python"
 elseif vim.fn.has("macunix") == 1 then
-	vim.g.python3_host_prog = '~/.pyenv/shims/python'
+	vim.g.python3_host_prog = "~/.pyenv/shims/python"
 end
 
 
 -- CUSTOM PLUGINS
 -------------------------------------------------------------------
--- require('hp_plugins/words_count')
+-- require("hp_plugins/words_count")
 
 
 -------------------------------------------------------------------
