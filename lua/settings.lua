@@ -13,7 +13,7 @@
 
 -- LEADER KEYS
 -------------------------------------------------------------------
--- Make sure to setup `mapleader` and `maplocalleader` before
+-- NOTE: Make sure to setup `mapleader` and `maplocalleader` before
 -- loading lazy.nvim so that mappings are correct.
 
 vim.api.nvim_set_keymap("n", "<Space>", "<NOP>", { noremap = true, silent = true })

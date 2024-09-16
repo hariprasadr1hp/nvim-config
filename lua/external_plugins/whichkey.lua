@@ -244,7 +244,7 @@ local normal_mappings = {
 	},
 	{ "<leader>cT", "<cmd>! ctags -R *<CR>", desc = "ctags", nowait = false, remap = false },
 	{ "<leader>cb", "<cmd>FloatermNew git blame %<CR>", desc = "git-blame", nowait = false, remap = false },
-	{ "<leader>cm", "<cmd>! make<CR>", desc = "make all", nowait = false, remap = false },
+	{ "<leader>cm", "<cmd>FloatermNew make<CR>", desc = "make all", nowait = false, remap = false },
 	{
 		"<leader>cs",
 		"<cmd>Telescope lsp_document_symbols<CR>",
@@ -258,8 +258,8 @@ local normal_mappings = {
 	{ "<leader>db", "<cmd>DapToggleBreakpoint<CR>", desc = "toggle-Breakpoint", nowait = false, remap = false },
 	{ "<leader>dc", "<cmd>DapContinue<CR>", desc = "continue", nowait = false, remap = false },
 	{ "<leader>di", "<cmd>DapStepInto<CR>", desc = "step-into", nowait = false, remap = false },
-	{ "<leader>dm", "<cmd>!make debug<CR>", desc = "make debug", nowait = false, remap = false },
 	{ "<leader>do", "<cmd>DapStepOver<CR>", desc = "step-over", nowait = false, remap = false },
+	{ "<leader>dm", "<cmd>FloatermNew make debug<CR>", desc = "make debug", nowait = false, remap = false },
 	{ "<leader>dr", "<cmd>DapToggleRepl<CR>", desc = "open-repl", nowait = false, remap = false },
 
 	-- [E]VAL / [E]DIT -------
@@ -509,14 +509,14 @@ local normal_mappings = {
 
 	-- [M]AKE -------------------
 	{ "<leader>m", group = "make", nowait = false, remap = false },
-	{ "<leader>mc", "<cmd>! make clean<CR>", desc = "make clean", nowait = false, remap = false },
-	{ "<leader>md", "<cmd>! make debug<CR>", desc = "make debug", nowait = false, remap = false },
+	{ "<leader>mc", "<cmd>FloatermNew make clean<CR>", desc = "make clean", nowait = false, remap = false },
+	{ "<leader>md", "<cmd>FloatermNew make debug<CR>", desc = "make debug", nowait = false, remap = false },
 	{ "<leader>ml", group = "link", nowait = false, remap = false },
 	{ "<leader>mll", "<cmd>echo 'does nothing'<CR>", desc = "N/A", nowait = false, remap = false },
 	{ "<leader>mlt", "<cmd>echo 'does nothing'<CR>", desc = "N/A", nowait = false, remap = false },
-	{ "<leader>mm", "<cmd>! make<CR>", desc = "make all", nowait = false, remap = false },
+	{ "<leader>mm", "<cmd>FloatermNew make<CR>", desc = "make all", nowait = false, remap = false },
 	{ "<leader>mo", "<cmd>e Makefile<CR>", desc = "open Makefile", nowait = false, remap = false },
-	{ "<leader>mt", "<cmd>! make test<CR>", desc = "make test", nowait = false, remap = false },
+	{ "<leader>mt", "<cmd>FloatermNew make test<CR>", desc = "make test", nowait = false, remap = false },
 
 	-- [N]OTES -------------------
 	{ "<leader>n", group = "notes", nowait = false, remap = false },

@@ -57,32 +57,39 @@ local velvet = {
 	},
 }
 
-require("lualine").setup({
-	options = {
-		icons_enabled = true,
-		padding = 1,
-		theme = velvet,
-		component_separators = { "", "" },
-		section_separators = { "", "" },
-		disabled_filetypes = {},
-	},
-	sections = {
-		lualine_a = { "mode" },
-		lualine_b = { "filename" },
-		-- lualine_c = { "", "branch", "data", require("lsp-status").status },
-		lualine_c = { "", "branch", "data", "" },
-		lualine_x = { "filetype", "fileformat", "encoding" },
-		lualine_y = { "progress" },
-		lualine_z = { "location" },
-	},
-	inactive_sections = {
-		lualine_a = {},
-		lualine_b = {},
-		lualine_c = { "filename" },
-		lualine_x = { "location" },
-		lualine_y = {},
-		lualine_z = {},
-	},
-	tabline = {},
-	extensions = {},
-})
+return {
+	"hoob3rt/lualine.nvim",
+	dependencies = { "kyazdani42/nvim-web-devicons", opt = true },
+	config = function()
+		local lualine = require("lualine")
+		lualine.setup({
+			options = {
+				icons_enabled = true,
+				padding = 1,
+				theme = velvet,
+				component_separators = { "", "" },
+				section_separators = { "", "" },
+				disabled_filetypes = {},
+			},
+			sections = {
+				lualine_a = { "mode" },
+				lualine_b = { "filename" },
+				-- lualine_c = { "", "branch", "data", require("lsp-status").status },
+				lualine_c = { "", "branch", "data", "" },
+				lualine_x = { "filetype", "fileformat", "encoding" },
+				lualine_y = { "progress" },
+				lualine_z = { "location" },
+			},
+			inactive_sections = {
+				lualine_a = {},
+				lualine_b = {},
+				lualine_c = { "filename" },
+				lualine_x = { "location" },
+				lualine_y = {},
+				lualine_z = {},
+			},
+			tabline = {},
+			extensions = {},
+		})
+	end,
+}
