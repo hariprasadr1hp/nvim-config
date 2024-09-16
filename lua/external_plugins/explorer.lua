@@ -1,3 +1,5 @@
+-- lua/external_plugins/explorer.lua
+
 -- each of these are documented in `:help nvim-tree.OPTION_NAME`
 -- nested options are documented by accessing them with `.` (eg: `:help nvim-tree.view.mappings.list`).
 
@@ -207,6 +209,14 @@ local config = {
 
 }
 
+-- require 'nvim-tree'.setup (config)
 
-require 'nvim-tree'.setup (config)
 
+return{
+	"kyazdani42/nvim-tree.lua",
+	version = "*",
+	dependencies = {
+	  "kyazdani42/nvim-web-devicons", -- optional, for file icon
+	},
+	config = config,
+}

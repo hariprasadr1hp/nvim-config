@@ -1,127 +1,121 @@
+-- lua/external_plugins/telescope.lua
+
 -- visit https://github.com/nvim-telescope/telescope.nvim
 
-local actions = require("telescope.actions")
+-- NOTE: Plugins can specify dependencies.
+--
+-- The dependencies are proper plugin specifications as well - anything
+-- you do for a plugin at the top level, you can do for a dependency.
+--
+-- Use the `dependencies` key to specify the dependencies of a particular plugin
 
--- Global remapping
-------------------------------
--- "--color=never",
-require("telescope").load_extension("media_files")
-require("telescope").setup {
-    defaults = {
-        vimgrep_arguments = {
-			"rg",
-			"--no-heading",
-			"--with-filename",
-			"--line-number",
-			"--column",
-			"defaultmart-case"
-		},
+return {
+	{ -- Fuzzy Finder (files, lsp, etc)
+		"nvim-telescope/telescope.nvim",
+		event = "VimEnter",
+		branch = "0.1.x",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			{ -- If encountering errors, see telescope-fzf-native README for installation instructions
+				"nvim-telescope/telescope-fzf-native.nvim",
 
-		-- What should the prompt prefix be
-        prompt_prefix = " ",
+				-- `build` is used to run some command when the plugin is installed/updated.
+				-- This is only run then, not every time Neovim starts up.
+				build = "make",
 
-		-- What should the selection caret be
-        selection_caret = " ",
-
-		-- What should be shown in front of every entry.
-		-- (current selection excluded)
-        entry_prefix = " ",
-
-		-- The initial mode when a prompt is opened
-		initial_mode = "insert",
-        selection_strategy = "reset",
-
-		-- Where first selection should be located
-        sorting_strategy = "descending",
-
-		-- How the telescope is drawn
-        layout_strategy = "horizontal",
-
-		-- Extra settings for fine-tuning how your layout looks
-        layout_config = {
-			horizontal = {
-				mirror = false
+				-- `cond` is a condition used to determine whether this plugin should be
+				-- installed and loaded.
+				cond = function()
+					return vim.fn.executable "make" == 1
+				end,
 			},
-			vertical = {
-				mirror = false
-			}
+			{ "nvim-telescope/telescope-ui-select.nvim" },
+
+			-- Useful for getting pretty icons, but requires a Nerd Font.
+			{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
 		},
 
-		-- sorter
-		file_sorter = require"telescope.sorters".get_fuzzy_file,
-        file_ignore_patterns = {},
-        generic_sorter = require"telescope.sorters".get_generic_fuzzy_sorter,
+		config = function()
+		-- Telescope is a fuzzy finder that comes with a lot of different things that
+		-- it can fuzzy find! It"s more than just a "file finder", it can search
+		-- many different aspects of Neovim, your workspace, LSP, and more!
+		--
+		-- The easiest way to use Telescope, is to start by doing something like:
+		--  :Telescope help_tags
+		--
+		-- After running this command, a window will open up and you"re able to
+		-- type in the prompt window. You"ll see a list of `help_tags` options and
+		-- a corresponding preview of the help.
+		--
+		-- Two important keymaps to use while in Telescope are:
+		--  - Insert mode: <c-/>
+		--  - Normal mode: ?
+		--
+		-- This opens a window that shows you all of the keymaps for the current
+		-- Telescope picker. This is really useful to discover what Telescope can
+		-- do as well as how to actually do it!
 
-		-- How transparent is the telescope window should be
-		winblend = 0,
-
-		-- The border chars, it gives border telescope window
-        border = {},
-        borderchars = {"─", "│", "─", "│", "╭", "╮", "╯", "╰"},
-
-		-- Whether to color devicons or not
-		color_devicons = true,
-
-		-- Whether to use less with bat or less/cat if bat not installed
-		use_less = true,
-
-		-- How file paths are displayed (causing telescope to not show files)
-        -- path_display = true,
-
-		-- Set environment variables for previewer
-		set_env = {["COLORTERM"] = "truecolor"}, -- default = nil,
-
-		-- What telescope previewer to use for files
-		file_previewer = require"telescope.previewers".vim_buffer_cat.new,
-
-		-- What telescope previewer to use for grep and similar
-		grep_previewer = require"telescope.previewers".vim_buffer_vimgrep.new,
-
-		-- What telescope previewer to use for qflist
-		qflist_previewer = require"telescope.previewers".vim_buffer_qflist.new,
-
-        -- Developer configurations: Not meant for general override
-        buffer_previewer_maker = require"telescope.previewers".buffer_previewer_maker,
-
-		-- mappings
-        mappings = {
-			-- insert mode
-            i = {
-                ["<C-j>"] = actions.move_selection_next,
-                ["<C-k>"] = actions.move_selection_previous,
-                ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-                -- To disable a keymap, put [map] = false
-                -- So, to not map "<C-n>", just put
-                -- ["<c-x>"] = false,
-                ["<esc>"] = actions.close,
-
-                -- Otherwise, just set the mapping to the function that you want it to be.
-                -- ["<C-i>"] = actions.select_horizontal,
-
-                -- Add up multiple actions
-                ["<CR>"] = actions.select_default + actions.center
-
-                -- You can perform as many actions in a row as you like
-                -- ["<CR>"] = actions.select_default + actions.center + my_cool_custom_action,
-            },
-
-			-- normal mode
-            n = {
-                ["<C-j>"] = actions.move_selection_next,
-                ["<C-k>"] = actions.move_selection_previous,
-                ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-                -- ["<C-i>"] = my_cool_custom_action,
-            }
-        }
-    },
-
-	extensions = {
-		media_files = {
-			-- filetypes whitelist
-			-- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
-			filetypes = {"png", "webp", "jpg", "jpeg"},
-			find_cmd = "rg" -- find command (defaults to `fd`)
+		-- [[ Configure Telescope ]]
+		-- See `:help telescope` and `:help telescope.setup()`
+		require("telescope").setup {
+			-- You can put your default mappings / updates / etc. in here
+			--  All the info you"re looking for is in `:help telescope.setup()`
+			--
+			-- defaults = {
+			--   mappings = {
+			--     i = { ["<c-enter>"] = "to_fuzzy_refine" },
+			--   },
+			-- },
+			-- pickers = {}
+			extensions = {
+				["ui-select"] = {
+					require("telescope.themes").get_dropdown(),
+				},
+			},
 		}
-	}
+
+		-- Enable Telescope extensions if they are installed
+		pcall(require("telescope").load_extension, "fzf")
+		pcall(require("telescope").load_extension, "ui-select")
+
+		-- See `:help telescope.builtin`
+		local builtin = require "telescope.builtin"
+		vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
+		vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
+		vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
+		vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
+		vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
+		vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
+		vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
+		vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
+		vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = "[S]earch Recent Files ('.' for repeat)" })
+		vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
+
+		-- Slightly advanced example of overriding default behavior and theme
+		vim.keymap.set("n", "<leader>/", function()
+			-- You can pass additional configuration to Telescope to change the theme, layout, etc.
+			builtin.current_buffer_fuzzy_find(
+				require("telescope.themes").get_dropdown {
+					winblend = 10,
+					previewer = false,
+				}
+			)
+		end, { desc = "[/] Fuzzily search in current buffer" })
+
+		-- It"s also possible to pass additional configuration options.
+		--  See `:help telescope.builtin.live_grep()` for information about particular keys
+		vim.keymap.set("n", "<leader>s/", function()
+			builtin.live_grep {
+				grep_open_files = true,
+				prompt_title = "Live Grep in Open Files",
+			}
+			end, { desc = "[S]earch [/] in Open Files" })
+
+			-- Shortcut for searching your Neovim configuration files
+			vim.keymap.set("n", "<leader>sn", function()
+				builtin.find_files { cwd = vim.fn.stdpath "config" }
+			end, { desc = "[S]earch [N]eovim files" })
+		end,
+	},
 }
 

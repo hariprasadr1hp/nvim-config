@@ -1,3 +1,4 @@
+-- lua/functions.lua
 
 local function runme()
 	local file_type = vim.bo.filetype

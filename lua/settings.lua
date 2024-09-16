@@ -16,7 +16,7 @@
 -- Make sure to setup `mapleader` and `maplocalleader` before
 -- loading lazy.nvim so that mappings are correct.
 
-vim.api.nvim_set_keymap("n", "<Space>", "<NOP>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<Space>", "<NOP>", { noremap = true, silent = true })
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
@@ -32,6 +32,11 @@ vim.cmd("syntax on")
 -- set term gui colors (most terminals support 256 colors)
 vim.opt.termguicolors = true
 
+-- enable showing whitespace characters
+vim.o.list = true
+
+-- configure characters for spaces and other whitespace
+vim.o.listchars = "space:·,tab:→ "
 
 -- SEARCH
 -------------------------------------------------------------------
@@ -39,7 +44,6 @@ vim.o.hlsearch = true
 vim.o.incsearch = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
-
 
 -- INDENTATION
 -------------------------------------------------------------------
@@ -56,25 +60,21 @@ vim.bo.expandtab = true
 -- Makes indenting smart
 vim.bo.smartindent = true
 
-
 -- NUMBERING
 -------------------------------------------------------------------
 -- relative numbering
 vim.o.number = true
 vim.o.relativenumber = true
 
-
 -- WRAP
 -------------------------------------------------------------------
 -- Display long lines as just one line
 vim.o.wrap = false
 
-
 -- MOUSE
 -------------------------------------------------------------------
 -- Enabling mouse
 vim.o.mouse = "a"
-
 
 -- BACKUP
 -------------------------------------------------------------------
@@ -86,7 +86,6 @@ vim.o.writebackup = false
 vim.opt.undodir = vim.fn.expand("~/.config/nvim/.undodir")
 vim.o.undofile = true
 
-
 -- WINDOWS
 -------------------------------------------------------------------
 -- Horizontal splits will automatically be below
@@ -95,12 +94,10 @@ vim.o.splitbelow = true
 -- Vertical splits will automatically be to the right
 vim.o.splitright = true
 
-
 -- DICTIONARY
 -------------------------------------------------------------------
 -- set a dictionary file
 vim.o.dictionary = "/usr/share/dict/american-english"
-
 
 -- MISCELLANEOUS
 -------------------------------------------------------------------
@@ -117,7 +114,6 @@ vim.o.timeoutlen = 500
 
 -- Don't pass short messages to |ins-completion-menu|. refer `:h shortmess`
 -- vim.opt.shortmess:append("c")
-
 
 -- Required to keep multiple buffers open multiple buffers
 vim.o.hidden = true
@@ -138,7 +134,6 @@ vim.o.clipboard = "unnamedplus"
 -- providing support for various icons (https://www.nerdfonts.com/)
 vim.g.have_nerd_font = true
 
-
 -- CODING
 -------------------------------------------------------------------
 if vim.fn.has("linux") == 1 then
@@ -147,11 +142,8 @@ elseif vim.fn.has("macunix") == 1 then
 	vim.g.python3_host_prog = "~/.pyenv/shims/python"
 end
 
-
 -- CUSTOM PLUGINS
 -------------------------------------------------------------------
 -- require("hp_plugins/words_count")
 
-
 -------------------------------------------------------------------
-
