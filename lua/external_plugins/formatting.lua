@@ -1,4 +1,4 @@
--- lua/external_plugins/conform.lua
+-- lua/external_plugins/formatting.lua
 
 return {
 	{

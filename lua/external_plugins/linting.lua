@@ -1,4 +1,4 @@
--- lua/external_plugins/lint.lua
+-- lua/external_plugins/linting.lua
 
 return {
 	{

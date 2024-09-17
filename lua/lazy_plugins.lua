@@ -11,8 +11,8 @@ local plugins = {
 	require("external_plugins/formatting"),
 	require("external_plugins/completion"),
 	require("external_plugins/linting"),
+	require("external_plugins/themes"),
 	require("external_plugins/explorer"),
-	require("external_plugins/theme"),
 	require("external_plugins/lualine"),
 	require("external_plugins/misc"),
 	require("external_plugins/notify"),
@@ -21,6 +21,8 @@ local plugins = {
 	require("external_plugins/org"),
 	require("external_plugins/trouble"),
 	require("external_plugins/zenmode"),
+	require("external_plugins/oil"),
+	require("external_plugins/harpoon"),
 
 	-- require("external_plugins/debug"),
 
