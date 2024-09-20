@@ -89,7 +89,7 @@ require("which-key").setup({
 	},
 
 	layout = {
-		height = { min = 4, max = 25 }, -- min and max height of the columns
+		height = { min = 14, max = 25 }, -- min and max height of the columns
 		width = { min = 20, max = 50 }, -- min and max width of the columns
 		spacing = 3, -- spacing between columns
 	},
@@ -190,7 +190,7 @@ vim.api.nvim_set_keymap("v", "<leader>/", ":CommentToggle<CR>", { noremap = true
 
 local normal_mappings = {
 	{ "<leader>,", ":Telescope find_files<CR>", desc = "files", nowait = false, remap = false },
-	{ "<leader>.", ":Sex!<CR>", desc = "Sex!", nowait = false, remap = false },
+	{ "<leader>.", ":Telescope find_files<CR>", desc = "files", nowait = false, remap = false },
 	{ "<leader>/", ":CommentToggle<CR>", desc = "comment", nowait = false, remap = false },
 	{ "<leader>0", "0", desc = "0", nowait = false, remap = false },
 	{ "<leader>1", "^", desc = "1", nowait = false, remap = false },
@@ -205,10 +205,10 @@ local normal_mappings = {
 	-- [B]UFFER ----------------
 	{ "<leader>b", group = "buffer", nowait = false, remap = false },
 	{ "<leader>bB", "<cmd>Telescope buffers<CR>", desc = "fzf-buffer", nowait = false, remap = false },
-	{ "<leader>bK", "<cmd>%bd | enew <CR>", desc = "kill-all-buffers", nowait = false, remap = false },
 	{ "<leader>bd", "<cmd>bp | bd #<CR>", desc = "kill-buffer", nowait = false, remap = false },
 	{ "<leader>bf", "<cmd>bfirst<CR>", desc = "first-buffer", nowait = false, remap = false },
 	{ "<leader>bk", "<cmd>bp | bd #<CR>", desc = "kill-buffer", nowait = false, remap = false },
+	{ "<leader>bK", "<cmd>%bd | enew <CR>", desc = "kill-all-buffers", nowait = false, remap = false },
 	{ "<leader>bl", "<cmd>blast<CR>", desc = "last-buffer", nowait = false, remap = false },
 	{ "<leader>bn", "<cmd>bnext<CR>", desc = "next-buffer", nowait = false, remap = false },
 	{ "<leader>bO", "<cmd>%bd | e#<CR>", desc = "kill-other-buffers", nowait = false, remap = false },
@@ -273,7 +273,6 @@ local normal_mappings = {
 	-- [F]ILE -------------------
 	{ "<leader>f", group = "file", nowait = false, remap = false },
 	{ "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "files", nowait = false, remap = false },
-	{ "<leader>fF", "<cmd>Sex! $HOME/.config/nvim<CR>", desc = "config-files", nowait = false, remap = false },
 	{ "<leader>fi", "<cmd>e $HOME/.config/nvim/init.lua<CR>", desc = "init.lua", nowait = false, remap = false },
 	{
 		"<leader>fI",
@@ -298,8 +297,17 @@ local normal_mappings = {
 	},
 	{
 		"<leader>fp",
+		function()
+			require("telescope.builtin").find_files({ cwd = "~/.config/nvim/" })
+		end,
+		desc = "private-config",
+		nowait = false,
+		remap = false,
+	},
+	{
+		"<leader>fP",
 		"<cmd>e $HOME/.config/nvim/lua/lazy_plugins.lua<CR>",
-		desc = "plugins.lua",
+		desc = "term-config",
 		nowait = false,
 		remap = false,
 	},
@@ -544,18 +552,40 @@ local normal_mappings = {
 	{ "<leader>nbu", "<cmd>e $HOME/.config/newsboat/urls<CR>", desc = "boat/urls", nowait = false, remap = false },
 
 	{ "<leader>nj", group = "journal", nowait = false, remap = false },
-	{ "<leader>njj", "<cmd>Sex! $HOME/my/org/journal/<CR>", desc = "journal", nowait = false, remap = false },
-	{ "<leader>njs", "<cmd>Sex! $HOME/my/org/journal/<CR>", desc = "journal", nowait = false, remap = false },
+	{
+		"<leader>njs",
+		function()
+			require("telescope.builtin").find_files({ cwd = "$HOME/my/org/journal/" })
+		end,
+		desc = "journal",
+		nowait = false,
+		remap = false,
+	},
 
 	---- [r]oam ------------------
 	{ "<leader>nr", group = "roam", nowait = false, remap = false },
-	{ "<leader>nrf", "<cmd>Sex! $HOME/my/org/roam/<CR>", desc = "roam", nowait = false, remap = false },
+	{
+		"<leader>nrf",
+		function()
+			require("telescope.builtin").find_files({ cwd = "$HOME/my/org/roam/" })
+		end,
+		desc = "roam",
+		nowait = false,
+		remap = false,
+	},
 	{ "<leader>nri", "<cmd>echo 'does nothing'<CR>", desc = "N/A", nowait = false, remap = false },
-	{ "<leader>nrr", "<cmd>Sex! $HOME/my/org/roam/<CR>", desc = "roam", nowait = false, remap = false },
+	{
+		"<leader>nrr",
+		function()
+			require("telescope.builtin").find_files({ cwd = "$HOME/my/org/roam/" })
+		end,
+		desc = "roam",
+		nowait = false,
+		remap = false,
+	},
 
 	---- [t]odo ------------------
 	{ "<leader>nt", group = "todo", nowait = false, remap = false },
-	{ "<leader>ntt", "<cmd>Sex! $HOME/.todo<CR>", desc = "todo-list", nowait = false, remap = false },
 
 	-- [O]PEN -------------------
 	{ "<leader>o", group = "open", nowait = false, remap = false },

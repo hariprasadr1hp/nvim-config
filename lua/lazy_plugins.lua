@@ -21,10 +21,12 @@ local plugins = {
 	require("external_plugins/org"),
 	require("external_plugins/trouble"),
 	require("external_plugins/zenmode"),
-	require("external_plugins/oil"),
-	require("external_plugins/harpoon"),
+	require("external_plugins/codesnap"),
 
+	-- require("external_plugins/oil"),
+	-- require("external_plugins/harpoon"),
 	-- require("external_plugins/debug"),
+	-- require("external_plugins/headlines"),
 
 	-----------------------------------------------------------------
 	-----------------------------------------------------------------

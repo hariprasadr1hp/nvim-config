@@ -72,27 +72,27 @@ local config = {
 			},
 
 			glyphs = {
-				default				= "",
-				symlink				= "",
+				default = "",
+				symlink = "",
 				folder = {
-					arrow_closed	= "",
-					arrow_open		= "",
-					default			= "",
-					open			= "",
-					empty			= "",
-					empty_open		= "",
-					symlink			= "",
-					symlink_open	= "",
+					arrow_closed = "",
+					arrow_open = "",
+					default = "",
+					open = "",
+					empty = "",
+					empty_open = "",
+					symlink = "",
+					symlink_open = "",
 				},
 
 				git = {
-					unstaged		= "✗",
-					staged			= "✓",
-					unmerged		= "",
-					renamed			= "➜",
-					untracked		= "★",
-					deleted			= "",
-					ignored			= "◌",
+					unstaged = "✗",
+					staged = "✓",
+					unmerged = "",
+					renamed = "➜",
+					untracked = "★",
+					deleted = "",
+					ignored = "◌",
 				},
 			},
 		},
@@ -101,7 +101,7 @@ local config = {
 			"Cargo.toml",
 			"Makefile",
 			"README.md",
-			"readme.md"
+			"readme.md",
 		},
 	},
 
@@ -125,16 +125,16 @@ local config = {
 		enable = true,
 		show_on_dirs = true,
 		icons = {
-			hint		= "",
-			info		= "",
-			warning		= "",
-			error		= "",
+			hint = "",
+			info = "",
+			warning = "",
+			error = "",
 		},
 	},
 
 	filters = {
 		dotfiles = false,
-		custom = {"^.git$"},
+		custom = { "^.git$" },
 		exclude = {},
 	},
 
@@ -168,12 +168,12 @@ local config = {
 						"qf",
 						"diff",
 						"fugitive",
-						"fugitiveblame"
+						"fugitiveblame",
 					},
 					buftype = {
 						"nofile",
 						"terminal",
-						"help"
+						"help",
 					},
 				},
 			},
@@ -206,17 +206,15 @@ local config = {
 			profile = false,
 		},
 	},
-
 }
 
 -- require 'nvim-tree'.setup (config)
 
-
-return{
+return {
 	"kyazdani42/nvim-tree.lua",
 	version = "*",
 	dependencies = {
-	  "kyazdani42/nvim-web-devicons", -- optional, for file icon
+		"kyazdani42/nvim-web-devicons", -- optional, for file icon
 	},
 	config = config,
 }
