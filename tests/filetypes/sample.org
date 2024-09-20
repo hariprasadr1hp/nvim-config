@@ -1,0 +1,88 @@
+:PROPERTIES:
+:ID:     fe039326-de94-407d-92e7-e103fabc728e
+:ROAM_ALIASES: "sample" "dummy"
+:END:
+#+title: Sample File
+
+* references
++ [[https://orgmode.org/manual/Results-of-Evaluation.html][orgmode.org/manual/Results-of-Evaluation.html]]
+
+* type-setting
+** check boxes
+Which one of these is *not* an /open-source/?[3/5][60%]
++ [X] Google Chrome
++ [ ] Blender
++ [X] Microsoft Edge
++ [X] One Note
++ [ ] Calibre
+
+** formatting options
++ *Bold*
++ /Italic/
++ +strike through+
++ _underline_
++ =verbatim=
++ ~monospace~
++ [[links][links]]
+
+* linking files
+** search options in file links
++ ~[[file:~/code/main.c::255]]~ :: jump to line 255
++ ~[[file:~/xx.org::My Target]]~ :: a text search of my target
++ ~[[file:~/xx.org::*My Target]]~ :: restrict search to headlines
+
+* org tables
+#+name: bmi
+#+header: :var height=1.73 weight=60
+#+begin_src python
+return "{:5.5}".format(weight/(height**2))
+#+end_src
+
+#+RESULTS: bmi
+: 20.047
+
+#+name: health
+#+header: :var bmi
+#+begin_src python
+return 0 if x>25 else 1
+#+end_src
+
+#+RESULTS: health
+: 1
+
+
+#+name: tbl_health-card
+| height(cms) | weight | height(m) |    BMI | Health |
+|-------------+--------+-----------+--------+--------|
+|         158 |     86 |      1.58 |  34.45 |      0 |
+|         177 |     60 |      1.77 | 19.152 |      1 |
+|         184 |     71 |      1.84 | 20.971 |      1 |
+|         163 |     88 |      1.63 | 33.121 |      0 |
+|         165 |     60 |      1.65 | 22.039 |      1 |
+#+TBLFM: $1='(org-sbe "randomint" (low 155)(high 195))::$2='(org-sbe "randomint" (low 55)(high 95))::$3=$1/100::$4='(org-sbe "bmi" (height $3)(weight $2))'::$5='(org-sbe "health" (bmi $4))
+
+
+#+begin_src python :results value :exports both :var table=tbl_health-card :colnames yes
+return table
+#+end_src
+
+#+RESULTS:
+| height(cms) | weight | height(m) |    BMI | Health |
+|-------------+--------+-----------+--------+--------|
+|         158 |     86 |      1.58 |  34.45 |      0 |
+|         177 |     60 |      1.77 | 19.152 |      1 |
+|         184 |     71 |      1.84 | 20.971 |      1 |
+|         163 |     88 |      1.63 | 33.121 |      0 |
+|         165 |     60 |      1.65 | 22.039 |      1 |
+
+* plots
+#+name: fig-simple_graph.svg
+#+BEGIN_SRC gnuplot :file assets/images/simplegraph1.svg
+reset
+set title "a simple graph"
+set xrange [0:1]
+set autoscale y
+set xlabel "frequency of A"
+plot x * x title 'AA', (1-x) * (1-x) title 'aa', 2 * x * (1-x) title 'Aa'
+#+END_SRC
+

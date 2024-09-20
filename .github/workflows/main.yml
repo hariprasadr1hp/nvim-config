@@ -1,0 +1,29 @@
+name: CI
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Neovim
+        run: |
+          sudo apt update -y
+          sudo apt install -y neovim
+
+      - name: Install Dependencies
+        run: |
+          sudo apt install -y ripgrep fd-find
+
+      - name: Install Neovim plugins (Lazy.nvim)
+        run: |
+          nvim --headless "+Lazy! sync" +qa
+        
+      - name: Run Neovim tests
+        run: |
+          nvim --headless -c 'luafile tests/config_tests.lua' -c 'q'
+
