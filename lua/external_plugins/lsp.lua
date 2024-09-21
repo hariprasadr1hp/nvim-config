@@ -1,4 +1,5 @@
--- LSP Plugins
+-- lua/external_plugins/lsp.lua
+
 return {
 	{
 		"folke/lazydev.nvim",
@@ -16,7 +17,10 @@ return {
 		"neovim/nvim-lspconfig",
 		dependencies = {
 			-- Automatically install LSPs and related tools to stdpath for Neovim
-			{ "williamboman/mason.nvim", config = true }, -- NOTE: Must be loaded before dependants
+			{
+				"williamboman/mason.nvim", -- NOTE: Must be loaded before dependants
+				config = true,
+			},
 			"williamboman/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 
@@ -29,10 +33,6 @@ return {
 		},
 
 		config = function()
-			--  This function gets run when an LSP attaches to a particular buffer.
-			--    That is to say, every time a new file is opened that is associated with
-			--    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
-			--    function will be executed to configure the current buffer
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
 
@@ -42,22 +42,10 @@ return {
 						vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 					end
 
-					-- Jump to the definition of the word under your cursor.
-					--  This is where a variable was first declared, or where a function is defined, etc.
-					--  To jump back, press <C-t>.
 					map("gd", require("telescope.builtin").lsp_definitions, "definition")
-
-					-- Find references for the word under your cursor.
 					map("gr", require("telescope.builtin").lsp_references, "references")
-
-					-- Jump to the implementation of the word under your cursor.
-					--  Useful when your language has ways of declaring types without an actual implementation.
 					map("gI", require("telescope.builtin").lsp_implementations, "implementation")
-
-					-- WARN: This is not Goto Definition, this is Goto Declaration.
-					--  For example, in C this would take you to the header.
 					map("gD", vim.lsp.buf.declaration, "declaration")
-
 					map("g.", vim.lsp.buf.code_action, "code-action")
 
 					-- The following two autocommands are used to highlight references of the
@@ -102,15 +90,12 @@ return {
 			})
 
 			-- LSP servers and clients are able to communicate to each other what features they support.
-			--  By default, Neovim doesn"t support everything that is in the LSP specification.
-			--  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
-			--  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
+			--  By default, Neovim doesn't support everything that is in the LSP specification.
+			--  By adding `nvim-cmp`, `luasnip`, etc. Neovim now has *more* capabilities.
+			--  So, we create new capabilities with `nvim-cmp`, and then broadcast that to the servers.
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
-			-- Enable the following language servers
-			--  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-			--
 			--  Add any additional override configuration in the following tables. Available keys are:
 			--  - cmd (table): Override the default command used to start the server
 			--  - filetypes (table): Override the default list of associated filetypes for the server
@@ -121,11 +106,27 @@ return {
 			-- See `:help lspconfig-all` for a list of all the pre-configured LSPs
 			-- Some languages (like typescript) have entire language plugins that can be useful:
 			--    https://github.com/pmizio/typescript-tools.nvim
-
 			local servers = {
 				clangd = {},
 				gopls = {},
-				pyright = {},
+				pyright = {
+					cmd = { "pyright-langserver", "--stdio" },
+					filetypes = { "python" },
+					settings = {
+						python = {
+							analysis = {
+								autoImportCompletions = true,
+								autoSearchPaths = true,
+								diagnosticMode = "workspace",
+								useLibraryCodeForTypes = true,
+								---@type "off" | "basic" | "strict"
+								typeCheckingMode = "strict",
+								---@type "Error" | "Warning" | "Information" | "Trace"
+								logLevel = "Information",
+							},
+						},
+					},
+				},
 				rust_analyzer = {},
 				ts_ls = {},
 				lua_ls = {

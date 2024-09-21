@@ -20,8 +20,11 @@ local plugins = {
 	require("external_plugins/todo"),
 	require("external_plugins/org"),
 	require("external_plugins/trouble"),
+	require("external_plugins/undo_tree"),
 	require("external_plugins/zenmode"),
 	require("external_plugins/codesnap"),
+	require("external_plugins/testing"),
+	require("external_plugins/cloak"),
 
 	-- require("external_plugins/oil"),
 	-- require("external_plugins/harpoon"),

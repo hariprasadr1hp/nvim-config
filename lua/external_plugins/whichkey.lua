@@ -607,6 +607,10 @@ local normal_mappings = {
 	{ "<leader>ot", "<cmd>FloatermToggle<CR>", desc = "terminal", nowait = false, remap = false },
 	{ "<leader>oz", "<cmd>Telescope builtin<CR>", desc = "telescope", nowait = false, remap = false },
 
+	-- [P]ROJECT ----------------
+	{ "<leader>p", group = "project", nowait = false, remap = false },
+	{ "<leader>pt", "<cmd>TodoQuickFix<CR>", desc = "todo-fixes", nowait = false, remap = false },
+
 	-- [Q]UIT -------------------
 	{ "<leader>q", group = "quit", nowait = false, remap = false },
 	{ "<leader>qa", "<cmd>qa<CR>", desc = "quit all, unmodified", nowait = false, remap = false },
@@ -643,15 +647,8 @@ local normal_mappings = {
 	{ "<leader>tG", "<cmd>%norm! g??<CR>", desc = "gibberish-rot13", nowait = false, remap = false },
 	{ "<leader>tT", "<cmd>highlight Normal guibg=black<CR>", desc = "bg-black", nowait = false, remap = false },
 	{ "<leader>tb", "<cmd>Gitsigns blame<CR>", desc = "BLAME", nowait = false, remap = false },
-	{
-		"<leader>tc",
-		'<cmd>execute "set colorcolumn=" . (&colorcolumn == "" ? "80" : "")<CR>',
-		desc = "colorbar",
-		nowait = false,
-		remap = false,
-	},
-	{ "<leader>te", "<cmd>NvimTreeToggle<CR>", desc = "explorer", nowait = false, remap = false },
-	{ "<leader>tf", "<cmd>NvimTreeToggle<CR>", desc = "explorer", nowait = false, remap = false },
+	{ "<leader>tc", "<cmd>CloakPreviewLine<CR>", desc = "cloak", nowait = false, remap = false },
+	{ "<leader>tC", "<cmd>CloakToggle<CR>", desc = "cloak", nowait = false, remap = false },
 	{ "<leader>tg", "<cmd>Gitsigns toggle_signs<CR>", desc = "git-signs", nowait = false, remap = false },
 	{ "<leader>th", "<cmd>set hls!<CR>", desc = "hl-search", nowait = false, remap = false },
 	{ "<leader>tl", "<cmd>LspRestart<CR>", desc = "lsp-restart", nowait = false, remap = false },
@@ -717,7 +714,9 @@ local normal_mappings = {
 
 	-- FU[Z]ZY ---------------
 	{ "<leader>z", group = "telescope", nowait = false, remap = false },
+	{ "<leader>zb", "<cmd>Telescope buffers<CR>", desc = "buffers", nowait = false, remap = false },
 	{ "<leader>zC", "<cmd>Telescope colorscheme<CR>", desc = "colors", nowait = false, remap = false },
+	{ "<leader>zf", "<cmd>Telescope find_files<CR>", desc = "files", nowait = false, remap = false },
 	{ "<leader>zF", "<cmd>Telescope filetypes<CR>", desc = "file type", nowait = false, remap = false },
 	{
 		"<leader>zH",
@@ -728,9 +727,8 @@ local normal_mappings = {
 	},
 	{ "<leader>zM", "<cmd>Telescope man_pages<CR>", desc = "man pages", nowait = false, remap = false },
 	{ "<leader>zT", "<cmd>Telescope tags<CR>", desc = "tags", nowait = false, remap = false },
+	{ "<leader>zu", "<cmd>Telescope undo<CR>", desc = "undo", nowait = false, remap = false },
 	{ "<leader>zZ", "<cmd>Telescope grep_string<CR>", desc = "grep_string", nowait = false, remap = false },
-	{ "<leader>zb", "<cmd>Telescope buffers<CR>", desc = "buffers", nowait = false, remap = false },
-	{ "<leader>zf", "<cmd>Telescope find_files<CR>", desc = "files", nowait = false, remap = false },
 
 	---- [g]it ----------------
 	{ "<leader>zg", group = "git", nowait = false, remap = false },
@@ -754,6 +752,7 @@ local normal_mappings = {
 	},
 
 	{ "<leader>zt", "<cmd>Telescope treesitter<CR>", desc = "treesitter", nowait = false, remap = false },
+	{ "<leader>zT", "<cmd>Telescope todo-comments<CR>", desc = "todo-list", nowait = false, remap = false },
 	{ "<leader>zv", "<cmd>Telescope commands<CR>", desc = "vim-commands", nowait = false, remap = false },
 	{ "<leader>zw", "<cmd>Telescope file_browser<CR>", desc = "file-browser", nowait = false, remap = false },
 	{ "<leader>zz", "<cmd>Telescope live_grep<CR>", desc = "file-browser", nowait = false, remap = false },

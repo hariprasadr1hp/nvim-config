@@ -40,7 +40,7 @@ vim.o.listchars = "space:·,tab:→ "
 
 -- SEARCH
 -------------------------------------------------------------------
-vim.o.hlsearch = true
+vim.o.hlsearch = false
 vim.o.incsearch = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
@@ -133,6 +133,10 @@ vim.o.clipboard = "unnamedplus"
 
 -- providing support for various icons (https://www.nerdfonts.com/)
 vim.g.have_nerd_font = true
+
+-- never scroll-off to less than `n` characters to the bottom,
+-- unless it's the end of the file
+vim.opt.scrolloff = 8
 
 -- CODING
 -------------------------------------------------------------------
