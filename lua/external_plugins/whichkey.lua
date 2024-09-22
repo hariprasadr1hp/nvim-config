@@ -674,7 +674,6 @@ local normal_mappings = {
 	{ "<leader>w<", "<C-w><", desc = "decrease-width", nowait = false, remap = false },
 	{ "<leader>w=", "<C-w>=", desc = "equalize-window", nowait = false, remap = false },
 	{ "<leader>w>", "<C-w>>", desc = "increase-width", nowait = false, remap = false },
-	{ "<leader>wT", "<C-w>s", desc = "break-window-into-tab", nowait = false, remap = false },
 	{ "<leader>wc", "<C-w>c", desc = "close-window", nowait = false, remap = false },
 	{ "<leader>we", "<C-w>=", desc = "balance-window", nowait = false, remap = false },
 	{ "<leader>wh", "<C-w>h", desc = "left-window", nowait = false, remap = false },
@@ -687,8 +686,8 @@ local normal_mappings = {
 	{ "<leader>wq", "<C-w>q", desc = "quit-window", nowait = false, remap = false },
 	{ "<leader>ws", "<C-w>s", desc = "split-window-below", nowait = false, remap = false },
 	{ "<leader>wv", "<C-w>v", desc = "split-window-right", nowait = false, remap = false },
-	{ "<leader>ww", "<C-w>v", desc = "switch-window", nowait = false, remap = false },
-	{ "<leader>wx", "<C-w>v", desc = "swap-window", nowait = false, remap = false },
+	{ "<leader>ww", "<C-w>w", desc = "switch-window", nowait = false, remap = false },
+	{ "<leader>wx", "<C-w>x", desc = "swap-window", nowait = false, remap = false },
 	{ "<leader>w|", "<C-w><", desc = "max-out-width", nowait = false, remap = false },
 
 	-- MISC ----------------------

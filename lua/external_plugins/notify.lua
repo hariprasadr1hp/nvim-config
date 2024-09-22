@@ -81,6 +81,7 @@ return {
 						search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
 						filter = { pattern = "^:%s*!", icon = "$", lang = "bash" },
 						python = { pattern = "^:%s*py3? ", icon = "", lang = "python" },
+						read_input = { pattern = "^:r ", icon = "", lang = "vim" },
 						lua = {
 							pattern = { "^:%s*lua%s+", "^:%s*lua%s*=%s*", "^:%s*=%s*" },
 							icon = "",

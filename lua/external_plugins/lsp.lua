@@ -120,7 +120,7 @@ return {
 								diagnosticMode = "workspace",
 								useLibraryCodeForTypes = true,
 								---@type "off" | "basic" | "strict"
-								typeCheckingMode = "strict",
+								typeCheckingMode = "basic",
 								---@type "Error" | "Warning" | "Information" | "Trace"
 								logLevel = "Information",
 							},

@@ -69,6 +69,7 @@ return {
 					-- confirm choice
 					["<Tab>"] = cmp.mapping.confirm({ select = true }),
 					["<C-y>"] = cmp.mapping.confirm({ select = true }),
+					["<cr>"] = cmp.mapping.confirm({ select = true }),
 
 					-- Manually trigger a completion from nvim-cmp.
 					--  Generally not needed, since `nvim-cmp` displays completions whever available

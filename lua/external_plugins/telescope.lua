@@ -1,16 +1,7 @@
 -- lua/external_plugins/telescope.lua
 
--- visit https://github.com/nvim-telescope/telescope.nvim
-
--- NOTE: Plugins can specify dependencies.
---
--- The dependencies are proper plugin specifications as well - anything
--- you do for a plugin at the top level, you can do for a dependency.
---
--- Use the `dependencies` key to specify the dependencies of a particular plugin
-
 return {
-	{ -- Fuzzy Finder (files, lsp, etc)
+	{
 		"nvim-telescope/telescope.nvim",
 		event = "VimEnter",
 		branch = "0.1.x",
@@ -47,3 +38,5 @@ return {
 		end,
 	},
 }
+
+-- TODO: separate functions for showing ignore and hidden files in the fuzzy finder
