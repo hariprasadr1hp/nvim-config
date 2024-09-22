@@ -1,6 +1,11 @@
 -- lua/lazy_plugins.lua
 
 local plugins = {
+	require("external_plugins/themes/catppuccin"),
+	require("external_plugins/themes/cyberdream"),
+	require("external_plugins/themes/nordic"),
+	require("external_plugins/themes/tokyonight"),
+
 	require("external_plugins/autopairs"),
 	require("external_plugins/comment"),
 	require("external_plugins/gitsigns"),
@@ -11,7 +16,6 @@ local plugins = {
 	require("external_plugins/formatting"),
 	require("external_plugins/completion"),
 	require("external_plugins/linting"),
-	require("external_plugins/themes"),
 	require("external_plugins/explorer"),
 	require("external_plugins/lualine"),
 	require("external_plugins/misc"),
