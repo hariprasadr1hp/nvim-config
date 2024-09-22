@@ -47,7 +47,9 @@ return {
 
 			sync_install = false,
 			auto_install = true,
-			-- ignore_install = {},
+			ignore_install = {
+				"org",
+			},
 
 			highlight = {
 				enable = true,
@@ -70,6 +72,4 @@ return {
 			},
 		},
 	},
-
-	"nvim-treesitter/playground",
 }

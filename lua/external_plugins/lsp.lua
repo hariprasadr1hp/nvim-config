@@ -127,7 +127,13 @@ return {
 						},
 					},
 				},
-				rust_analyzer = {},
+				rust_analyzer = {
+					cmd = { "rust-analyzer" },
+					filetypes = { "rust" },
+					settings = {
+						["rust-analyzer"] = {},
+					},
+				},
 				ts_ls = {},
 				lua_ls = {
 					-- cmd = {...},

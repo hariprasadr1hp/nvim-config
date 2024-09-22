@@ -7,7 +7,11 @@ return {
 	{
 		"akinsho/toggleterm.nvim",
 		version = "*",
-		config = true
+		config = function()
+			require("toggleterm").setup({
+				---@type "float" | "horizontal"
+				direction = "horizontal",
+			})
+		end,
 	},
 }
-

@@ -28,9 +28,9 @@ return {
 
 				-- you can enable a preset for easier configuration
 				presets = {
-					bottom_search = true, -- use a classic bottom cmdline for search
+					bottom_search = false, -- use a classic bottom cmdline for search
 					command_palette = true, -- position the cmdline and popupmenu together
-					long_message_to_split = true, -- long messages will be sent to a split
+					long_message_to_split = false, -- long messages will be sent to a split
 					inc_rename = true, -- enables an input dialog for inc-rename.nvim
 					lsp_doc_border = true, -- add a border to hover docs and signature help
 				},
@@ -87,7 +87,7 @@ return {
 							icon = "",
 							lang = "lua",
 						},
-						help = { pattern = "^:%s*he?l?p?%s+", icon = "" },
+						help = { pattern = "^:%s*he?l?p?%s+", icon = "󰋖" },
 						input = { view = "cmdline_input", icon = "󰥻 " }, -- Used by input()
 						-- lua = false, -- to disable a format, set to `false`
 					},
@@ -105,6 +105,9 @@ return {
 					},
 				},
 			})
+
+			-- add telescope functionality to noice
+			require("telescope").load_extension("noice")
 		end,
 	},
 }
