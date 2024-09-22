@@ -5,6 +5,7 @@ node_modules/
 lua/temp.lua
 .hypothesis/
 temp/
+lua/external_plugins/languages/
 
 #files
 temp.lua

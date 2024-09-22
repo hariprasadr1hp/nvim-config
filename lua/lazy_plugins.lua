@@ -25,6 +25,7 @@ local plugins = {
 	require("external_plugins/codesnap"),
 	require("external_plugins/testing"),
 	require("external_plugins/cloak"),
+	require("external_plugins/sniprun"),
 
 	-- require("external_plugins/oil"),
 	-- require("external_plugins/harpoon"),
