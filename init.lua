@@ -6,9 +6,9 @@ require("lazy_bootstrap")
 require("lazy_plugins")
 require("lazy_settings")
 
-require("keybindings")
 require("functions")
-require("ollama")
+require("commands")
+require("keybindings")
 require("neovide")
 require("temp")
 

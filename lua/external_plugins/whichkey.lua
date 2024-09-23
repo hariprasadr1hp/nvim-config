@@ -583,7 +583,7 @@ local whichkey_mappings = {
 		{ "<leader>oe", "<cmd>NvimTreeToggle<CR>", desc = "explorer", nowait = false, remap = false },
 		{ "<leader>ol", "<cmd>FloatermNew lazygit<CR>", desc = "lazygit", nowait = false, remap = false },
 		{ "<leader>om", "<cmd>e Makefile<CR>", desc = "Makefile", nowait = false, remap = false },
-		{ "<leader>on", "<cmd>messages<CR>", desc = "notifications", nowait = false, remap = false },
+		{ "<leader>on", "<cmd>NoiceAll<CR>", desc = "notifications", nowait = false, remap = false },
 
 		{
 			"<leader>oo",
@@ -727,7 +727,6 @@ local whichkey_mappings = {
 			nowait = false,
 			remap = false,
 		},
-		{ "<leader>zM", "<cmd>Telescope man_pages<CR>", desc = "man pages", nowait = false, remap = false },
 		{ "<leader>zT", "<cmd>Telescope tags<CR>", desc = "tags", nowait = false, remap = false },
 		{ "<leader>zu", "<cmd>Telescope undo<CR>", desc = "undo", nowait = false, remap = false },
 		{ "<leader>zZ", "<cmd>Telescope grep_string<CR>", desc = "grep_string", nowait = false, remap = false },
@@ -741,6 +740,8 @@ local whichkey_mappings = {
 
 		{ "<leader>zh", "<cmd>Telescope help_tags<CR>", desc = "Help tags", nowait = false, remap = false },
 		{ "<leader>zm", "<cmd>Telescope marks<CR>", desc = "marks", nowait = false, remap = false },
+		{ "<leader>zM", "<cmd>Telescope man_pages<CR>", desc = "man pages", nowait = false, remap = false },
+		{ "<leader>zn", "<cmd>NoiceTelescope<CR>", desc = "noice", nowait = false, remap = false },
 		{ "<leader>zr", "<cmd>Telescope registers<CR>", desc = "registers", nowait = false, remap = false },
 
 		---- [s]earch ---------------

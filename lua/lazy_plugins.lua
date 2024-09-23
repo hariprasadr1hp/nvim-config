@@ -80,3 +80,5 @@ local opts = {
 require("lazy").setup(plugins, opts)
 
 require("external_plugins/whichkey")
+
+-- TODO: creating language/extension-specific functionalities

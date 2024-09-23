@@ -1,6 +1,8 @@
 -- lua/functions.lua
 
-local function runme()
+local M = {}
+
+function M.runme()
 	local file_type = vim.bo.filetype
 	if file_type == "python" then
 		local cmd = string.format("! %s %%", vim.g.python3_host_prog)
@@ -18,6 +20,4 @@ local function runme()
 	end
 end
 
-
-vim.api.nvim_create_user_command("Runme", runme, {})
-
+return M
