@@ -1,17 +1,23 @@
 -- lua/external_plugins/terminal.lua
 
--- floaterm, for details, visit https://github.com/voldikss/vim-floaterm
+local M = {}
 
-return {
-	"voldikss/vim-floaterm",
+local setup_toggleterm = function()
+	require("toggleterm").setup({
+		---@type "float" | "horizontal"
+		direction = "horizontal",
+	})
+end
+
+M = {
+	"voldikss/vim-floaterm", -- Vim-floaterm setup
 	{
-		"akinsho/toggleterm.nvim",
+		"akinsho/toggleterm.nvim", -- Toggleterm setup
 		version = "*",
 		config = function()
-			require("toggleterm").setup({
-				---@type "float" | "horizontal"
-				direction = "horizontal",
-			})
+			setup_toggleterm()
 		end,
 	},
 }
+
+return M

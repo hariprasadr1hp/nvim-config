@@ -9,12 +9,6 @@ source ~/.config/nvim/vimscript/keys_terminal.vim
 source ~/.config/nvim/vimscript/functions.vim
 source ~/.config/nvim/vimscript/temp.vim
 
-" source ~/.config/nvim/vimscript/plug-config/completion-nvim.vim
-" source ~/.config/nvim/vimscript/plug-config/vim-vsnip.vim
-
-
-" mappings
-" let mapleader = "\<Space>"
 
 " Y yanks till the end of the line from the cursor
 nnoremap Y y$
@@ -60,3 +54,4 @@ vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 
 " `bn` as escape characters
 inoremap bn <Esc>
+

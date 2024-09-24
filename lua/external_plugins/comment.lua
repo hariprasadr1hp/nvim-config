@@ -1,33 +1,25 @@
--- TODO: should be replaced with https://github.com/numToStr/Comment.nvim
+-- lua/external_plugins/comment.lua
 
-return {
+-- TODO: Comments plugin should be replaced with https://github.com/numToStr/Comment.nvim
+
+local M = {}
+
+local comment_config = {
+	marker_padding = true, -- Linters prefer a space between comment markers
+	comment_empty = true, -- Allow commenting out empty or whitespace lines
+	comment_empty_trim_whitespace = true, -- Trim whitespace on empty comments
+	create_mappings = true, -- Enable key mappings
+	line_mapping = "gcc", -- Normal mode mapping
+	operator_mapping = "gc", -- Visual/Operator mode mapping
+	comment_chunk_text_object = "ic", -- Text object for comment chunks
+	hook = nil, -- Hook function before commenting
+}
+
+M = {
 	"terrortylor/nvim-comment",
 	config = function()
-		local comment = require("nvim_comment")
-		comment.setup({
-			-- Linters prefer comment and line to have a space in between markers
-			marker_padding = true,
-
-			-- should comment out empty or whitespace only lines
-			comment_empty = true,
-
-			-- trim empty comment whitespace
-			comment_empty_trim_whitespace = true,
-
-			-- Should key mappings be created
-			create_mappings = true,
-
-			-- Normal mode mapping left hand side
-			line_mapping = "gcc",
-
-			-- Visual/Operator mapping left hand side
-			operator_mapping = "gc",
-
-			-- text object mapping, comment chunk,,
-			comment_chunk_text_object = "ic",
-
-			-- Hook function to call before commenting takes place
-			hook = nil,
-		})
+		require("nvim_comment").setup(comment_config)
 	end,
 }
+
+return M

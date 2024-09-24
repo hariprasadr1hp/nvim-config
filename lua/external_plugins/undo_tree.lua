@@ -1,34 +1,41 @@
 -- lua/external_plugins/undo_tree.lua
 
-return {
-	{
-		"debugloop/telescope-undo.nvim",
-		dependencies = {
-			{
-				"nvim-telescope/telescope.nvim",
-				dependencies = { "nvim-lua/plenary.nvim" },
-			},
-		},
-		keys = {
-			{ "<leader>zu", "<cmd>Telescope undo<cr>", desc = "undo history" },
-		},
-		opts = {
-			extensions = {
-				undo = {
-					side_by_side = true,
-					layout_strategy = "vertical",
-					layout_config = {
-						preview_height = 0.8,
-					},
+local M = {}
+
+local setup_options = function()
+	return {
+		extensions = {
+			undo = {
+				side_by_side = true,
+				layout_strategy = "vertical",
+				layout_config = {
+					preview_height = 0.8,
 				},
 			},
 		},
-		config = function(_, opts)
-			-- Calling telescope's setup from multiple specs does not hurt, it will happily merge the
-			-- configs for us. We won't use data, as everything is in it's own namespace (telescope
-			-- defaults, as well as each extension).
-			require("telescope").setup(opts)
-			require("telescope").load_extension("undo")
-		end,
+	}
+end
+
+local setup_telescope = function(opts)
+	require("telescope").setup(opts)
+	require("telescope").load_extension("undo")
+end
+
+M = {
+	"debugloop/telescope-undo.nvim",
+	dependencies = {
+		{
+			"nvim-telescope/telescope.nvim",
+			dependencies = { "nvim-lua/plenary.nvim" },
+		},
 	},
+	keys = {
+		{ "<leader>zu", "<cmd>Telescope undo<cr>", desc = "undo history" },
+	},
+	opts = setup_options(),
+	config = function(_, opts)
+		setup_telescope(opts)
+	end,
 }
+
+return M

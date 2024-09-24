@@ -1,5 +1,9 @@
 -- lua/external_plugins/zenmode.lua
 
-return {
+local M = {}
+
+M = {
 	"folke/zen-mode.nvim",
 }
+
+return M

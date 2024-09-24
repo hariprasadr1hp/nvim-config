@@ -1,47 +1,66 @@
-return {
-	{
-		"folke/tokyonight.nvim",
-		priority = 1000,
-		config = function()
-			local transparent = false -- set to true if you would like to enable transparency
+-- lua/external_plugins/themes/tokyonight.lua
 
-			local bg = "#011628"
-			local bg_dark = "#011423"
-			local bg_highlight = "#143652"
-			local bg_search = "#0A64AC"
-			local bg_visual = "#275378"
-			local fg = "#CBE0F0"
-			local fg_dark = "#B4D0E9"
-			local fg_gutter = "#627E97"
-			local border = "#547998"
+local M = {}
 
-			require("tokyonight").setup({
-				style = "night",
-				transparent = transparent,
-				styles = {
-					sidebars = transparent and "transparent" or "dark",
-					floats = transparent and "transparent" or "dark",
-				},
-				on_colors = function(colors)
-					colors.bg = bg
-					colors.bg_dark = transparent and colors.none or bg_dark
-					colors.bg_float = transparent and colors.none or bg_dark
-					colors.bg_highlight = bg_highlight
-					colors.bg_popup = bg_dark
-					colors.bg_search = bg_search
-					colors.bg_sidebar = transparent and colors.none or bg_dark
-					colors.bg_statusline = transparent and colors.none or bg_dark
-					colors.bg_visual = bg_visual
-					colors.border = border
-					colors.fg = fg
-					colors.fg_dark = fg_dark
-					colors.fg_float = fg
-					colors.fg_gutter = fg_gutter
-					colors.fg_sidebar = fg_dark
-				end,
-			})
+local setup_colors = function(transparent)
+	return {
+		bg = "#011628",
+		bg_dark = "#011423",
+		bg_highlight = "#143652",
+		bg_search = "#0A64AC",
+		bg_visual = "#275378",
+		fg = "#CBE0F0",
+		fg_dark = "#B4D0E9",
+		fg_gutter = "#627E97",
+		border = "#547998",
+		transparent = transparent,
+	}
+end
 
-			vim.cmd("colorscheme tokyonight")
+local apply_custom_colors = function(custom_colors, colors, transparent)
+	custom_colors.bg = colors.bg
+	custom_colors.bg_dark = transparent and custom_colors.none or colors.bg_dark
+	custom_colors.bg_float = transparent and custom_colors.none or colors.bg_dark
+	custom_colors.bg_highlight = colors.bg_highlight
+	custom_colors.bg_popup = colors.bg_dark
+	custom_colors.bg_search = colors.bg_search
+	custom_colors.bg_sidebar = transparent and custom_colors.none or colors.bg_dark
+	custom_colors.bg_statusline = transparent and custom_colors.none or colors.bg_dark
+	custom_colors.bg_visual = colors.bg_visual
+	custom_colors.border = colors.border
+	custom_colors.fg = colors.fg
+	custom_colors.fg_dark = colors.fg_dark
+	custom_colors.fg_float = colors.fg
+	custom_colors.fg_gutter = colors.fg_gutter
+	custom_colors.fg_sidebar = colors.fg_dark
+end
+
+local setup_tokyonight = function()
+	local transparent = false
+
+	local colors = setup_colors(transparent)
+
+	require("tokyonight").setup({
+		style = "night",
+		transparent = transparent,
+		styles = {
+			sidebars = transparent and "transparent" or "dark",
+			floats = transparent and "transparent" or "dark",
+		},
+		on_colors = function(custom_colors)
+			apply_custom_colors(custom_colors, colors, transparent)
 		end,
-	},
+	})
+
+	vim.cmd("colorscheme tokyonight")
+end
+
+M = {
+	"folke/tokyonight.nvim",
+	priority = 1000,
+	config = function()
+		setup_tokyonight()
+	end,
 }
+
+return M

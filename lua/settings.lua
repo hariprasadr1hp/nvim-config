@@ -138,6 +138,9 @@ vim.g.have_nerd_font = true
 -- unless it's the end of the file
 vim.opt.scrolloff = 8
 
+-- add a trailing newline at the end of the file
+vim.opt.fixendofline = false
+
 -- HELP WINDOW
 -------------------------------------------------------------------
 -- open help window in vertical (instead of horizontal) split
@@ -148,6 +151,16 @@ vim.api.nvim_create_autocmd("FileType", {
 	callback = function()
 		vim.opt_local.wrap = true
 		vim.cmd("wincmd L")
+	end,
+})
+
+-- STARTUP
+-------------------------------------------------------------------
+vim.api.nvim_create_autocmd("VimEnter", {
+	callback = function()
+		if vim.fn.argc() == 0 then
+			vim.cmd("enew")
+		end
 	end,
 })
 

@@ -13,12 +13,13 @@ local plugins = {
 	require("external_plugins/text_objects"),
 	require("external_plugins/telescope"),
 	require("external_plugins/lsp"),
-	require("external_plugins/formatting"),
+	require("external_plugins/format"),
 	require("external_plugins/completion"),
-	require("external_plugins/linting"),
+	require("external_plugins/lint"),
 	require("external_plugins/explorer"),
 	require("external_plugins/lualine"),
 	require("external_plugins/misc"),
+	require("external_plugins/mini"),
 	require("external_plugins/notify"),
 	require("external_plugins/terminal"),
 	require("external_plugins/todo"),
@@ -31,9 +32,9 @@ local plugins = {
 	require("external_plugins/cloak"),
 	require("external_plugins/sniprun"),
 
-	-- require("external_plugins/oil"),
-	-- require("external_plugins/harpoon"),
-	-- require("external_plugins/debug"),
+	require("external_plugins/oil"),
+	require("external_plugins/harpoon"),
+	require("external_plugins/debug"),
 	-- require("external_plugins/headlines"),
 
 	-----------------------------------------------------------------
