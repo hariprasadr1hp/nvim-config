@@ -2,18 +2,16 @@
 
 local M = {}
 
-local setup_patterns = function()
-	return {
-		{
-			file_pattern = { ".env*", "dev.vars" },
-			cloak_pattern = "=.+",
-			replace = nil, -- Keeps the first character by default
-		},
-	}
-end
+local patterns = {
+	{
+		file_pattern = { ".env*", "dev.vars" },
+		cloak_pattern = "=.+",
+		replace = nil, -- Keeps the first character by default
+	},
+}
 
 local setup_cloak_config = function()
-	return {
+	return require("cloak").setup({
 		enabled = true,
 		cloak_character = "*",
 		highlight_group = "Comment",
@@ -21,18 +19,14 @@ local setup_cloak_config = function()
 		try_all_patterns = true,
 		cloak_telescope = true,
 		cloak_on_leave = false,
-		patterns = setup_patterns(),
-	}
-end
-
-local setup_cloak = function()
-	require("cloak").setup(setup_cloak_config())
+		patterns = patterns,
+	})
 end
 
 M = {
 	"laytan/cloak.nvim",
 	config = function()
-		setup_cloak()
+		setup_cloak_config()
 	end,
 }
 

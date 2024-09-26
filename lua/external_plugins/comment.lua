@@ -18,8 +18,12 @@ local comment_config = {
 M = {
 	"terrortylor/nvim-comment",
 	config = function()
-		require("nvim_comment").setup(comment_config)
+		local nvim_comment = require("nvim_comment")
+		nvim_comment.setup(comment_config)
 	end,
 }
 
 return M
+
+-- FIX: `CommentToggle` on visual selection
+-- right now, only toggling the last line (use `gc` for comment in vusual mode)

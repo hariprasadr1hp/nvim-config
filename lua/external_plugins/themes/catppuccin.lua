@@ -4,70 +4,62 @@
 
 local M = {}
 
-local setup_dim_inactive = function()
-	return {
-		enabled = false,
-		shade = "dark",
-		percentage = 0.15,
-	}
-end
+local dim_inactive = {
+	enabled = false,
+	shade = "dark",
+	percentage = 0.15,
+}
 
-local setup_styles = function()
-	return {
-		comments = { "italic" },
-		conditionals = { "italic" },
-		loops = {},
-		functions = {},
-		keywords = {},
-		strings = {},
-		variables = {},
-		numbers = {},
-		booleans = {},
-		properties = {},
-		types = {},
-		operators = {},
-	}
-end
+local styles = {
+	comments = { "italic" },
+	conditionals = { "italic" },
+	loops = {},
+	functions = {},
+	keywords = {},
+	strings = {},
+	variables = {},
+	numbers = {},
+	booleans = {},
+	properties = {},
+	types = {},
+	operators = {},
+}
 
-local setup_integrations = function()
-	return {
-		cmp = true,
-		gitsigns = true,
-		nvimtree = true,
-		treesitter = true,
-		notify = false,
-		mini = {
-			enabled = true,
-			indentscope_color = "",
-		},
-	}
-end
+local integrations = {
+	cmp = true,
+	gitsigns = true,
+	nvimtree = true,
+	treesitter = true,
+	notify = false,
+	mini = {
+		enabled = true,
+		indentscope_color = "",
+	},
+}
 
-local setup_catppuccin_config = function()
-	return {
-		---@type "auto" | "latte" | "frappe" | "macchiato" | "mocha"
-		flavour = "auto",
-		background = {
-			light = "latte",
-			dark = "mocha",
-		},
-		transparent_background = false,
-		show_end_of_buffer = false,
-		term_colors = false,
-		dim_inactive = setup_dim_inactive(),
-		no_italic = false,
-		no_bold = false,
-		no_underline = false,
-		styles = setup_styles(),
-		color_overrides = {},
-		custom_highlights = {},
-		default_integrations = true,
-		integrations = setup_integrations(),
-	}
-end
+local catppuccin_config = {
+	---@type "auto" | "latte" | "frappe" | "macchiato" | "mocha"
+	flavour = "auto",
+	background = {
+		light = "latte",
+		dark = "mocha",
+	},
+	transparent_background = false,
+	show_end_of_buffer = false,
+	term_colors = false,
+	dim_inactive = dim_inactive,
+	no_italic = false,
+	no_bold = false,
+	no_underline = false,
+	styles = styles,
+	color_overrides = {},
+	custom_highlights = {},
+	default_integrations = true,
+	integrations = integrations,
+}
 
 local setup_catppuccin = function()
-	require("catppuccin").setup(setup_catppuccin_config())
+	require("catppuccin").setup(catppuccin_config)
 
 	-- setup must be called before loading the colorscheme
 	vim.cmd.colorscheme("catppuccin")

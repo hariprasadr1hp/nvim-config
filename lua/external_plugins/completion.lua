@@ -64,6 +64,18 @@ local setup_sources = function()
 		{ name = "luasnip" },
 		{ name = "path" },
 		{ name = "orgmode" },
+		{ name = "neorg" },
+	}
+end
+
+local setup_formatting = function()
+	return {
+		format = require("lspkind").cmp_format({
+			mode = "symbol",
+			maxwidth = 50,
+			ellipsis_char = "...",
+			-- symbol_map = { Codeium = "" },
+		}),
 	}
 end
 
@@ -77,6 +89,7 @@ local setup_cmp = function()
 		completion = { completeopt = "menu,menuone,noinsert" },
 		mapping = setup_mappings(cmp, luasnip),
 		sources = setup_sources(),
+		-- formatting = setup_formatting(),
 	})
 end
 

@@ -20,6 +20,16 @@ local setup_defaults = function(actions)
 		preview = {
 			filesize_limit = 0.1, -- MB limit for preview
 		},
+		---@types "horizontal" | "vertical"
+		layout_strategy = "horizontal",
+		layout_config = {
+			horizontal = {
+				height = 0.99,
+				preview_cutoff = 120,
+				prompt_position = "bottom",
+				width = 0.99,
+			},
+		},
 		mappings = setup_mappings(actions),
 		vimgrep_arguments = {
 			"rg",
@@ -34,13 +44,11 @@ local setup_defaults = function(actions)
 	}
 end
 
-local setup_pickers = function()
-	return {
-		find_files = {
-			find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
-		},
-	}
-end
+local pickers = {
+	find_files = {
+		find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+	},
+}
 
 local setup_extensions = function()
 	return {
@@ -58,7 +66,7 @@ local setup_telescope = function()
 
 	require("telescope").setup({
 		defaults = setup_defaults(actions),
-		pickers = setup_pickers(),
+		pickers = pickers,
 		extensions = setup_extensions(),
 	})
 
@@ -87,3 +95,5 @@ M = {
 }
 
 return M
+
+-- TODO: 2 or 3 additional telescope functions to show ignored, untracked and hidden files as well

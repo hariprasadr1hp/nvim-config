@@ -16,22 +16,20 @@ local disable_default_linters = function()
 	lint.linters_by_ft["text"] = nil
 end
 
-local setup_linters = function()
-	return {
-		javascript = { "eslint_d" },
-		javascriptreact = { "eslint_d" },
-		markdown = { "markdownlint" },
-		python = { "pylint" },
-		svelte = { "eslint_d" },
-		terraform = { "tflint" },
-		typescript = { "eslint_d" },
-		typescriptreact = { "eslint_d" },
-	}
-end
+local linters_by_ft = {
+	javascript = { "eslint_d" },
+	javascriptreact = { "eslint_d" },
+	markdown = { "markdownlint" },
+	python = { "pylint" },
+	svelte = { "eslint_d" },
+	terraform = { "tflint" },
+	typescript = { "eslint_d" },
+	typescriptreact = { "eslint_d" },
+}
 
 local setup_lint = function()
 	local lint = require("lint")
-	lint.linters_by_ft = setup_linters()
+	lint.linters_by_ft = linters_by_ft
 	disable_default_linters()
 end
 
