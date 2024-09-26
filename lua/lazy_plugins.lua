@@ -6,6 +6,7 @@ local plugins = {
 	require("external_plugins/themes/nordic"),
 	require("external_plugins/themes/tokyonight"),
 
+	require("external_plugins/rocks"),
 	require("external_plugins/autopairs"),
 	require("external_plugins/comment"),
 	require("external_plugins/gitsigns"),
@@ -14,6 +15,7 @@ local plugins = {
 	require("external_plugins/telescope"),
 	require("external_plugins/lsp"),
 	require("external_plugins/completion"),
+	require("external_plugins/neorg"),
 	require("external_plugins/org"),
 	require("external_plugins/lint"),
 	require("external_plugins/format"),
