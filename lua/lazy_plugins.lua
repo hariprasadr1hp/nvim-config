@@ -15,6 +15,8 @@ local plugins = {
 	require("external_plugins/telescope"),
 	require("external_plugins/lsp"),
 	require("external_plugins/completion"),
+	require("external_plugins/codeium"),
+	require("external_plugins/gen"),
 	require("external_plugins/neorg"),
 	require("external_plugins/org"),
 	require("external_plugins/lint"),
