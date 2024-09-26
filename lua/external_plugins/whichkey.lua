@@ -129,14 +129,14 @@ local key_mappings = {
 		{
 			"<leader>fP",
 			"<cmd>e $HOME/.config/nvim/lua/lazy_plugins.lua<CR>",
-			desc = "term-config",
+			desc = "plugins-config",
 			nowait = false,
 			remap = false,
 		},
 		{
 			"<leader>fq",
 			"<cmd>e $HOME/.config/wezterm/wezterm.lua<CR>",
-			desc = "term-config",
+			desc = "wezterm-config",
 			nowait = false,
 			remap = false,
 		},
@@ -179,14 +179,14 @@ local key_mappings = {
 		{
 			"<leader>fw",
 			"<cmd>e $HOME/.config/nvim/lua/external_plugins/whichkey.lua<CR>",
-			desc = "which-key",
+			desc = "whichkey-config",
 			nowait = false,
 			remap = false,
 		},
 		{
 			"<leader>fz",
 			"<cmd>e /Users/hari/.config/zellij/config.kdl<CR>",
-			desc = "which-key",
+			desc = "zellij-config",
 			nowait = false,
 			remap = false,
 		},
@@ -412,7 +412,8 @@ local key_mappings = {
 		{ "<leader>oe", "<cmd>NvimTreeToggle<CR>", desc = "explorer", nowait = false, remap = false },
 		{ "<leader>ol", "<cmd>FloatermNew lazygit<CR>", desc = "lazygit", nowait = false, remap = false },
 		{ "<leader>om", "<cmd>e Makefile<CR>", desc = "Makefile", nowait = false, remap = false },
-		{ "<leader>on", "<cmd>NoiceAll<CR>", desc = "notifications", nowait = false, remap = false },
+		{ "<leader>on", "<cmd>Messages<CR>", desc = "notifications", nowait = false, remap = false },
+		-- { "<leader>on", "<cmd>NoiceAll<CR>", desc = "notifications", nowait = false, remap = false },
 
 		{
 			"<leader>oo",
@@ -556,9 +557,6 @@ local key_mappings = {
 			nowait = false,
 			remap = false,
 		},
-		{ "<leader>zT", "<cmd>Telescope tags<CR>", desc = "tags", nowait = false, remap = false },
-		{ "<leader>zu", "<cmd>Telescope undo<CR>", desc = "undo", nowait = false, remap = false },
-		{ "<leader>zZ", "<cmd>Telescope grep_string<CR>", desc = "grep_string", nowait = false, remap = false },
 
 		---- [g]it ----------------
 		{ "<leader>zg", group = "git", nowait = false, remap = false },
@@ -570,7 +568,7 @@ local key_mappings = {
 		{ "<leader>zh", "<cmd>Telescope help_tags<CR>", desc = "Help tags", nowait = false, remap = false },
 		{ "<leader>zm", "<cmd>Telescope marks<CR>", desc = "marks", nowait = false, remap = false },
 		{ "<leader>zM", "<cmd>Telescope man_pages<CR>", desc = "man pages", nowait = false, remap = false },
-		{ "<leader>zn", "<cmd>NoiceTelescope<CR>", desc = "noice", nowait = false, remap = false },
+		-- { "<leader>zn", "<cmd>NoiceTelescope<CR>", desc = "noice", nowait = false, remap = false },
 		{ "<leader>zr", "<cmd>Telescope registers<CR>", desc = "registers", nowait = false, remap = false },
 
 		---- [s]earch ---------------
@@ -583,17 +581,23 @@ local key_mappings = {
 			remap = false,
 		},
 
-		{ "<leader>zt", "<cmd>Telescope treesitter<CR>", desc = "treesitter", nowait = false, remap = false },
-		{ "<leader>zT", "<cmd>Telescope todo-comments<CR>", desc = "todo-list", nowait = false, remap = false },
+		{ "<leader>zt", "<cmd>TodoTelescope keywords=TODO,FIX<CR>", desc = "todo", nowait = false, remap = false },
+		{ "<leader>zu", "<cmd>Telescope undo<CR>", desc = "undo", nowait = false, remap = false },
 		{ "<leader>zv", "<cmd>Telescope commands<CR>", desc = "vim-commands", nowait = false, remap = false },
-		{ "<leader>zw", "<cmd>Telescope file_browser<CR>", desc = "file-browser", nowait = false, remap = false },
 		{ "<leader>zz", "<cmd>Telescope live_grep<CR>", desc = "file-browser", nowait = false, remap = false },
+		{ "<leader>zZ", "<cmd>Telescope grep_string<CR>", desc = "grep_string", nowait = false, remap = false },
 	},
 
 	--- VISUAL MODE
 	{
 		mode = "v",
-		{ "<leader>/", "<cmd>CommentToggle<CR>", desc = "comment", nowait = false, remap = false },
+		{
+			"<leader>/",
+			"gc",
+			desc = "comment",
+			nowait = false,
+			remap = false,
+		},
 		-- [G]IT ------------------
 		{ "<leader>g", group = "git", nowait = false, remap = false },
 
