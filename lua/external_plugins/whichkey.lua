@@ -203,10 +203,11 @@ local key_mappings = {
 
 		{ "<leader>gh", group = "hunk", nowait = false, remap = false },
 		{ "<leader>ghp", "<cmd>Gitsigns preview_hunk<CR>", desc = "preview-hunk", nowait = false, remap = false },
+		{ "<leader>ghn", "<cmd>Gitsigns next_hunk<CR>", desc = "next-hunk", nowait = false, remap = false },
 		{ "<leader>ghs", "<cmd>Gitsigns stage_hunk<CR>", desc = "stage-hunk", nowait = false, remap = false },
 		{
 			"<leader>ghu",
-			"<cmd>Gitsigns undo_stage_hunk<CR>",
+			"<cmd>Gitsigns unstage_hunk<CR>",
 			desc = "undo-stage-hunk",
 			nowait = false,
 			remap = false,
@@ -230,7 +231,7 @@ local key_mappings = {
 			nowait = false,
 			remap = false,
 		},
-		{ "<leader>ht", "<cmd>Telescope colorscheme<CR>", desc = "themes", nowait = false, remap = false },
+		{ "<leader>ht", "<cmd>FzfLua colorschemes<CR>", desc = "themes", nowait = false, remap = false },
 
 		{ "<leader>i", group = "info", nowait = false, remap = false }, -- [I]NFO / [I]NSERT --------
 		{ "<leader>ib", "<cmd> !battery<CR>", desc = "battery", nowait = false, remap = false },
@@ -604,7 +605,8 @@ local key_mappings = {
 		---- [h]unk ---------------
 		{ "<leader>gh", group = "git-hunk", nowait = false, remap = false },
 		{ "<leader>ghs", "<cmd>Gitsigns stage_hunk<CR>", desc = "stage-hunk", nowait = false, remap = false },
-		{ "<leader>ghr", "<cmd>Gitsigns reset_hunk<CR>", desc = "reset-hunk", nowait = false, remap = false },
+		-- { "<leader>ghr", "<cmd>Gitsigns reset_hunk<CR>", desc = "reset-hunk", nowait = false, remap = false },
+		{ "<leader>ghu", "<cmd>Gitsigns undo_stage_hunk<CR>", desc = "unstage-hunk", nowait = false, remap = false },
 	},
 
 	--- TERMINAL MODE

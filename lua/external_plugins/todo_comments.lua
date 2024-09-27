@@ -83,12 +83,13 @@ end
 
 M = {
 	"folke/todo-comments.nvim",
-	dependencies = "nvim-lua/plenary.nvim",
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+		"ibhagwan/fzf-lua",
+	},
 	config = function()
 		setup_todo_comments()
 	end,
 }
 
 return M
-
--- FIX: `:TodoFzfLua` error

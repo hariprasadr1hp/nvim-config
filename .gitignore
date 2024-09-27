@@ -1,5 +1,4 @@
 # directories
-plugin/
 .undodir/
 node_modules/
 lua/temp.lua
@@ -14,6 +13,6 @@ package-lock.json
 vimscript/temp.vim
 .netrwhist
 tags
+.env
 
 lazy-lock.json
-startup_time.txt
