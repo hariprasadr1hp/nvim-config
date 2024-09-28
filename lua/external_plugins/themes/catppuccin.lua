@@ -5,9 +5,9 @@
 local M = {}
 
 local dim_inactive = {
-	enabled = false,
-	shade = "dark",
-	percentage = 0.15,
+	enabled = true,
+	shade = "light",
+	percentage = 0.5,
 }
 
 local styles = {

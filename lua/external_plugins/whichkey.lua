@@ -592,20 +592,12 @@ local key_mappings = {
 	--- VISUAL MODE
 	{
 		mode = "v",
-		{
-			"<leader>/",
-			"gc",
-			desc = "comment",
-			nowait = false,
-			remap = false,
-		},
 		-- [G]IT ------------------
 		{ "<leader>g", group = "git", nowait = false, remap = false },
 
 		---- [h]unk ---------------
 		{ "<leader>gh", group = "git-hunk", nowait = false, remap = false },
 		{ "<leader>ghs", "<cmd>Gitsigns stage_hunk<CR>", desc = "stage-hunk", nowait = false, remap = false },
-		-- { "<leader>ghr", "<cmd>Gitsigns reset_hunk<CR>", desc = "reset-hunk", nowait = false, remap = false },
 		{ "<leader>ghu", "<cmd>Gitsigns undo_stage_hunk<CR>", desc = "unstage-hunk", nowait = false, remap = false },
 	},
 

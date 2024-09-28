@@ -10,7 +10,7 @@ local comment_config = {
 	comment_empty_trim_whitespace = true, -- Trim whitespace on empty comments
 	create_mappings = true, -- Enable key mappings
 	line_mapping = "gcc", -- Normal mode mapping
-	operator_mapping = "gc", -- Visual/Operator mode mapping
+	operator_mapping = "<leader>/", -- Visual/Operator mode mapping
 	comment_chunk_text_object = "ic", -- Text object for comment chunks
 	hook = nil, -- Hook function before commenting
 }
@@ -24,6 +24,3 @@ M = {
 }
 
 return M
-
--- FIX: `CommentToggle` on visual selection
--- right now, only toggling the last line (use `gc` for comment in vusual mode)
