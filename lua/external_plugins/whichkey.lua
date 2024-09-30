@@ -6,6 +6,12 @@ local key_mappings = {
 		mode = "n",
 		{ "<C-`>", "<cmd>ToggleTerm<CR>", desc = "toggle-term", nowait = false, remap = false },
 
+		{ "<leader>1", "<cmd>1tabnext<CR>", desc = "tab-1", nowait = false, remap = false },
+		{ "<leader>2", "<cmd>2tabnext<CR>", desc = "tab-2", nowait = false, remap = false },
+		{ "<leader>3", "<cmd>3tabnext<CR>", desc = "tab-3", nowait = false, remap = false },
+		{ "<leader>4", "<cmd>4tabnext<CR>", desc = "tab-4", nowait = false, remap = false },
+		{ "<leader>5", "<cmd>5tabnext<CR>", desc = "tab-5", nowait = false, remap = false },
+
 		{ "<leader>,", ":Telescope find_files<CR>", desc = "files", nowait = false, remap = false },
 		{ "<leader>.", ":Telescope find_files<CR>", desc = "files", nowait = false, remap = false },
 		{ "<leader>/", ":CommentToggle<CR>", desc = "comment", nowait = false, remap = false },
@@ -480,12 +486,11 @@ local key_mappings = {
 
 		-- [T]OGGLE ----------------
 		{ "<leader>t", group = "toggle", nowait = false, remap = false },
-		{ "<leader>tG", "<cmd>%norm! g??<CR>", desc = "gibberish-rot13", nowait = false, remap = false },
-		{ "<leader>tT", "<cmd>highlight Normal guibg=black<CR>", desc = "bg-black", nowait = false, remap = false },
 		{ "<leader>tb", "<cmd>Gitsigns blame<CR>", desc = "BLAME", nowait = false, remap = false },
 		{ "<leader>tc", "<cmd>CloakPreviewLine<CR>", desc = "cloak", nowait = false, remap = false },
 		{ "<leader>tC", "<cmd>CloakToggle<CR>", desc = "cloak", nowait = false, remap = false },
 		{ "<leader>tg", "<cmd>Gitsigns toggle_signs<CR>", desc = "git-signs", nowait = false, remap = false },
+		{ "<leader>tG", "<cmd>%norm! g??<CR>", desc = "gibberish-rot13", nowait = false, remap = false },
 		{ "<leader>th", "<cmd>set hls!<CR>", desc = "hl-search", nowait = false, remap = false },
 		{ "<leader>tl", "<cmd>LspRestart<CR>", desc = "lsp-restart", nowait = false, remap = false },
 		{ "<leader>to", "<cmd>call Cpp_Flip_Ext()<CR>", desc = "CppFlip", nowait = false, remap = false },
@@ -498,6 +503,7 @@ local key_mappings = {
 			nowait = false,
 			remap = false,
 		},
+		{ "<leader>tT", "<cmd>highlight Normal guibg=black<CR>", desc = "bg-black", nowait = false, remap = false },
 		{ "<leader>tw", "<cmd>set nowrap!<CR>", desc = "wrap-text", nowait = false, remap = false },
 		{ "<leader>tz", "<cmd>ZenMode<CR>", desc = "wrap-text", nowait = false, remap = false },
 
