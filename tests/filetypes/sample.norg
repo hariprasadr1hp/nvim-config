@@ -1,0 +1,33 @@
+# Norg example to test editor settings
+
+* Welcome to Norg
+  This is an example file to demonstrate the features of the Norg markup language.
+
+* Table of Contents
+  - [Introduction](#introduction)
+  - [Lists](#lists)
+  - [Code Blocks](#code-blocks)
+  - [Links](#links)
+  - [Images](#images)
+  - [Tasks](#tasks)
+
+* Introduction
+  Norg is a powerful markup language that supports tasks, tables, links, and more. It is particularly well-suited for note-taking and project management.
+
+* Lists
+  - Unordered list item 1
+  - Unordered list item 2
+    - Sub-item 1
+    - Sub-item 2
+
+  1. Ordered list item 1
+  2. Ordered list item 2
+
+* Code Blocks
+  Here is a simple code block:
+
+  ```python
+  def greet(name):
+      print(f"Hello, {name}!")
+  greet("Norg")
+

@@ -1,0 +1,49 @@
+; Beancount example to test editor settings
+
+; Option to set the default currency
+option "operating_currency" "USD"
+
+; Open accounts
+2019-01-01 open Assets:Checking USD
+2019-01-01 open Liabilities:CreditCard USD
+2019-01-01 open Expenses:Groceries
+2019-01-01 open Income:Salary
+2019-01-01 open Equity:Opening-Balances
+
+; Starting balance
+2019-01-01 balance Assets:Checking 1000.00 USD
+
+; Salary income transaction
+2023-08-01 * "Employer" "Monthly Salary"
+  Income:Salary          -5000.00 USD
+  Assets:Checking         5000.00 USD
+
+; Groceries purchase
+2023-08-03 * "Supermarket" "Groceries"
+  Expenses:Groceries        150.00 USD
+  Liabilities:CreditCard   -150.00 USD
+
+; Payment to credit card
+2023-08-10 * "Credit Card Payment"
+  Liabilities:CreditCard    150.00 USD
+  Assets:Checking          -150.00 USD
+
+; Automated interest income
+2023-08-31 * "Bank" "Interest Income"
+  Income:Interest          -10.00 USD
+  Assets:Checking           10.00 USD
+
+; Define a custom tag
+2023-09-05 * "Bookstore" "Bought a book" #books
+  Expenses:Books            30.00 USD
+  Assets:Checking          -30.00 USD
+
+; Add a note to a transaction
+2023-09-15 * "Coffee Shop" "Morning coffee"
+  Expenses:Dining           5.00 USD
+  Assets:Checking          -5.00 USD
+  note: "Used loyalty card"
+
+; Balance assertion
+2023-09-30 balance Assets:Checking 4830.00 USD
+

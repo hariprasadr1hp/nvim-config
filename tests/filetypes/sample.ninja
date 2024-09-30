@@ -1,0 +1,35 @@
+# Ninja build file example to test editor settings
+
+# Define the C compiler and flags
+cc = gcc
+cflags = -Wall -g
+
+# Rule to compile C source files into object files
+rule compile
+  command = $cc $cflags -c $in -o $out
+  description = Compiling $in
+
+# Rule to link object files into an executable
+rule link
+  command = $cc $in -o $out
+  description = Linking $out
+
+# Source files and corresponding object files
+src_files = main.c utils.c
+obj_files = main.o utils.o
+
+# Build the object files from source files
+build main.o: compile main.c
+build utils.o: compile utils.c
+
+# Link the object files into an executable
+build myapp: link $obj_files
+
+# Define a clean rule to remove generated files
+rule clean
+  command = rm -f *.o myapp
+  description = Cleaning up
+
+# Add a default target
+default myapp
+

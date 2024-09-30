@@ -1,0 +1,53 @@
+# Corn example to test editor settings
+
+# Define variables
+let name = "Corn Language"
+let x = 10
+let y = 20
+
+# Print a message
+print("Hello, " + name + "!")
+
+# Define a function to add two numbers
+fn add(a, b) -> Int {
+  return a + b
+}
+
+# Call the function
+let result = add(x, y)
+print("Sum of " + str(x) + " and " + str(y) + " is: " + str(result))
+
+# Conditional statement
+if x > y {
+  print(str(x) + " is greater than " + str(y))
+} else {
+  print(str(x) + " is not greater than " + str(y))
+}
+
+# Loops
+for i in 1..5 {
+  print("For loop iteration: " + str(i))
+}
+
+let count = 1
+while count <= 5 {
+  print("While loop iteration: " + str(count))
+  count += 1
+}
+
+# Define and use arrays
+let numbers = [1, 2, 3, 4, 5]
+for num in numbers {
+  print("Number: " + str(num))
+}
+
+# Define a record (similar to a struct)
+record Person {
+  name: String,
+  age: Int
+}
+
+# Create an instance of the record
+let person1 = Person(name: "Alice", age: 30)
+print(person1.name + " is " + str(person1.age) + " years old.")
+

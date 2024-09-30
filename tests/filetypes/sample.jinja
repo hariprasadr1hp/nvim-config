@@ -1,0 +1,44 @@
+{# Jinja template example to test editor settings #}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+</head>
+<body>
+
+    <!-- Conditional rendering -->
+    {% if user.is_logged_in %}
+        <h1>Welcome back, {{ user.name }}!</h1>
+    {% else %}
+        <h1>Welcome to our website!</h1>
+    {% endif %}
+
+    <!-- Loop through a list of items -->
+    <ul>
+    {% for item in items %}
+        <li>{{ item.name }} - ${{ item.price }}</li>
+    {% else %}
+        <li>No items available.</li>
+    {% endfor %}
+    </ul>
+
+    <!-- Include another template -->
+    {% include 'footer.html' %}
+
+    <!-- Set a variable -->
+    {% set total = 0 %}
+    {% for item in items %}
+        {% set total = total + item.price %}
+    {% endfor %}
+    <p>Total: ${{ total }}</p>
+
+    <!-- Using filters -->
+    <p>{{ message | upper }}</p>
+    <p>{{ description | truncate(50) }}</p>
+
+</body>
+</html>
+

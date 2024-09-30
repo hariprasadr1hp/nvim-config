@@ -1,0 +1,107 @@
+# TOML example to test editor settings
+
+# Basic key-value pairs
+title = "TOML Example" # A string
+version = 1.2          # A float
+enabled = true         # A boolean
+max_connections = 100  # An integer
+
+# Date and time values (ISO 8601 format)
+release_date = 2023-08-15T10:00:00Z
+local_time = 2023-08-15T15:30:00-05:00
+
+# Nested tables
+[database]
+server = "192.168.1.1"
+port = 5432
+enabled = true
+max_connections = 500
+
+# Tables can also have subtables
+[database.settings]
+pool_size = 20
+timeout = 30.5
+
+# Arrays (list of values)
+servers = ["alpha.example.com", "beta.example.com", "gamma.example.com"]
+
+# Array of tables (multiple related tables)
+[[products]]
+name = "Widget"
+price = 25.99
+quantity = 100
+
+[[products]]
+name = "Gadget"
+price = 19.99
+quantity = 200
+
+[[products]]
+name = "Doodad"
+price = 5.99
+quantity = 500
+
+# Nested array of tables
+[[users]]
+name = "Alice"
+email = "alice@example.com"
+age = 30
+
+[[users.devices]]
+name = "Laptop"
+os = "Linux"
+
+[[users.devices]]
+name = "Phone"
+os = "Android"
+
+[[users]]
+name = "Bob"
+email = "bob@example.com"
+age = 35
+
+[[users.devices]]
+name = "Desktop"
+os = "Windows"
+
+[[users.devices]]
+name = "Tablet"
+os = "iOS"
+
+# Inline tables
+inline_data = { key1 = "value1", key2 = "value2", key3 = "value3" }
+
+# Multiline basic strings (use triple quotes)
+multiline_string = """
+This is a multiline
+string that spans
+multiple lines.
+"""
+
+# Multiline arrays
+multiline_array = ["Item 1", "Item 2", "Item 3", "Item 4"]
+
+# Integer values with different notations
+hex_value = 0xDEADBEEF    # Hexadecimal
+octal_value = 0o755       # Octal
+binary_value = 0b11010101 # Binary
+
+# Floating-point values
+float_value = 3.14159
+negative_float = -42.42
+infinite_value = inf
+negative_infinity = -inf
+not_a_number = nan
+
+# Local date and time
+local_date = 2023-08-15
+local_time_only = 10:30:00
+local_date_time = 2023-08-15T10:30:00
+
+# Boolean values
+is_active = true
+is_admin = false
+
+# Comments are allowed, both inline and on their own lines
+# This is a full-line comment
+username = "admin" # This is an inline comment

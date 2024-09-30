@@ -1,0 +1,68 @@
+# GraphQL example to test editor settings
+
+# Query to fetch all users with their details
+query {
+  users {
+    id
+    name
+    email
+    age
+  }
+}
+
+# Query to fetch a specific user by ID
+query {
+  user(id: 1) {
+    id
+    name
+    email
+    age
+  }
+}
+
+# Mutation to create a new user
+mutation {
+  createUser(input: {
+    name: "Alice",
+    email: "alice@example.com",
+    age: 30
+  }) {
+    id
+    name
+    email
+    age
+  }
+}
+
+# Mutation to update an existing user
+mutation {
+  updateUser(id: 1, input: {
+    name: "Alice Updated",
+    email: "alice_updated@example.com",
+    age: 31
+  }) {
+    id
+    name
+    email
+    age
+  }
+}
+
+# Mutation to delete a user
+mutation {
+  deleteUser(id: 1) {
+    success
+    message
+  }
+}
+
+# Subscription to listen for new users being created
+subscription {
+  newUser {
+    id
+    name
+    email
+    age
+  }
+}
+

@@ -1,0 +1,72 @@
+-- BigQuery SQL (bqSQL) example to test editor settings
+
+-- Create a new table
+CREATE TABLE `project_id.dataset_id.new_table` (
+  id INT64,
+  name STRING,
+  age INT64,
+  created_at TIMESTAMP
+);
+
+-- Insert data into the table
+INSERT INTO `project_id.dataset_id.new_table` (id, name, age, created_at)
+VALUES
+  (1, 'Alice', 30, CURRENT_TIMESTAMP()),
+  (2, 'Bob', 25, CURRENT_TIMESTAMP()),
+  (3, 'Charlie', 35, CURRENT_TIMESTAMP());
+
+-- Select data from the table
+SELECT id, name, age
+FROM `project_id.dataset_id.new_table`
+WHERE age > 28;
+
+-- Update data in the table
+UPDATE `project_id.dataset_id.new_table`
+SET age = 31
+WHERE id = 1;
+
+-- Delete data from the table
+DELETE FROM `project_id.dataset_id.new_table`
+WHERE id = 2;
+
+-- Aggregation: Count rows and calculate average age
+SELECT COUNT(*) AS total_count, AVG(age) AS average_age
+FROM `project_id.dataset_id.new_table`;
+
+-- Create a view
+CREATE VIEW `project_id.dataset_id.age_view` AS
+SELECT name, age
+FROM `project_id.dataset_id.new_table`
+WHERE age > 30;
+
+-- Joins: Inner join two tables
+SELECT a.name, b.department
+FROM `project_id.dataset_id.employees` a
+JOIN `project_id.dataset_id.departments` b
+ON a.department_id = b.department_id;
+
+-- Partitioned table by date
+CREATE TABLE `project_id.dataset_id.partitioned_table`
+(
+  id INT64,
+  event_name STRING,
+  event_date DATE
+)
+PARTITION BY event_date;
+
+-- Query partitioned table
+SELECT *
+FROM `project_id.dataset_id.partitioned_table`
+WHERE event_date BETWEEN '2023-01-01' AND '2023-12-31';
+
+-- Window functions: Calculate running total
+SELECT
+  id,
+  name,
+  age,
+  SUM(age) OVER (ORDER BY age) AS running_total
+FROM `project_id.dataset_id.new_table`;
+
+-- Drop a table
+DROP TABLE `project_id.dataset_id.new_table`;
+

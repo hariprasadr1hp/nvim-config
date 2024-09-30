@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <!-- Basic key-value pairs -->
+    <key>Title</key>
+    <string>Example Property List</string>
+    
+    <key>Version</key>
+    <integer>1</integer>
+
+    <key>IsActive</key>
+    <true/>
+    
+    <key>Rating</key>
+    <real>4.5</real>
+    
+    <!-- Date and time -->
+    <key>ReleaseDate</key>
+    <date>2023-09-30T12:00:00Z</date>
+    
+    <!-- Array of values -->
+    <key>SupportedDevices</key>
+    <array>
+      <string>iPhone</string>
+      <string>iPad</string>
+      <string>MacBook</string>
+    </array>
+
+    <!-- Nested dictionary -->
+    <key>Author</key>
+    <dict>
+      <key>Name</key>
+      <string>John Doe</string>
+      <key>Email</key>
+      <string>john.doe@example.com</string>
+    </dict>
+
+    <!-- Boolean values -->
+    <key>IsPublished</key>
+    <false/>
+
+    <!-- Data (Base64 encoded) -->
+    <key>ThumbnailData</key>
+    <data>
+    iVBORw0KGgoAAAANSUhEUgAAAAUA
+    AAAFCAYAAACNbyblAAAAHElEQVQI12P4
+    //8/w38GIAXDIBKE0DHxgljNBAAO
+    9TXL0Y4OHwAAAABJRU5ErkJggg==
+    </data>
+
+    <!-- Integer and real arrays -->
+    <key>Scores</key>
+    <array>
+      <integer>10</integer>
+      <integer>20</integer>
+      <integer>30</integer>
+    </array>
+
+    <key>Percentages</key>
+    <array>
+      <real>0.75</real>
+      <real>0.80</real>
+      <real>0.90</real>
+    </array>
+  </dict>
+</plist>
+

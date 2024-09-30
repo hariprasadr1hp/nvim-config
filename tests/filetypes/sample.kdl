@@ -1,0 +1,146 @@
+// KDL example to test editor settings
+
+// Basic node with attributes
+person "John Doe" age=30 email="john.doe@example.com" active=true
+
+// Node with children
+person "Jane Smith" {
+    age 25
+    email "jane.smith@example.com"
+    active true
+
+    address {
+        street "123 Main Street"
+        city "New York"
+        state "NY"
+        postal_code "10001"
+    }
+
+    phone_numbers {
+        home "123-456-7890"
+        work "987-654-3210"
+    }
+}
+
+// Lists (arrays) in KDL
+skills "John Doe" {
+    languages "Python" "JavaScript" "Go" "Rust"
+}
+
+// Nodes with attributes and children
+department "Engineering" headcount=25 {
+    manager "John Doe"
+    employees {
+        employee "Alice Johnson" role="Software Engineer"
+        employee "Bob Williams" role="DevOps Engineer"
+    }
+}
+
+// Using integers, floats, booleans, and null values
+config {
+    max_connections 100
+    retry_attempts 3
+    timeout 30.5
+    feature_enabled true
+    description null
+}
+
+// Multi-line strings
+description """ 
+  This is a multi-line string
+  that spans multiple lines.
+  Useful for longer descriptions or comments.
+"""
+
+// Nested nodes with attributes and multiple children
+project "Website Redesign" status="In Progress" {
+    start_date "2023-01-01"
+    end_date "2023-12-31"
+    
+    team {
+        lead "Jane Smith"
+        members {
+            member "Alice Johnson"
+            member "Bob Williams"
+        }
+    }
+
+    milestones {
+        milestone "Design Complete" due="2023-04-01"
+        milestone "Development Complete" due="2023-08-01"
+        milestone "Launch" due="2023-12-31"
+    }
+}
+
+// Boolean and null values
+features {
+    signup_enabled true
+    notifications_enabled false
+    advanced_mode null
+}
+
+// Key-value pairs with various data types
+settings {
+    theme "dark"
+    language "en"
+    timezone "UTC"
+}
+
+// Using environment variables (for configuration purposes)
+env_vars {
+    DATABASE_URL "${DATABASE_URL}"
+    SECRET_KEY "${SECRET_KEY}"
+    DEBUG_MODE "${DEBUG}"
+}
+
+// Defining nodes with lists of child nodes
+servers {
+    server "web1" ip="192.168.1.10" role="frontend"
+    server "web2" ip="192.168.1.11" role="frontend"
+    server "db1" ip="192.168.1.20" role="database"
+}
+
+// Complex structures with nested children
+application "MyApp" version="1.0" {
+    settings {
+        max_users 1000
+        debug_mode true
+        log_level "info"
+    }
+
+    modules {
+        module "auth" enabled=true
+        module "payment" enabled=true
+        module "notifications" enabled=false
+    }
+
+    endpoints {
+        get_user "/api/v1/users/{user_id}"
+        update_user "/api/v1/users/{user_id}/update"
+    }
+}
+
+// Example of a hierarchical data structure
+organization "Tech Solutions" {
+    departments {
+        department "Engineering" headcount=50 {
+            manager "Alice Johnson"
+            projects {
+                project "AI Development" status="Ongoing"
+                project "Cloud Migration" status="Completed"
+            }
+        }
+
+        department "Sales" headcount=20 {
+            manager "Bob Williams"
+            target 1000000
+        }
+    }
+}
+
+// Defining an array of primitive values
+supported_languages "en" "es" "fr" "de"
+
+// Empty node example
+empty_node
+

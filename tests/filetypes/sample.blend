@@ -1,0 +1,52 @@
+// Blend file example to test editor settings
+
+// Set global variables
+blend_version = "1.0"
+background_color = "#ffffff"
+
+// Define a rectangle shape
+shape Rectangle {
+    width = 200
+    height = 100
+    position = {x: 50, y: 50}
+    fill_color = "#3498db"
+    stroke_color = "#2c3e50"
+    stroke_width = 5
+}
+
+// Define a circle shape
+shape Circle {
+    radius = 50
+    position = {x: 300, y: 150}
+    fill_color = "#e74c3c"
+    stroke_color = "#c0392b"
+    stroke_width = 3
+}
+
+// Define a line
+shape Line {
+    start_point = {x: 100, y: 200}
+    end_point = {x: 300, y: 300}
+    stroke_color = "#9b59b6"
+    stroke_width = 4
+}
+
+// Define a text element
+text TextElement {
+    content = "Hello, Blend!"
+    position = {x: 150, y: 350}
+    font_size = 24
+    font_family = "Arial"
+    color = "#2ecc71"
+}
+
+// Define an animation for the rectangle
+animation RectangleAnimation {
+    target = Rectangle
+    property = "position"
+    from = {x: 50, y: 50}
+    to = {x: 250, y: 50}
+    duration = 2s
+    easing = "ease-in-out"
+}
+

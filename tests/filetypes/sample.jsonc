@@ -1,0 +1,26 @@
+{
+  // JSONC (JSON with Comments) example to test editor settings
+
+  "id": 1,                     // This is the user ID
+  "name": "Alice",              // The user's name
+  "age": 30,                    // The user's age
+  "email": "alice@example.com", // The user's email address
+
+  // Nested object
+  "address": {
+    "street": "123 Main St",
+    "city": "Wonderland",
+    "postal_code": "12345"
+  },
+
+  // Array of phone numbers
+  "phone_numbers": [
+    "+1234567890",  // Primary phone
+    "+0987654321"   // Secondary phone
+  ],
+
+  /* Boolean values */
+  "is_active": true,     // Whether the user is active
+  "is_subscribed": false // Whether the user is subscribed
+}
+

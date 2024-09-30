@@ -1,0 +1,246 @@
+/* CSS example to test editor settings */
+
+/* Universal selector */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+/* Simple element selector */
+body {
+	font-family: Arial, sans-serif;
+	line-height: 1.6;
+	background-color: #f4f4f4;
+}
+
+/* ID selector */
+#main {
+	width: 80%;
+	margin: 0 auto;
+	padding: 20px;
+	background-color: white;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Class selector */
+.container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 15px;
+	background-color: #fff;
+}
+
+/* Nested class selectors */
+.container .column {
+	flex: 1;
+	padding: 10px;
+}
+
+.container .column img {
+	max-width: 100%;
+	height: auto;
+}
+
+/* Pseudo-class */
+a:hover {
+	color: #3498db;
+	text-decoration: underline;
+}
+
+/* Pseudo-element */
+p::first-line {
+	font-weight: bold;
+	color: #333;
+}
+
+/* Child combinator */
+nav>ul>li {
+	list-style-type: none;
+}
+
+/* Adjacent sibling combinator */
+h1+p {
+	font-size: 18px;
+	color: #666;
+}
+
+/* General sibling combinator */
+h1~p {
+	margin-bottom: 10px;
+}
+
+/* Attribute selector */
+input[type="text"] {
+	border: 1px solid #ccc;
+	padding: 5px;
+	width: 100%;
+}
+
+/* Grouping selectors */
+h1,
+h2,
+h3 {
+	font-family: "Helvetica", sans-serif;
+	color: #333;
+}
+
+/* Media queries */
+@media screen and (max-width: 768px) {
+	.container {
+		flex-direction: column;
+	}
+
+	#main {
+		width: 100%;
+	}
+
+	nav ul {
+		flex-direction: column;
+	}
+}
+
+/* Keyframes for animation */
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+/* Animation */
+.fade-in {
+	animation: fadeIn 2s ease-in-out;
+}
+
+/* Flexbox layout */
+.flex-container {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.flex-item {
+	background-color: #3498db;
+	padding: 20px;
+	color: white;
+	margin: 10px;
+	border-radius: 5px;
+}
+
+/* Grid layout */
+.grid-container {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 10px;
+}
+
+.grid-item {
+	background-color: #2ecc71;
+	padding: 20px;
+	color: white;
+	border-radius: 5px;
+}
+
+/* Box model properties */
+.box {
+	width: 300px;
+	height: 200px;
+	padding: 20px;
+	margin: 20px auto;
+	border: 2px solid #333;
+	background-color: #ecf0f1;
+}
+
+/* Positioning */
+.position-relative {
+	position: relative;
+	top: 20px;
+	left: 30px;
+}
+
+.position-absolute {
+	position: absolute;
+	top: 50px;
+	right: 50px;
+}
+
+/* Z-index */
+.z-index-high {
+	position: relative;
+	z-index: 10;
+}
+
+/* Transform and transition */
+.transform-box {
+	transition: transform 0.3s ease;
+}
+
+.transform-box:hover {
+	transform: scale(1.1) rotate(5deg);
+}
+
+/* Text styles */
+.text-center {
+	text-align: center;
+}
+
+.text-uppercase {
+	text-transform: uppercase;
+}
+
+.text-muted {
+	color: #999;
+}
+
+/* Colors and background */
+.primary {
+	color: #3498db;
+	background-color: #ecf0f1;
+}
+
+.secondary {
+	color: #2ecc71;
+	background-color: #f1c40f;
+}
+
+/* Shadows */
+.box-shadow {
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Rounded corners */
+.rounded {
+	border-radius: 10px;
+}
+
+/* Responsive image */
+.responsive-image {
+	max-width: 100%;
+	height: auto;
+}
+
+/* Variables (CSS custom properties) */
+:root {
+	--primary-color: #3498db;
+	--secondary-color: #2ecc71;
+}
+
+.variable-usage {
+	color: var(--primary-color);
+	background-color: var(--secondary-color);
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #3498db;
+	border-radius: 10px;
+}

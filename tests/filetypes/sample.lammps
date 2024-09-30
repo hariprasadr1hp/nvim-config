@@ -1,0 +1,51 @@
+# LAMMPS input script example to test editor settings
+
+# Initialize simulation
+
+units       metal
+dimension   3
+boundary    p p p
+atom_style  atomic
+
+# Create simulation box
+
+lattice     fcc 3.615
+region      simbox block 0 10 0 10 0 10
+create_box  1 simbox
+create_atoms 1 box
+
+# Define interaction potential
+
+pair_style  eam
+pair_coeff  * * Cu_u3.eam
+
+# Define settings
+
+neighbor    0.3 bin
+neigh_modify    every 1 delay 0 check yes
+
+# Define simulation parameters
+
+timestep    0.001
+thermo      100
+
+# Define groups
+
+group       all type 1
+
+# Fixes
+
+fix         1 all nvt temp 300.0 300.0 0.1
+fix         2 all press/berendsen iso 0.0 0.0 1000.0
+
+# Run the simulation
+
+run         5000
+
+# Output results
+
+dump        1 all atom 100 dump.atom
+dump_modify 1 scale no
+thermo_style custom step temp press pe
+write_data  final.data
+

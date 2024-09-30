@@ -1,0 +1,48 @@
+# HTTP request example to test editor settings
+
+# GET request
+GET /api/users/1 HTTP/1.1
+Host: example.com
+Accept: application/json
+User-Agent: Mozilla/5.0
+
+# POST request with JSON payload
+POST /api/users HTTP/1.1
+Host: example.com
+Content-Type: application/json
+Content-Length: 85
+
+{
+  "name": "Alice",
+  "email": "alice@example.com",
+  "age": 30,
+  "is_active": true
+}
+
+# PUT request to update a resource
+PUT /api/users/1 HTTP/1.1
+Host: example.com
+Content-Type: application/json
+Content-Length: 74
+
+{
+  "name": "Alice",
+  "email": "alice_updated@example.com",
+  "age": 31
+}
+
+# DELETE request to delete a resource
+DELETE /api/users/1 HTTP/1.1
+Host: example.com
+
+# Response example
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 58
+
+{
+  "id": 1,
+  "name": "Alice",
+  "email": "alice_updated@example.com"
+}
+

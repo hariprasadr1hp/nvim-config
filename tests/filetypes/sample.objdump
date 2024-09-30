@@ -1,0 +1,46 @@
+# objdump example to test editor settings
+
+# Example output of objdump -d (disassembly)
+
+Disassembly of section .text:
+
+0000000000401136 <_start>:
+  401136:       31 ed                   xor    %ebp,%ebp
+  401138:       49 89 d1                mov    %rdx,%r9
+  40113b:       5e                      pop    %rsi
+  40113c:       48 89 e2                mov    %rsp,%rdx
+  40113f:       48 83 e4 f0             and    $0xfffffffffffffff0,%rsp
+  401143:       50                      push   %rax
+  401144:       54                      push   %rsp
+  401145:       49 c7 c0 d0 11 40 00    mov    $0x4011d0,%r8
+  40114c:       48 c7 c1 80 11 40 00    mov    $0x401180,%rcx
+  401153:       48 c7 c7 30 11 40 00    mov    $0x401130,%rdi
+  40115a:       ff 15 0a 2f 00 00       callq  *0x2f0a(%rip)        # 40306a <__libc_start_main@GLIBC_2.2.5>
+  401160:       f4                      hlt
+
+# Example output of objdump -t (symbol table)
+
+SYMBOL TABLE:
+0000000000000000 l    df *ABS*  0000000000000000 foo.c
+0000000000000000 l    d  .text  0000000000000000 .text
+0000000000000000 l    d  .data  0000000000000000 .data
+0000000000000000 l    d  .bss   0000000000000000 .bss
+0000000000000000 l    d  .rodata        0000000000000000 .rodata
+0000000000000000 g     F .text  0000000000000029 _start
+0000000000000000 g     O .data  0000000000000004 global_var
+0000000000000000 g     F .text  0000000000000041 main
+0000000000000000 g     O .bss   0000000000000008 uninitialized_var
+
+# Example output of objdump -h (section headers)
+
+Sections:
+Idx Name          Size      VMA               LMA               File off  Algn
+  0 .text         00000034  0000000000401136  0000000000401136  00000136  2**4
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000004  0000000000602000  0000000000602000  00000200  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000008  0000000000602004  0000000000602004  00000204  2**2
+                  ALLOC
+  3 .rodata       00000010  0000000000601000  0000000000601000  00000210  2**4
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+

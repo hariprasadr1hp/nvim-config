@@ -31,6 +31,16 @@ Which one of these is *not* an /open-source/?[3/5][60%]
 + ~[[file:~/xx.org::My Target]]~ :: a text search of my target
 + ~[[file:~/xx.org::*My Target]]~ :: restrict search to headlines
 
+* Images
+[[https://via.placeholder.com/150][Alt text for image]]
+
+* Blockquotes
+#+BEGIN_QUOTE
+This is a blockquote. You can use it to highlight important information or quotations.
+
+Multiple lines of blockquote text will still be treated as a single block.
+#+END_QUOTE
+
 * org tables
 #+name: bmi
 #+header: :var height=1.73 weight=60
