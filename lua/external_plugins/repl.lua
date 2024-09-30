@@ -1,4 +1,4 @@
--- lua/external_plugins/sniprun.lua
+-- lua/external_plugins/repl.lua
 
 local M = {}
 

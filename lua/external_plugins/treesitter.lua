@@ -70,10 +70,16 @@ local setup_treesitter_config = function()
 end
 
 M = {
-	"nvim-treesitter/nvim-treesitter",
-	build = ":TSUpdate",
-	main = "nvim-treesitter.configs",
-	opts = setup_treesitter_config(),
+	{
+		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate",
+		event = { "BufReadPre", "BufNewFile" },
+		main = "nvim-treesitter.configs",
+		opts = setup_treesitter_config(),
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter-textobjects",
+		},
+	},
 }
 
 return M

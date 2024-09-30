@@ -3,7 +3,7 @@
 local M = {}
 
 local setup_neorg_config = function()
-	require("neorg").setup({
+	return require("neorg").setup({
 		load = {
 			["core.defaults"] = {},
 			["core.completion"] = {

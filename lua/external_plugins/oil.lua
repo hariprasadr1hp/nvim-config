@@ -123,7 +123,7 @@ local keymaps_help = {
 }
 
 local setup_oil = function()
-	require("oil").setup({
+	return require("oil").setup({
 		default_file_explorer = true,
 		columns = columns,
 		buf_options = buf_options,

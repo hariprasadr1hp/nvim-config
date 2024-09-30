@@ -2,7 +2,7 @@
 
 ## Overview
 
-`neovim` customized for coding environment
+`neovim` config
 
 ## Install `neovim`
 
@@ -22,16 +22,12 @@ sudo apt install neovim
 
 ## Setting up
 
-- clone the repo as `~/.config/nvim`
-
-```bash
-cd ~/.config/nvim
-touch vimscript/temp.vim
-touch lua/temp.lua
-```
-
-- inside `neovim`, `:Lazy`
+- clone the repo at `~/.config/nvim`
+- inside `neovim`, `:Lazy` and `:Mason` to load plugins and lsp support for languages
 
 ## References
 
 - [https://www.lazyvim.org/](https://www.lazyvim.org/)
+- [gh:nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
+- [gh:mason.nvim](https://github.com/williamboman/mason.nvim)
+- [gh:nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)

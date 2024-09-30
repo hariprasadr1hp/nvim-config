@@ -1,23 +1,30 @@
 -- lua/external_plugins/whichkey.lua
 
+local telescope_builtins = require("telescope.builtin")
+local conform = require("conform")
+
 local key_mappings = {
 	--- NORMAL MODE
 	{
 		mode = "n",
 		{ "<C-`>", "<cmd>ToggleTerm<CR>", desc = "toggle-term", nowait = false, remap = false },
 
+		{ ",p", group = "swap-prev", nowait = false, remap = false },
+		{ ",n", group = "swap-next", nowait = false, remap = false },
+
+		{ "<leader>,", ":Telescope find_files<CR>", desc = "files", nowait = false, remap = false },
+		{ "<leader>.", ":Telescope find_files<CR>", desc = "files", nowait = false, remap = false },
+		{ "<leader>/", ":CommentToggle<CR>", desc = "comment", nowait = false, remap = false },
+
+		{ "<leader>0", "0", desc = "0", nowait = false, remap = false },
+		{ "<leader>6", "^", desc = "^", nowait = false, remap = false },
+		{ "<leader>9", "$", desc = "$", nowait = false, remap = false },
+
 		{ "<leader>1", "<cmd>1tabnext<CR>", desc = "tab-1", nowait = false, remap = false },
 		{ "<leader>2", "<cmd>2tabnext<CR>", desc = "tab-2", nowait = false, remap = false },
 		{ "<leader>3", "<cmd>3tabnext<CR>", desc = "tab-3", nowait = false, remap = false },
 		{ "<leader>4", "<cmd>4tabnext<CR>", desc = "tab-4", nowait = false, remap = false },
 		{ "<leader>5", "<cmd>5tabnext<CR>", desc = "tab-5", nowait = false, remap = false },
-
-		{ "<leader>,", ":Telescope find_files<CR>", desc = "files", nowait = false, remap = false },
-		{ "<leader>.", ":Telescope find_files<CR>", desc = "files", nowait = false, remap = false },
-		{ "<leader>/", ":CommentToggle<CR>", desc = "comment", nowait = false, remap = false },
-		{ "<leader>0", "0", desc = "0", nowait = false, remap = false },
-		{ "<leader>6", "^", desc = "^", nowait = false, remap = false },
-		{ "<leader>9", "$", desc = "$", nowait = false, remap = false },
 
 		-- [A]CTION ----------------
 		{ "<leader>a", group = "action", nowait = false, remap = false },
@@ -52,7 +59,7 @@ local key_mappings = {
 		{
 			"<leader>cf",
 			function()
-				require("conform").format({ async = true, lsp_format = "fallback" })
+				conform.format({ async = true, lsp_format = "fallback" })
 			end,
 			desc = "format",
 			nowait = false,
@@ -126,7 +133,7 @@ local key_mappings = {
 		{
 			"<leader>fp",
 			function()
-				require("telescope.builtin").find_files({ cwd = "~/.config/nvim/" })
+				telescope_builtins.find_files({ cwd = "~/.config/nvim/" })
 			end,
 			desc = "private-config",
 			nowait = false,
@@ -318,17 +325,21 @@ local key_mappings = {
 			remap = false,
 		},
 
+		-- [n]ext -------------------
+		{ "<leader>ln", group = "next", nowait = false, remap = false },
 		{
-			"<leader>ln",
-			"<cmd>lua vim.diagnostic.goto_next()",
+			"<leader>lnd",
+			"<cmd>lua vim.diagnostic.goto_next()<CR>",
 			desc = "next-diagnostic",
 			nowait = false,
 			remap = false,
 		},
 
+		-- [p]revious ---------------
+		{ "<leader>lp", group = "next", nowait = false, remap = false },
 		{
-			"<leader>lp",
-			"<cmd>lua vim.diagnostic.goto_prev()",
+			"<leader>lpd",
+			"<cmd>lua vim.diagnostic.goto_prev()<CR>",
 			desc = "prev-diagnostic",
 			nowait = false,
 			remap = false,
@@ -382,7 +393,7 @@ local key_mappings = {
 		{
 			"<leader>njs",
 			function()
-				require("telescope.builtin").find_files({ cwd = "$HOME/my/org/journal/" })
+				telescope_builtins.find_files({ cwd = "$HOME/my/org/journal/" })
 			end,
 			desc = "journal",
 			nowait = false,
@@ -394,7 +405,7 @@ local key_mappings = {
 		{
 			"<leader>nrf",
 			function()
-				require("telescope.builtin").find_files({ cwd = "$HOME/my/org/roam/" })
+				telescope_builtins.find_files({ cwd = "$HOME/my/org/roam/" })
 			end,
 			desc = "roam",
 			nowait = false,
@@ -404,7 +415,7 @@ local key_mappings = {
 		{
 			"<leader>nrr",
 			function()
-				require("telescope.builtin").find_files({ cwd = "$HOME/my/org/roam/" })
+				telescope_builtins.find_files({ cwd = "$HOME/my/org/roam/" })
 			end,
 			desc = "roam",
 			nowait = false,
@@ -416,6 +427,7 @@ local key_mappings = {
 
 		-- [O]PEN -------------------
 		{ "<leader>o", group = "open", nowait = false, remap = false },
+		{ "<leader>od", "<cmd>FloatermNew lazydocker<CR>", desc = "lazygit", nowait = false, remap = false },
 		{ "<leader>oe", "<cmd>NvimTreeToggle<CR>", desc = "explorer", nowait = false, remap = false },
 		{ "<leader>ol", "<cmd>FloatermNew lazygit<CR>", desc = "lazygit", nowait = false, remap = false },
 		{ "<leader>om", "<cmd>e Makefile<CR>", desc = "Makefile", nowait = false, remap = false },

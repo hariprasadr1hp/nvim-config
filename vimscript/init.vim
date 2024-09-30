@@ -7,7 +7,6 @@ source ~/.config/nvim/vimscript/keys_insert.vim
 source ~/.config/nvim/vimscript/keys_meta.vim
 source ~/.config/nvim/vimscript/keys_terminal.vim
 source ~/.config/nvim/vimscript/functions.vim
-source ~/.config/nvim/vimscript/temp.vim
 
 
 " Y yanks till the end of the line from the cursor

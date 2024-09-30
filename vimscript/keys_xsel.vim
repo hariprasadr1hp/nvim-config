@@ -300,6 +300,9 @@ vnoremap <leader>a9v "9P
 nnoremap <leader>a-x "-d
 vnoremap <leader>a-x "-d
 
+nnoremap <leader>a-c "-y
+vnoremap <leader>a-c "-y
+
 nnoremap <leader>a-v "-P
 vnoremap <leader>a-v "-P
 

@@ -30,10 +30,15 @@ end
 local setup_keymaps = function()
 	local harpoon = require("harpoon")
 
-	-- Add files to Harpoon list
+	-- Add file to the Harpoon list
 	vim.keymap.set("n", "<leader>hla", function()
 		harpoon:list():add()
 	end, { desc = "harpoon-add" })
+
+	-- Delete file from the  Harpoon list
+	vim.keymap.set("n", "<leader>hld", function()
+		harpoon:list():remove()
+	end, { desc = "harpoon-remove" })
 
 	-- Toggle Harpoon quick menu
 	vim.keymap.set("n", "<leader>oh", function()
@@ -70,7 +75,7 @@ local setup_keymaps = function()
 	end, { desc = "harpoon-next" })
 
 	-- Toggle Harpoon list with Telescope
-	vim.keymap.set("n", "<leader>hlo", function()
+	vim.keymap.set("n", "<leader>hll", function()
 		toggle_telescope(harpoon:list())
 	end, { desc = "harpoon-telescope" })
 end

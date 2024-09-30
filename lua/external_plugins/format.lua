@@ -54,3 +54,5 @@ vim.api.nvim_create_user_command("Format", function(args)
 end, { range = true })
 
 return M
+
+-- TODO: an option to save file without applying code-formatting

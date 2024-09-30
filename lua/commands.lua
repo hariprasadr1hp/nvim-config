@@ -4,19 +4,19 @@ vim.api.nvim_create_user_command("Runme", function()
 	require("functions").runme()
 end, {})
 
-vim.api.nvim_create_user_command("FilePath", function()
+vim.api.nvim_create_user_command("GetFilePath", function()
 	print(vim.fn.expand("%:p"))
 end, {})
 
-vim.api.nvim_create_user_command("FileName", function()
+vim.api.nvim_create_user_command("GetFileName", function()
 	print(vim.fn.expand("%:t"))
 end, {})
 
-vim.api.nvim_create_user_command("FileNameWihoutExt", function()
+vim.api.nvim_create_user_command("GetFileNameWihoutExt", function()
 	print(vim.fn.expand("%:t:r"))
 end, {})
 
-vim.api.nvim_create_user_command("FileExt", function()
+vim.api.nvim_create_user_command("GetFileExt", function()
 	print(vim.fn.expand("%:e"))
 end, {})
 
