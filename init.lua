@@ -10,6 +10,5 @@ require("functions")
 require("commands")
 require("keybindings")
 require("neovide")
-require("temp")
 
 vim.cmd("source ~/.config/nvim/vimscript/init.vim")

@@ -2,12 +2,63 @@
 
 local telescope_builtins = require("telescope.builtin")
 local conform = require("conform")
+local harpoon_list = require("harpoon"):list()
 
 local key_mappings = {
 	--- NORMAL MODE
 	{
 		mode = "n",
 		{ "<C-`>", "<cmd>ToggleTerm<CR>", desc = "toggle-term", nowait = false, remap = false },
+
+		{
+			",1",
+			function()
+				harpoon_list:select(1)
+			end,
+			desc = "harpoon-1",
+			nowait = false,
+			remap = false,
+		},
+
+		{
+			",2",
+			function()
+				harpoon_list:select(2)
+			end,
+			desc = "harpoon-2",
+			nowait = false,
+			remap = false,
+		},
+
+		{
+			",3",
+			function()
+				harpoon_list:select(3)
+			end,
+			desc = "harpoon-3",
+			nowait = false,
+			remap = false,
+		},
+
+		{
+			",4",
+			function()
+				harpoon_list:select(4)
+			end,
+			desc = "harpoon-4",
+			nowait = false,
+			remap = false,
+		},
+
+		{
+			",5",
+			function()
+				harpoon_list:select(5)
+			end,
+			desc = "harpoon-5",
+			nowait = false,
+			remap = false,
+		},
 
 		{ ",p", group = "swap-prev", nowait = false, remap = false },
 		{ ",n", group = "swap-next", nowait = false, remap = false },
@@ -44,6 +95,7 @@ local key_mappings = {
 		{ "<leader>bO", "<cmd>%bd | e#<CR>", desc = "kill-other-buffers", nowait = false, remap = false },
 		{ "<leader>bp", "<cmd>bprevious<CR>", desc = "previous-buffer", nowait = false, remap = false },
 		{ "<leader>bt", "<C-^>", desc = "toggle-buffer", nowait = false, remap = false },
+		{ "<leader>bz", "<cmd>Telescope buffers<CR>", desc = "fzf-buffer", nowait = false, remap = false },
 
 		-- [C]ODE -------------------
 		{ "<leader>c", group = "code", nowait = false, remap = false },
@@ -237,6 +289,58 @@ local key_mappings = {
 
 		-- [H]ELP -------------------
 		{ "<leader>h", group = "help", nowait = false, remap = false },
+		{ "<leader>hl", group = "harpoon", nowait = false, remap = false },
+		{
+			"<leader>hla",
+			function()
+				harpoon_list:add()
+			end,
+			desc = "harpoon-add",
+			nowait = false,
+			remap = false,
+		},
+
+		{
+			"<leader>hld",
+			function()
+				harpoon_list:remove()
+			end,
+			desc = "harpoon-delete",
+			nowait = false,
+			remap = false,
+		},
+
+		{
+			"<leader>hll",
+			function()
+				require("harpoon").ui:toggle_quick_menu(harpoon_list)
+			end,
+			desc = "harpoon-list",
+			nowait = false,
+			remap = false,
+		},
+
+		{
+			"<leader>hlp",
+			function()
+				harpoon_list:prev()
+			end,
+			desc = "harpoon-prev",
+			nowait = false,
+			remap = false,
+		},
+
+		{
+			"<leader>hln",
+			function()
+				harpoon_list:next()
+			end,
+			desc = "harpoon-next",
+			nowait = false,
+			remap = false,
+		},
+
+		{ "<leader>hrr", "<cmd>echo '`emacs` command 🫠'<CR>", desc = "N/A", nowait = false, remap = false },
 		{
 			"<leader>hs",
 			"<cmd>lua vim.lsp.buf.signature_help()<CR>",
@@ -390,6 +494,7 @@ local key_mappings = {
 		},
 
 		{ "<leader>nj", group = "journal", nowait = false, remap = false },
+		{ "<leader>njj", "<cmd>echo '`emacs` command 🫠'<CR>", desc = "N/A", nowait = false, remap = false },
 		{
 			"<leader>njs",
 			function()
@@ -412,22 +517,16 @@ local key_mappings = {
 			remap = false,
 		},
 		{ "<leader>nri", "<cmd>echo '`emacs` command 🫠'<CR>", desc = "N/A", nowait = false, remap = false },
-		{
-			"<leader>nrr",
-			function()
-				telescope_builtins.find_files({ cwd = "$HOME/my/org/roam/" })
-			end,
-			desc = "roam",
-			nowait = false,
-			remap = false,
-		},
+		{ "<leader>nrr", "<cmd>echo '`emacs` command 🫠'<CR>", desc = "N/A", nowait = false, remap = false },
+		{ "<leader>nrs", "<cmd>echo '`emacs` command 🫠'<CR>", desc = "N/A", nowait = false, remap = false },
+		{ "<leader>ns", "<cmd>echo '`emacs` command 🫠'<CR>", desc = "N/A", nowait = false, remap = false },
 
 		---- [t]odo ------------------
 		{ "<leader>nt", group = "todo", nowait = false, remap = false },
 
 		-- [O]PEN -------------------
 		{ "<leader>o", group = "open", nowait = false, remap = false },
-		{ "<leader>od", "<cmd>FloatermNew lazydocker<CR>", desc = "lazygit", nowait = false, remap = false },
+		{ "<leader>od", "<cmd>FloatermNew lazydocker<CR>", desc = "lazydocker", nowait = false, remap = false },
 		{ "<leader>oe", "<cmd>NvimTreeToggle<CR>", desc = "explorer", nowait = false, remap = false },
 		{ "<leader>ol", "<cmd>FloatermNew lazygit<CR>", desc = "lazygit", nowait = false, remap = false },
 		{ "<leader>om", "<cmd>e Makefile<CR>", desc = "Makefile", nowait = false, remap = false },
@@ -543,25 +642,7 @@ local key_mappings = {
 		{ "<leader>w|", "<C-w><", desc = "max-out-width", nowait = false, remap = false },
 
 		-- MISC ----------------------
-		{ "<leader>x", group = "hop", nowait = false, remap = false },
-		{ "<leader>xC", "<cmd>HopChar1<CR>", desc = "hop-char1", nowait = false, remap = false },
-		{ "<leader>xa", "<cmd>HopChar2BC<CR>", desc = "hop-char2-above", nowait = false, remap = false },
-		{ "<leader>xb", "<cmd>HopChar2AC<CR>", desc = "hop-char2-below", nowait = false, remap = false },
-		{ "<leader>xc", "<cmd>HopChar2<CR>", desc = "hop-char2", nowait = false, remap = false },
-
-		{ "<leader>xl", group = "lines", nowait = false, remap = false },
-		{ "<leader>xlj", "<cmd>HopLineStartAC<CR>", desc = "hop-lines-below", nowait = false, remap = false },
-		{ "<leader>xlk", "<cmd>HopLineStartBC<CR>", desc = "hop-lines-above", nowait = false, remap = false },
-		{ "<leader>xll", "<cmd>HopLineStart<CR>", desc = "hop-lines", nowait = false, remap = false },
-
-		{ "<leader>xp", "<cmd>HopPattern<CR>", desc = "hop-pattern", nowait = false, remap = false },
-		{ "<leader>xw", group = "words", nowait = false, remap = false },
-
-		{ "<leader>xwj", "<cmd>HopWordAC<CR>", desc = "hop-words-below", nowait = false, remap = false },
-		{ "<leader>xwk", "<cmd>HopWordBC<CR>", desc = "hop-words-above", nowait = false, remap = false },
-		{ "<leader>xww", "<cmd>HopWord<CR>", desc = "hop-words", nowait = false, remap = false },
-
-		{ "<leader>xx", "<cmd>HopChar2<CR>", desc = "hop-char2", nowait = false, remap = false },
+		{ "<leader>x", group = "misc", nowait = false, remap = false },
 
 		-- FU[Z]ZY ---------------
 		{ "<leader>z", group = "telescope", nowait = false, remap = false },
