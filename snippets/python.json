@@ -1,0 +1,368 @@
+{
+  "jaddarg": {
+    "prefix": "jaddarg",
+    "body": [
+      "parser.add_argument(",
+      "\t\"-${1:w}\",",
+      "\t\"--${2:word}\",",
+      "\ttype=${3:str},",
+      "\trequired=${4:True},",
+      "\tmetavar='',",
+      "\thelp=\"${5:help syntax}\"",
+      ")$0"
+    ],
+    "description": "hp snippet for parser.add_argument"
+  },
+  "jargparse": {
+    "prefix": "jargparse",
+    "body": [
+      "parser = argparse.ArgumentParser(",
+      "\tdescription=\"${1:a description}\"",
+      ")",
+      "$0",
+      "args = parser.parse_args()"
+    ],
+    "description": "hp snippet argparse"
+  },
+  "jbasemodelpydantic": {
+    "prefix": "jbasemodelpydantic",
+    "body": [
+      "class ${1:CLASS_NAME}(pydantic.BaseModel):",
+      "\t${0:STATEMENT}"
+    ],
+    "description": "hp snippet for inheriting `pydantic.BaseModel`"
+  },
+  "jbsoup": {
+    "prefix": "jbsoup",
+    "body": [
+      "import sys",
+      "import requests",
+      "from requests.exceptions import HTTPError",
+      "from bs4 import BeautifulSoup",
+      "",
+      "urlpath = \"${1:URLPATH}\"",
+      "",
+      "try:",
+      "\tresponse = requests.get(urlpath)",
+      "\tresponse.raise_for_status()",
+      "except HTTPError as http_err:",
+      "\tprint(f'HTTP error occurred: {http_err}')",
+      "\tsys.exit()",
+      "# else:",
+      "# print('Request Success!')",
+      "",
+      "response.encoding = 'utf-8'",
+      "data = response.text",
+      "soup = BeautifulSoup(data,'lxml')",
+      "print(soup.prettify())",
+      "#headlineintro = soup.find_all('span',{'class': 'headline-intro'})",
+      "$0"
+    ],
+    "description": "snippet for beautifulsoup"
+  },
+  "jcurry": {
+    "prefix": "jcurry",
+    "body": [
+      "from functools import partial",
+      "from inspect import signature",
+      "def curry(func):",
+      "\tdef inner(arg):",
+      "\t\tif len(signature(func).parameters) == 1:",
+      "\t\t\treturn func(arg)",
+      "\t\treturn curry(partial(func,arg))",
+      "\treturn inner",
+      "$0"
+    ],
+    "description": "decorator for currying"
+  },
+  "jenum": {
+    "prefix": "jenum",
+    "body": [
+      "class ${1:CLASS_NAME}(str, enum.Enum):",
+      "\t${0:STATEMENT}"
+    ],
+    "description": "hp snippet for enum class"
+  },
+  "jhdf5Read": {
+    "prefix": "jhdf5Read",
+    "body": [
+      "with h5py.File('${1:FILENAME}.h5','r') as rf:",
+      "\tcells = list(rf.items())",
+      "\tdata = rf.get('${2:DATASET}')",
+      "\t${3:VARIABLE} = np.array(data)",
+      "\tk = list(data.attrs.keys())",
+      "\tv = list(data.attrs.values())",
+      "$0"
+    ],
+    "description": "hp read a HDF5 file"
+  },
+  "jfieldpydantic": {
+    "prefix": "jfieldpydantic",
+    "body": [
+      "pydantic.Field(description=\"${0:DESCRIPTION}\")"
+    ],
+    "description": "hp snippet for filling `pydantic.Field`"
+  },
+  "jflask": {
+    "prefix": "jflask",
+    "body": [
+      "from flask import Flask, render_template",
+      "",
+      "app = Flask(__name__)",
+      "",
+      "@app.route('/')",
+      "def index():",
+      "\treturn \"Hello, World\"",
+      "\n",
+      "if __name__ == \"__main__\":",
+      "\tapp.run(debug=True)"
+    ],
+    "description": "hp flask snippet"
+  },
+  "jllamachat": {
+    "prefix": "jllamachat",
+    "body": [
+      "def get_gpt_summary(content: str, model: str, host: str | None = None) -> str:",
+      "\tif not host:",
+      "\t\thost = \"http://localhost:11434\"",
+      "\tclient = ollama.Client(host=host)",
+      "\tmessages = [",
+      "\t\tollama.Message(",
+      "\t\t\trole=\"system\",",
+      "\t\t\tcontent=\"summarize the text, into bullet points, only return the summary\",",
+      "\t\t),",
+      "\t\tollama.Message(role=\"user\", content=content),",
+      "\t]",
+      "\tresponse = client.chat(model=model, messages=messages, stream=False)",
+      "\treturn response[\"message\"][\"content\"]"
+    ],
+    "description": "hp ollama snippet"
+  },
+  "jhdf5Write": {
+    "prefix": "jhdf5Write",
+    "body": [
+      "with h5py.File('${1:FILENAME}.h5','w') as wf:",
+      "\t${2:VARIABLE} = wf.create_dataset('${3:DATASET}', data=${4:MATRIX})",
+      "\t#set attributes",
+      "\tdataset1.attrs['${5:VERSION}'] = '${6:VERSIONNO}'",
+      "$0"
+    ],
+    "description": "hp write a HDF5 file"
+  },
+  "jinit": {
+    "prefix": "jinit",
+    "body": [
+      "def __init__(self, $1) -> None:",
+      "\t$0"
+    ],
+    "description": "snippet for __init__"
+  },
+  "jjsonRead": {
+    "prefix": "jjsonRead",
+    "body": [
+      "with open(file='${1:FILENAME}.json', mode='r', encoding='utf-8') as rf:",
+      "\t${2:VARIABLE} = json.load(rf)",
+      "$0"
+    ],
+    "description": "hp read a JSON file"
+  },
+  "jjsonWrite": {
+    "prefix": "jjsonWrite",
+    "body": [
+      "with open(file='${1:FILENAME}.json', mode='w', encoding='utf-8') as wf:",
+      "\tjson.dump(${2:CONTENTS}, wf, indent=2, sort_keys=False)",
+      "$0"
+    ],
+    "description": "hp write a JSON file"
+  },
+  "jlineplot": {
+    "prefix": "jlineplot",
+    "body": [
+      "plt.style.use('seaborn')",
+      "plt.plot(${1:XLIST}, ${2:YLIST}, marker='o',label='plotlabel')",
+      "plt.title('plot title')",
+      "plt.legend()",
+      "plt.xlabel('xlabel')",
+      "plt.ylabel('ylabel')",
+      "plt.grid(False)",
+      "plt.xticks(np.arange(min(${1:XLIST}), max(${1:XLIST}), int((max(${1:XLIST})-min(${1:XLIST}))/5)))",
+      "plt.yticks(np.arange(min(${2:YLIST}), max(${2:YLIST}), int((max(${2:YLIST})-min(${2:YLIST}))/5)))",
+      "plt.tight_layout()",
+      "plt.show()",
+      "$0"
+    ],
+    "description": "hp line plotting using matplotlib"
+  },
+  "jmain": {
+    "prefix": "jmain",
+    "body": [
+      "def main() -> None:",
+      "\t$0",
+      "\t...\n\n",
+      "if __name__ == \"__main__\":",
+      "\tmain()"
+    ],
+    "description": "hp snippet for main"
+  },
+  "jmat": {
+    "prefix": "jmat",
+    "body": [
+      "import matplotlib.pyplot as plt"
+    ],
+    "description": "hp import matplotlib.pyplot"
+  },
+  "jnp": {
+    "prefix": "jnp",
+    "body": [
+      "import numpy as np"
+    ],
+    "description": "hp import numpy"
+  },
+  "jpar": {
+    "prefix": "jpar",
+    "body": [
+      ":type ${1:VARIABLE}: ${2:DATATYPE}",
+      ":param ${1:VARIABLE}: ${3:DESCRIPTION}$0"
+    ],
+    "description": "hp define parameters"
+  },
+  "jpd": {
+    "prefix": "jpd",
+    "body": [
+      "import pandas as pd"
+    ],
+    "description": "hp import pandas"
+  },
+  "jpostinit": {
+    "prefix": "jpostinit",
+    "body": [
+      "def __post_init__(self, ${1}) -> None:",
+      "\t$0"
+    ],
+    "description": "hp snippet for __post_init__"
+  },
+  "jprint": {
+    "prefix": "jprint",
+    "body": [
+      "print(\"${1:STRING}\".format(${2:VALUES}))$0"
+    ],
+    "description": "hp snippet for print"
+  },
+  "jprop": {
+    "prefix": "jprop",
+    "body": [
+      "@property",
+      "def ${1:NAME}(self) -> ${2:float}:",
+      "\treturn self._${1}",
+      "",
+      "@${1}.setter",
+      "def ${1:NAME}(self, value) -> None:",
+      "\tself._${1} = value"
+    ],
+    "description": "hp snippet for property"
+  },
+  "jrepr": {
+    "prefix": "jrepr",
+    "body": [
+      "def __repr__(self) -> str:",
+      "\treturn str(self.__dict__)"
+    ],
+    "description": "hp snippet for __repr__"
+  },
+  "jsel": {
+    "prefix": "jsel",
+    "body": [
+      "from selenium import webdriver",
+      "from selenium.webdriver.common.keys import Keys",
+      "from selenium.webdriver.common.by import By",
+      "from selenium.webdriver.support import expected_conditions as EC",
+      "from selenium.webdriver.support.wait import SupportWait"
+    ],
+    "description": "hp snippet for selenium"
+  },
+  "jsns": {
+    "prefix": "jsns",
+    "body": [
+      "import seaborn as sns"
+    ],
+    "description": "hp import seaborn"
+  },
+  "jstr": {
+    "prefix": "jstr",
+    "body": [
+      "def __str__(self) -> str:",
+      "\treturn $0"
+    ],
+    "description": "hp snippet for __str__"
+  },
+  "jsubprocess": {
+    "prefix": "jsubprocess",
+    "body": [
+      "${1:VARIABLE} = sub.run('${2:COMMAND}',",
+      "             capture_output=True,",
+      "             text=True,",
+      "             shell=True)",
+      "$0"
+    ],
+    "description": "hp snippet for subprocess"
+  },
+  "jsvgWrite": {
+    "prefix": "jsvgWrite",
+    "body": [
+      "import xml.etree.ElementTree as ET",
+      "",
+      "svg_doc = ET.Element(",
+      "\t\"svg\",",
+      "\twidth=\"$1mm\",",
+      "\theight=\"$2mm\",",
+      "\tviewBox=\"0 0 ${1:WIDTH} ${2:HEIGHT}\",",
+      ")",
+      "g = ET.SubElement(svg_doc, \"g\")",
+      "tree = ET.ElementTree(svg_doc)",
+      "tree.write(\"${3:FILENAME}.svg\", encoding=\"UTF-8\", xml_declaration=True)",
+      "$0"
+    ],
+    "description": "writing svg file"
+  },
+  "jtimeit": {
+    "prefix": "jtimeit",
+    "body": [
+      "def timeit(method):",
+      "\tdef timed(*args, **kwargs):",
+      "\t\ttstart = time.time()",
+      "\t\tresult = method(*args, **kwargs)",
+      "\t\ttend = time.time()        ",
+      "\t\tprint(\"Time taken for running '{}': {} second(s)\".format(method.__name__, (tend-tstart)))",
+      "\t\treturn result",
+      "\treturn timed",
+      "$0"
+    ],
+    "description": "decorator for timeit"
+  },
+  "jwith_open": {
+    "prefix": "jwith_open",
+    "body": [
+      "with open(${1:FILENAME}, '${2:MODE}') as f:",
+      "\t$0"
+    ],
+    "description": "code snippet for open-file"
+  },
+  "jyamlRead": {
+    "prefix": "jyamlRead",
+    "body": [
+      "with open(file='${1:FILENAME}.yml', mode='r', encoding='utf-8') as rf:",
+      "\t${2:VARIABLE} = yaml.load(rf, yaml.FullLoader)",
+      "$0"
+    ],
+    "description": "read a YAML file"
+  },
+  "jyamlWrite": {
+    "prefix": "jyamlWrite",
+    "body": [
+      "with open(file='${1:FILENAME}.yml', mode='w', encoding='utf-8') as wf:",
+      "\tyaml.dump(${2:CONTENTS}, wf)",
+      "$0"
+    ],
+    "description": "write a YAML file"
+  }
+}

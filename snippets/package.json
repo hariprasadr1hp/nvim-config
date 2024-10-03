@@ -1,0 +1,188 @@
+{
+	"name": "example-snippets",
+	"contributes": {
+		"snippets": [
+			{
+				"language": [
+					"all"
+				],
+				"path": "./jinja.json"
+			},
+			{
+				"language": [
+					"arduino"
+				],
+				"path": "./arduino.json"
+			},
+			{
+				"language": [
+					"asm"
+				],
+				"path": "./asm.json"
+			},
+			{
+				"language": [
+					"beancount"
+				],
+				"path": "./beancount.json"
+			},
+			{
+				"language": [
+					"cmake"
+				],
+				"path": "./cmake.json"
+			},
+			{
+				"language": [
+					"cobol"
+				],
+				"path": "./cobol.json"
+			},
+			{
+				"language": [
+					"c"
+				],
+				"path": "./c.json"
+			},
+			{
+				"language": [
+					"cpp"
+				],
+				"path": "./cpp.json"
+			},
+			{
+				"language": [
+					"docker"
+				],
+				"path": "./docker.json"
+			},
+			{
+				"language": [
+					"fortran"
+				],
+				"path": "./fortran.json"
+			},
+			{
+				"language": [
+					"graphql"
+				],
+				"path": "./graphql.json"
+			},
+			{
+				"language": [
+					"gleam"
+				],
+				"path": "./gleam.json"
+			},
+			{
+				"language": [
+					"go"
+				],
+				"path": "./go.json"
+			},
+			{
+				"language": [
+					"haskell"
+				],
+				"path": "./haskell.json"
+			},
+			{
+				"language": [
+					"html"
+				],
+				"path": "./html.json"
+			},
+			{
+				"language": [
+					"json"
+				],
+				"path": "./json.json"
+			},
+			{
+				"language": [
+					"javascript"
+				],
+				"path": "./javascript.json"
+			},
+			{
+				"language": [
+					"lua"
+				],
+				"path": "./lua.json"
+			},
+			{
+				"language": [
+					"make"
+				],
+				"path": "./makefile.json"
+			},
+			{
+				"language": [
+					"markdown"
+				],
+				"path": "./markdown.json"
+			},
+			{
+				"language": [
+					"org"
+				],
+				"path": "./org.json"
+			},
+			{
+				"language": [
+					"python"
+				],
+				"path": "./python.json"
+			},
+			{
+				"language": [
+					"rust"
+				],
+				"path": "./rust.json"
+			},
+			{
+				"language": [
+					"sql"
+				],
+				"path": "./sql.json"
+			},
+			{
+				"language": [
+					"svg"
+				],
+				"path": "./svg.json"
+			},
+			{
+				"language": [
+					"tex"
+				],
+				"path": "./tex.json"
+			},
+			{
+				"language": [
+					"toml"
+				],
+				"path": "./toml.json"
+			},
+			{
+				"language": [
+					"typescript"
+				],
+				"path": "./typescript.json"
+			},
+			{
+				"language": [
+					"typescriptreact"
+				],
+				"path": "./typescriptreact.json"
+			},
+			{
+				"language": [
+					"vue"
+				],
+				"path": "./vue.json"
+			}
+		]
+	}
+}
+

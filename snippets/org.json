@@ -1,0 +1,119 @@
+{
+  "jcpp": {
+    "prefix": "jcpp",
+    "body": [
+      "#+NAME: parameters",
+      "#+begin_src C++ ",
+      "int a, b;",
+      "a = 12;",
+      "b = 12;",
+      "#+end_src",
+      "",
+      "#+NAME: add",
+      "#+begin_src C++ :includes [list \"<iostream>\" \"<vector>\"] :cache yes :noweb yes :output yes ",
+      "<<parameters>>",
+      "auto add = [=](int a, int b){ return a + b; };",
+      "std::cout << add(a,b) << std::endl;",
+      "#+end_src"
+    ],
+    "description": "sample cpp source block"
+  },
+  "jcss1": {
+    "prefix": "jcss1",
+    "body": [
+      "#+HTML_HEAD: <link rel=\"stylesheet\" href=\"https://sandyuraz.com/styles/org.min.css\">$0"
+    ],
+    "description": "css template 1"
+  },
+  "jcss2": {
+    "prefix": "jcss2",
+    "body": [
+      "#+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css\"/>",
+      "#+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css\"/>",
+      "#+HTML_HEAD: <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js\"></script>",
+      "#+HTML_HEAD: <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js\"></script>",
+      "#+HTML_HEAD: <script type=\"text/javascript\" src=\"https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js\"></script>",
+      "#+HTML_HEAD: <script type=\"text/javascript\" src=\"https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js\"></script>"
+    ],
+    "description": "css template 2"
+  },
+  "jmatplotlib": {
+    "prefix": "jmatplotlib",
+    "body": [
+      "#+begin_src python :results file",
+      "import numpy as np",
+      "import matplotlib.pyplot as plt",
+      "fig=plt.figure(figsize=(4,2))",
+      "x = np.array([0.1*i-45 for i in range(300)])",
+      "plt.plot(np.sin(x), label='$sin(x)$')",
+      "plt.plot(np.cos(x), label='$cos(x)$')",
+      "plt.title(\"Sinusiodal waves\")",
+      "plt.legend()",
+      "#fig.tight_layout()",
+      "fname = 'python-matplot.svg'",
+      "plt.savefig(fname)",
+      "return fname # return filename to org-mode",
+      "#+end_src"
+    ],
+    "description": "python source block for matplotlib"
+  },
+  "jplantumlMindmap": {
+    "prefix": "jplantumlMindmap",
+    "body": [
+      "#+begin_src plantuml :file mindmap.eps",
+      "@startmindmap",
+      "!define LIGHTGREEN",
+      "!includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml",
+      ",* Debian",
+      ",** Ubuntu",
+      ",*** Linux Mint",
+      ",*** Kubuntu",
+      ",** LMDE",
+      ",** Raspbian with a very long name",
+      ",*** <s>Raspmbc</s> => OSMC",
+      ",*** <s>Raspyfi</s> => Volumio",
+      "@endmindmap",
+      "#+end_src"
+    ],
+    "description": "plantuml source block for mindmap"
+  },
+  "jplantumlProcess": {
+    "prefix": "jplantumlProcess",
+    "body": [
+      "#+begin_src plantuml :file output.eps",
+      "@startuml",
+      "!define LIGHTBLUE",
+      "!includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml",
+      "(*) --> \"Initialization\"",
+      "if \"Some Test\" then",
+      "\\\\-->[true] \"Some Action\"",
+      "\\\\--> \"Another Action\"",
+      "\\\\-right-> (*)",
+      "else",
+      "\\\\->[false] \"Something else\"",
+      "\\\\-->[Ending process] (*)",
+      "endif",
+      "@enduml",
+      "#+end_src"
+    ],
+    "description": "plantuml source block for process flowchart"
+  },
+  "jpython": {
+    "prefix": "jpython",
+    "body": [
+      "#+name: ${1:NAME}",
+      "#+header: :var ${2:PARAMETER1}=${3:VALUE1} ${4:PARAMETER2}=${5:VALUE2}",
+      "#+begin_src python :noweb yes",
+      "return $0",
+      "#+end_src"
+    ],
+    "description": "sample python source block"
+  },
+  "jTBLFM": {
+    "prefix": "jTBLFM",
+    "body": [
+      "#+TBLFM: $1='(org-sbe \"${1:FUNCTION}\" (${2:PARAMETER1} ${3:VALUE1})(${4:PARAMETER2} ${5:VALUE2}))::$6='(org-sbe \"$7\" ($8 $9)($10 $11 $12))"
+    ],
+    "description": "python source block template"
+  }
+}

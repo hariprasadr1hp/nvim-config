@@ -1,0 +1,64 @@
+{
+  "GraphQL Query": {
+    "prefix": "query",
+    "body": [
+      "query $1 {",
+      "  $2 {",
+      "    $3",
+      "  }",
+      "}"
+    ],
+    "description": "GraphQL Query: Example usage -> query GetUser { user { id name email } }"
+  },
+  "GraphQL Mutation": {
+    "prefix": "mutation",
+    "body": [
+      "mutation $1 {",
+      "  $2(input: {",
+      "    $3",
+      "  }) {",
+      "    $4",
+      "  }",
+      "}"
+    ],
+    "description": "GraphQL Mutation: Example usage -> mutation CreateUser { createUser(input: { name: \"John\", email: \"john@example.com\" }) { id name } }"
+  },
+  "GraphQL Type Definition": {
+    "prefix": "type",
+    "body": [
+      "type $1 {",
+      "  $2: $3",
+      "}"
+    ],
+    "description": "GraphQL Type Definition: Example usage -> type User { id: ID name: String email: String }"
+  },
+  "GraphQL Input Type": {
+    "prefix": "input",
+    "body": [
+      "input $1 {",
+      "  $2: $3",
+      "}"
+    ],
+    "description": "GraphQL Input Type: Example usage -> input UserInput { name: String email: String }"
+  },
+  "GraphQL Resolver Function": {
+    "prefix": "resolver",
+    "body": [
+      "const $1 = {",
+      "  Query: {",
+      "    $2: (parent, args, context, info) => {",
+      "      $3",
+      "    }",
+      "  },",
+      "  Mutation: {",
+      "    $4: (parent, args, context, info) => {",
+      "      $5",
+      "    }",
+      "  }",
+      "};",
+      "",
+      "module.exports = $1;"
+    ],
+    "description": "GraphQL Resolver: Example usage -> const resolvers = { Query: { user: (parent, args) => { /* logic */ } }, Mutation: { createUser: (parent, args) => { /* logic */ } } };"
+  }
+}

@@ -1,0 +1,179 @@
+{
+  "jarc": {
+    "prefix": "jarc",
+    "body": [
+      "\\draw[red,thick,dashed] ($1,$2) arc ($3cm:$4cm);",
+      "$0"
+    ],
+    "description": "snippet for arc"
+  },
+  "jaxes": {
+    "prefix": "jaxes",
+    "body": [
+      "\\draw[thick,->] (0,0) -- (4.5,0) node[anchor=north west] {x axis};",
+      "\\draw[thick,->] (0,0) -- (0,4.5) node[anchor=south east] {y axis};",
+      "$0",
+      "\\foreach \\x in {0,1,2,3,4}",
+      "\\draw (\\x cm,1pt) -- (\\x cm,-1pt) node[anchor=north] {$\\x$};",
+      "\\foreach \\y in {0,1,2,3,4}",
+      "\\draw (1pt,\\y cm) -- (-1pt,\\y cm) node[anchor=east] {$\\y$};"
+    ],
+    "description": "snippet for axes"
+  },
+  "jjcheckmark": {
+    "prefix": "jjcheckmark",
+    "body": [
+      "\\def\\checkmark{\\tikz\\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}$0"
+    ],
+    "description": "custom checkmark definition"
+  },
+  "jcircle": {
+    "prefix": "jcircle",
+    "body": [
+      "\\draw[red,thick,dashed] ($1,$2) circle ($3cm);",
+      "$0"
+    ],
+    "description": "snippet for circle"
+  },
+  "jellipse": {
+    "prefix": "jellipse",
+    "body": [
+      "\\draw[red,thick,dashed] ($1,$2) ellipse ($3cm and $4cm);",
+      "$0"
+    ],
+    "description": "snippet for ellipse"
+  },
+  "jflowchart": {
+    "prefix": "jflowchart",
+    "body": [
+      "\\tikzstyle{startstop} = [circle, radius=1cm, text centered, ",
+      "draw=black, fill=black!100]",
+      "",
+      "\\tikzstyle{process} = [rectangle, minimum width=3cm, ",
+      "minimum height=1cm, text centered, draw=white, fill=black!20]",
+      "",
+      "\\tikzstyle{arrow} = [thick,->,>=stealth]",
+      "",
+      "\begin{tikzpicture}[node distance=2cm]",
+      "\t\\node (start)[startstop]{};",
+      "\t\\node (motion)[process, below of=start]{Analyze ego motion ",
+      "\tand environment (perception)};",
+      "\t\\node (maneuver)[process, below of=motion]{Decide on a plan and maneuver ",
+      "\t(planning)};",
+      "\t\\node (stop)[startstop, below of=maneuver]{};",
+      "\t\\draw [arrow] (start) -- node[anchor=west]{Input} (motion);",
+      "\t\\draw [arrow] (motion) -- (maneuver);",
+      "\t\\draw [arrow] (maneuver) -- node[anchor=west]{drive}(stop);",
+      "\\end{tikzpicture}"
+    ],
+    "description": "snippet for flowchart"
+  },
+  "jcommentline": {
+    "prefix": "jcommentline",
+    "body": [
+      "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+    ],
+    "description": "comments the whole line to section"
+  },
+  "jfill": {
+    "prefix": "jfill",
+    "body": [
+      "\\fill[blue!40!white] (0,0) rectangle (4,4);",
+      "$0"
+    ],
+    "description": "snippet for fill"
+  },
+  "jfilldraw": {
+    "prefix": "jfilldraw",
+    "body": [
+      "\\filldraw[fill=blue!40!white, draw=black] (0,0) rectangle (4,4);",
+      "$0"
+    ],
+    "description": "snippet for filldraw"
+  },
+  "jfillgradient": {
+    "prefix": "jfillgradient",
+    "body": [
+      "\\shade[left color=blue,right color=red] (0,0) rectangle (4,4);",
+      "%left,right,top,bottom,inner,outer",
+      "$0"
+    ],
+    "description": "snippet for fillgradient"
+  },
+  "jgrid": {
+    "prefix": "jgrid",
+    "body": [
+      "\\draw[step=1cm,gray,very thin] (-2,-2) grid (6,6);",
+      "$0"
+    ],
+    "description": "snippet for grid"
+  },
+  "jmathmode": {
+    "prefix": "jmathmode",
+    "body": [
+      "$ $0 $"
+    ],
+    "description": "Encloses with dollar signs"
+  },
+  "jppt": {
+    "prefix": "jppt",
+    "body": [
+      "\\documentclass[14pt]{beamer}",
+      "\\usetheme{Luebeck}",
+      "\\usepackage[utf8]{inputenc}",
+      "\\usepackage[english]{babel}",
+      "\\usepackage{amsmath}",
+      "\\usepackage{amsfonts}",
+      "\\usepackage{amssymb}",
+      "\\usepackage{graphicx}",
+      "%\\author{}",
+      "%\title{}",
+      "%\\setbeamercovered{transparent} ",
+      "%\\setbeamertemplate{navigation symbols}{} ",
+      "%\\logo{} ",
+      "%\\institute{} ",
+      "%\\date{} ",
+      "%\\subject{} ",
+      "\\begin{document}",
+      "",
+      "%\\begin{frame}",
+      "%\\titlepage",
+      "%\\end{frame}",
+      "",
+      "%\\begin{frame}",
+      "%\\tableofcontents",
+      "%\\end{frame}",
+      "",
+      "\\begin{frame}{•}",
+      "",
+      "\\end{frame}",
+      "",
+      "\\end {document}"
+    ],
+    "description": "code snippet for presentation"
+  },
+  "jrectangle": {
+    "prefix": "jrectangle",
+    "body": [
+      "\\draw[red,thick,dashed] ($1,$2) rectangle ($3,$4);",
+      "$0"
+    ],
+    "description": "snippet for rectangle"
+  },
+  "jreport": {
+    "prefix": "jreport",
+    "body": [
+      "\\documentclass[10pt,a4paper]{report}",
+      "\\usepackage[utf8]{inputenc}",
+      "\\usepackage[english]{babel}",
+      "\\usepackage{amsmath}",
+      "\\usepackage{amsfonts}",
+      "\\usepackage{amssymb}",
+      "\\usepackage{graphicx}",
+      "\\begin{document}",
+      "\t$0",
+      "\\end{document}"
+    ],
+    "description": "code snippet for quickstart(report)"
+  }
+}

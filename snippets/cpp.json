@@ -1,0 +1,172 @@
+{
+  "jcout": {
+    "prefix": "jcout",
+    "body": [
+      "std::cout << ${1:\"hello\"} << std::endl;$0"
+    ],
+    "description": "hp a std::cout line"
+  },
+  "jforeach": {
+    "prefix": "jforeach",
+    "body": [
+      "for(auto &&i : ${1:CONTAINER}){",
+      "\t$0",
+      "}"
+    ],
+    "description": "hp for each snippet"
+  },
+  "jforiter": {
+    "prefix": "jforiter",
+    "body": [
+      "for(auto ${1:itr}=${2:vec}.begin(); ${1:itr}!=${2:vec}.end(); ++${1:itr}){",
+      "\t$0",
+      "}"
+    ],
+    "description": "hp for iterator snippet"
+  },
+  "jforrange": {
+    "prefix": "jforrange",
+    "body": [
+      "for(size_t i=${1:0}; i<${2:5}; ++i){",
+      "\t$0",
+      "}"
+    ],
+    "description": "hp for range snippet"
+  },
+  "jheader": {
+    "prefix": "jheader",
+    "body": [
+      "#ifndef ${TM_FILENAME_BASE}_H",
+      "#define ${TM_FILENAME_BASE}_H",
+      "",
+      "$0",
+      "\n\n\n\n\n\n",
+      "#endif //${TM_FILENAME_BASE}_H"
+    ],
+    "description": "creates header tags"
+  },
+  "jinclude": {
+    "prefix": "jinclude",
+    "body": [
+      "#include <${1:vector}>"
+    ],
+    "description": "hp include"
+  },
+  "jiostream": {
+    "prefix": "jiostream",
+    "body": [
+      "#include <iostream>$0"
+    ],
+    "description": "inserts #include <iostream>"
+  },
+  "jmap": {
+    "prefix": "jmap",
+    "body": [
+      "std::map<${1:int}, ${2:int}> $3 = ${4:std::make_pair(${5:5}, ${6:6})};$0"
+    ],
+    "description": "hp std::map snippet"
+  },
+  "jmath": {
+    "prefix": "jmath",
+    "body": [
+      "#include \"math.h\"$0"
+    ],
+    "description": "inserts #include \"math.h\""
+  },
+  "jmpistarter": {
+    "prefix": "jmpistarter",
+    "body": [
+      "int rank, size,ierr;",
+      "MPI_Status status;",
+      "MPI_Request request;",
+      "MPI_Comm MPI_COMM_WORLD;",
+      "MPI_Init(&argc, &argv);",
+      "MPI_Comm_rank(MPI_COMM_WORLD, &rank);",
+      "MPI_Comm_size(MPI_COMM_WORLD, &size);",
+      "MPI_Finalize();"
+    ],
+    "description": "code snippet for barebone mpi"
+  },
+  "jpair": {
+    "prefix": "jpair",
+    "body": [
+      "std::pair<${1:int}, ${2:int}> $3 = ${4:std::make_pair(${5:5}, ${6:6})};$0"
+    ],
+    "description": "hp std::pair snippet"
+  },
+  "jprint": {
+    "prefix": "jprint",
+    "body": [
+      "printf(\"$1\\n\"${2|%c,%d,%e,%f,%i,%o,%s,%u,%x|});$0"
+    ],
+    "description": "code snippet for printf"
+  },
+  "jqueue": {
+    "prefix": "jqueue",
+    "body": [
+      "std::queue<${1:int}> ${2:vec};$0"
+    ],
+    "description": "hp std::queue snippet"
+  },
+  "jrand": {
+    "prefix": "jrand",
+    "body": [
+      "$RANDOM$0"
+    ],
+    "description": "hp snippet temporary"
+  },
+  "jsamplecpp": {
+    "prefix": "jsamplecpp",
+    "body": [
+      "#include <iostream>",
+      "",
+      "",
+      "int main(int argc, char const *argv[]) {",
+      "\t$0;",
+      "\treturn 0;",
+      "}"
+    ],
+    "description": "creates barebone cpp"
+  },
+  "jsnprintf": {
+    "prefix": "jspnrintf",
+    "body": [
+      "char ${1:txt}[100];",
+      "sprintf(${1:txt}, sizeof(${1:txt}), \"${2:TEXT %d GOES HERE}\", 5);",
+      "err = system(${1:txt});"
+    ],
+    "description": "hp snprintf snippet"
+  },
+  "jsprintf": {
+    "prefix": "jsprintf",
+    "body": [
+      "char ${1:err}[100];",
+      "sprintf(${1:err}, \"${2:TEXT %d GOES HERE}\", 5);",
+      "std::cout << ${1:err} << std::endl;"
+    ],
+    "description": "hp sprintf snippet"
+  },
+  "jstack": {
+    "prefix": "jstack",
+    "body": [
+      "std::stack<${1:int}> ${2:vec};$0"
+    ],
+    "description": "hp std::stack snippet"
+  },
+  "jvec": {
+    "prefix": "jvec",
+    "body": [
+      "std::vector<${1:int}> ${2:vec};$0"
+    ],
+    "description": "hp std::vector snippet"
+  },
+  "jwhile": {
+    "prefix": "jwhile",
+    "body": [
+      "while (${1:CONDITION}){",
+      "\t$0",
+      "}"
+    ],
+    "description": "hp while snippet"
+  }
+}

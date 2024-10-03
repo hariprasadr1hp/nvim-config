@@ -8,7 +8,6 @@ lua/external_plugins/languages/
 
 #files
 temp.lua
-package.json
 package-lock.json
 vimscript/temp.vim
 .netrwhist

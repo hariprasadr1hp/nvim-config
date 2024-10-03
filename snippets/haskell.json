@@ -1,0 +1,14 @@
+{
+  "jqsort": {
+    "prefix": "jqsort",
+    "body": [
+      "quicksort :: (Ord a) => [a] -> [a]",
+      "quicksort [] = []",
+      "quicksort (x:xs) =",
+      "\tlet smallsorted = quicksort [a | a <- xs, a<=x]",
+      "\t\tbigsorted = quicksort [a | a <- xs, a>x]",
+      "\tin smallsorted ++ [x] ++ bigsorted"
+    ],
+    "description": "hp quicksort snippet"
+  }
+}

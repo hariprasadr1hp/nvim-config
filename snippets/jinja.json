@@ -1,0 +1,100 @@
+{
+  "For Loop": {
+    "prefix": "jinjafor",
+    "body": [
+      "{% for $1 in $2 %}",
+      "    $3",
+      "{% endfor %}"
+    ],
+    "description": "Jinja For Loop: `{% for item in items %} ... {% endfor %}`"
+  },
+  "If Statement": {
+    "prefix": "jinjaif",
+    "body": [
+      "{% if $1 %}",
+      "    $2",
+      "{% endif %}"
+    ],
+    "description": "Jinja If Statement: `{% if condition %} ... {% endif %}`"
+  },
+  "If-Else Statement": {
+    "prefix": "jinjaifelse",
+    "body": [
+      "{% if $1 %}",
+      "    $2",
+      "{% else %}",
+      "    $3",
+      "{% endif %}"
+    ],
+    "description": "Jinja If-Else Statement: `{% if condition %} ... {% else %} ... {% endif %}`"
+  },
+  "Variable Output": {
+    "prefix": "jinjavar",
+    "body": [
+      "{{ $1 }}"
+    ],
+    "description": "Jinja Variable Output: `{{ variable }}`"
+  },
+  "Set Variable": {
+    "prefix": "jinjaset",
+    "body": [
+      "{% set $1 = $2 %}"
+    ],
+    "description": "Jinja Set Variable: `{% set variable = value %}`"
+  },
+  "Include Template": {
+    "prefix": "jinjainclude",
+    "body": [
+      "{% include '$1' %}"
+    ],
+    "description": "Jinja Include Template: `{% include 'template.html' %}`"
+  },
+  "Comment": {
+    "prefix": "jinjacomment",
+    "body": [
+      "{# $1 #}"
+    ],
+    "description": "Jinja Comment: `{# This is a comment #}`"
+  },
+  "Extends Template": {
+    "prefix": "jinjaextends",
+    "body": [
+      "{% extends '$1' %}"
+    ],
+    "description": "Jinja Extends Template: `{% extends 'base.html' %}`"
+  },
+  "Block": {
+    "prefix": "jinjablock",
+    "body": [
+      "{% block $1 %}",
+      "    $2",
+      "{% endblock %}"
+    ],
+    "description": "Jinja Block: `{% block content %} ... {% endblock %}`"
+  },
+  "Function Definition": {
+    "prefix": "jinjafunction",
+    "body": [
+      "{% macro $1($2) %}",
+      "    $3",
+      "{% endmacro %}"
+    ],
+    "description": "Jinja Function Definition (Macro): `{% macro function_name(args) %} ... {% endmacro %}`"
+  },
+  "Import": {
+    "prefix": "jinjaimport",
+    "body": [
+      "{% import '$1' as $2 %}"
+    ],
+    "description": "Jinja Import: `{% import 'macros.html' as macros %}`"
+  },
+  "Call Block": {
+    "prefix": "jinjacall",
+    "body": [
+      "{% call $1.$2($3) %}",
+      "    $4",
+      "{% endcall %}"
+    ],
+    "description": "Jinja Call Block: `{% call macro.block(args) %} ... {% endcall %}`"
+  }
+}

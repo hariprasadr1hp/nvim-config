@@ -1,0 +1,71 @@
+{
+  "jpytest": {
+    "prefix": "jpytest",
+    "body": [
+      "[tool.pytest.ini_options]",
+      "minversion = \"6.0\"",
+      "addopts = \"-q\"",
+      "testpaths = [",
+      "\t\"tests\",",
+      "]"
+    ],
+    "description": "hp snippet for pytest"
+  },
+  "jmypy": {
+    "prefix": "jmypy",
+    "body": [
+      "[tool.mypy]",
+      "mypy_path = \"src\"",
+      "check_untyped_defs = true",
+      "disallow_any_generics = true",
+      "no_implicit_optional = true",
+      "show_error_codes = true",
+      "strict_equality = true",
+      "warn_redundant_casts = true",
+      "warn_return_any = true",
+      "warn_unreachable = true",
+      "warn_unused_configs = true",
+      "no_implicit_reexport = true"
+    ],
+    "description": "hp snippet for mypy"
+  },
+  "jflake8": {
+    "prefix": "jflake8",
+    "body": [
+      "[tool.flakehell]",
+      "exclude = [\"README.rst\", \"README.md\"]",
+      "format = \"colored\"",
+      "max_line_length = 88",
+      "show_source = true",
+      "whitelist = \"../../allowlist.txt\"",
+      "",
+      "[tool.flakehell.plugins]",
+      "flake8-bandit = [\"+*\", \"-S322\"]",
+      "flake8-bugbear = [\"+*\"]",
+      "flake8-builtins = [\"+*\"]",
+      "flake8-comprehensions = [\"+*\"]",
+      "flake8-darglint = [\"+*\"]",
+      "flake8-docstrings = [\"+*\"]",
+      "flake8-eradicate = [\"+*\"]",
+      "flake8-isort = [\"+*\"]",
+      "flake8-mutable = [\"+*\"]",
+      "flake8-pytest-style = [\"+*\"]",
+      "flake8-spellcheck = [\"+*\"]",
+      "mccabe = [\"+*\"]",
+      "pep8-naming = [\"+*\"]",
+      "pycodestyle = [\"+*\"]",
+      "pyflakes = [\"+*\"]",
+      "pylint = [\"+*\"]"
+    ],
+    "description": "hp snippet for flake8"
+  },
+  "jbuildpython": {
+    "prefix": "jbuildpython",
+    "body": [
+      "[build-system]",
+      "requires = [\"setuptools>=42.0\", \"wheel\"]",
+      "build-backend = \"setuptools.build_meta\""
+    ],
+    "description": "hp snippet for build-system python"
+  }
+}

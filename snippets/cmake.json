@@ -1,0 +1,14 @@
+{
+  "cmake_boilerplate": {
+    "prefix": "my_cmake_boilerplate",
+    "body": [
+      "cmake_minimum_required(VERSION 3.8)",
+      "",
+      "set (This ${1:PROJECTNAME})",
+      "project(/$/{This/})",
+      "",
+      "add_executable(/$/{This/} /bin/main.cpp)"
+    ],
+    "description": "a barebone code for cmake"
+  }
+}

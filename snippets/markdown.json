@@ -1,0 +1,11 @@
+{
+  "jbash": {
+    "prefix": "jbash",
+    "body": [
+      "```bash",
+      "$0",
+      "```"
+    ],
+    "description": "code snippet for bash"
+  }
+}

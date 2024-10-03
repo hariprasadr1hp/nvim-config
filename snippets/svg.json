@@ -1,0 +1,152 @@
+{
+  "jcircle": {
+    "prefix": "jcircle",
+    "body": [
+      "<circle",
+      "\tid=\"${1:CIRCLE_ID}\"",
+      "\tcx=\"${2:CENTER_X}\" cy=\"${3:CENTER_Y}\" r=\"${4:RADIUS}\"",
+      "\tstyle=\"fill:#ffffff;stroke:#000000;stroke-width:1;",
+      "\tstroke-opacity:0.99;opacity:0.99\"",
+      "\tclass=\"${5:CLASS}\" >",
+      "</circle>$0"
+    ],
+    "description": "svg sample for circle"
+  },
+  "jellipse": {
+    "prefix": "jellipse",
+    "body": [
+      "<ellipse",
+      "\tid=\"${1:ELLIPSE_ID}\"",
+      "\tcx=\"${2:CENTER_X}\"",
+      "\tcy=\"${3:CENTER_Y}\"",
+      "\trx=\"${4:RADIUS_X}\"",
+      "\try=\"${5:RADIUS_Y}\"",
+      "\tstyle=\"fill:#ffffff;stroke:#000000;stroke-width:1;",
+      "\tstroke-opacity:0.99;opacity:0.99\"",
+      "\tclass=\"${6:CLASS}\">",
+      "</ellipse>$0"
+    ],
+    "description": "svg snippet for ellipse"
+  },
+  "jline": {
+    "prefix": "jline",
+    "body": [
+      "<line",
+      "\tid=\"${1:LINE_ID}\"",
+      "\tx1=\"${2:X1}\" y1=\"${3:Y1}\" x2=\"${4:X2}\" y2=\"${5:Y2}\"  ",
+      "\tstyle=\"fill:#000000;stroke:#000000;stroke-width:1;",
+      "\tstroke-opacity:0.99;opacity:0.99\"",
+      "\tclass=\"${6:CLASS}\" >",
+      "</line>$0"
+    ],
+    "description": "svg sample for line"
+  },
+  "jpath": {
+    "prefix": "jpath",
+    "body": [
+      "<path",
+      "\tid=\"${1:PATH_ID}\"",
+      "\td=\"${2:PATH_DEFINITION}\"",
+      "\tstyle=\"fill:#000000;stroke:#000000;stroke-width:1;",
+      "\tstroke-opacity:0.99;opacity:0.99\"",
+      "\tclass=\"${3:CLASS}\" >",
+      "</path>$0"
+    ],
+    "description": [
+      "svg sample for polygon\n",
+      "d=\"M 100 100 L 300 100 L 200 300 z\"",
+      "M − moveto − move from one point to another point.",
+      "L − lineto − create a line.",
+      "H − horizontal lineto − create a horizontal line.",
+      "V − vertical lineto − create a vertical line.",
+      "C − curveto − create a curve.",
+      "S − smooth curveto − create a smooth curve.",
+      "Q − quadratic Bezier curve − create a quadratic Bezier curve.",
+      "T − smooth quadratic Bezier curveto − create a smooth quadratic Bezier curve",
+      "A − elliptical Arc − create a elliptical arc.",
+      "Z − closepath − close the path. "
+    ]
+  },
+  "jpolyline": {
+    "prefix": "jpolyline",
+    "body": [
+      "<polygon",
+      "\tid=\"${1:POLYLINE_ID}\"",
+      "\tpoints=\"$2,$3 $4,$5 $6,$7\"",
+      "\tstyle=\"fill:#000000;stroke:#000000;stroke-width:1;",
+      "\tstroke-opacity:0.99;opacity:0.99\"",
+      "\tclass=\"${8:CLASS}\" >",
+      "</polyline>$0"
+    ],
+    "description": "svg sample for polyline"
+  },
+  "jpolygon": {
+    "prefix": "jpolygon",
+    "body": [
+      "<polygon",
+      "\tid=\"${1:POLYGON_ID}\"",
+      "\tpoints=\"$2,$3 $4,$5 $6,$7\"",
+      "\tstyle=\"fill:#ffffff;stroke:#000000;stroke-width:1;",
+      "\tstroke-opacity:0.99;opacity:0.99\"",
+      "\tclass=\"${8:CLASS}\" >",
+      "</polygon>$0"
+    ],
+    "description": "svg sample for polygon"
+  },
+  "jrect": {
+    "prefix": "jrect",
+    "body": [
+      "<rect",
+      "\tid=\"${1:RECTANGLE_ID}\"",
+      "\tx=\"${2:START_X}\"",
+      "\ty=\"${3:START_Y}\"",
+      "\twidth=\"${4:WIDTH}\"",
+      "\theight=\"${5:HEIGHT}\"",
+      "\tstyle=\"fill:#ffffff;stroke:#000000;stroke-width:1;",
+      "\tstroke-opacity:0.99;opacity:0.99\"",
+      "\trx=\"0\"",
+      "\try=\"0\"",
+      "\tclass=\"${6:CLASS}\" >",
+      "</rect>$0"
+    ],
+    "description": "svg sample for rectangle"
+  },
+  "jsamplesvg": {
+    "prefix": "jsamplesvg",
+    "body": [
+      "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>",
+      "<svg",
+      "\txmlns:dc=\"http://purl.org/dc/elements/1.1/\"",
+      "\txmlns:cc=\"http://creativecommons.org/ns#\"",
+      "\txmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"",
+      "\txmlns:svg=\"http://www.w3.org/2000/svg\"",
+      "\txmlns=\"http://www.w3.org/2000/svg\"",
+      "\txmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\"",
+      "\txmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\"",
+      "\tid=\"svg8\"",
+      "\twidth=\"${1:WIDTH}mm\"",
+      "\theight=\"${2:HEIGHT}mm\"",
+      "\tversion=\"1.1\"",
+      "\tviewBox=\"0 0 ${1:WIDTH} ${2:HEIGHT}\"",
+      "\tinkscape:version=\"1.0.1 (0767f8302a, 2020-10-17)\"",
+      "\tsodipodi:docname=\"${3:FILENAME}.svg\">",
+      "\t<g",
+      "\t\tid=\"layer1\"",
+      "\t\tinkscape:groupmode=\"layer\"",
+      "\t\tinkscape:label=\"Layer 1\">",
+      "\t${0:FILL_CONTENT}",
+      "\t\t</g>",
+      "</svg>"
+    ],
+    "description": "svg sample snippet"
+  },
+  "jtext": {
+    "prefix": "jtext",
+    "body": [
+      "<text x=\"$1\" y=\"$2\" fill=\"$3\">",
+      "\t$4",
+      "</text>$0"
+    ],
+    "description": "svg sample for text"
+  }
+}

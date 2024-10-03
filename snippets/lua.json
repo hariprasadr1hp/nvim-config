@@ -1,0 +1,27 @@
+{
+  "jp": {
+    "prefix": "jp",
+    "body": [
+      "print($TM_SELECTED_TEXT)"
+    ],
+    "description": "hp surround print"
+  },
+  "jfunc": {
+    "prefix": "jfunc",
+    "body": [
+      "function ${1:FUNCTION_NAME}(${2:PARAMETERS})",
+      "\treturn $0",
+      "end"
+    ],
+    "description": "hp function snippet"
+  },
+  "jforpairs": {
+    "prefix": "jforpairs",
+    "body": [
+      "for ${1:KEY}, ${2:VALUE} in pairs(${3:CONTAINER}) do",
+      "\t$0",
+      "end"
+    ],
+    "description": "hp forpairs snippet"
+  }
+}

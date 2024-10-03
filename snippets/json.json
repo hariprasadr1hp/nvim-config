@@ -1,0 +1,15 @@
+{
+  "jsnippetAdd": {
+    "prefix": "jsnippetAdd",
+    "body": [
+      "\"$1\": {",
+      "\t\"prefix\": \"$1\",",
+      "\t\"body\": [",
+      "\t\t$0",
+      "\t],",
+      "\t\"description\": \"$2\"",
+      "},"
+    ],
+    "description": "snippet for adding snippet"
+  }
+}
