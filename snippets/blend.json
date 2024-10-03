@@ -1,0 +1,21 @@
+{
+  "Blend Header": {
+    "prefix": "header",
+    "body": [
+      "# Blend File Header",
+      "File: $1",
+      "Version: $2"
+    ],
+    "description": "Snippet for Blend file header information"
+  },
+  "Blend Data Block": {
+    "prefix": "datablock",
+    "body": [
+      "DataBlock: $1",
+      "Size: $2",
+      "Contents: $3"
+    ],
+    "description": "Snippet for defining a Blend data block"
+  }
+}
+

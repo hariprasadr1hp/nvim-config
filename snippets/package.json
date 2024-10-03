@@ -28,6 +28,12 @@
 			},
 			{
 				"language": [
+					"blend"
+				],
+				"path": "./blend.json"
+			},
+			{
+				"language": [
 					"cmake"
 				],
 				"path": "./cmake.json"
