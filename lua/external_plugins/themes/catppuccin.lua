@@ -1,7 +1,5 @@
 -- lua/external_plugins/themes/catppuccin.lua
 
--- TODO: bright colors for relative numbering
-
 local M = {}
 
 local dim_inactive = {
