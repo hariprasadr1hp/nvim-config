@@ -9,6 +9,7 @@ local ensure_installed = {
 	"c",
 	"cpp",
 	"css",
+	"csv",
 	"diff",
 	"dockerfile",
 	"gitignore",
@@ -50,7 +51,7 @@ local indent = {
 local incremental_selection = {
 	enable = true,
 	keymaps = {
-		init_selection = "<space>lk",
+		init_selection = "<leader>lk",
 		node_incremental = ".",
 		node_decremental = ",",
 		scope_incremental = "<c-space>",
