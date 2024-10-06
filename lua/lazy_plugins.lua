@@ -38,6 +38,7 @@ local plugins = {
 	require("external_plugins/zenmode"),
 	require("external_plugins/snapshot"),
 	require("external_plugins/misc"),
+	require("external_plugins/multicursors"),
 
 	-- require("external_plugins/oil"),
 	-- require("external_plugins/debug"),
