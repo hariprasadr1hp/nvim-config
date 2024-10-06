@@ -483,6 +483,7 @@ local key_mappings = {
 			nowait = false,
 			remap = false,
 		},
+		{ "<leader>mz", "<cmd>MakeFzf<CR>", desc = "make-fzf", nowait = false, remap = false },
 
 		-- [N]OTES -------------------
 		{ "<leader>n", group = "notes", nowait = false, remap = false },
