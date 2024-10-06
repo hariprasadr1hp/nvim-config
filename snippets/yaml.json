@@ -1,0 +1,23 @@
+{
+  "github ci workflow": {
+    "prefix": "jci",
+    "body": [
+      "name: CI",
+      "on:",
+      "  workflow_dispatch:",
+      "",
+      "jobs:",
+      "  test:",
+      "    runs-on: ubuntu-latest",
+      "",
+      "    steps:",
+      "      - name: checkout repository",
+      "        uses: actions/checkout@v2",
+      "",
+      "      - name: install updates",
+      "        run: |",
+      "          sudo apt update -y"
+    ],
+    "description": "A GitHub Actions CI workflow example"
+  }
+}

@@ -193,6 +193,12 @@
 					"vue"
 				],
 				"path": "./vue.json"
+			},
+			{
+				"language": [
+					"yaml"
+				],
+				"path": "./yaml.json"
 			}
 		]
 	}

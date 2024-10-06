@@ -127,7 +127,7 @@ local key_mappings = {
 			remap = false,
 		},
 		{ "<leader>cT", "<cmd>! ctags -R *<CR>", desc = "ctags", nowait = false, remap = false },
-		{ "<leader>cm", "<cmd>FloatermNew make<CR>", desc = "make all", nowait = false, remap = false },
+		{ "<leader>cm", "<cmd>FloatermNew --autoclose=0 make<CR>", desc = "make all", nowait = false, remap = false },
 		{
 			"<leader>cs",
 			"<cmd>Telescope lsp_document_symbols<CR>",
@@ -142,7 +142,13 @@ local key_mappings = {
 		{ "<leader>dc", "<cmd>DapContinue<CR>", desc = "continue", nowait = false, remap = false },
 		{ "<leader>di", "<cmd>DapStepInto<CR>", desc = "step-into", nowait = false, remap = false },
 		{ "<leader>do", "<cmd>DapStepOver<CR>", desc = "step-over", nowait = false, remap = false },
-		{ "<leader>dm", "<cmd>FloatermNew make debug<CR>", desc = "make debug", nowait = false, remap = false },
+		{
+			"<leader>dm",
+			"<cmd>FloatermNew --autoclose=0 make debug<CR>",
+			desc = "make debug",
+			nowait = false,
+			remap = false,
+		},
 		{ "<leader>dr", "<cmd>DapToggleRepl<CR>", desc = "open-repl", nowait = false, remap = false },
 
 		-- [E]VAL / [E]DIT -------
@@ -289,6 +295,8 @@ local key_mappings = {
 
 		-- [H]ELP -------------------
 		{ "<leader>h", group = "help", nowait = false, remap = false },
+		{ "<leader>hf", "<cmd>Telescope builtins<CR>", desc = "describe-function", nowait = false, remap = false },
+		{ "<leader>hk", "<cmd>Telescope keymaps<CR>", desc = "describe-key", nowait = false, remap = false },
 		{ "<leader>hl", group = "harpoon", nowait = false, remap = false },
 		{
 			"<leader>hla",
@@ -455,14 +463,26 @@ local key_mappings = {
 
 		-- [M]AKE -------------------
 		{ "<leader>m", group = "prefix", nowait = false, remap = false },
-		{ "<leader>mc", "<cmd>FloatermNew make clean<CR>", desc = "make clean", nowait = false, remap = false },
-		{ "<leader>md", "<cmd>FloatermNew make debug<CR>", desc = "make debug", nowait = false, remap = false },
+		{ "<leader>mc", "<cmd>FloatermNew --autoclose=0 make<CR>", desc = "make clean", nowait = false, remap = false },
+		{
+			"<leader>md",
+			"<cmd>FloatermNew --autoclose=0 make debug<CR>",
+			desc = "make debug",
+			nowait = false,
+			remap = false,
+		},
 		{ "<leader>ml", group = "link", nowait = false, remap = false },
 		{ "<leader>mll", "<cmd>echo '`emacs` command 🫠'<CR>", desc = "N/A", nowait = false, remap = false },
 		{ "<leader>mlt", "<cmd>echo '`emacs` command 🫠'<CR>", desc = "N/A", nowait = false, remap = false },
-		{ "<leader>mm", "<cmd>FloatermNew make<CR>", desc = "make all", nowait = false, remap = false },
+		{ "<leader>mm", "<cmd>FloatermNew --autoclose=0 make<CR>", desc = "make all", nowait = false, remap = false },
 		{ "<leader>mo", "<cmd>e Makefile<CR>", desc = "open Makefile", nowait = false, remap = false },
-		{ "<leader>mt", "<cmd>FloatermNew make test<CR>", desc = "make test", nowait = false, remap = false },
+		{
+			"<leader>mt",
+			"<cmd>FloatermNew --autoclose=0 make test<CR>",
+			desc = "make test",
+			nowait = false,
+			remap = false,
+		},
 
 		-- [N]OTES -------------------
 		{ "<leader>n", group = "notes", nowait = false, remap = false },
@@ -578,7 +598,7 @@ local key_mappings = {
 		{ "<leader>rf", "<cmd>NvimTreeRefresh<CR>", desc = "explorer", nowait = false, remap = false },
 		{
 			"<leader>rr",
-			"<cmd>source $HOME/.config/nvim/vimscript/init.vim<CR>",
+			"<cmd>source $HOME/.config/nvim/init.lua<CR>",
 			desc = "source init.vim",
 			nowait = false,
 			remap = false,
@@ -646,7 +666,10 @@ local key_mappings = {
 
 		-- FU[Z]ZY ---------------
 		{ "<leader>z", group = "telescope", nowait = false, remap = false },
+		{ "<leader>za", "<cmd>Telescope autocommands<CR>", desc = "buffers", nowait = false, remap = false },
 		{ "<leader>zb", "<cmd>Telescope buffers<CR>", desc = "buffers", nowait = false, remap = false },
+		{ "<leader>zB", "<cmd>Telescope builtins<CR>", desc = "builtins", nowait = false, remap = false },
+		{ "<leader>zc", "<cmd>Telescope commands<CR>", desc = "commands", nowait = false, remap = false },
 		{ "<leader>zC", "<cmd>Telescope colorscheme<CR>", desc = "colors", nowait = false, remap = false },
 		{ "<leader>zf", "<cmd>Telescope find_files<CR>", desc = "files", nowait = false, remap = false },
 		{ "<leader>zF", "<cmd>Telescope filetypes<CR>", desc = "file type", nowait = false, remap = false },

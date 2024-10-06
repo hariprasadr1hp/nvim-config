@@ -1,3 +1,4 @@
+---@diagnostic disable: unused-local
 -- Lua example to test editor settings
 
 -- Single-line comment
@@ -36,18 +37,18 @@ for i = 1, #numbers do
 end
 
 -- Functions
-function greet(name)
+local function greet(name)
 	return "Hello, " .. name .. "!"
 end
 
 print(greet("Alice")) -- Output: Hello, Alice!
 
 -- Function with multiple return values
-function addAndMultiply(a, b)
+local function add_and_multiply(a, b)
 	return a + b, a * b
 end
 
-local sum, product = addAndMultiply(3, 5)
+local sum, product = add_and_multiply(3, 5)
 print("Sum:", sum) -- Output: 8
 print("Product:", product) -- Output: 15
 

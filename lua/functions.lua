@@ -16,7 +16,7 @@ function M.runme()
 	elseif file_type == "" then
 		print("ERROR: no defined filetype to evaluate!")
 	else
-		print(string.format("ERROR: not sure how to execute a '%s' file :(", file_type))
+		print(string.format("ERROR: not sure how to execute a `.%s` file :(", file_type))
 	end
 end
 
