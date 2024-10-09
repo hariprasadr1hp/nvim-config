@@ -576,7 +576,7 @@ local key_mappings = {
 
 		{ "<leader>oP", "<cmd>Lazy<CR>", desc = "plugin-manager", nowait = false, remap = false },
 		{ "<leader>or", "<cmd>FloatermNew ranger .<CR>", desc = "ranger", nowait = false, remap = false },
-		{ "<leader>ot", "<cmd>ToggleTerm<CR>", desc = "terminal", nowait = false, remap = false },
+		{ "<leader>ot", "<cmd>FloatermNew<CR>", desc = "terminal", nowait = false, remap = false },
 		{ "<leader>oz", "<cmd>Telescope builtin<CR>", desc = "telescope", nowait = false, remap = false },
 
 		-- [P]ROJECT ----------------
@@ -732,7 +732,6 @@ local key_mappings = {
 	{
 		mode = "t",
 		{ "<C-`>", "<cmd>ToggleTerm<CR>", desc = "toggle-term", nowait = false, remap = false },
-		{ "<leader>ot", "<cmd>ToggleTerm<CR>", desc = "toggle-term", nowait = false, remap = false },
 	},
 }
 
