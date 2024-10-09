@@ -26,7 +26,7 @@ vim.api.nvim_create_autocmd("ModeChanged", {
 			vim.api.nvim_set_hl(0, "LineNrAbove", { fg = colors.yellowish_green })
 			vim.api.nvim_set_hl(0, "LineNrBelow", { fg = colors.green })
 		elseif mode == "i" then
-			vim.api.nvim_set_hl(0, "LineNr", { fg = colors.yellow })
+			vim.api.nvim_set_hl(0, "LineNr", { fg = colors.red })
 			vim.api.nvim_set_hl(0, "LineNrAbove", { fg = colors.yellow })
 			vim.api.nvim_set_hl(0, "LineNrBelow", { fg = colors.yellow })
 		elseif mode == "v" or "V" then
