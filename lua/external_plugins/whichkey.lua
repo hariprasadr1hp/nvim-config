@@ -9,6 +9,7 @@ local key_mappings = {
 	{
 		mode = "n",
 		{ "<C-`>", "<cmd>ToggleTerm<CR>", desc = "toggle-term", nowait = false, remap = false },
+		{ "<C-.><C-.>", "<cmd>NvimTreeToggle<CR>", desc = "toggle-term", nowait = false, remap = false },
 
 		{
 			",1",
@@ -211,6 +212,7 @@ local key_mappings = {
 			nowait = false,
 			remap = false,
 		},
+		{ "<leader>fr", "<cmd>e<CR>", desc = "reload-file", nowait = false, remap = false },
 		{ "<leader>fs", "<cmd>update<CR>", desc = "save-file", nowait = false, remap = false },
 		{
 			"<leader>fS",
@@ -267,35 +269,37 @@ local key_mappings = {
 		{ "<leader>gB", "<cmd>Gitsigns blame<CR>", desc = "BLAME", nowait = false, remap = false },
 		{ "<leader>gC", "<cmd>Telescope git_bcommits<CR>", desc = "bcommits", nowait = false, remap = false },
 		{ "<leader>gS", "<cmd>Telescope git_stash<CR>", desc = "stash", nowait = false, remap = false },
-		{ "<leader>gb", "<cmd>Gitsigns blame_line<CR>", desc = "blame", nowait = false, remap = false },
+		{ "<leader>gb", "<cmd>Gitsigns blame_line<CR>", desc = "blame-line", nowait = false, remap = false },
+		{ "<leader>gB", "<cmd>Gitsigns blame<CR>", desc = "blame-file", nowait = false, remap = false },
 		{ "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "commits", nowait = false, remap = false },
 		{ "<leader>gf", "<cmd>Telescope git_files<CR>", desc = "git-files", nowait = false, remap = false },
-		{ "<leader>gg", "<cmd>Telescope git_status<CR>", desc = "status", nowait = false, remap = false },
-
-		{ "<leader>gh", group = "hunk", nowait = false, remap = false },
-		{ "<leader>ghp", "<cmd>Gitsigns preview_hunk<CR>", desc = "preview-hunk", nowait = false, remap = false },
-		{ "<leader>ghn", "<cmd>Gitsigns next_hunk<CR>", desc = "next-hunk", nowait = false, remap = false },
-		{ "<leader>ghs", "<cmd>Gitsigns stage_hunk<CR>", desc = "stage-hunk", nowait = false, remap = false },
-		{
-			"<leader>ghu",
-			"<cmd>Gitsigns unstage_hunk<CR>",
-			desc = "undo-stage-hunk",
-			nowait = false,
-			remap = false,
-		},
-		{
-			"<leader>ghv",
-			"<cmd>Gitsigns select_hunk<CR>",
-			desc = "visual-select-hunk",
-			nowait = false,
-			remap = false,
-		},
+		{ "<leader>gg", "<cmd>Gitsigns preview_hunk_inline<CR>", desc = "preview-hunk", nowait = false, remap = false },
 		{ "<leader>gp", "<cmd>Gitsigns preview_hunk<CR>", desc = "preview-hunk", nowait = false, remap = false },
 		{ "<leader>gy", "<cmd>Telescope git_branches<CR>", desc = "branches", nowait = false, remap = false },
 
 		-- [H]ELP -------------------
 		{ "<leader>h", group = "help", nowait = false, remap = false },
 		{ "<leader>hf", "<cmd>Telescope builtins<CR>", desc = "describe-function", nowait = false, remap = false },
+
+		{ "<leader>hh", group = "git-hunk", nowait = false, remap = false },
+		{ "<leader>hhp", "<cmd>Gitsigns prev_hunk<CR>", desc = "preview-hunk", nowait = false, remap = false },
+		{ "<leader>hhn", "<cmd>Gitsigns next_hunk<CR>", desc = "next-hunk", nowait = false, remap = false },
+		{ "<leader>hhs", "<cmd>Gitsigns stage_hunk<CR>", desc = "stage-hunk", nowait = false, remap = false },
+		{
+			"<leader>hhu",
+			"<cmd>Gitsigns unstage_hunk<CR>",
+			desc = "undo-stage-hunk",
+			nowait = false,
+			remap = false,
+		},
+		{
+			"<leader>hhv",
+			"<cmd>Gitsigns select_hunk<CR>",
+			desc = "visual-select-hunk",
+			nowait = false,
+			remap = false,
+		},
+
 		{ "<leader>hk", "<cmd>Telescope keymaps<CR>", desc = "describe-key", nowait = false, remap = false },
 		{ "<leader>hl", group = "harpoon", nowait = false, remap = false },
 		{
@@ -719,9 +723,9 @@ local key_mappings = {
 		{ "<leader>g", group = "git", nowait = false, remap = false },
 
 		---- [h]unk ---------------
-		{ "<leader>gh", group = "git-hunk", nowait = false, remap = false },
-		{ "<leader>ghs", "<cmd>Gitsigns stage_hunk<CR>", desc = "stage-hunk", nowait = false, remap = false },
-		{ "<leader>ghu", "<cmd>Gitsigns undo_stage_hunk<CR>", desc = "unstage-hunk", nowait = false, remap = false },
+		{ "<leader>hh", group = "git-hunk", nowait = false, remap = false },
+		{ "<leader>hhs", "<cmd>Gitsigns stage_hunk<CR>", desc = "stage-hunk", nowait = false, remap = false },
+		{ "<leader>hhu", "<cmd>Gitsigns undo_stage_hunk<CR>", desc = "unstage-hunk", nowait = false, remap = false },
 	},
 
 	--- TERMINAL MODE

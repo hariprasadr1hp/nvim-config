@@ -11,10 +11,10 @@ local setup_keymaps = function()
 	local harpoon_list = require("harpoon"):list()
 
 	-- Toggle previous & next buffers stored in Harpoon list
-	vim.keymap.set("n", "[h", function()
+	vim.keymap.set("n", "[n", function()
 		harpoon_list:prev()
 	end, { desc = "prev-harpoon" })
-	vim.keymap.set("n", "]h", function()
+	vim.keymap.set("n", "]n", function()
 		harpoon_list:next()
 	end, { desc = "next-harpoon" })
 end

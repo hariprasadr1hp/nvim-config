@@ -2,43 +2,64 @@
 
 local M = {}
 
-local lsp_servers = {
-	clangd = {},
-	gopls = {},
-	pyright = {
-		cmd = { "pyright-langserver", "--stdio" },
-		filetypes = { "python" },
-		settings = {
-			python = {
-				analysis = {
-					autoImportCompletions = true,
-					autoSearchPaths = true,
-					diagnosticMode = "workspace",
-					useLibraryCodeForTypes = true,
-					typeCheckingMode = "basic",
-					logLevel = "Information",
+local setup_lsp_servers = function(util)
+	return {
+		clangd = {},
+		gopls = {},
+		ts_ls = {},
+
+		pyright = {
+			cmd = { "pyright-langserver", "--stdio" },
+			filetypes = { "python" },
+			settings = {
+				python = {
+					analysis = {
+						autoImportCompletions = true,
+						autoSearchPaths = true,
+						diagnosticMode = "workspace",
+						useLibraryCodeForTypes = true,
+						typeCheckingMode = "basic",
+						logLevel = "Information",
+					},
 				},
 			},
 		},
-	},
-	rust_analyzer = {
-		cmd = { "rust-analyzer" },
-		filetypes = { "rust" },
-		settings = {
-			["rust-analyzer"] = {},
+
+		rust_analyzer = {
+			cmd = { "rust-analyzer" },
+			filetypes = { "rust" },
+			root_dir = function(fname)
+				local cargo_crate_dir = util.root_pattern("Cargo.toml")(fname)
+				local cmd = "cargo metadata --no-deps --format-version 1"
+				if cargo_crate_dir ~= nil then
+					cmd = cmd .. " --manifest-path " .. util.path.join(cargo_crate_dir, "Cargo.toml")
+				end
+				local cargo_metadata = vim.fn.system(cmd)
+				local cargo_workspace_dir = nil
+				if vim.v.shell_error == 0 then
+					cargo_workspace_dir = vim.fn.json_decode(cargo_metadata)["workspace_root"]
+				end
+				return cargo_workspace_dir
+					or cargo_crate_dir
+					or util.root_pattern("rust-project.json")(fname)
+					or util.find_git_ancestor(fname)
+			end,
+			settings = {
+				["rust-analyzer"] = {},
+			},
 		},
-	},
-	ts_ls = {},
-	lua_ls = {
-		settings = {
-			Lua = {
-				completion = {
-					callSnippet = "Replace",
+
+		lua_ls = {
+			settings = {
+				Lua = {
+					completion = {
+						callSnippet = "Replace",
+					},
 				},
 			},
 		},
-	},
-}
+	}
+end
 
 local function setup_lsp_mappings(event)
 	local map = function(keys, func, desc, mode)
@@ -105,6 +126,9 @@ local function setup_mason_and_tools()
 			},
 		},
 	})
+
+	local util = require("lspconfig").util
+	local lsp_servers = setup_lsp_servers(util)
 
 	local ensure_installed = vim.tbl_keys(lsp_servers or {})
 	vim.list_extend(ensure_installed, {

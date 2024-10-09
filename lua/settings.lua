@@ -172,8 +172,4 @@ elseif vim.fn.has("macunix") == 1 then
 	vim.g.python3_host_prog = "~/.pyenv/shims/python"
 end
 
--- CUSTOM PLUGINS
--------------------------------------------------------------------
--- require("hp_plugins/words_count")
-
 -------------------------------------------------------------------

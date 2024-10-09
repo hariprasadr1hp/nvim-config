@@ -39,17 +39,17 @@ local setup_on_attach = function()
 		end
 
 		-- Navigation
-		map("n", "]g", function()
+		map("n", "]h", function()
 			if vim.wo.diff then
-				vim.cmd.normal({ "]g", bang = true })
+				vim.cmd.normal({ "]h", bang = true })
 			else
 				gitsigns.nav_hunk("next")
 			end
 		end, { desc = "next-git-hunk" })
 
-		map("n", "[g", function()
+		map("n", "[h", function()
 			if vim.wo.diff then
-				vim.cmd.normal({ "[g", bang = true })
+				vim.cmd.normal({ "[h", bang = true })
 			else
 				gitsigns.nav_hunk("prev")
 			end

@@ -24,6 +24,7 @@ local formatters_by_ft = {
 	rust = { "rustfmt", lsp_format = "fallback" },
 	-- First available formatter
 	javascript = { "prettierd", "prettier", stop_after_first = true },
+	json = { "prettierd", "prettier", stop_after_first = true },
 }
 
 local opts = {
