@@ -67,5 +67,14 @@
       "build-backend = \"setuptools.build_meta\""
     ],
     "description": "hp snippet for build-system python"
+  },
+  "jmaturin": {
+    "prefix": "jmaturin",
+    "body": [
+      "[build-system]",
+      "requires = [\"maturin>=1.0,<2.0\"]",
+      "build-backend = \"maturin\""
+    ],
+    "description": "snippet for maturin setup"
   }
 }
