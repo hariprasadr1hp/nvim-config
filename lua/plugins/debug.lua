@@ -2,7 +2,7 @@
 
 local M = {}
 
-local setup_mason_dap = function()
+local function setup_mason_dap()
 	require("mason-nvim-dap").setup({
 		automatic_installation = true,
 		handlers = {}, -- Add specific handlers if needed
@@ -43,7 +43,7 @@ local setup_dap_event_listeners = function(dap, dapui)
 	end
 end
 
-local setup_dap_go = function()
+local function setup_dap_go()
 	require("dap-go").setup({
 		delve = {
 			detached = vim.fn.has("win32") == 0, -- Delve setup for Windows
@@ -51,7 +51,7 @@ local setup_dap_go = function()
 	})
 end
 
-local setup_dap = function()
+local function setup_dap()
 	local dap = require("dap")
 	local dapui = require("dapui")
 

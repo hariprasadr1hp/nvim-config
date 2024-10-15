@@ -2,7 +2,7 @@
 
 local M = {}
 
-local setup_config = function()
+local function setup_config()
 	require("trouble").setup({
 		-- your configuration comes here
 		-- or leave it empty to use the default settings

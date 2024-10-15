@@ -99,7 +99,7 @@ def multiple_arguments_with_types(arg1: int, arg2: float, arg3: str) -> list[str
 
 # Dictionary with defaultdict
 def defaultdict_example():
-    """defaultdict eaxample"""
+    """defaultdict example"""
     counts = defaultdict(int)
     words = ["apple", "banana", "apple", "orange", "banana", "banana"]
     for word in words:

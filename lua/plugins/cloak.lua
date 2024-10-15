@@ -10,7 +10,7 @@ local patterns = {
 	},
 }
 
-local setup_cloak_config = function()
+local function setup_cloak_config()
 	return require("cloak").setup({
 		enabled = true,
 		cloak_character = "*",

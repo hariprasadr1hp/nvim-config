@@ -122,7 +122,7 @@ local keymaps_help = {
 	border = "rounded",
 }
 
-local setup_oil = function()
+local function setup_oil()
 	return require("oil").setup({
 		default_file_explorer = true,
 		columns = columns,

@@ -2,7 +2,7 @@
 
 local M = {}
 
-local setup_web_devicons_config = function()
+local function setup_web_devicons_config()
 	local devicons = require("nvim-web-devicons")
 	return devicons.setup({
 		-- your personnal icons can go here (to override)

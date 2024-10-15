@@ -85,7 +85,7 @@ local display_makefile_targets = function(result)
 		:find()
 end
 
-local make_fzf = function()
+local function make_fzf()
 	local bufnr = get_make_file_buffer_nr()
 	if bufnr and bufnr ~= -1 then
 		local result = get_ts_query_matches(bufnr)

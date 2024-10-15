@@ -2,7 +2,7 @@
 
 local M = {}
 
-local setup_neorg_config = function()
+local function setup_neorg_config()
 	return require("neorg").setup({
 		load = {
 			["core.defaults"] = {},

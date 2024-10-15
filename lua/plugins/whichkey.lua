@@ -722,10 +722,13 @@ local key_mappings = {
 		-- [G]IT ------------------
 		{ "<leader>g", group = "git", nowait = false, remap = false },
 
-		---- [h]unk ---------------
+		-- [H]UNK ------------------
 		{ "<leader>hh", group = "git-hunk", nowait = false, remap = false },
 		{ "<leader>hhs", "<cmd>Gitsigns stage_hunk<CR>", desc = "stage-hunk", nowait = false, remap = false },
 		{ "<leader>hhu", "<cmd>Gitsigns undo_stage_hunk<CR>", desc = "unstage-hunk", nowait = false, remap = false },
+
+		---- [T]OGGLE -------------
+		{ "<leader>tG", "g?", desc = "gibberish-rot13", nowait = false, remap = false },
 	},
 
 	--- TERMINAL MODE
@@ -735,25 +738,25 @@ local key_mappings = {
 	},
 }
 
-local setup_delay_function = function()
+local function setup_delay_function()
 	return function(ctx)
 		return ctx.plugin and 0 or 200
 	end
 end
 
-local setup_filter_function = function()
+local function setup_filter_function()
 	return function(mapping)
 		return mapping == true
 	end
 end
 
-local setup_defer_function = function()
+local function setup_defer_function()
 	return function(ctx)
 		return ctx.mode == "V" or ctx.mode == "<C-V>"
 	end
 end
 
-local setup_plugins = function()
+local function setup_plugins()
 	return {
 		marks = true,
 		registers = true,
@@ -773,7 +776,7 @@ local setup_plugins = function()
 	}
 end
 
-local setup_window_options = function()
+local function setup_window_options()
 	return {
 		no_overlap = true,
 		padding = { 1, 2 },
@@ -785,7 +788,7 @@ local setup_window_options = function()
 	}
 end
 
-local setup_layout_options = function()
+local function setup_layout_options()
 	return {
 		height = { min = 14, max = 25 },
 		width = { min = 20, max = 50 },
@@ -793,14 +796,14 @@ local setup_layout_options = function()
 	}
 end
 
-local setup_keys = function()
+local function setup_keys()
 	return {
 		scroll_down = "<c-d>",
 		scroll_up = "<c-u>",
 	}
 end
 
-local setup_icons = function()
+local function setup_icons()
 	return {
 		breadcrumb = "»",
 		separator = "➜",
@@ -842,7 +845,7 @@ local setup_icons = function()
 	}
 end
 
-local setup_which_key = function()
+local function setup_which_key()
 	local wk = require("which-key")
 
 	wk.setup({

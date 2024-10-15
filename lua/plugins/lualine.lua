@@ -26,7 +26,7 @@ local colors = {
 	fl_pink = "#FE1493",
 }
 
-local setup_velvet_theme = function()
+local function setup_velvet_theme()
 	return {
 		normal = {
 			a = { fg = colors.bg, bg = colors.yellow_green, gui = "bold" },
@@ -53,6 +53,11 @@ local setup_velvet_theme = function()
 			b = { fg = colors.bg, bg = colors.yellow_green, gui = "bold" },
 			c = { fg = colors.bg, bg = colors.yellow_green },
 		},
+		terminal = {
+			a = { fg = colors.bg, bg = colors.purple, gui = "bold" },
+			b = { fg = colors.purple, bg = colors.bg, gui = "bold" },
+			c = { fg = colors.purple, bg = colors.bg },
+		},
 		inactive = {
 			a = { fg = colors.gray1, bg = colors.bg, gui = "bold" },
 			b = { fg = colors.gray1, bg = colors.bg },
@@ -61,7 +66,7 @@ local setup_velvet_theme = function()
 	}
 end
 
-local setup_sections = function()
+local function setup_sections()
 	return {
 		lualine_a = { "mode" },
 		lualine_b = { "filename" },
@@ -72,7 +77,7 @@ local setup_sections = function()
 	}
 end
 
-local setup_inactive_sections = function()
+local function setup_inactive_sections()
 	return {
 		lualine_a = {},
 		lualine_b = {},
@@ -83,7 +88,7 @@ local setup_inactive_sections = function()
 	}
 end
 
-local setup_lualine = function()
+local function setup_lualine()
 	local velvet = setup_velvet_theme()
 
 	local lualine = require("lualine")

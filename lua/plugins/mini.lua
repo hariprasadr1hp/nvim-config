@@ -2,7 +2,7 @@
 
 local M = {}
 
-local setup_mini_plugin = function() end
+local function setup_mini_plugin() end
 
 M = { {
 	"echasnovski/mini.nvim",

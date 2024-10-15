@@ -2,7 +2,7 @@
 
 local M = {}
 
-local setup_mappings = function(actions)
+local function setup_mappings(actions)
 	return {
 		i = {
 			["<c-enter>"] = "to_fuzzy_refine",
@@ -15,7 +15,8 @@ local setup_mappings = function(actions)
 	}
 end
 
-local setup_defaults = function(actions)
+-- local setup_defaults = function(actions)
+local function setup_defaults(actions)
 	return {
 		preview = {
 			filesize_limit = 0.1, -- MB limit for preview
@@ -50,18 +51,18 @@ local pickers = {
 	},
 }
 
-local setup_extensions = function()
+local function setup_extensions()
 	return {
 		["ui-select"] = require("telescope.themes").get_dropdown(),
 	}
 end
 
-local load_extensions = function()
+local function load_extensions()
 	pcall(require("telescope").load_extension, "fzf")
 	pcall(require("telescope").load_extension, "ui-select")
 end
 
-local setup_telescope = function()
+local function setup_telescope()
 	local actions = require("telescope.actions")
 
 	require("telescope").setup({
@@ -97,3 +98,4 @@ M = {
 return M
 
 -- TODO: 2 or 3 additional telescope functions to show ignored, untracked and hidden files as well
+-- TODO exclude `*.lock` files from `:Telescope find_files`

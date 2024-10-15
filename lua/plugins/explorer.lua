@@ -195,7 +195,7 @@ local log = {
 	},
 }
 
-local setup_config = function()
+local function setup_config()
 	return require("nvim-tree").setup({
 		auto_reload_on_write = true,
 		create_in_closed_folder = false,

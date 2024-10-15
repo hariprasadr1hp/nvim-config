@@ -2,7 +2,7 @@
 
 local M = {}
 
-local setup_options = function()
+local function setup_options()
 	return {
 		extensions = {
 			undo = {

@@ -2,12 +2,12 @@
 
 local M = {}
 
-local setup_harpoon = function()
+local function setup_harpoon()
 	local harpoon = require("harpoon")
 	harpoon:setup()
 end
 
-local setup_keymaps = function()
+local function setup_keymaps()
 	local harpoon_list = require("harpoon"):list()
 
 	-- Toggle previous & next buffers stored in Harpoon list
