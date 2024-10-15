@@ -15,18 +15,18 @@ local colors = {
 	gray1 = "#5c6370",
 	gray2 = "#2c323d",
 	gray3 = "#3e4452",
-	yellow_green = "#AFFF87",
-	dandelion = "#FFE300",
-	white = "#FFFFFF",
-	fl_green = "#08FF08",
-	fl_yellow = "#CCFF02",
-	fl_turquoise = "#00FDFF",
-	fl_orange = "#FFCF00",
-	fl_red = "#FF5555",
-	fl_pink = "#FE1493",
+	yellow_green = "#afff87",
+	dandelion = "#ffe300",
+	white = "#ffffff",
+	fl_green = "#08ff08",
+	fl_yellow = "#ccff02",
+	fl_turquoise = "#00fdff",
+	fl_orange = "#ffcf00",
+	fl_red = "#ff5555",
+	fl_pink = "#fe1493",
 }
 
-local setup_velvet_theme = function()
+local function setup_velvet_theme()
 	return {
 		normal = {
 			a = { fg = colors.bg, bg = colors.yellow_green, gui = "bold" },
@@ -53,6 +53,11 @@ local setup_velvet_theme = function()
 			b = { fg = colors.bg, bg = colors.yellow_green, gui = "bold" },
 			c = { fg = colors.bg, bg = colors.yellow_green },
 		},
+		terminal = {
+			a = { fg = colors.bg, bg = colors.purple, gui = "bold" },
+			b = { fg = colors.purple, bg = colors.bg, gui = "bold" },
+			c = { fg = colors.purple, bg = colors.bg },
+		},
 		inactive = {
 			a = { fg = colors.gray1, bg = colors.bg, gui = "bold" },
 			b = { fg = colors.gray1, bg = colors.bg },
@@ -61,7 +66,7 @@ local setup_velvet_theme = function()
 	}
 end
 
-local setup_sections = function()
+local function setup_sections()
 	return {
 		lualine_a = { "mode" },
 		lualine_b = { "filename" },
@@ -72,7 +77,7 @@ local setup_sections = function()
 	}
 end
 
-local setup_inactive_sections = function()
+local function setup_inactive_sections()
 	return {
 		lualine_a = {},
 		lualine_b = {},
@@ -83,7 +88,7 @@ local setup_inactive_sections = function()
 	}
 end
 
-local setup_lualine = function()
+local function setup_lualine()
 	local velvet = setup_velvet_theme()
 
 	local lualine = require("lualine")

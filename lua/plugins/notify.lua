@@ -87,7 +87,7 @@ local routes = {
 	},
 }
 
-local setup_noice = function()
+local function setup_noice()
 	require("noice").setup({
 		lsp = lsp, -- LSP integration and markdown overrides
 		presets = presets, -- Noice presets

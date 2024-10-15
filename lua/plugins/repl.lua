@@ -39,7 +39,7 @@ local colors = {
 	SniprunFloatingWinErr = { fg = "#881515", ctermfg = "DarkRed", bold = true },
 }
 
-local setup_sniprun_config = function()
+local function setup_sniprun_config()
 	return require("sniprun").setup({
 		selected_interpreters = {},
 		repl_enable = { "Python3_original" },

@@ -2,13 +2,13 @@
 
 local M = {}
 
-local setup_cmp_autopairs = function()
+local function setup_cmp_autopairs()
 	local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 	local cmp = require("cmp")
 	cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 end
 
-local setup_autopairs = function()
+local function setup_autopairs()
 	local autopairs = require("nvim-autopairs")
 	autopairs.setup({})
 

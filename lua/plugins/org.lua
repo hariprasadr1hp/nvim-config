@@ -4,7 +4,7 @@
 
 local M = {}
 
-local setup_orgmode_config = function()
+local function setup_orgmode_config()
 	return {
 		org_startup_folded = "showeverything", -- Options: "showeverything", "overview", "content"
 		org_agenda_files = "~/my/org/agenda/**/*", -- Path to agenda files
@@ -12,7 +12,7 @@ local setup_orgmode_config = function()
 	}
 end
 
-local setup_orgmode = function()
+local function setup_orgmode()
 	local org = require("orgmode")
 	org.setup(setup_orgmode_config())
 end

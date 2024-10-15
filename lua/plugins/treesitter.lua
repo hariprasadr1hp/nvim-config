@@ -58,7 +58,7 @@ local incremental_selection = {
 	},
 }
 
-local setup_treesitter_config = function()
+local function setup_treesitter_config()
 	return {
 		ensure_installed = ensure_installed,
 		sync_install = false,

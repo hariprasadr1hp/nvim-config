@@ -2,7 +2,7 @@
 
 local M = {}
 
-local setup_nvim_treesitter_text_object_config = function()
+local function setup_nvim_treesitter_text_object_config()
 	---@diagnostic disable-next-line: missing-fields
 	require("nvim-treesitter.configs").setup({
 		textobjects = {
@@ -30,6 +30,7 @@ local setup_nvim_treesitter_text_object_config = function()
 					["ac"] = { query = "@class.outer", desc = "around-class" },
 					["ic"] = { query = "@class.inner", desc = "inner-class" },
 				},
+				include_surrounding_whitespace = false,
 			},
 
 			swap = {

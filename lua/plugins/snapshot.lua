@@ -2,7 +2,7 @@
 
 local M = {}
 
-local setup_options = function()
+local function setup_options()
 	return {
 		-- Optional: Uncomment if you want to set a custom save path
 		-- save_path = "~/Pictures/nvim_snap/",

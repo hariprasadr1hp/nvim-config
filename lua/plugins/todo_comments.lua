@@ -55,7 +55,7 @@ local search = {
 	pattern = [[\b(KEYWORDS):]], -- ripgrep regex pattern
 }
 
-local setup_keymaps = function()
+local function setup_keymaps()
 	vim.keymap.set("n", "]t", function()
 		require("todo-comments").jump_next()
 	end, { desc = "Next todo comment" })
@@ -65,7 +65,7 @@ local setup_keymaps = function()
 	end, { desc = "Previous todo comment" })
 end
 
-local setup_todo_comments = function()
+local function setup_todo_comments()
 	require("todo-comments").setup({
 		signs = true,
 		sign_priority = 8,

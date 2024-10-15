@@ -2,7 +2,7 @@
 
 local M = {}
 
-local setup_dependencies = function()
+local function setup_dependencies()
 	return {
 		{
 			"L3MON4D3/LuaSnip",
@@ -60,7 +60,7 @@ local setup_mappings = function(cmp, luasnip)
 	})
 end
 
-local setup_sources = function()
+local function setup_sources()
 	return {
 		{ name = "lazydev", group_index = 0 },
 		{ name = "nvim_lsp" },
@@ -71,7 +71,7 @@ local setup_sources = function()
 	}
 end
 
-local setup_formatting = function()
+local function setup_formatting()
 	return {
 		format = require("lspkind").cmp_format({
 			mode = "symbol",
@@ -82,7 +82,7 @@ local setup_formatting = function()
 	}
 end
 
-local setup_cmp = function()
+local function setup_cmp()
 	local cmp = require("cmp")
 	local luasnip = require("luasnip")
 	luasnip.config.setup({})

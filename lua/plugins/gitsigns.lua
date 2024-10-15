@@ -28,7 +28,7 @@ local preview_config = {
 	col = 1,
 }
 
-local setup_on_attach = function()
+local function setup_on_attach()
 	return function(bufnr)
 		local gitsigns = require("gitsigns")
 
@@ -57,7 +57,7 @@ local setup_on_attach = function()
 	end
 end
 
-local setup_gitsigns_config = function()
+local function setup_gitsigns_config()
 	return {
 		signs = signs,
 		signcolumn = true,

@@ -2,14 +2,14 @@
 
 local M = {}
 
-local setup_rust_adapter = function()
+local function setup_rust_adapter()
 	return require("neotest-rust")({
 		args = { "--no-capture" },
 		dap_adapter = "lldb",
 	})
 end
 
-local setup_python_adapter = function()
+local function setup_python_adapter()
 	return require("neotest-python")({
 		-- Extra arguments for nvim-dap configuration
 		-- See https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for values
@@ -42,15 +42,15 @@ local setup_python_adapter = function()
 	})
 end
 
-local setup_bash_adapter = function()
+local function setup_bash_adapter()
 	return require("neotest-bash")
 end
 
-local setup_haskell_adapter = function()
+local function setup_haskell_adapter()
 	return require("neotest-haskell")
 end
 
-local setup_neotest = function()
+local function setup_neotest()
 	---@diagnostic disable-next-line: missing-fields
 	require("neotest").setup({
 		adapters = {

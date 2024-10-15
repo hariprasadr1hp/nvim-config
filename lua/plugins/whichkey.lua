@@ -645,26 +645,25 @@ local key_mappings = {
 
 		-- [W]INDOW ----------------
 		{ "<leader>w", group = "window", nowait = false, remap = false },
-		{ "<leader>w+", "<C-w>>", desc = "increase-height", nowait = false, remap = false },
-		{ "<leader>w-", "<C-w><", desc = "decrease-height", nowait = false, remap = false },
-		{ "<leader>w<", "<C-w><", desc = "decrease-width", nowait = false, remap = false },
-		{ "<leader>w=", "<C-w>=", desc = "equalize-window", nowait = false, remap = false },
-		{ "<leader>w>", "<C-w>>", desc = "increase-width", nowait = false, remap = false },
-		{ "<leader>wc", "<C-w>c", desc = "close-window", nowait = false, remap = false },
-		{ "<leader>we", "<C-w>=", desc = "balance-window", nowait = false, remap = false },
-		{ "<leader>wh", "<C-w>h", desc = "left-window", nowait = false, remap = false },
-		{ "<leader>wj", "<C-w>j", desc = "bottom-window", nowait = false, remap = false },
-		{ "<leader>wk", "<C-w>k", desc = "top-window", nowait = false, remap = false },
-		{ "<leader>wl", "<C-w>l", desc = "right-window", nowait = false, remap = false },
-		{ "<leader>wm", "<cmd>only<CR>", desc = "maximize-window", nowait = false, remap = false },
+		{ "<leader>w6", "<cmd>wincmd +<CR>", desc = "increase-height", nowait = false, remap = false },
+		{ "<leader>w7", "<cmd>wincmd -<CR>", desc = "decrease-height", nowait = false, remap = false },
+		{ "<leader>w9", "<cmd>wincmd <<CR>", desc = "decrease-width", nowait = false, remap = false },
+		{ "<leader>w0", "<cmd>wincmd ><CR>", desc = "increase-width", nowait = false, remap = false },
+		{ "<leader>w=", "<cmd>wincmd =<CR>", desc = "equalize-window", nowait = false, remap = false },
+		{ "<leader>wc", "<cmd>wincmd c<CR>", desc = "close-window", nowait = false, remap = false },
+		{ "<leader>wh", "<cmd>wincmd h<CR>", desc = "left-window", nowait = false, remap = false },
+		{ "<leader>wj", "<cmd>wincmd j<CR>", desc = "bottom-window", nowait = false, remap = false },
+		{ "<leader>wk", "<cmd>wincmd k<CR>", desc = "top-window", nowait = false, remap = false },
+		{ "<leader>wl", "<cmd>wincmd l<CR>", desc = "right-window", nowait = false, remap = false },
+		{ "<leader>wm", "<cmd>wincmd |<CR>", desc = "maximize-window", nowait = false, remap = false },
 		{ "<leader>wn", "<cmd>new<CR>", desc = "new-window", nowait = false, remap = false },
 		{ "<leader>wo", "<cmd>only<CR>", desc = "only-window", nowait = false, remap = false },
-		{ "<leader>wq", "<C-w>q", desc = "quit-window", nowait = false, remap = false },
-		{ "<leader>ws", "<C-w>s", desc = "split-window-below", nowait = false, remap = false },
-		{ "<leader>wv", "<C-w>v", desc = "split-window-right", nowait = false, remap = false },
-		{ "<leader>ww", "<C-w>w", desc = "switch-window", nowait = false, remap = false },
-		{ "<leader>wx", "<C-w>x", desc = "swap-window", nowait = false, remap = false },
-		{ "<leader>w|", "<C-w><", desc = "max-out-width", nowait = false, remap = false },
+		{ "<leader>wq", "<cmd>wincmd q<CR>", desc = "quit-window", nowait = false, remap = false },
+		{ "<leader>ws", "<cmd>wincmd s<CR>", desc = "split-window-below", nowait = false, remap = false },
+		{ "<leader>wv", "<cmd>wincmd v<CR>", desc = "split-window-right", nowait = false, remap = false },
+		{ "<leader>ww", "<cmd>wincmd w<CR>", desc = "switch-window", nowait = false, remap = false },
+		{ "<leader>wx", "<cmd>wincmd x<CR>", desc = "swap-window", nowait = false, remap = false },
+		{ "<leader>w|", "<cmd>wincmd <<CR>", desc = "max-out-width", nowait = false, remap = false },
 
 		-- MISC ----------------------
 		{ "<leader>x", group = "misc", nowait = false, remap = false },
@@ -722,10 +721,13 @@ local key_mappings = {
 		-- [G]IT ------------------
 		{ "<leader>g", group = "git", nowait = false, remap = false },
 
-		---- [h]unk ---------------
+		-- [H]UNK ------------------
 		{ "<leader>hh", group = "git-hunk", nowait = false, remap = false },
 		{ "<leader>hhs", "<cmd>Gitsigns stage_hunk<CR>", desc = "stage-hunk", nowait = false, remap = false },
 		{ "<leader>hhu", "<cmd>Gitsigns undo_stage_hunk<CR>", desc = "unstage-hunk", nowait = false, remap = false },
+
+		---- [T]OGGLE -------------
+		{ "<leader>tG", "g?", desc = "gibberish-rot13", nowait = false, remap = false },
 	},
 
 	--- TERMINAL MODE
@@ -735,25 +737,25 @@ local key_mappings = {
 	},
 }
 
-local setup_delay_function = function()
+local function setup_delay_function()
 	return function(ctx)
 		return ctx.plugin and 0 or 200
 	end
 end
 
-local setup_filter_function = function()
+local function setup_filter_function()
 	return function(mapping)
 		return mapping == true
 	end
 end
 
-local setup_defer_function = function()
+local function setup_defer_function()
 	return function(ctx)
 		return ctx.mode == "V" or ctx.mode == "<C-V>"
 	end
 end
 
-local setup_plugins = function()
+local function setup_plugins()
 	return {
 		marks = true,
 		registers = true,
@@ -773,7 +775,7 @@ local setup_plugins = function()
 	}
 end
 
-local setup_window_options = function()
+local function setup_window_options()
 	return {
 		no_overlap = true,
 		padding = { 1, 2 },
@@ -785,7 +787,7 @@ local setup_window_options = function()
 	}
 end
 
-local setup_layout_options = function()
+local function setup_layout_options()
 	return {
 		height = { min = 14, max = 25 },
 		width = { min = 20, max = 50 },
@@ -793,14 +795,14 @@ local setup_layout_options = function()
 	}
 end
 
-local setup_keys = function()
+local function setup_keys()
 	return {
 		scroll_down = "<c-d>",
 		scroll_up = "<c-u>",
 	}
 end
 
-local setup_icons = function()
+local function setup_icons()
 	return {
 		breadcrumb = "»",
 		separator = "➜",
@@ -842,7 +844,7 @@ local setup_icons = function()
 	}
 end
 
-local setup_which_key = function()
+local function setup_which_key()
 	local wk = require("which-key")
 
 	wk.setup({

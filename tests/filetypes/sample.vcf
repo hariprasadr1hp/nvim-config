@@ -1,0 +1,14 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:John Doe
+N:Doe;John;;;
+ORG:Example Corp
+TITLE:Software Engineer
+EMAIL;TYPE=INTERNET:john.doe@example.com
+TEL;TYPE=CELL:+1234567890
+ADR;TYPE=WORK:;;123 Main St;Wonderland;CA;90210;USA
+URL:https://www.example.com
+NOTE:This is an example vCard entry.
+REV:20231002T080000Z
+END:VCARD
+

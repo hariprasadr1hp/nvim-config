@@ -2,7 +2,7 @@
 
 local M = {}
 
-local disable_default_linters = function()
+local function disable_default_linters()
 	local lint = require("lint")
 	lint.linters_by_ft["clojure"] = nil
 	lint.linters_by_ft["dockerfile"] = nil
@@ -27,13 +27,13 @@ local linters_by_ft = {
 	typescriptreact = { "eslint_d" },
 }
 
-local setup_lint = function()
+local function setup_lint()
 	local lint = require("lint")
 	lint.linters_by_ft = linters_by_ft
 	disable_default_linters()
 end
 
-local setup_autocmd = function()
+local function setup_autocmd()
 	local lint = require("lint")
 	local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 

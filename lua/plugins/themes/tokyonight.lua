@@ -35,7 +35,7 @@ local apply_custom_colors = function(custom_colors, colors, transparent)
 	custom_colors.fg_sidebar = colors.fg_dark
 end
 
-local setup_tokyonight = function()
+local function setup_tokyonight()
 	local transparent = false
 
 	local colors = setup_colors(transparent)

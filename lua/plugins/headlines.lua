@@ -5,7 +5,7 @@
 
 local M = {}
 
-local setup_org_query = function()
+local function setup_org_query()
 	return vim.treesitter.query.parse(
 		"org",
 		[[
@@ -28,7 +28,7 @@ local setup_org_query = function()
 	)
 end
 
-local setup_bullet_highlights = function()
+local function setup_bullet_highlights()
 	return {
 		"@org.headline.level1",
 		"@org.headline.level2",
@@ -41,7 +41,7 @@ local setup_bullet_highlights = function()
 	}
 end
 
-local setup_org_config = function()
+local function setup_org_config()
 	return {
 		query = setup_org_query(),
 		headline_highlights = { "Headline" },
@@ -58,7 +58,7 @@ local setup_org_config = function()
 	}
 end
 
-local setup_headlines = function()
+local function setup_headlines()
 	require("headlines").setup({
 		org = setup_org_config(),
 	})

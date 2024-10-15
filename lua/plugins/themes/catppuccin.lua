@@ -56,7 +56,7 @@ local catppuccin_config = {
 	integrations = integrations,
 }
 
-local setup_catppuccin = function()
+local function setup_catppuccin()
 	require("catppuccin").setup(catppuccin_config)
 
 	-- setup must be called before loading the colorscheme
