@@ -54,10 +54,10 @@ vim.o.softtabstop = 4
 -- Change the number of space characters inserted for indentation
 vim.o.shiftwidth = 4
 
--- Converts tabs to spaces
+-- Converts tabs to spaces (if true)
 vim.bo.expandtab = true
 
--- Makes indenting smart
+-- Makes indenting smart (if true)
 vim.bo.smartindent = true
 
 -- NUMBERING

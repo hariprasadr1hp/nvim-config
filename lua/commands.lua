@@ -1,8 +1,12 @@
 -- lua/commands.lua
 
+vim.api.nvim_create_user_command("SaveWithNoFormat", function()
+	vim.cmd("noautocmd w")
+end, { desc = "save the file without applying any formatting options" })
+
 vim.api.nvim_create_user_command("Runme", function()
 	require("functions").runme()
-end, {})
+end, { desc = "evalute the buffer code (if applicable)" })
 
 vim.api.nvim_create_user_command("GetFilePath", function()
 	print(vim.fn.expand("%:p"))
