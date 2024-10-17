@@ -29,7 +29,7 @@ local plugins = {
 	require("plugins/mini"),
 	-- require("plugins/notify"),
 	require("plugins/lualine"),
-	require("plugins/undo_tree"),
+	require("plugins/undo"),
 	require("plugins/harpoon"),
 	require("plugins/todo_comments"),
 	require("plugins/testing"),
@@ -40,6 +40,7 @@ local plugins = {
 	require("plugins/snapshot"),
 	require("plugins/misc"),
 	require("plugins/multicursors"),
+	require("plugins/outline"),
 	require("plugins/debug"),
 
 	-- require("plugins/oil"),

@@ -1,4 +1,4 @@
--- lua/plugins/undo_tree.lua
+-- lua/plugins/undo.lua
 
 local M = {}
 
