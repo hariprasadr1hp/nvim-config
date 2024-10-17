@@ -246,15 +246,15 @@ local key_mappings = {
 
 		-- [G]IT --------------------
 		{ "<leader>g", group = "git", nowait = false, remap = false },
-		{ "<leader>gB", "<cmd>Gitsigns blame<CR>", desc = "BLAME", nowait = false, remap = false },
-		{ "<leader>gC", "<cmd>Telescope git_bcommits<CR>", desc = "bcommits", nowait = false, remap = false },
-		{ "<leader>gS", "<cmd>Telescope git_stash<CR>", desc = "stash", nowait = false, remap = false },
 		{ "<leader>gb", "<cmd>Gitsigns blame_line<CR>", desc = "blame-line", nowait = false, remap = false },
 		{ "<leader>gB", "<cmd>Gitsigns blame<CR>", desc = "blame-file", nowait = false, remap = false },
 		{ "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "commits", nowait = false, remap = false },
+		{ "<leader>gC", "<cmd>Telescope git_bcommits<CR>", desc = "bcommits", nowait = false, remap = false },
 		{ "<leader>gf", "<cmd>Telescope git_files<CR>", desc = "git-files", nowait = false, remap = false },
 		{ "<leader>gg", "<cmd>Gitsigns preview_hunk_inline<CR>", desc = "preview-hunk", nowait = false, remap = false },
+		{ "<leader>gG", "<cmd>DiffviewOpen --selected-file<CR>", desc = "preview-file", nowait = false, remap = false },
 		{ "<leader>gp", "<cmd>Gitsigns preview_hunk<CR>", desc = "preview-hunk", nowait = false, remap = false },
+		{ "<leader>gS", "<cmd>Telescope git_stash<CR>", desc = "stash", nowait = false, remap = false },
 		{ "<leader>gy", "<cmd>Telescope git_branches<CR>", desc = "branches", nowait = false, remap = false },
 
 		-- [H]ELP -------------------
@@ -602,13 +602,11 @@ local key_mappings = {
 
 		-- [T]OGGLE ----------------
 		{ "<leader>t", group = "toggle", nowait = false, remap = false },
-		{ "<leader>tb", "<cmd>Gitsigns blame<CR>", desc = "BLAME", nowait = false, remap = false },
 		{ "<leader>tc", "<cmd>CloakPreviewLine<CR>", desc = "cloak", nowait = false, remap = false },
 		{ "<leader>tC", "<cmd>CloakToggle<CR>", desc = "cloak", nowait = false, remap = false },
 		{ "<leader>tg", "<cmd>Gitsigns toggle_signs<CR>", desc = "git-signs", nowait = false, remap = false },
 		{ "<leader>tG", "<cmd>%norm! g??<CR>", desc = "gibberish-rot13", nowait = false, remap = false },
 		{ "<leader>th", "<cmd>set hls!<CR>", desc = "hl-search", nowait = false, remap = false },
-		{ "<leader>tl", "<cmd>LspRestart<CR>", desc = "lsp-restart", nowait = false, remap = false },
 		{ "<leader>tn", "<cmd>set nu! rnu!<CR>", desc = "CppFlip", nowait = false, remap = false },
 		{ "<leader>to", "<cmd>call Cpp_Flip_Ext()<CR>", desc = "CppFlip", nowait = false, remap = false },
 		{ "<leader>tr", "<cmd>set ro!<CR>", desc = "read-only", nowait = false, remap = false },

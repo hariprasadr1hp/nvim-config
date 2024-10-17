@@ -55,10 +55,10 @@ vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
 
 -- Converts tabs to spaces (if true)
-vim.bo.expandtab = true
+vim.o.expandtab = true
 
 -- Makes indenting smart (if true)
-vim.bo.smartindent = true
+vim.o.smartindent = true
 
 -- NUMBERING
 -------------------------------------------------------------------
