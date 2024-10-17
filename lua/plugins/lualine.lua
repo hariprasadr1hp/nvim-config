@@ -69,11 +69,86 @@ end
 local function setup_sections()
 	return {
 		lualine_a = { "mode" },
-		lualine_b = { "filename" },
-		lualine_c = { "branch", "data" },
-		lualine_x = { "filetype", "fileformat", "encoding" },
-		lualine_y = { "progress" },
-		lualine_z = { "location" },
+
+		lualine_b = {
+			"branch",
+			{
+				"filename",
+				file_status = true, -- Displays file status (readonly status, modified status)
+				newfile_status = false, -- Display new file status (new file means no write after created)
+				path = 1, -- 0: Just the filename
+				-- 1: Relative path
+				-- 2: Absolute path
+				-- 3: Absolute path, with tilde as the home directory
+				-- 4: Filename and parent dir, with tilde as the home directory
+
+				shorting_target = 40, -- Shortens path to leave 40 spaces in the window
+				-- for other components. (terrible name, any suggestions?)
+				symbols = {
+					modified = "🖋️", -- Text to show when the file is modified.
+					readonly = "🔒", -- Text to show when the file is non-modifiable or readonly.
+					unnamed = "🤖", -- Text to show for unnamed buffers.
+					newfile = "🌱", -- Text to show for newly created file before first write
+				},
+				---@diagnostic disable-next-line: unused-local
+				on_click = function(clicks, button, modifiers)
+					if clicks >= 1 and button == "l" then
+						vim.cmd("Telescope find_files")
+					end
+				end,
+			},
+			"data",
+		},
+
+		lualine_c = {
+			{
+				"aerial",
+				sep = "  ",
+				depth = 2,
+				dense = false,
+				dense_sep = ".",
+				colored = false,
+				---@diagnostic disable-next-line: unused-local
+				on_click = function(clicks, button, modifiers)
+					if clicks >= 1 and button == "l" then
+						vim.cmd("Telescope aerial")
+					end
+				end,
+			},
+		},
+
+		lualine_x = {
+			{
+				"diagnostics",
+				sources = { "nvim_lsp" },
+				symbols = { error = " ", warn = " ", info = " " },
+				colored = true,
+				update_in_insert = false,
+				always_visible = false,
+				---@diagnostic disable-next-line: unused-local
+				on_click = function(clicks, button, modifiers)
+					if clicks >= 1 and button == "l" then
+						vim.cmd("FzfLua diagnostics_document")
+					end
+				end,
+			},
+		},
+
+		lualine_y = {
+			{
+				"filetype",
+				---@diagnostic disable-next-line: unused-local
+				on_click = function(clicks, button, modifiers)
+					if clicks >= 1 and button == "l" then
+						vim.cmd("FzfLua filetypes")
+					end
+				end,
+			},
+			"fileformat",
+			"encoding",
+		},
+
+		lualine_z = { "filesize", "progress", "location" },
 	}
 end
 
@@ -99,12 +174,29 @@ local function setup_lualine()
 			theme = velvet,
 			component_separators = { "", "" },
 			section_separators = { "", "" },
-			disabled_filetypes = {},
+			disabled_filetypes = {
+				statusline = {},
+				winbar = {},
+			},
+			ignore_focus = {},
+			always_divide_middle = true,
+			globalstatus = false,
+			refresh = {
+				statusline = 1000,
+				tabline = 1000,
+				winbar = 1000,
+			},
 		},
 		sections = setup_sections(),
 		inactive_sections = setup_inactive_sections(),
 		tabline = {},
-		extensions = {},
+		winbar = {},
+		inactive_winbar = {},
+		extensions = {
+			"nvim-tree",
+			"nvim-dap-ui",
+			"toggleterm",
+		},
 	})
 end
 

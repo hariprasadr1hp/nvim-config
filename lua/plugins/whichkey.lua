@@ -392,7 +392,7 @@ local key_mappings = {
 			nowait = false,
 			remap = false,
 		},
-		{ "<leader>ld", "", desc = "document-diagnostics", nowait = false, remap = false },
+		{ "<leader>ld", "FzfLua diagnostics_document", desc = "document-diagnostics", nowait = false, remap = false },
 
 		{
 			"<leader>lD",
@@ -436,6 +436,14 @@ local key_mappings = {
 			"<leader>lnd",
 			"<cmd>lua vim.diagnostic.goto_next()<CR>",
 			desc = "next-diagnostic",
+			nowait = false,
+			remap = false,
+		},
+
+		{
+			"<leader>lo",
+			"<cmd>Telescope lsp_document_symbols<CR>",
+			desc = "document-symbols",
 			nowait = false,
 			remap = false,
 		},
@@ -546,23 +554,7 @@ local key_mappings = {
 		{ "<leader>om", "<cmd>e Makefile<CR>", desc = "Makefile", nowait = false, remap = false },
 		{ "<leader>on", "<cmd>Messages<CR>", desc = "notifications", nowait = false, remap = false },
 		-- { "<leader>on", "<cmd>NoiceAll<CR>", desc = "notifications", nowait = false, remap = false },
-
-		{
-			"<leader>oo",
-			"<cmd>Telescope lsp_document_symbols<CR>",
-			desc = "document-symbols",
-			nowait = false,
-			remap = false,
-		},
-
-		{
-			"<leader>oO",
-			"<cmd>Telescope lsp_workspace_symbols<CR>",
-			desc = "workspace-symbols",
-			nowait = false,
-			remap = false,
-		},
-
+		{ "<leader>oo", "<cmd>AerialToggle<CR>", desc = "outline", nowait = false, remap = false },
 		{ "<leader>oP", "<cmd>Lazy<CR>", desc = "plugin-manager", nowait = false, remap = false },
 		{ "<leader>or", "<cmd>FloatermNew ranger .<CR>", desc = "ranger", nowait = false, remap = false },
 		{ "<leader>ot", "<cmd>FloatermNew<CR>", desc = "terminal", nowait = false, remap = false },
@@ -612,13 +604,12 @@ local key_mappings = {
 		-- [T]OGGLE ----------------
 		{ "<leader>t", group = "toggle", nowait = false, remap = false },
 		{ "<leader>tb", "<cmd>DapToggleBreakpoint<CR>", desc = "toggle-Breakpoint", nowait = false, remap = false },
-		{ "<leader>tc", "<cmd>CloakPreviewLine<CR>", desc = "cloak", nowait = false, remap = false },
-		{ "<leader>tC", "<cmd>CloakToggle<CR>", desc = "cloak", nowait = false, remap = false },
+		{ "<leader>tc", "<cmd>CloakPreviewLine<CR>", desc = "cloak-line", nowait = false, remap = false },
+		{ "<leader>tC", "<cmd>CloakToggle<CR>", desc = "cloak-file", nowait = false, remap = false },
 		{ "<leader>tg", "<cmd>Gitsigns toggle_signs<CR>", desc = "git-signs", nowait = false, remap = false },
 		{ "<leader>tG", "<cmd>%norm! g??<CR>", desc = "gibberish-rot13", nowait = false, remap = false },
 		{ "<leader>th", "<cmd>set hls!<CR>", desc = "hl-search", nowait = false, remap = false },
-		{ "<leader>tn", "<cmd>set nu! rnu!<CR>", desc = "CppFlip", nowait = false, remap = false },
-		{ "<leader>to", "<cmd>call Cpp_Flip_Ext()<CR>", desc = "CppFlip", nowait = false, remap = false },
+		{ "<leader>tn", "<cmd>set nu! rnu!<CR>", desc = "line-numbers", nowait = false, remap = false },
 		{ "<leader>tr", "<cmd>set ro!<CR>", desc = "read-only", nowait = false, remap = false },
 		{ "<leader>ts", "<cmd>set spell!<CR>", desc = "spell-check", nowait = false, remap = false },
 		{

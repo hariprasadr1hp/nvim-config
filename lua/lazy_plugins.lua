@@ -40,6 +40,7 @@ local plugins = {
 	require("plugins/snapshot"),
 	require("plugins/misc"),
 	require("plugins/multicursors"),
+	require("plugins/outline"),
 	require("plugins/debug"),
 
 	-- require("plugins/oil"),
