@@ -141,19 +141,6 @@ vim.opt.scrolloff = 8
 -- add a trailing newline at the end of the file
 vim.opt.fixendofline = false
 
--- HELP WINDOW
--------------------------------------------------------------------
--- open help window in vertical (instead of horizontal) split
--- also always have `wrap` on for the help buffers
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "help",
-	-- command = "wincmd L",
-	callback = function()
-		vim.opt_local.wrap = true
-		vim.cmd("wincmd L")
-	end,
-})
-
 -- STARTUP
 -------------------------------------------------------------------
 vim.api.nvim_create_autocmd("VimEnter", {
