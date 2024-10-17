@@ -2,21 +2,43 @@
 
 local M = {}
 
-local function setup_mappings(actions)
+local function setup_mappings(actions, actions_layout)
 	return {
 		i = {
 			["<c-enter>"] = "to_fuzzy_refine",
-			["<esc>"] = actions.close,
-			["<C-u>"] = false,
-			-- Uncomment for cycling through previewers
-			-- ["<C-s>"] = actions.cycle_previewers_next,
-			-- ["<C-a>"] = actions.cycle_previewers_prev,
+			["<CR>"] = actions.select_default,
+			["<Down>"] = actions.move_selection_next,
+			["<Up>"] = actions.move_selection_previous,
+
+			["<C-c>"] = actions.close,
+			["<C-l>"] = actions.complete_tag,
+			["<C-p>"] = actions.move_selection_previous,
+			["<C-n>"] = actions.move_selection_next,
+			["<C-t>"] = actions.select_tab,
+			["<C-u>"] = false, -- reset the characters in search prompt
+			["<C-v>"] = actions.select_vertical,
+			["<C-x>"] = actions.select_horizontal,
+			["<C-/>"] = actions.which_key,
+
+			["<M-k>"] = actions.preview_scrolling_up,
+			["<M-j>"] = actions.preview_scrolling_down,
+			["<M-h>"] = actions.results_scrolling_up,
+			["<M-l>"] = actions.results_scrolling_down,
+
+			["<M-p>"] = actions_layout.toggle_preview,
+			["<M-t>"] = actions_layout.toggle_preview,
+
+			-- ["<C-s>"] = actions.cycle_previewers_next, -- cycling through previewers
+			-- ["<C-a>"] = actions.cycle_previewers_prev, -- cycling through previewers
 		},
 	}
 end
 
--- local setup_defaults = function(actions)
-local function setup_defaults(actions)
+local function setup_defaults()
+	local actions = require("telescope.actions")
+	local actions_layout = require("telescope.actions.layout")
+	local config = require("telescope.config")
+
 	return {
 		preview = {
 			filesize_limit = 0.1, -- MB limit for preview
@@ -26,12 +48,14 @@ local function setup_defaults(actions)
 		layout_config = {
 			horizontal = {
 				height = 0.99,
+				width = 0.99,
 				preview_cutoff = 120,
 				prompt_position = "bottom",
-				width = 0.99,
+				results_width = 0.5,
+				preview_width = 0.5,
 			},
 		},
-		mappings = setup_mappings(actions),
+		mappings = config.values.default_mappings or setup_mappings(actions, actions_layout),
 		vimgrep_arguments = {
 			"rg",
 			"--color=never",
@@ -63,10 +87,8 @@ local function load_extensions()
 end
 
 local function setup_telescope()
-	local actions = require("telescope.actions")
-
 	require("telescope").setup({
-		defaults = setup_defaults(actions),
+		defaults = setup_defaults(),
 		pickers = pickers,
 		extensions = setup_extensions(),
 	})
@@ -98,4 +120,4 @@ M = {
 return M
 
 -- TODO: 2 or 3 additional telescope functions to show ignored, untracked and hidden files as well
--- TODO exclude `*.lock` files from `:Telescope find_files`
+-- TODO: exclude `*.lock` files from `:Telescope find_files`
