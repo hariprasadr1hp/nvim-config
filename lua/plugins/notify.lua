@@ -70,7 +70,7 @@ local cmdline = {
 	},
 }
 
---TODO: reduce notification noise
+-- TODO: reduce notification noise
 local routes = {
 	{
 		view = "notify",

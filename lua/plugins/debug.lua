@@ -66,6 +66,9 @@ local function setup_dap()
 
 	-- Set up event listeners for Dap UI
 	setup_dap_event_listeners(dap, dapui)
+
+	-- Read config from `launch.json`, if available
+	require("dap.ext.vscode").load_launchjs(nil, {})
 end
 
 local setup_keys = function(_, keys)
@@ -73,18 +76,10 @@ local setup_keys = function(_, keys)
 	local dapui = require("dapui")
 
 	local mappings = {
-		{ "<F5>", dap.continue, desc = "Debug: Start/Continue" },
 		{ "<F1>", dap.step_into, desc = "Debug: Step Into" },
 		{ "<F2>", dap.step_over, desc = "Debug: Step Over" },
 		{ "<F3>", dap.step_out, desc = "Debug: Step Out" },
-		{ "<leader>b", dap.toggle_breakpoint, desc = "Debug: Toggle Breakpoint" },
-		{
-			"<leader>B",
-			function()
-				dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
-			end,
-			desc = "Debug: Set Breakpoint",
-		},
+		{ "<F5>", dap.continue, desc = "Debug: Start/Continue" },
 		{ "<F7>", dapui.toggle, desc = "Debug: See last session result." },
 	}
 
@@ -104,5 +99,8 @@ M = {
 	config = setup_dap,
 	keys = setup_keys,
 }
+
+vim.fn.sign_define("DapBreakpoint", { text = "🟥", texthl = "", linehl = "", numhl = "" })
+vim.fn.sign_define("DapStopped", { text = "▶️", texthl = "", linehl = "", numhl = "" })
 
 return M

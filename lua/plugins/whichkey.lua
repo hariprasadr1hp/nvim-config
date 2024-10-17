@@ -2,6 +2,7 @@
 
 local telescope_builtins = require("telescope.builtin")
 local conform = require("conform")
+local dap = require("dap")
 local harpoon_list = require("harpoon"):list()
 
 local key_mappings = {
@@ -139,8 +140,16 @@ local key_mappings = {
 
 		-- [D]EBUG ------------------
 		{ "<leader>d", group = "debug", nowait = false, remap = false },
-		{ "<leader>db", "<cmd>DapToggleBreakpoint<CR>", desc = "toggle-Breakpoint", nowait = false, remap = false },
-		{ "<leader>dc", "<cmd>DapContinue<CR>", desc = "continue", nowait = false, remap = false },
+		{
+			"<leader>db",
+			function()
+				dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
+			end,
+			desc = "set-breakpoint",
+			nowait = false,
+			remap = false,
+		},
+		{ "<leader>dd", "<cmd>DapContinue<CR>", desc = "continue", nowait = false, remap = false },
 		{ "<leader>di", "<cmd>DapStepInto<CR>", desc = "step-into", nowait = false, remap = false },
 		{ "<leader>do", "<cmd>DapStepOver<CR>", desc = "step-over", nowait = false, remap = false },
 		{
@@ -602,6 +611,7 @@ local key_mappings = {
 
 		-- [T]OGGLE ----------------
 		{ "<leader>t", group = "toggle", nowait = false, remap = false },
+		{ "<leader>tb", "<cmd>DapToggleBreakpoint<CR>", desc = "toggle-Breakpoint", nowait = false, remap = false },
 		{ "<leader>tc", "<cmd>CloakPreviewLine<CR>", desc = "cloak", nowait = false, remap = false },
 		{ "<leader>tC", "<cmd>CloakToggle<CR>", desc = "cloak", nowait = false, remap = false },
 		{ "<leader>tg", "<cmd>Gitsigns toggle_signs<CR>", desc = "git-signs", nowait = false, remap = false },
@@ -651,11 +661,11 @@ local key_mappings = {
 		{ "<leader>z", group = "telescope", nowait = false, remap = false },
 		{ "<leader>za", "<cmd>Telescope autocommands<CR>", desc = "buffers", nowait = false, remap = false },
 		{ "<leader>zb", "<cmd>Telescope buffers<CR>", desc = "buffers", nowait = false, remap = false },
-		{ "<leader>zB", "<cmd>Telescope builtins<CR>", desc = "builtins", nowait = false, remap = false },
+		{ "<leader>zB", "<cmd>Telescope builtin<CR>", desc = "builtins", nowait = false, remap = false },
 		{ "<leader>zc", "<cmd>Telescope commands<CR>", desc = "commands", nowait = false, remap = false },
-		{ "<leader>zC", "<cmd>Telescope colorscheme<CR>", desc = "colors", nowait = false, remap = false },
+		{ "<leader>zd", "<cmd>FzfLua dap_commands<CR>", desc = "commands", nowait = false, remap = false },
 		{ "<leader>zf", "<cmd>Telescope find_files<CR>", desc = "files", nowait = false, remap = false },
-		{ "<leader>zF", "<cmd>Telescope filetypes<CR>", desc = "file type", nowait = false, remap = false },
+		{ "<leader>zF", "<cmd>FzfLua filetypes<CR>", desc = "file type", nowait = false, remap = false },
 		{
 			"<leader>zH",
 			"<cmd>Telescope command_history<CR>",

@@ -17,8 +17,8 @@ local plugins = {
 	require("plugins/git/diffview"),
 	require("plugins/git/neogit"),
 	require("plugins/lsp"),
-	require("plugins/codeium"),
-	require("plugins/gen"),
+	require("plugins/ai/codeium"),
+	require("plugins/ai/gen"),
 	require("plugins/neorg"),
 	require("plugins/org"),
 	require("plugins/completion"),
@@ -40,9 +40,9 @@ local plugins = {
 	require("plugins/snapshot"),
 	require("plugins/misc"),
 	require("plugins/multicursors"),
+	require("plugins/debug"),
 
 	-- require("plugins/oil"),
-	-- require("plugins/debug"),
 	-- require("plugins/headlines"),
 
 	-----------------------------------------------------------------

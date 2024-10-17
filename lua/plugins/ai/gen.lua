@@ -1,4 +1,4 @@
--- lua/plugins/gen.lua
+-- lua/plugins/ai/gen.lua
 
 local M = {}
 

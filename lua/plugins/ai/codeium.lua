@@ -1,4 +1,4 @@
--- lua/plugins/codeium.lua
+-- lua/plugins/ai/codeium.lua
 
 local M = {}
 
