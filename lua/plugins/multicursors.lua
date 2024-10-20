@@ -2,6 +2,8 @@
 
 local M = {}
 
+-- FIX: multicursor commands only work (on x mode), only after the keymaps are triggered
+
 M = {
 	{
 		"brenton-leighton/multiple-cursors.nvim",
@@ -33,8 +35,8 @@ M = {
 				mode = { "n", "x" },
 				desc = "Add cursors to cword in previous area",
 			},
-
 			{
+
 				"<Leader>xd",
 				"<Cmd>MultipleCursorsAddJumpNextMatch<CR>",
 				mode = { "n", "x" },

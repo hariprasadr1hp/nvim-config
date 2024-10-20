@@ -2,25 +2,23 @@
 
 local M = {}
 
-local function setup_options()
-	return {
-		-- Optional: Uncomment if you want to set a custom save path
-		-- save_path = "~/Pictures/nvim_snap/",
-		has_breadcrumbs = true,
-		breadcrumbs_separator = " 󰶻 ",
-		-- Optional: Uncomment if you want to set a background theme
-		-- bg_theme = "bamboo",
-		bg_padding = 0,
-		has_line_number = true,
-		-- Optional: Uncomment if you want to set a watermark
-		-- watermark = "hariprasadr1hp",
-	}
-end
+local opts = {
+	-- Optional: Uncomment if you want to set a custom save path
+	-- save_path = "~/Pictures/nvim_snap/",
+	has_breadcrumbs = true,
+	breadcrumbs_separator = " 󰶻 ",
+	-- Optional: Uncomment if you want to set a background theme
+	-- bg_theme = "bamboo",
+	bg_padding = 0,
+	has_line_number = true,
+	-- Optional: Uncomment if you want to set a watermark
+	-- watermark = "hariprasadr1hp",
+}
 
 M = {
 	"mistricky/codesnap.nvim",
 	build = "make",
-	opts = setup_options(),
+	opts = opts,
 }
 
 return M

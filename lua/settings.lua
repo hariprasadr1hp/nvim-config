@@ -55,7 +55,7 @@ vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
 
 -- Converts tabs to spaces (if true)
-vim.o.expandtab = true
+vim.o.expandtab = false
 
 -- Makes indenting smart (if true)
 vim.o.smartindent = true
@@ -158,5 +158,9 @@ if vim.fn.has("linux") == 1 then
 elseif vim.fn.has("macunix") == 1 then
 	vim.g.python3_host_prog = "~/.pyenv/shims/python"
 end
+
+-- CUSTOM MESSAGES
+-------------------------------------------------------------------
+-- vim.api.nvim_command("highlight InfoMsg guifg=#00ff00 guibg=NONE")
 
 -------------------------------------------------------------------

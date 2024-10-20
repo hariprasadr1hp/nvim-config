@@ -5,7 +5,7 @@ vim.api.nvim_create_user_command("SaveWithNoFormat", function()
 end, { desc = "save the file without applying any formatting options" })
 
 vim.api.nvim_create_user_command("Runme", function()
-	require("functions").runme()
+	require("helpers").runme()
 end, { desc = "evalute the buffer code (if applicable)" })
 
 vim.api.nvim_create_user_command("GetFilePath", function()

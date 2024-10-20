@@ -12,7 +12,7 @@ local function setup_mason_dap()
 	})
 end
 
-local setup_dap_ui = function(dap, dapui)
+local setup_dap_ui = function(dapui)
 	dapui.setup({
 		icons = { expanded = "▾", collapsed = "▸", current_frame = "*" },
 		controls = {
@@ -59,7 +59,7 @@ local function setup_dap()
 	setup_mason_dap()
 
 	-- Setup Dap UI
-	setup_dap_ui(dap, dapui)
+	setup_dap_ui(dapui)
 
 	-- Setup Dap Go for Golang-specific debugging
 	setup_dap_go()

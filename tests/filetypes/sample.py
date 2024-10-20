@@ -3,6 +3,7 @@
 import math
 import os
 from collections import defaultdict
+from collections.abc import Callable
 
 
 # Keyword and function examples
@@ -59,7 +60,8 @@ class ExampleClass:
     @staticmethod
     def static_method():
         """static method"""
-        print("This is a static method")
+        value = 12
+        print(f"This is a static method, the value is {value}")
 
     # Magic methods
     def __repr__(self):
@@ -70,7 +72,7 @@ class ExampleClass:
 
 
 # Lambda functions and list comprehensions
-square = lambda x: x**2  # noqa: E731
+square: Callable = lambda x: x**2  # noqa: E731
 squared_list = [square(x) for x in range(10) if x % 2 == 0]
 
 

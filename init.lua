@@ -6,7 +6,7 @@ require("lazy_bootstrap")
 require("lazy_plugins")
 require("lazy_settings")
 
-require("functions")
+require("helpers")
 require("commands")
 require("keybindings")
 require("neovide")
