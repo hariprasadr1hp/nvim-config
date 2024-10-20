@@ -1,4 +1,24 @@
 {
+  "jcargo": {
+    "prefix": "jcargo",
+    "body": [
+      "[package]",
+      "name = \"my_rust_project\"",
+      "version = \"0.1.0\"",
+      "authors = [\"Your Name <your.email@example.com>\"]",
+      "edition = \"2021\"",
+      "description = \"A manually created Rust project\"",
+      "license = \"MIT\"",
+      "",
+      "# Optional: Minimum Rust version",
+      "rust-version = \"1.56\"",
+      "",
+      "[dependencies]",
+      "rand = \"0.8\"",
+      "serde = \"1.0\""
+    ],
+    "description": "snippet for cargo"
+  },
   "jpytest": {
     "prefix": "jpytest",
     "body": [
@@ -72,6 +92,7 @@
       "\t\"R0911\", # too-many-return-statements (> 5)",
       "\t\"R0913\", # too-many-arguments (> 5)",
       "\t\"R0914\", # too-many-local-variables (> 15)",
+      "\t\"R0917\", # too-many-positional-arguments (> 5)",
       "]"
     ],
     "description": "snippet for pylint config"

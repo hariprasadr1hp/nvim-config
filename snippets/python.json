@@ -24,12 +24,22 @@
     ],
     "description": "hp snippet argparse"
   },
+  "jb64encode": {
+    "prefix": "jb64encode",
+    "body": [
+      "import base64",
+      "from pathlib import Path",
+      "",
+      "",
+      "def encode_image(image_path: Path):",
+      "    with open(image_path, \"rb\") as image_file:",
+      "        return base64.b64encode(image_file.read()).decode(\"utf-8\")"
+    ],
+    "description": "Your custom snippet"
+  },
   "jbasemodelpydantic": {
     "prefix": "jbasemodelpydantic",
-    "body": [
-      "class ${1:CLASS_NAME}(pydantic.BaseModel):",
-      "\t${0:STATEMENT}"
-    ],
+    "body": ["class ${1:CLASS_NAME}(pydantic.BaseModel):", "\t${0:STATEMENT}"],
     "description": "hp snippet for inheriting `pydantic.BaseModel`"
   },
   "jbsoup": {
@@ -77,10 +87,7 @@
   },
   "jenum": {
     "prefix": "jenum",
-    "body": [
-      "class ${1:CLASS_NAME}(str, enum.Enum):",
-      "\t${0:STATEMENT}"
-    ],
+    "body": ["class ${1:CLASS_NAME}(str, enum.Enum):", "\t${0:STATEMENT}"],
     "description": "hp snippet for enum class"
   },
   "jhdf5Read": {
@@ -98,9 +105,7 @@
   },
   "jfieldpydantic": {
     "prefix": "jfieldpydantic",
-    "body": [
-      "pydantic.Field(description=\"${0:DESCRIPTION}\")"
-    ],
+    "body": ["pydantic.Field(description=\"${0:DESCRIPTION}\")"],
     "description": "hp snippet for filling `pydantic.Field`"
   },
   "jflask": {
@@ -151,10 +156,7 @@
   },
   "jinit": {
     "prefix": "jinit",
-    "body": [
-      "def __init__(self, $1) -> None:",
-      "\t$0"
-    ],
+    "body": ["def __init__(self, $1) -> None:", "\t$0"],
     "description": "snippet for __init__"
   },
   "jjsonRead": {
@@ -206,16 +208,12 @@
   },
   "jmat": {
     "prefix": "jmat",
-    "body": [
-      "import matplotlib.pyplot as plt"
-    ],
+    "body": ["import matplotlib.pyplot as plt"],
     "description": "hp import matplotlib.pyplot"
   },
   "jnp": {
     "prefix": "jnp",
-    "body": [
-      "import numpy as np"
-    ],
+    "body": ["import numpy as np"],
     "description": "hp import numpy"
   },
   "jpar": {
@@ -228,24 +226,17 @@
   },
   "jpd": {
     "prefix": "jpd",
-    "body": [
-      "import pandas as pd"
-    ],
+    "body": ["import pandas as pd"],
     "description": "hp import pandas"
   },
   "jpostinit": {
     "prefix": "jpostinit",
-    "body": [
-      "def __post_init__(self, ${1}) -> None:",
-      "\t$0"
-    ],
+    "body": ["def __post_init__(self, ${1}) -> None:", "\t$0"],
     "description": "hp snippet for __post_init__"
   },
   "jprint": {
     "prefix": "jprint",
-    "body": [
-      "print(\"${1:STRING}\".format(${2:VALUES}))$0"
-    ],
+    "body": ["print(\"${1:STRING}\".format(${2:VALUES}))$0"],
     "description": "hp snippet for print"
   },
   "jprop": {
@@ -263,10 +254,7 @@
   },
   "jrepr": {
     "prefix": "jrepr",
-    "body": [
-      "def __repr__(self) -> str:",
-      "\treturn str(self.__dict__)"
-    ],
+    "body": ["def __repr__(self) -> str:", "\treturn str(self.__dict__)"],
     "description": "hp snippet for __repr__"
   },
   "jsel": {
@@ -282,17 +270,12 @@
   },
   "jsns": {
     "prefix": "jsns",
-    "body": [
-      "import seaborn as sns"
-    ],
+    "body": ["import seaborn as sns"],
     "description": "hp import seaborn"
   },
   "jstr": {
     "prefix": "jstr",
-    "body": [
-      "def __str__(self) -> str:",
-      "\treturn $0"
-    ],
+    "body": ["def __str__(self) -> str:", "\treturn $0"],
     "description": "hp snippet for __str__"
   },
   "jsubprocess": {
@@ -341,10 +324,7 @@
   },
   "jwith_open": {
     "prefix": "jwith_open",
-    "body": [
-      "with open(${1:FILENAME}, '${2:MODE}') as f:",
-      "\t$0"
-    ],
+    "body": ["with open(${1:FILENAME}, '${2:MODE}') as f:", "\t$0"],
     "description": "code snippet for open-file"
   },
   "jyamlRead": {

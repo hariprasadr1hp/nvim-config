@@ -59,7 +59,8 @@ class ExampleClass:
     @staticmethod
     def static_method():
         """static method"""
-        print("This is a static method")
+        value = 12
+        print(f"This is a static method, the value is {value}")
 
     # Magic methods
     def __repr__(self):
