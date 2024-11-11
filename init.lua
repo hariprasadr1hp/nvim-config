@@ -1,14 +1,7 @@
 -- init.lua
 
-require("settings")
+-- lua config
+require("config")
 
-require("lazy_bootstrap")
-require("lazy_plugins")
-require("lazy_settings")
-
-require("helpers")
-require("commands")
-require("keybindings")
-require("neovide")
-
+-- vimscript config (should eventually be replaced with lua code)
 vim.cmd("source ~/.config/nvim/vimscript/init.vim")

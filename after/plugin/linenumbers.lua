@@ -3,7 +3,7 @@
 -- Render the color of linenumbers based on its mode,
 -- or something mimicking a mode (macros for example)
 
-local is_recording = require("helpers").is_recording
+local is_recording = require("config.helpers").is_recording
 
 local colors = {
 	red = "#e06c75",
