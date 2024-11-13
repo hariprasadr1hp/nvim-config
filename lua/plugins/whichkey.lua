@@ -830,7 +830,7 @@ local function setup_which_key()
 	local wk = require("which-key")
 
 	wk.setup({
-		---@type false | "classic" | "modern" | "helix"
+		--- @type false | "classic" | "modern" | "helix"
 		preset = "classic",
 		delay = setup_delay_function(),
 		filter = setup_filter_function(),

@@ -90,7 +90,7 @@ local function setup_sections()
 					unnamed = "🤖", -- Text to show for unnamed buffers.
 					newfile = "🌱", -- Text to show for newly created file before first write
 				},
-				---@diagnostic disable-next-line: unused-local
+				--- @diagnostic disable-next-line: unused-local
 				on_click = function(clicks, button, modifiers)
 					if clicks >= 1 and button == "l" then
 						vim.cmd("Telescope find_files")
@@ -108,7 +108,7 @@ local function setup_sections()
 				dense = false,
 				dense_sep = ".",
 				colored = true,
-				---@diagnostic disable-next-line: unused-local
+				--- @diagnostic disable-next-line: unused-local
 				on_click = function(clicks, button, modifiers)
 					if clicks >= 1 and button == "l" then
 						vim.cmd("Telescope aerial")
@@ -125,7 +125,7 @@ local function setup_sections()
 				colored = true,
 				update_in_insert = false,
 				always_visible = false,
-				---@diagnostic disable-next-line: unused-local
+				--- @diagnostic disable-next-line: unused-local
 				on_click = function(clicks, button, modifiers)
 					if clicks >= 1 and button == "l" then
 						vim.cmd("FzfLua diagnostics_document")
@@ -137,7 +137,7 @@ local function setup_sections()
 		lualine_y = {
 			{
 				"filetype",
-				---@diagnostic disable-next-line: unused-local
+				--- @diagnostic disable-next-line: unused-local
 				on_click = function(clicks, button, modifiers)
 					if clicks >= 1 and button == "l" then
 						vim.cmd("Telescope filetypes")

@@ -4,7 +4,7 @@ local M = {}
 
 local function setup_toggleterm()
 	require("toggleterm").setup({
-		---@type "float" | "horizontal"
+		--- @type "float" | "horizontal"
 		direction = "horizontal",
 	})
 end

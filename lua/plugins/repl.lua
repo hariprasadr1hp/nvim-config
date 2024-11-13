@@ -7,7 +7,7 @@ local interpreter_options = {
 		use_on_filetypes = { "markdown.pandoc" },
 	},
 	Python3_original = {
-		---@type "long" | "short" | "auto"
+		--- @type "long" | "short" | "auto"
 		error_truncate = "auto",
 		interpreter = "python3.12",
 	},

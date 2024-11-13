@@ -3,7 +3,7 @@
 local M = {}
 
 local function setup_nvim_treesitter_text_object_config()
-	---@diagnostic disable-next-line: missing-fields
+	--- @diagnostic disable-next-line: missing-fields
 	require("nvim-treesitter.configs").setup({
 		textobjects = {
 			select = {

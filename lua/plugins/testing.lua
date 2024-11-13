@@ -32,7 +32,7 @@ local function setup_python_adapter()
 
 		-- Returns if a given file path is a test file.
 		-- NB: This function is called a lot so don't perform any heavy tasks within it.
-		---@diagnostic disable-next-line: unused-local
+		--- @diagnostic disable-next-line: unused-local
 		-- is_test_file = function(file_path)
 		-- ...
 		-- end,
@@ -51,7 +51,7 @@ local function setup_haskell_adapter()
 end
 
 local function setup_neotest()
-	---@diagnostic disable-next-line: missing-fields
+	--- @diagnostic disable-next-line: missing-fields
 	require("neotest").setup({
 		adapters = {
 			setup_rust_adapter(),
