@@ -3,34 +3,59 @@
 local M = {}
 
 local function format_on_save(bufnr)
-	local disable_filetypes = {
-		c = true,
-		cpp = true,
-	}
+	-- Disable autoformat on certain filetypes
+	local ignore_filetypes = { "c", "cpp" }
+	if vim.tbl_contains(ignore_filetypes, vim.bo[bufnr].filetype) then
+		return
+	end
 
-	local lsp_format_opt = disable_filetypes[vim.bo[bufnr].filetype] and "never" or "fallback"
+	-- Disable with a global or buffer-local variable
+	if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+		return
+	end
 
-	return {
-		timeout_ms = 500,
-		lsp_format = lsp_format_opt,
-	}
+	-- Disable autoformat for files in a certain path
+	local bufname = vim.api.nvim_buf_get_name(bufnr)
+	if bufname:match("/node_modules/") then
+		return
+	end
+
+	-- additional logic, if any
+	return { timeout_ms = 500, lsp_format = "fallback" }
+end
+
+local function format_after_save(bufnr)
+	if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+		return
+	end
+
+	-- additional logic, if any
+	return { lsp_format = "fallback" }
 end
 
 local formatters_by_ft = {
+	gdscript = { "gdtoolkit" },
 	lua = { "stylua" },
 	-- Can run multiple formatters sequentially
 	python = { "isort", "black" },
 	-- Customize format options
 	rust = { "rustfmt", lsp_format = "fallback" },
 	-- First available formatter
-	javascript = { "prettierd", "prettier", stop_after_first = true },
-	json = { "prettierd", "prettier", stop_after_first = true },
+	javascript = { "biome", stop_after_first = true },
+	json = { "biome", stop_after_first = true },
+	typescript = { "biome", stop_after_first = true },
 }
 
+--- @module "conform"
+--- @type conform.setupOpts
 local opts = {
-	notify_on_error = false,
-	format_on_save = format_on_save,
 	formatters_by_ft = formatters_by_ft,
+	notify_on_error = false,
+	default_format_opts = {
+		lsp_format = "fallback",
+	},
+	format_on_save = format_on_save,
+	format_after_save = format_after_save,
 }
 
 M = {
@@ -54,6 +79,23 @@ vim.api.nvim_create_user_command("Format", function(args)
 	require("conform").format({ async = true, lsp_format = "fallback", range = range })
 end, { range = true })
 
-return M
+vim.api.nvim_create_user_command("FormatDisable", function(args)
+	if args.bang then
+		-- FormatDisable! will disable formatting just for this buffer
+		vim.b.disable_autoformat = true
+	else
+		vim.g.disable_autoformat = true
+	end
+end, {
+	desc = "Disable autoformat-on-save",
+	bang = true,
+})
 
--- TODO: an option to save file without applying code-formatting
+vim.api.nvim_create_user_command("FormatEnable", function()
+	vim.b.disable_autoformat = false
+	vim.g.disable_autoformat = false
+end, {
+	desc = "Re-enable autoformat-on-save",
+})
+
+return M
