@@ -3,84 +3,93 @@
 local M = {}
 
 local ensure_installed = {
-	"arduino",
-	"awk",
-	"bash",
-	"c",
-	"cpp",
-	"css",
-	"csv",
-	"diff",
-	"dockerfile",
-	"gitignore",
-	"graphql",
-	"haskell",
-	"html",
-	"javascript",
-	"json",
-	"kdl",
-	"lua",
-	"luadoc",
-	"markdown",
-	"markdown_inline",
-	"org",
-	"python",
-	"query",
-	"regex",
-	"rust",
-	"sql",
-	"terraform",
-	"toml",
-	"tsx",
-	"typescript",
-	"vim",
-	"vimdoc",
-	"yaml",
+    "arduino",
+    "awk",
+    "bash",
+    "c",
+    "cpp",
+    "css",
+    "csv",
+    "diff",
+    "dockerfile",
+    "gdscript",
+    "gitignore",
+    "graphql",
+    "haskell",
+    "html",
+    "javascript",
+    "json",
+    "kdl",
+    "lua",
+    "luadoc",
+    "markdown",
+    "markdown_inline",
+    "org",
+    "python",
+    "query",
+    "regex",
+    "rust",
+    "sql",
+    "svelte",
+    "terraform",
+    "toml",
+    "tsx",
+    "typescript",
+    "vim",
+    "vimdoc",
+    "vue",
+    "yaml",
 }
 
 local highlight = {
-	enable = true,
-	additional_vim_regex_highlighting = { "ruby" },
+    enable = true,
+    additional_vim_regex_highlighting = { "ruby" },
 }
 
 local indent = {
-	enable = true,
-	disable = { "ruby" },
+    enable = true,
+    disable = { "ruby" },
 }
 
 local incremental_selection = {
-	enable = true,
-	keymaps = {
-		init_selection = "<leader>lk",
-		node_incremental = ".",
-		node_decremental = ",",
-		scope_incremental = "<c-space>",
-	},
+    enable = true,
+    keymaps = {
+        init_selection = "<leader>lk",
+        node_incremental = ".",
+        node_decremental = ",",
+        scope_incremental = "<c-space>",
+    },
+}
+
+local autotag = {
+    enable = true,
 }
 
 local function setup_treesitter_config()
-	return {
-		ensure_installed = ensure_installed,
-		sync_install = false,
-		auto_install = true,
-		ignore_install = { "org" },
-		highlight = highlight,
-		indent = indent,
-		incremental_selection = incremental_selection,
-	}
+    return {
+        ensure_installed = ensure_installed,
+        sync_install = false,
+        auto_install = true,
+        ignore_install = { "org" },
+        highlight = highlight,
+        indent = indent,
+        incremental_selection = incremental_selection,
+        autotag = autotag,
+    }
 end
 
 M = {
-	{
-		"nvim-treesitter/nvim-treesitter",
-		build = ":TSUpdate",
-		event = { "BufReadPre", "BufNewFile" },
-		main = "nvim-treesitter.configs",
-		opts = setup_treesitter_config(),
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter-textobjects",
-		},
-	},
+    {
+        "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate",
+        event = { "BufReadPre", "BufNewFile" },
+        main = "nvim-treesitter.configs",
+        opts = setup_treesitter_config(),
+        dependencies = {
+            "windwp/nvim-ts-autotag",
+            "nvim-treesitter/nvim-treesitter-textobjects",
+        },
+    },
 }
 
 return M

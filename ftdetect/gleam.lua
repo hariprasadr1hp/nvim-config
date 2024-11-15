@@ -1,6 +1,8 @@
+-- ftdetect/gleam.lua
+
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-	pattern = "*.gleam",
-	callback = function()
-		vim.bo.filetype = "gleam"
-	end,
+    pattern = "*.gleam",
+    callback = function()
+        vim.bo.filetype = "gleam"
+    end,
 })

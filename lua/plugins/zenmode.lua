@@ -3,7 +3,7 @@
 local M = {}
 
 M = {
-	"folke/zen-mode.nvim",
+    "folke/zen-mode.nvim",
 }
 
 return M

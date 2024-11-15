@@ -3,7 +3,7 @@
 local M = {}
 
 M = {
-	"machakann/vim-highlightedyank",
+    "machakann/vim-highlightedyank",
 }
 
 return M

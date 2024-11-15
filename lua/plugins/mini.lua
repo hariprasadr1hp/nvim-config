@@ -5,11 +5,11 @@ local M = {}
 local function setup_mini_plugin() end
 
 M = { {
-	"echasnovski/mini.nvim",
-	version = "*",
-	config = function()
-		setup_mini_plugin()
-	end,
+    "echasnovski/mini.nvim",
+    version = "*",
+    config = function()
+        setup_mini_plugin()
+    end,
 } }
 
 return M

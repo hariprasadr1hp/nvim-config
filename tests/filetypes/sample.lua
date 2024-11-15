@@ -1,4 +1,4 @@
----@diagnostic disable: unused-local
+--- @diagnostic disable: unused-local
 -- Lua example to test editor settings
 
 -- Single-line comment
@@ -15,9 +15,9 @@ local nilValue = nil -- Nil
 
 -- Tables (associative arrays)
 local person = {
-	name = "John",
-	age = 30,
-	isActive = true,
+    name = "John",
+    age = 30,
+    isActive = true,
 }
 
 -- Accessing table elements
@@ -33,19 +33,19 @@ local numbers = { 1, 2, 3, 4, 5 }
 
 -- Looping through an array
 for i = 1, #numbers do
-	print("Number:", numbers[i])
+    print("Number:", numbers[i])
 end
 
 -- Functions
 local function greet(name)
-	return "Hello, " .. name .. "!"
+    return "Hello, " .. name .. "!"
 end
 
 print(greet("Alice")) -- Output: Hello, Alice!
 
 -- Function with multiple return values
 local function add_and_multiply(a, b)
-	return a + b, a * b
+    return a + b, a * b
 end
 
 local sum, product = add_and_multiply(3, 5)
@@ -54,7 +54,7 @@ print("Product:", product) -- Output: 15
 
 -- Anonymous function (lambda)
 local anonymousFunction = function(x, y)
-	return x - y
+    return x - y
 end
 
 print(anonymousFunction(10, 3)) -- Output: 7
@@ -62,11 +62,11 @@ print(anonymousFunction(10, 3)) -- Output: 7
 -- Conditional statements
 local x = 10
 if x > 5 then
-	print("x is greater than 5")
+    print("x is greater than 5")
 elseif x == 5 then
-	print("x is equal to 5")
+    print("x is equal to 5")
 else
-	print("x is less than 5")
+    print("x is less than 5")
 end
 
 -- Loops
@@ -74,29 +74,29 @@ end
 -- While loop
 local count = 0
 while count < 5 do
-	print("Count:", count)
-	count = count + 1
+    print("Count:", count)
+    count = count + 1
 end
 
 -- Repeat-until loop (similar to do-while)
 repeat
-	print("Repeating...")
-	count = count - 1
+    print("Repeating...")
+    count = count - 1
 until count == 0
 
 -- For loop (numeric)
 for i = 1, 5 do
-	print("For loop iteration:", i)
+    print("For loop iteration:", i)
 end
 
 -- For loop with step
 for i = 1, 10, 2 do
-	print("Step loop iteration:", i)
+    print("Step loop iteration:", i)
 end
 
 -- For loop (generic)
 for key, value in pairs(person) do
-	print(key, ":", value)
+    print(key, ":", value)
 end
 
 -- Metatables and metamethods
@@ -104,12 +104,12 @@ local vector = { x = 1, y = 2 }
 
 -- Define a metatable with __add metamethod for vector addition
 local vectorMeta = {
-	__add = function(v1, v2)
-		return { x = v1.x + v2.x, y = v1.y + v2.y }
-	end,
-	__tostring = function(v)
-		return "Vector (" .. v.x .. ", " .. v.y .. ")"
-	end,
+    __add = function(v1, v2)
+        return { x = v1.x + v2.x, y = v1.y + v2.y }
+    end,
+    __tostring = function(v)
+        return "Vector (" .. v.x .. ", " .. v.y .. ")"
+    end,
 }
 
 -- Set the metatable for the vector
@@ -126,9 +126,9 @@ print(result) -- Output: Vector (4, 6)
 
 -- Simple coroutine example
 local function simpleCoroutine()
-	print("Coroutine start")
-	coroutine.yield() -- Yield execution
-	print("Coroutine resumed")
+    print("Coroutine start")
+    coroutine.yield() -- Yield execution
+    print("Coroutine resumed")
 end
 
 local co = coroutine.create(simpleCoroutine)
@@ -141,30 +141,30 @@ coroutine.resume(co) -- Output: Coroutine resumed
 
 -- Using coroutines with parameters
 local function generator()
-	local i = 0
-	while true do
-		i = i + 1
-		coroutine.yield(i) -- Yield the next value
-	end
+    local i = 0
+    while true do
+        i = i + 1
+        coroutine.yield(i) -- Yield the next value
+    end
 end
 
 local gen = coroutine.create(generator)
 
 for _ = 1, 5 do
-	local _, value = coroutine.resume(gen)
-	print("Generated value:", value)
+    local _, value = coroutine.resume(gen)
+    print("Generated value:", value)
 end
 
 -- Error handling
 
 -- Protected call with pcall
 local function unsafeFunction()
-	error("An error occurred!")
+    error("An error occurred!")
 end
 
 local status, err = pcall(unsafeFunction)
 if not status then
-	print("Error:", err)
+    print("Error:", err)
 end
 
 -- Object-oriented programming using tables and metatables
@@ -174,14 +174,14 @@ local Animal = {}
 Animal.__index = Animal
 
 function Animal:new(name, sound)
-	local obj = setmetatable({}, Animal)
-	obj.name = name
-	obj.sound = sound
-	return obj
+    local obj = setmetatable({}, Animal)
+    obj.name = name
+    obj.sound = sound
+    return obj
 end
 
 function Animal:makeSound()
-	print(self.name .. " says " .. self.sound)
+    print(self.name .. " says " .. self.sound)
 end
 
 -- Instantiate objects
@@ -197,7 +197,7 @@ cat:makeSound() -- Output: Cat says Meow
 local myModule = {}
 
 function myModule.sayHello()
-	print("Hello from the module!")
+    print("Hello from the module!")
 end
 
 return myModule

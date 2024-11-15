@@ -1,6 +1,8 @@
+-- ftdetect/jinja.lua
+
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-	pattern = "*.jinja",
-	callback = function()
-		vim.bo.filetype = "jinja"
-	end,
+    pattern = "*.jinja",
+    callback = function()
+        vim.bo.filetype = "jinja"
+    end,
 })

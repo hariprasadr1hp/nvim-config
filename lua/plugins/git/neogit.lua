@@ -3,16 +3,16 @@
 local M = {}
 
 M = {
-	{
-		"NeogitOrg/neogit",
-		dependencies = {
-			"nvim-lua/plenary.nvim", -- required
-			"sindrets/diffview.nvim", -- optional - Diff integration
+    {
+        "NeogitOrg/neogit",
+        dependencies = {
+            "nvim-lua/plenary.nvim", -- required
+            "sindrets/diffview.nvim", -- optional - Diff integration
 
-			"ibhagwan/fzf-lua", -- optional
-		},
-		config = true,
-	},
+            "ibhagwan/fzf-lua", -- optional
+        },
+        config = true,
+    },
 }
 
 return M
