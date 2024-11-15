@@ -1,7 +1,7 @@
 -- after/plugin/fzfmake.lua
 
----@param filepath (string | nil)
----@return integer
+--- @param filepath (string | nil)
+--- @return integer
 local get_make_file_buffer_nr = function(filepath)
 	local makefile_path = filepath or (vim.fn.getcwd() .. "/Makefile")
 
@@ -12,8 +12,8 @@ local get_make_file_buffer_nr = function(filepath)
 	return -1
 end
 
----@param bufnr integer
----@return table<string, string>
+--- @param bufnr integer
+--- @return table<string, string>
 local get_ts_query_matches = function(bufnr)
 	local treesitter = require("vim.treesitter")
 
@@ -43,7 +43,7 @@ local get_ts_query_matches = function(bufnr)
 	return result
 end
 
----@param result table<string, string>
+--- @param result table<string, string>
 local display_makefile_targets = function(result)
 	local pickers = require("telescope.pickers")
 	local config = require("telescope.config")
@@ -66,7 +66,7 @@ local display_makefile_targets = function(result)
 			}),
 			sorter = config.values.generic_sorter({}),
 			attach_mappings = function(_, map)
-				---@diagnostic disable-next-line: unused-local
+				--- @diagnostic disable-next-line: unused-local
 				map("i", "<CR>", function(prompt_bufnr)
 					local selection = actions_state.get_selected_entry()
 					print("Target:", selection.value)
@@ -76,7 +76,7 @@ local display_makefile_targets = function(result)
 				return true
 			end,
 			previewer = previewers.new_buffer_previewer({
-				---@diagnostic disable-next-line: unused-local
+				--- @diagnostic disable-next-line: unused-local
 				define_preview = function(self, entry, status)
 					vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, vim.split(result[entry.value], "\n"))
 				end,

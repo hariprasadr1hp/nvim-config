@@ -6,12 +6,12 @@ local dap = require("dap")
 local harpoon_list = require("harpoon"):list()
 
 local key_mappings = {
-	--- NORMAL MODE
-	{
-		mode = "n",
-		{ "<C-`>", "<cmd>ToggleTerm<CR>", desc = "toggle-term", nowait = false, remap = false },
-		{ "<C-.><C-.>", "<cmd>NvimTreeToggle<CR>", desc = "toggle-term", nowait = false, remap = false },
-		{ "<C-w>a", ":WindowResizeModeEnter<CR>", desc = "resize-window-mode", nowait = false, remap = false },
+    --- NORMAL MODE
+    {
+        mode = "n",
+        { "<C-`>", "<cmd>ToggleTerm<CR>", desc = "toggle-term", nowait = false, remap = false },
+        { "<C-.><C-.>", "<cmd>NvimTreeToggle<CR>", desc = "toggle-tree", nowait = false, remap = false },
+        { "<C-w>a", ":WindowResizeModeEnter<CR>", desc = "resize-window-mode", nowait = false, remap = false },
 
 		{
 			",1",
