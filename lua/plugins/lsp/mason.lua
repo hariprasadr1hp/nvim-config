@@ -27,7 +27,6 @@ local function setup_mason_config()
             "jinja_lsp",
             "lua_ls",
             "pyright",
-            "rust_analyzer",
             "ruff",
             "svelte",
             "ts_ls",
