@@ -33,6 +33,7 @@ local plugins = {
     require("plugins/explorer"),
     require("plugins/mini"),
     -- require("plugins/notify"),
+    require("plugins/dressing"),
     require("plugins/lualine"),
     require("plugins/undo"),
     require("plugins/harpoon"),
