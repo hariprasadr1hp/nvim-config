@@ -46,10 +46,24 @@ local function setup_lint_config()
     })
 end
 
+local opts = {
+    linters = {
+        sqlfluff = {
+            args = {
+                "lint",
+                "--format=json",
+                -- note: users will have to replace the --dialect argument accordingly
+                "--dialect=postgres",
+            },
+        },
+    },
+}
+
 M = {
     {
         "mfussenegger/nvim-lint",
         event = { "BufReadPre", "BufNewFile" },
+        -- opts = opts,
         config = setup_lint_config,
     },
 }

@@ -70,6 +70,13 @@ local function setup_completion()
         sources = setup_sources(),
         -- formatting = setup_formatting(lspkind),
     })
+
+    -- cmp.setup.filetype({ "sql" }, {
+    --     sources = {
+    --         { name = "vim-dadbod-completion" },
+    --         { name = "buffer" },
+    --     },
+    -- })
 end
 
 local function setup_dependencies()

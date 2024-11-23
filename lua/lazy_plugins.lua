@@ -21,6 +21,7 @@ local plugins = {
     require("plugins/lsp/mason"),
     require("plugins/lsp/lspconfig"),
     require("plugins/lsp/rustacean"),
+    require("plugins/lsp/sql"),
     require("plugins/ai/companion"),
     require("plugins/ai/codeium"),
     require("plugins/ai/gen"),

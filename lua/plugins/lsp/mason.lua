@@ -28,6 +28,7 @@ local function setup_mason_config()
             "lua_ls",
             "pyright",
             "ruff",
+            "sqls",
             "svelte",
             "ts_ls",
             "terraformls",
