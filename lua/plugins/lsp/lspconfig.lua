@@ -60,6 +60,9 @@ local function setup_lsp_handlers()
                         completion = {
                             callSnippet = "Replace",
                         },
+                        telemetry = {
+                            enable = false,
+                        },
                     },
                 },
             })

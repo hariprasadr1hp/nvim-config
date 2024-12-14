@@ -75,3 +75,6 @@ end, {
 })
 
 return M
+
+-- TODO: virtual text for lines with more than 1 diagnostic
+-- show foo (+n more), instead of polluting the screen real estate

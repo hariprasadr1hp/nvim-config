@@ -89,7 +89,7 @@ local key_mappings = {
         -- [B]UFFER ----------------
         { "<leader>b", group = "buffer", nowait = false, remap = false },
         { "<leader>bB", "<cmd>Telescope buffers<CR>", desc = "fzf-buffer", nowait = false, remap = false },
-        { "<leader>bd", "<cmd>bp | bd #<CR>", desc = "kill-buffer", nowait = false, remap = false },
+        { "<leader>bd", "<cmd>bd!<CR>", desc = "discard-changes", nowait = false, remap = false },
         { "<leader>bf", "<cmd>bfirst<CR>", desc = "first-buffer", nowait = false, remap = false },
         { "<leader>bk", "<cmd>bp | bd #<CR>", desc = "kill-buffer", nowait = false, remap = false },
         { "<leader>bK", "<cmd>%bd | enew <CR>", desc = "kill-all-buffers", nowait = false, remap = false },
@@ -466,11 +466,31 @@ local key_mappings = {
 
         -- [M]AKE -------------------
         { "<leader>m", group = "prefix", nowait = false, remap = false },
-        { "<leader>mc", "<cmd>FloatermNew --autoclose=0 make<CR>", desc = "make clean", nowait = false, remap = false },
+        {
+            "<leader>ma",
+            "<cmd>FloatermNew --autoclose=0 make temp<CR>",
+            desc = "make temp",
+            nowait = false,
+            remap = false,
+        },
+        {
+            "<leader>mc",
+            "<cmd>FloatermNew --autoclose=0 make clean<CR>",
+            desc = "make clean",
+            nowait = false,
+            remap = false,
+        },
         {
             "<leader>md",
             "<cmd>FloatermNew --autoclose=0 make debug<CR>",
             desc = "make debug",
+            nowait = false,
+            remap = false,
+        },
+        {
+            "<leader>mf",
+            "<cmd>FloatermNew --autoclose=0 make format<CR>",
+            desc = "make format",
             nowait = false,
             remap = false,
         },

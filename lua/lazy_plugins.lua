@@ -33,6 +33,7 @@ local plugins = {
     require("plugins/terminal"),
     require("plugins/explorer"),
     require("plugins/mini"),
+    require("plugins/snacks"),
     -- require("plugins/notify"),
     require("plugins/dressing"),
     require("plugins/lualine"),

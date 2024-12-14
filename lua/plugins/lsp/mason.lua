@@ -21,6 +21,7 @@ local function setup_mason_config()
         ensure_installed = {
             "ansiblels",
             "arduino_language_server",
+            "clangd",
             "emmet_ls",
             "gitlab_ci_ls",
             "graphql",
