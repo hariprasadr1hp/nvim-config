@@ -38,29 +38,72 @@ local function setup_sources()
         { name = "lazydev", group_index = 0 },
         { name = "nvim_lsp" },
         { name = "luasnip" },
-        { name = "buffer" },
         { name = "path" },
+        { name = "buffer", keyword_length = 5 },
         -- { name = "orgmode" },
         -- { name = "neorg" },
     }
 end
 
--- local function setup_formatting(lspkind)
---     return {
---         -- format = require("lspkind").cmp_format {
---         format = lspkind.cmp_format {
---             mode = "symbol",
---             maxwidth = 50,
---             ellipsis_char = "...",
---             -- symbol_map = { Codeium = "" },
---         },
---     }
--- end
+local function setup_formatting(lspkind)
+    return {
+        format = lspkind.cmp_format({
+            -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+            ellipsis_char = "...",
+            maxwidth = {
+                -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+                -- can also be a function to dynamically calculate max width such as
+                -- menu = 50, -- leading text (labelDetails)
+                menu = function()
+                    return math.floor(0.45 * vim.o.columns)
+                end,
+                abbr = 50, -- actual suggestion item
+            },
+            menu = {
+                nvim_lsp = "[lsp]",
+                buffer = "[buf]",
+                luasnip = "[snip]",
+                path = "[path]",
+            },
+            --- @type 'text' | 'text_symbol' | 'symbol_text' | 'symbol'
+            mode = "symbol",
+            show_labelDetails = true, -- show labelDetails in menu. Disabled by default
+            symbol_map = {
+                Text = "󰉿",
+                Method = "󰆧",
+                Function = "󰊕",
+                Constructor = "",
+                Field = "󰜢",
+                Variable = "󰀫",
+                Class = "󰠱",
+                Interface = "",
+                Module = "",
+                Property = "󰜢",
+                Unit = "󰑭",
+                Value = "󰎠",
+                Enum = "",
+                Keyword = "󰌋",
+                Snippet = "",
+                Color = "󰏘",
+                File = "󰈙",
+                Reference = "󰈇",
+                Folder = "󰉋",
+                EnumMember = "",
+                Constant = "󰏿",
+                Struct = "󰙅",
+                Event = "",
+                Operator = "󰆕",
+                TypeParameter = "",
+                Codeium = "",
+            },
+        }),
+    }
+end
 
 local function setup_completion()
     local cmp = require("cmp")
     local luasnip = require("luasnip")
-    -- local lspkind = require "lspkind"
+    local lspkind = require("lspkind")
     luasnip.config.setup({})
 
     cmp.setup({
@@ -68,15 +111,15 @@ local function setup_completion()
         completion = { completeopt = "menu,menuone,preview,noinsert" },
         mapping = setup_mappings(cmp, luasnip),
         sources = setup_sources(),
-        -- formatting = setup_formatting(lspkind),
+        formatting = setup_formatting(lspkind),
     })
 
-    -- cmp.setup.filetype({ "sql" }, {
-    --     sources = {
-    --         { name = "vim-dadbod-completion" },
-    --         { name = "buffer" },
-    --     },
-    -- })
+    cmp.setup.filetype({ "sql" }, {
+        sources = {
+            { name = "vim-dadbod-completion" },
+            { name = "buffer" },
+        },
+    })
 end
 
 local function setup_dependencies()
@@ -106,7 +149,7 @@ local function setup_dependencies()
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
-        -- "onsails/lspkind",
+        "onsails/lspkind.nvim",
     }
 end
 
