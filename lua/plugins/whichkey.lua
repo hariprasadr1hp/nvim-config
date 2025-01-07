@@ -227,7 +227,7 @@ local key_mappings = {
         { "<leader>fS", "<cmd>SaveWithNoFormat<CR>", desc = "save-file", nowait = false, remap = false },
         {
             "<leader>fx",
-            "<cmd>! rm -f $HOME/.local/share/nvim/swap/*<CR>",
+            "<cmd>! rm -f $HOME/.local/state/nvim/swap/*<CR>",
             desc = "delete-swap-files",
             nowait = false,
             remap = false,
