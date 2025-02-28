@@ -5,6 +5,7 @@ local plugins = {
     require("plugins/themes/cyberdream"),
     require("plugins/themes/nordic"),
     require("plugins/themes/tokyonight"),
+    require("plugins/themes/eink"),
 
     require("plugins/icons"),
     require("plugins/rocks"),
