@@ -31,6 +31,7 @@ local plugins = {
     require("plugins/completion"),
     require("plugins/lint"),
     require("plugins/format"),
+    require("plugins/coverage"),
     require("plugins/terminal"),
     require("plugins/explorer"),
     require("plugins/mini"),
