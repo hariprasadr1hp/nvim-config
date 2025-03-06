@@ -67,7 +67,15 @@ local key_mappings = {
         { ",n", group = "swap-next", nowait = false, remap = false },
 
         { "<leader>,", ":Telescope find_files<CR>", desc = "files", nowait = false, remap = false },
-        { "<leader>.", ":Telescope find_files<CR>", desc = "files", nowait = false, remap = false },
+        {
+            "<leader>.",
+            function()
+                telescope_builtins.find_files({ no_ignore = true })
+            end,
+            desc = "files",
+            nowait = false,
+            remap = false,
+        },
         { "<leader>/", ":CommentToggle<CR>", desc = "comment", nowait = false, remap = false },
 
         { "<leader>0", "0", desc = "0", nowait = false, remap = false },

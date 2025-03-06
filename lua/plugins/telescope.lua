@@ -137,5 +137,4 @@ M = {
 
 return M
 
--- TODO: 2 or 3 additional telescope functions to show ignored, untracked and hidden files as well
 -- TODO: exclude `*.lock` files from `:Telescope find_files`
