@@ -714,8 +714,9 @@ local key_mappings = {
         { "<leader>zt", "<cmd>TodoTelescope keywords=TODO,FIX<CR>", desc = "todo", nowait = false, remap = false },
         { "<leader>zu", "<cmd>Telescope undo<CR>", desc = "undo", nowait = false, remap = false },
         { "<leader>zv", "<cmd>Telescope commands<CR>", desc = "vim-commands", nowait = false, remap = false },
-        { "<leader>zz", "<cmd>Telescope live_grep<CR>", desc = "file-browser", nowait = false, remap = false },
-        { "<leader>zZ", "<cmd>Telescope grep_string<CR>", desc = "grep_string", nowait = false, remap = false },
+        { "<leader>zx", "<cmd>Telescope resume<CR>", desc = "vim-commands", nowait = false, remap = false },
+        { "<leader>zz", "<cmd>Telescope grep_string<CR>", desc = "vim-commands", nowait = false, remap = false },
+        { "<leader>zZ", "<cmd>Telescope live_grep<CR>", desc = "file-browser", nowait = false, remap = false },
     },
 
     --- VISUAL MODE
