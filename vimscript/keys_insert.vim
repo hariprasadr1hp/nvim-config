@@ -29,6 +29,8 @@ inoremap <M-a> <C-o>^
 inoremap <M-e> <C-o>$
 inoremap <M-u> <C-o>d0
 inoremap <M-w> <C-o>db
+inoremap <M-Left> <C-o>^
+inoremap <M-Right> <C-o>$
 
 
 " meta keys for entering a new line
