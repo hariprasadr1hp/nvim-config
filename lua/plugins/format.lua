@@ -21,7 +21,7 @@ local function format_on_save(bufnr)
     end
 
     -- additional logic, if any
-    return { timeout_ms = 500, lsp_format = "fallback" }
+    return { timeout_ms = 5000, lsp_format = "fallback" }
 end
 
 local function format_after_save(bufnr)
@@ -47,6 +47,7 @@ local formatters_by_ft = {
     python = { "isort", "black", "ruff" },
     ruby = { "standardrb" },
     rust = { "rustfmt", lsp_format = "fallback" },
+    sql = { "sqlfluff" },
     svelte = { "prettier", stop_after_first = true },
     toml = { "taplo" },
     typescript = { "prettier", stop_after_first = true },
