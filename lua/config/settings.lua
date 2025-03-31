@@ -71,6 +71,15 @@ vim.o.splitright = true
 -------------------------------------------------------------------
 vim.o.errorbells = false
 
+-- cursor (turn-off blinking)
+vim.opt.guicursor = {
+    "n-v-c-sm:block",
+    "i-ci-ve:ver25",
+    "r-cr:hor20",
+    "o:hor50",
+    "t:block-TermCursor",
+}
+
 -- using `vim.cmd` since lua support is not available
 vim.cmd("syntax on")
 
