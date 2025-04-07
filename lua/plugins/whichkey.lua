@@ -232,7 +232,7 @@ local key_mappings = {
         },
         { "<leader>fr", "<cmd>e<CR>", desc = "reload-file", nowait = false, remap = false },
         { "<leader>fs", "<cmd>update<CR>", desc = "save-file", nowait = false, remap = false },
-        { "<leader>fS", "<cmd>SaveWithNoFormat<CR>", desc = "save-file", nowait = false, remap = false },
+        { "<leader>fS", "<cmd>SaveWithNoFormat<CR>", desc = "save-file-wo-format", nowait = false, remap = false },
         {
             "<leader>fx",
             "<cmd>! rm -f $HOME/.local/state/nvim/swap/*<CR>",
@@ -361,16 +361,7 @@ local key_mappings = {
         { "<leader>ht", "<cmd>FzfLua colorschemes<CR>", desc = "themes", nowait = false, remap = false },
 
         { "<leader>i", group = "info", nowait = false, remap = false }, -- [I]NFO / [I]NSERT --------
-        { "<leader>ib", "<cmd> !battery<CR>", desc = "battery", nowait = false, remap = false },
-        { "<leader>ic", "<cmd> !clock<CR>", desc = "clock", nowait = false, remap = false },
-        { "<leader>id", "<cmd> !date<CR>", desc = "date-time", nowait = false, remap = false },
-        { "<leader>il", "<cmd> !pwd;ls -la<CR>", desc = "list-all-files", nowait = false, remap = false },
-        { "<leader>im", "<cmd> !memory<CR>", desc = "memory", nowait = false, remap = false },
-        { "<leader>ip", "<cmd> !battery<CR>", desc = "power-percent", nowait = false, remap = false },
-        { "<leader>ir", "<cmd> !memory<CR>", desc = "rar", nowait = false, remap = false },
-        { "<leader>it", "<cmd> !clock<CR>", desc = "date-time", nowait = false, remap = false },
-        { "<leader>iu", "<cmd> !upt<CR>", desc = "date-uptime", nowait = false, remap = false },
-        { "<leader>iv", "<cmd> !volume<CR>", desc = "volume", nowait = false, remap = false },
+        { "<leader>it", "<cmd>InspectTree<CR>", desc = "inspect-tree", nowait = false, remap = false },
 
         { "<leader>j", group = "tabs", nowait = false, remap = false }, -- TABS ------------
         { "<leader>j0", "<cmd>tabfirst<CR>", desc = "first-tab", nowait = false, remap = false },
@@ -723,8 +714,8 @@ local key_mappings = {
         { "<leader>zu", "<cmd>Telescope undo<CR>", desc = "undo", nowait = false, remap = false },
         { "<leader>zv", "<cmd>Telescope commands<CR>", desc = "vim-commands", nowait = false, remap = false },
         { "<leader>zx", "<cmd>Telescope resume<CR>", desc = "vim-commands", nowait = false, remap = false },
-        { "<leader>zz", "<cmd>Telescope grep_string<CR>", desc = "vim-commands", nowait = false, remap = false },
-        { "<leader>zZ", "<cmd>Telescope live_grep<CR>", desc = "file-browser", nowait = false, remap = false },
+        { "<leader>zz", "<cmd>Telescope live_grep<CR>", desc = "live-grep", nowait = false, remap = false },
+        { "<leader>zZ", "<cmd>Telescope grep_string<CR>", desc = "grep-string", nowait = false, remap = false },
     },
 
     --- VISUAL MODE
