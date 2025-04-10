@@ -16,6 +16,7 @@ local plugins = {
     require("plugins/text_objects"),
     require("plugins/treesitter"),
     require("plugins/telescope"),
+    require("plugins/faster"),
     require("plugins/git/gitsigns"),
     require("plugins/git/diffview"),
     require("plugins/git/neogit"),
