@@ -38,13 +38,10 @@ local function convert_to_vscode_snippet()
 
     -- Create the snippet body with placeholders (you can customize as needed)
     local snippet_body = table.concat(escaped_lines, ",\n")
-    local snippet_json = '{\n  "prefix": "exampleSnippet",\n  "body": ['
-        .. snippet_body
-        .. '],\n  "description": "Your custom snippet"\n}'
 
     -- Copy the snippet JSON to the clipboard
-    vim.fn.setreg("+", snippet_json)
-    print("Snippet JSON copied to clipboard!")
+    vim.fn.setreg("+", snippet_body)
+    print("Body of the Snippet, copied to the clipboard!")
 end
 
 -- Create a command to call the function

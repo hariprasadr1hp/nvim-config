@@ -27,13 +27,13 @@ local function setup_outline_config()
             -- Determines the default direction to open the aerial window. The 'prefer'
             -- options will open the window in the other direction *if* there is a
             -- different buffer in the way of the preferred direction
-            --- @type "prefer_right" | "prefer_left" | "right" | "left" | "float"
+            ---@type "prefer_right" | "prefer_left" | "right" | "left" | "float"
             default_direction = "float",
 
             -- Determines where the aerial window will be opened
             --   edge   - open aerial at the far right/left of the editor
             --   window - open aerial to the right/left of the current window
-            --- @type "window" | "edge"
+            ---@type "window" | "edge"
             placement = "edge",
 
             -- When the symbols change, resize the aerial window (within min/max constraints) to fit
@@ -46,7 +46,7 @@ local function setup_outline_config()
         -- Determines how the aerial window decides which buffer to display symbols for
         --   window - aerial window will display symbols for the buffer in the window from which it was opened
         --   global - aerial window will display symbols for the current window
-        --- @type "window" | "global"
+        ---@type "window" | "global"
         attach_mode = "window",
 
         -- List of enum values that configure when to auto-close the aerial window
@@ -149,7 +149,7 @@ local function setup_outline_config()
         -- last          Only the most-recently focused window will have its location
         --               marked in the aerial buffer.
         -- none          Do not show the cursor locations in the aerial window.
-        --- @type "split_width" | "full_width" | "last" | "none"
+        ---@type "split_width" | "full_width" | "last" | "none"
         highlight_mode = "split_width",
 
         -- Highlight the closest symbol if the cursor is not exactly on one.
@@ -226,11 +226,11 @@ local function setup_outline_config()
         nerd_font = "auto",
 
         -- Call this function when aerial attaches to a buffer.
-        --- @diagnostic disable-next-line: unused-local
+        ---@diagnostic disable-next-line: unused-local
         on_attach = function(bufnr) end,
 
         -- Call this function when aerial first sets symbols on a buffer.
-        --- @diagnostic disable-next-line: unused-local
+        ---@diagnostic disable-next-line: unused-local
         on_first_symbols = function(bufnr) end,
 
         -- Automatically open aerial when entering supported buffers.
@@ -252,7 +252,7 @@ local function setup_outline_config()
         --   * symbol?: specific to the lsp backend
         --   * syntax_tree?: specific to the treesitter backend
         --   * match?: specific to the treesitter backend, TS query match
-        --- @diagnostic disable-next-line: unused-local
+        ---@diagnostic disable-next-line: unused-local
         post_parse_symbol = function(bufnr, item, ctx)
             return true
         end,
@@ -268,7 +268,7 @@ local function setup_outline_config()
         --   * lang: info about the language
         --   * symbols?: specific to the lsp backend
         --   * syntax_tree?: specific to the treesitter backend
-        --- @diagnostic disable-next-line: unused-local
+        ---@diagnostic disable-next-line: unused-local
         post_add_all_symbols = function(bufnr, items, ctx)
             return items
         end,
@@ -295,7 +295,7 @@ local function setup_outline_config()
         },
 
         -- Set this function to override the highlight groups for certain symbols
-        --- @diagnostic disable-next-line: unused-local
+        ---@diagnostic disable-next-line: unused-local
         get_highlight = function(symbol, is_icon, is_collapsed)
             -- return "MyHighlight" .. symbol.kind
         end,
@@ -319,7 +319,7 @@ local function setup_outline_config()
             height = nil,
             min_height = { 8, 0.1 },
 
-            --- @diagnostic disable-next-line: unused-local
+            ---@diagnostic disable-next-line: unused-local
             override = function(conf, source_winid)
                 -- This is the config that will be passed to nvim_open_win.
                 -- Change values here to customize the layout

@@ -21,7 +21,7 @@ local signs_staged = {
 
 local blame_opts = {
     virt_text = true,
-    --- @type "eol" | "overlay" | "right_align"
+    ---@type "eol" | "overlay" | "right_align"
     virt_text_pos = "right_align",
     delay = 1000,
     ignore_whitespace = false,
@@ -79,7 +79,7 @@ local function setup_gitsigns_options()
             follow_files = true,
         },
         diff_opts = {
-            --- @type "myers" | "minimal" | "patience" | "histogram"
+            ---@type "myers" | "minimal" | "patience" | "histogram"
             algorithm = "myers", -- default
             vertical = true,
         },

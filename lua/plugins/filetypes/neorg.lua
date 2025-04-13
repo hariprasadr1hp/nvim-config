@@ -6,12 +6,12 @@ local function setup_neorg_config()
     return require("neorg").setup({
         load = {
             ["core.defaults"] = {},
-            ["core.completion"] = {
-                config = {
-                    engine = "nvim-cmp",
-                },
-            },
-            ["core.integrations.nvim-cmp"] = {},
+            -- ["core.completion"] = {
+            --     config = {
+            --         engine = "nvim-cmp",
+            --     },
+            -- },
+            -- ["core.integrations.nvim-cmp"] = {},
             ["core.dirman"] = {
                 config = {
                     workspaces = {

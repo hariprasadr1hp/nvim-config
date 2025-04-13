@@ -8,7 +8,7 @@
       "\ttype=${3:str},",
       "\trequired=${4:True},",
       "\tmetavar='',",
-      "\thelp=\"${5:help syntax}\"",
+      "\thelp=\"${5:HELP-DOC}\"",
       ")$0"
     ],
     "description": "hp snippet for parser.add_argument"

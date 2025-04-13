@@ -90,7 +90,7 @@ vim.opt.termguicolors = true
 vim.opt.cursorline = true
 
 -- colorschemes that can be light or dark will default to dark
---- @type "dark" | "light"
+---@type "dark" | "light"
 vim.opt.background = "dark"
 
 -- enable showing whitespace characters

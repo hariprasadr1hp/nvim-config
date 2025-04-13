@@ -2,14 +2,19 @@
 
 local M = {}
 
-local function setup_mini_plugin() end
+local function setup_mini_plugin()
+    require("mini.pick").setup()
+end
 
-M = { {
-    "echasnovski/mini.nvim",
-    version = "*",
-    config = function()
-        setup_mini_plugin()
-    end,
-} }
+M = {
+    {
+        "echasnovski/mini.nvim",
+        -- version = "*",
+        version = false,
+        config = function()
+            setup_mini_plugin()
+        end,
+    },
+}
 
 return M

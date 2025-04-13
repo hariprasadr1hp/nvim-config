@@ -225,14 +225,16 @@ local function setup_config()
 end
 
 M = {
-    "kyazdani42/nvim-tree.lua",
-    version = "*",
-    dependencies = {
-        "kyazdani42/nvim-web-devicons", -- optional, for file icons
+    {
+        "kyazdani42/nvim-tree.lua",
+        version = "*",
+        dependencies = {
+            "kyazdani42/nvim-web-devicons", -- optional, for file icons
+        },
+        config = function()
+            setup_config()
+        end,
     },
-    config = function()
-        setup_config()
-    end,
 }
 
 return M

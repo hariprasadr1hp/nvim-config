@@ -1,4 +1,4 @@
---- @diagnostic disable: unused-local
+---@diagnostic disable: unused-local
 -- Lua example to test editor settings
 
 -- Single-line comment

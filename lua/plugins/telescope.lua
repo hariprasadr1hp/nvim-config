@@ -44,7 +44,7 @@ local function setup_defaults()
         preview = {
             filesize_limit = 0.1, -- MB limit for preview
         },
-        --- @type "horizontal" | "vertical"
+        ---@type "horizontal" | "vertical"
         layout_strategy = "horizontal",
         layout_config = {
             horizontal = {

@@ -14,10 +14,10 @@ local function setup_dressing_config()
             -- Trim trailing `:` from prompt
             trim_prompt = true,
 
-            --- @type "left" | "right" | "center"
+            ---@type "left" | "right" | "center"
             title_pos = "left",
 
-            --- @type "insert" | "normal" | "visual" | "select"
+            ---@type "insert" | "normal" | "visual" | "select"
             start_mode = "insert",
 
             -- These are passed to nvim_open_win

@@ -1,9 +1,37 @@
 {
+  "@class": {
+    "prefix": "@class",
+    "body": ["---@class ${1:NAME}"],
+    "description": "examples:\n`---@class \"snacks.bigfile.Config\"`"
+  },
+  "@field": {
+    "prefix": "@field",
+    "body": ["---@field ${1:NAME} ${2:VALUE}"],
+    "description": "examples:\n`---@field filepath (string | nil)`"
+  },
+  "@module": {
+    "prefix": "@module",
+    "body": ["---@module ${1:NAME}"],
+    "description": "examples:\n`---@module \"conform\"`"
+  },
+  "@param": {
+    "prefix": "@param",
+    "body": ["---@param ${1:NAME} ${2:VALUE}"],
+    "description": "examples:\n`---@param filepath (string | nil)`"
+  },
+  "@return": {
+    "prefix": "@return",
+    "body": ["---@return ${1:TYPE}"],
+    "description": "examples:\n`---@return table<string, string> | nil`"
+  },
+  "@type": {
+    "prefix": "@type",
+    "body": ["---@type ${1:OPTION-1} | ${2:OPTION-2}"],
+    "description": "examples:\n`---@type \"foo\" | \"bar\"`"
+  },
   "jp": {
     "prefix": "jp",
-    "body": [
-      "print($TM_SELECTED_TEXT)"
-    ],
+    "body": ["print($TM_SELECTED_TEXT)"],
     "description": "hp surround print"
   },
   "jfunc": {

@@ -65,7 +65,7 @@ local integrations = {
 }
 
 local catppuccin_config = {
-    --- @type "auto" | "latte" | "frappe" | "macchiato" | "mocha"
+    ---@type "auto" | "latte" | "frappe" | "macchiato" | "mocha"
     flavour = "auto",
     background = {
         light = "latte",
