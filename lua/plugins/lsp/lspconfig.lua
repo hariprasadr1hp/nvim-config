@@ -5,11 +5,11 @@ local M = {}
 local function setup_lsp_handlers()
     local lspconfig = require("lspconfig")
     local mason_lspconfig = require("mason-lspconfig")
-    local cmp_nvim_lsp = require("cmp_nvim_lsp")
+    local blink_cmp = require("blink.cmp")
 
     -- used to enable autocompletion (assign to every lsp server config)
     local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities = vim.tbl_deep_extend("force", capabilities, cmp_nvim_lsp.default_capabilities())
+    capabilities = vim.tbl_deep_extend("force", capabilities, blink_cmp.get_lsp_capabilities({}, false))
 
     --  Add any additional override configuration in the following tables. Available keys are:
     --  - cmd (table): Override the default command used to start the server
@@ -54,8 +54,16 @@ local function setup_lsp_handlers()
                 capabilities = capabilities,
                 settings = {
                     Lua = {
+                        runtime = {
+                            version = "LuaJIT",
+                        },
                         diagnostics = {
                             globals = { "vim" },
+                            disable = {},
+                        },
+                        workspace = {
+                            checkThirdParty = false,
+                            library = vim.api.nvim_get_runtime_file("", true),
                         },
                         completion = {
                             callSnippet = "Replace",
@@ -203,18 +211,6 @@ end
 local function setup_lsp_config()
     setup_lsp_autocommands()
     setup_lsp_handlers()
-
-    -- local signs = {
-    --     Error = " ",
-    --     Warn = " ",
-    --     Hint = " ",
-    --     Info = " ",
-    -- }
-    --
-    -- for type, icon in pairs(signs) do
-    --     local hl = "DiagnosticSign" .. type
-    --     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-    -- end
 end
 
 M = {
@@ -222,9 +218,8 @@ M = {
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
         "williamboman/mason.nvim",
-        "hrsh7th/cmp-nvim-lsp",
+        "saghen/blink.cmp",
         { "antosha417/nvim-lsp-file-operations", config = true },
-        { "folke/neodev.nvim", opts = {} },
     },
     config = setup_lsp_config,
 }

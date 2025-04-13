@@ -60,12 +60,12 @@ local function setup_formatting(lspkind)
                 abbr = 50, -- actual suggestion item
             },
             menu = {
-                nvim_lsp = "[lsp]",
-                buffer = "[buf]",
-                luasnip = "[snip]",
-                path = "[path]",
+                nvim_lsp = "[lsp] ",
+                buffer = "[buf] ",
+                luasnip = "[snip] ",
+                path = "[path] ",
             },
-            --- @type 'text' | 'text_symbol' | 'symbol_text' | 'symbol'
+            ---@type 'text' | 'text_symbol' | 'symbol_text' | 'symbol'
             mode = "symbol",
             show_labelDetails = true, -- show labelDetails in menu. Disabled by default
             symbol_map = {
@@ -100,10 +100,35 @@ local function setup_formatting(lspkind)
     }
 end
 
+local function setup_sorting(cmp, context)
+    return {
+        comparators = {
+            function(entry1, entry2)
+                if context.in_treesitter_capture("parameters") or context.in_treesitter_capture("arguments") then
+                    local kind1 = entry1:get_kind()
+                    local kind2 = entry2:get_kind()
+                    return kind1 == cmp.lsp.CompletionItemKind.Variable and kind2 ~= cmp.lsp.CompletionItemKind.Variable
+                end
+                return nil -- Fallback to other comparators
+            end,
+            cmp.config.compare.offset,
+            cmp.config.compare.exact,
+            cmp.config.compare.score,
+            cmp.config.compare.recently_used,
+            cmp.config.compare.kind,
+            cmp.config.compare.sort_text,
+            cmp.config.compare.length,
+            cmp.config.compare.order,
+        },
+    }
+end
+
 local function setup_completion()
     local cmp = require("cmp")
+    local context = require("cmp.config.context")
     local luasnip = require("luasnip")
     local lspkind = require("lspkind")
+
     luasnip.config.setup({})
 
     cmp.setup({
@@ -112,6 +137,7 @@ local function setup_completion()
         mapping = setup_mappings(cmp, luasnip),
         sources = setup_sources(),
         formatting = setup_formatting(lspkind),
+        sorting = setup_sorting(cmp, context),
     })
 
     cmp.setup.filetype({ "sql" }, {

@@ -2,14 +2,6 @@
 
 local M = {}
 
-local function setup_cmp_autopairs()
-    local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-    local cmp = require("cmp")
-
-    -- make autopairs and completion to work together
-    cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-end
-
 local function setup_autopairs()
     local autopairs = require("nvim-autopairs")
     autopairs.setup({
@@ -20,15 +12,14 @@ local function setup_autopairs()
             java = false, -- don't check treesitter on java
         },
     })
-
-    -- Setup for nvim-cmp integration
-    setup_cmp_autopairs()
 end
 
 M = {
     "windwp/nvim-autopairs",
     event = { "InsertEnter" },
-    dependencies = { "hrsh7th/nvim-cmp" }, -- Optional dependency
+    dependencies = {
+        "saghen/blink.cmp",
+    },
     config = function()
         setup_autopairs()
     end,

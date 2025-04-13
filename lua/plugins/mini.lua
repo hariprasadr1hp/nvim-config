@@ -4,6 +4,7 @@ local M = {}
 
 local function setup_mini_plugin()
     require("mini.pick").setup()
+    require("mini.deps").setup()
 end
 
 M = {

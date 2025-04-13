@@ -129,10 +129,10 @@ local key_mappings = {
             remap = false,
         },
 
-        { "<leader>cF", "<cmd>Telescope filetypes<CR>", desc = "filetype", nowait = false, remap = false },
+        { "<leader>cF", "<cmd>FzfLua filetypes<CR>", desc = "filetype", nowait = false, remap = false },
         {
             "<leader>cS",
-            "<cmd>Telescope lsp_workspace_symbols<CR>",
+            "<cmd>FzfLua lsp_workspace_symbols<CR>",
             desc = "workspace-symbols",
             nowait = false,
             remap = false,
@@ -141,7 +141,7 @@ local key_mappings = {
         { "<leader>cm", "<cmd>FloatermNew --autoclose=0 make<CR>", desc = "make all", nowait = false, remap = false },
         {
             "<leader>cs",
-            "<cmd>Telescope lsp_document_symbols<CR>",
+            "<cmd>FzfLua lsp_document_symbols<CR>",
             desc = "document-symbols",
             nowait = false,
             remap = false,
@@ -266,14 +266,14 @@ local key_mappings = {
         { "<leader>g", group = "git", nowait = false, remap = false },
         { "<leader>gb", "<cmd>Gitsigns blame_line<CR>", desc = "blame-line", nowait = false, remap = false },
         { "<leader>gB", "<cmd>Gitsigns blame<CR>", desc = "blame", nowait = false, remap = false },
-        { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "commits", nowait = false, remap = false },
-        { "<leader>gC", "<cmd>Telescope git_bcommits<CR>", desc = "bcommits", nowait = false, remap = false },
-        { "<leader>gf", "<cmd>Telescope git_files<CR>", desc = "git-files", nowait = false, remap = false },
+        { "<leader>gc", "<cmd>FzfLua git_commits<CR>", desc = "commits", nowait = false, remap = false },
+        { "<leader>gC", "<cmd>FzfLua git_bcommits<CR>", desc = "bcommits", nowait = false, remap = false },
+        { "<leader>gf", "<cmd>FzfLua git_files<CR>", desc = "git-files", nowait = false, remap = false },
         { "<leader>gg", "<cmd>Gitsigns preview_hunk_inline<CR>", desc = "preview-hunk", nowait = false, remap = false },
         { "<leader>gG", "<cmd>DiffviewOpen --selected-file<CR>", desc = "preview", nowait = false, remap = false },
         { "<leader>gp", "<cmd>Gitsigns preview_hunk<CR>", desc = "preview-hunk", nowait = false, remap = false },
-        { "<leader>gS", "<cmd>Telescope git_stash<CR>", desc = "stash", nowait = false, remap = false },
-        { "<leader>gy", "<cmd>Telescope git_branches<CR>", desc = "branches", nowait = false, remap = false },
+        { "<leader>gS", "<cmd>FzfLua git_stash<CR>", desc = "stash", nowait = false, remap = false },
+        { "<leader>gy", "<cmd>FzfLua git_branches<CR>", desc = "branches", nowait = false, remap = false },
 
         -- [H]ELP -------------------
         { "<leader>h", group = "help", nowait = false, remap = false },
@@ -298,7 +298,7 @@ local key_mappings = {
             remap = false,
         },
 
-        { "<leader>hk", "<cmd>Telescope keymaps<CR>", desc = "describe-key", nowait = false, remap = false },
+        { "<leader>hk", "<cmd>FzfLua keymaps<CR>", desc = "describe-key", nowait = false, remap = false },
         { "<leader>hl", group = "harpoon", nowait = false, remap = false },
         {
             "<leader>hla",
@@ -392,11 +392,12 @@ local key_mappings = {
             nowait = false,
             remap = false,
         },
+
         { "<leader>ld", "FzfLua diagnostics_document", desc = "document-diagnostics", nowait = false, remap = false },
 
         {
             "<leader>lD",
-            "<cmd>Telescope diagnostics<CR>",
+            "<cmd>FzfLua diagnostics_workspace<CR>",
             desc = "workspace-diagnostics",
             nowait = false,
             remap = false,
@@ -405,7 +406,7 @@ local key_mappings = {
         {
             "<leader>lf",
             "<cmd>lua vim.lsp.buf.type_definition()<CR>",
-            desc = "type-definition",
+            desc = "goto-type-definition",
             nowait = false,
             remap = false,
         },
@@ -430,28 +431,18 @@ local key_mappings = {
             remap = false,
         },
 
-        -- [n]ext -------------------
-        { "<leader>ln", group = "next", nowait = false, remap = false },
         {
-            "<leader>lnd",
+            "<leader>ln",
             "<cmd>lua vim.diagnostic.goto_next()<CR>",
             desc = "next-diagnostic",
             nowait = false,
             remap = false,
         },
 
-        {
-            "<leader>lo",
-            "<cmd>Telescope lsp_document_symbols<CR>",
-            desc = "document-symbols",
-            nowait = false,
-            remap = false,
-        },
+        { "<leader>lo", "<cmd>AerialToggle<CR>", desc = "outline", nowait = false, remap = false },
 
-        -- [p]revious ---------------
-        { "<leader>lp", group = "next", nowait = false, remap = false },
         {
-            "<leader>lpd",
+            "<leader>lp",
             "<cmd>lua vim.diagnostic.goto_prev()<CR>",
             desc = "prev-diagnostic",
             nowait = false,
@@ -535,7 +526,6 @@ local key_mappings = {
             nowait = false,
             remap = false,
         },
-
         { "<leader>nj", group = "journal", nowait = false, remap = false },
         { "<leader>njj", "<cmd>echo '`emacs` command 🫠'<CR>", desc = "N/A", nowait = false, remap = false },
         {
@@ -575,7 +565,20 @@ local key_mappings = {
         { "<leader>om", "<cmd>e Makefile<CR>", desc = "Makefile", nowait = false, remap = false },
         { "<leader>on", "<cmd>messages<CR>", desc = "notifications", nowait = false, remap = false },
         -- { "<leader>on", "<cmd>NoiceAll<CR>", desc = "notifications", nowait = false, remap = false },
-        { "<leader>oo", "<cmd>AerialToggle<CR>", desc = "outline", nowait = false, remap = false },
+        {
+            "<leader>oo",
+            "<cmd>FzfLua lsp_document_symbols<CR>",
+            desc = "document-symbols",
+            nowait = false,
+            remap = false,
+        },
+        {
+            "<leader>oO",
+            "<cmd>FzfLua lsp_workspace_symbols<CR>",
+            desc = "document-symbols",
+            nowait = false,
+            remap = false,
+        },
         { "<leader>oP", "<cmd>Lazy<CR>", desc = "plugin-manager", nowait = false, remap = false },
         { "<leader>or", "<cmd>FloatermNew ranger .<CR>", desc = "ranger", nowait = false, remap = false },
         { "<leader>ot", "<cmd>FloatermToggle<CR>", desc = "terminal", nowait = false, remap = false },
@@ -613,13 +616,16 @@ local key_mappings = {
 
         -- [S]EARCH ----------------
         { "<leader>s", group = "search", nowait = false, remap = false },
-        { "<leader>sM", "<cmd>Telescope man_pages<CR>", desc = "Man Pages", nowait = false, remap = false },
-        { "<leader>sR", "<cmd>Telescope registers<CR>", desc = "Registers", nowait = false, remap = false },
-        { "<leader>sb", "<cmd>Gitsigns blame_line<CR>", desc = "blame_line", nowait = false, remap = false },
+        { "<leader>sb", "<cmd>FzfLua grep_curbuf<CR>", desc = "buffer", nowait = false, remap = false },
+        { "<leader>sc", "<cmd>FzfLua grep_cword<CR>", desc = "current-word", nowait = false, remap = false },
         { "<leader>sd", "<cmd>!date<CR>", desc = "show-datetime", nowait = false, remap = false },
-        { "<leader>sf", "<cmd>Telescope find_files<CR>", desc = "Find File", nowait = false, remap = false },
-        { "<leader>sm", "<cmd>Telescope marks<CR>", desc = "Marks", nowait = false, remap = false },
-        { "<leader>sr", "<cmd>Telescope oldfiles<CR>", desc = "Open Recent File", nowait = false, remap = false },
+        { "<leader>sf", "<cmd>Telescope find_files<CR>", desc = "files", nowait = false, remap = false },
+        { "<leader>sh", "<cmd>FzfLua search_history<CR>", desc = "history", nowait = false, remap = false },
+        { "<leader>sm", "<cmd>FzfLua marks<CR>", desc = "marks", nowait = false, remap = false },
+        { "<leader>sM", "<cmd>FzfLua man_pages<CR>", desc = "man-pages", nowait = false, remap = false },
+        { "<leader>sr", "<cmd>FzfLua oldfiles<CR>", desc = "recent-file", nowait = false, remap = false },
+        { "<leader>sR", "<cmd>FzfLua registers<CR>", desc = "registers", nowait = false, remap = false },
+        { "<leader>ss", "<cmd>FzfLua grep_cword<CR>", desc = "current-word", nowait = false, remap = false },
         { "<leader>st", "<cmd>!date<CR>", desc = "show-datetime", nowait = false, remap = false },
 
         -- [T]OGGLE ----------------
@@ -675,13 +681,13 @@ local key_mappings = {
         { "<leader>za", "<cmd>Telescope autocommands<CR>", desc = "buffers", nowait = false, remap = false },
         { "<leader>zb", "<cmd>Telescope buffers<CR>", desc = "buffers", nowait = false, remap = false },
         { "<leader>zB", "<cmd>Telescope builtin<CR>", desc = "builtins", nowait = false, remap = false },
-        { "<leader>zc", "<cmd>Telescope commands<CR>", desc = "commands", nowait = false, remap = false },
+        { "<leader>zc", "<cmd>FzfLua commands<CR>", desc = "commands", nowait = false, remap = false },
         { "<leader>zd", "<cmd>FzfLua dap_commands<CR>", desc = "commands", nowait = false, remap = false },
         { "<leader>zf", "<cmd>Telescope find_files<CR>", desc = "files", nowait = false, remap = false },
         { "<leader>zF", "<cmd>FzfLua filetypes<CR>", desc = "file type", nowait = false, remap = false },
         {
             "<leader>zH",
-            "<cmd>Telescope command_history<CR>",
+            "<cmd>FzfLua command_history<CR>",
             desc = "command-history",
             nowait = false,
             remap = false,
@@ -689,22 +695,27 @@ local key_mappings = {
 
         ---- [g]it ----------------
         { "<leader>zg", group = "git", nowait = false, remap = false },
-        { "<leader>zgS", "<cmd>Telescope git_stash<CR>", desc = "stash", nowait = false, remap = false },
-        { "<leader>zgb", "<cmd>Telescope git_commits<CR>", desc = "commits", nowait = false, remap = false },
-        { "<leader>zgf", "<cmd>Telescope git_files<CR>", desc = "files", nowait = false, remap = false },
-        { "<leader>zgs", "<cmd>Telescope git_status<CR>", desc = "status", nowait = false, remap = false },
+        { "<leader>zgS", "<cmd>FzfLua git_stash<CR>", desc = "stash", nowait = false, remap = false },
+        { "<leader>zgb", "<cmd>FzfLua git_commits<CR>", desc = "commits", nowait = false, remap = false },
+        { "<leader>zgf", "<cmd>FzfLua git_files<CR>", desc = "files", nowait = false, remap = false },
+        { "<leader>zgs", "<cmd>FzfLua git_status<CR>", desc = "status", nowait = false, remap = false },
 
-        { "<leader>zh", "<cmd>Telescope help_tags<CR>", desc = "Help tags", nowait = false, remap = false },
-        { "<leader>zm", "<cmd>Telescope marks<CR>", desc = "marks", nowait = false, remap = false },
-        { "<leader>zM", "<cmd>Telescope man_pages<CR>", desc = "man pages", nowait = false, remap = false },
+        { "<leader>zh", "<cmd>FzfLua help_tags<CR>", desc = "help-tags", nowait = false, remap = false },
+        { "<leader>zj", "<cmd>FzfLua jumps<CR>", desc = "jumps", nowait = false, remap = false },
+        { "<leader>zl", "<cmd>FzfLua loclist<CR>", desc = "llist", nowait = false, remap = false },
+        { "<leader>zL", "<cmd>FzfLua loclist_stack<CR>", desc = "llist-history", nowait = false, remap = false },
+        { "<leader>zm", "<cmd>FzfLua marks<CR>", desc = "marks", nowait = false, remap = false },
+        { "<leader>zM", "<cmd>FzfLua man_pages<CR>", desc = "man-pages", nowait = false, remap = false },
         -- { "<leader>zn", "<cmd>NoiceTelescope<CR>", desc = "noice", nowait = false, remap = false },
-        { "<leader>zr", "<cmd>Telescope registers<CR>", desc = "registers", nowait = false, remap = false },
+        { "<leader>zr", "<cmd>FzfLua registers<CR>", desc = "registers", nowait = false, remap = false },
+        { "<leader>zq", "<cmd>FzfLua quickfix<CR>", desc = "clist", nowait = false, remap = false },
+        { "<leader>zQ", "<cmd>FzfLua quickfix_stack<CR>", desc = "clist-history", nowait = false, remap = false },
 
         ---- [s]earch ---------------
-        { "<leader>zs", group = "show", nowait = false, remap = false },
+        { "<leader>zs", group = "search", nowait = false, remap = false },
         {
             "<leader>zss",
-            "<cmd>Telescope command_history<CR>",
+            "<cmd>FzfLua command_history<CR>",
             desc = "command-history",
             nowait = false,
             remap = false,
@@ -712,9 +723,9 @@ local key_mappings = {
 
         { "<leader>zt", "<cmd>TodoTelescope keywords=TODO,FIX<CR>", desc = "todo", nowait = false, remap = false },
         { "<leader>zu", "<cmd>Telescope undo<CR>", desc = "undo", nowait = false, remap = false },
-        { "<leader>zv", "<cmd>Telescope commands<CR>", desc = "vim-commands", nowait = false, remap = false },
-        { "<leader>zx", "<cmd>Telescope resume<CR>", desc = "vim-commands", nowait = false, remap = false },
-        { "<leader>zz", "<cmd>Telescope live_grep<CR>", desc = "live-grep", nowait = false, remap = false },
+        { "<leader>zv", "<cmd>FzfLua commands<CR>", desc = "vim-commands", nowait = false, remap = false },
+        { "<leader>zx", "<cmd>FzfLua resume<CR>", desc = "resume", nowait = false, remap = false },
+        { "<leader>zz", "<cmd>FzfLua live_grep<CR>", desc = "live-grep", nowait = false, remap = false },
         { "<leader>zZ", "<cmd>Telescope grep_string<CR>", desc = "grep-string", nowait = false, remap = false },
     },
 
@@ -729,7 +740,10 @@ local key_mappings = {
         { "<leader>hhs", "<cmd>Gitsigns stage_hunk<CR>", desc = "stage-hunk", nowait = false, remap = false },
         { "<leader>hhu", "<cmd>Gitsigns undo_stage_hunk<CR>", desc = "unstage-hunk", nowait = false, remap = false },
 
-        ---- [T]OGGLE -------------
+        -- [S]EARCH -------------
+        { "<leader>ss", "<cmd>FzfLua grep_visual<CR>", desc = "search", nowait = false, remap = false },
+
+        -- [T]OGGLE -------------
         { "<leader>tG", "g?", desc = "gibberish-rot13", nowait = false, remap = false },
     },
 
@@ -851,7 +865,7 @@ local function setup_which_key()
     local wk = require("which-key")
 
     wk.setup({
-        --- @type false | "classic" | "modern" | "helix"
+        ---@type false | "classic" | "modern" | "helix"
         preset = "classic",
         delay = setup_delay_function(),
         filter = setup_filter_function(),

@@ -17,6 +17,7 @@ local function disable_default_linters()
 end
 
 local linters_by_ft = {
+    bash = { "shellcheck" },
     gdscript = { "gdtoolkit" },
     javascript = { "eslint_d" },
     javascriptreact = { "eslint_d" },
@@ -63,7 +64,7 @@ M = {
     {
         "mfussenegger/nvim-lint",
         event = { "BufReadPre", "BufNewFile" },
-        -- opts = opts,
+        opts = opts,
         config = setup_lint_config,
     },
 }
