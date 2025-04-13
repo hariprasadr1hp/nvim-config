@@ -9,6 +9,7 @@ function M.pprint(value)
     else
         print(value)
     end
+    return value
 end
 
 -- Print (type) of tables, as well as numbers/strings
@@ -43,6 +44,30 @@ function M.runme()
         print(string.format("ERROR: not sure how to execute a `.%s` file :(", file_type))
     end
 end
+
+---@param filepath string | nil
+function M.load_env_file(filepath)
+    local file = io.open(filepath or ".env", "r")
+    if not file then
+        return
+    end
+
+    for line in file:lines() do
+        -- ignore comments and empty lines
+        if not line:match("^%s*#") and line:match("%S") then
+            local key, value = line:match("^%s*([%w_.-]+)%s*=%s*(.*)%s*$")
+            if key and value then
+                -- remove surrounding quotes if any
+                value = value:gsub("^[\"']", ""):gsub("[\"']$", "")
+                vim.env[key] = value
+            end
+        end
+    end
+
+    file:close()
+end
+
+M.load_env_file()
 
 _G.pprint = M.pprint
 _G.tprint = M.tprint

@@ -115,6 +115,9 @@ vim.g.have_nerd_font = true
 -- unless it's the end of the file
 vim.opt.scrolloff = 8
 
+-- views can only be fully collapsed with the global statusline
+vim.opt.laststatus = 3
+
 -- add a trailing newline at the end of the file
 vim.opt.fixendofline = false
 

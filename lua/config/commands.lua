@@ -4,6 +4,10 @@ vim.api.nvim_create_user_command("SaveWithNoFormat", function()
     vim.cmd("noautocmd w")
 end, { desc = "save the file without applying any formatting options" })
 
+vim.api.nvim_create_user_command("LoadEnvFile", function()
+    require("config.helpers").load_env_file()
+end, { desc = "load the environmental variables from a file (`.env` by default)" })
+
 vim.api.nvim_create_user_command("Runme", function()
     require("config.helpers").runme()
 end, { desc = "evalute the buffer code (if applicable)" })
