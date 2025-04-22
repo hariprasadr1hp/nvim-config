@@ -1,0 +1,39 @@
+---
+- name: Neovim setup (cross-platform)
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  vars:
+    lazy_path: '{{ ansible_env.HOME }}/.local/share/nvim/lazy/lazy.nvim'
+    cargo_path: '{{ ansible_env.HOME }}/.cargo/bin'
+  tasks:
+    - name: Install packages (MacOS)
+      when: ansible_facts['os_family'] == 'Darwin'
+      homebrew:
+        name: [ripgrep, fd, jq, go, node, tidy-html5]
+        state: present
+    - name: Install packages on (Debian/Ubuntu)
+      when: ansible_facts['os_family'] == 'Debian'
+      apt:
+        name: [ripgrep, fd-find, jq, golang, nodejs, npm, curl]
+        state: present
+        update_cache: true
+    - name: Install global npm packages
+      npm:
+        name:
+          - typescript
+          - eslint
+          - prettier
+          - typescript-language-server
+          - bash-language-server
+          - vim-language-server
+        global: true
+    - name: Install Rust using rustup
+      shell: |
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+        when: cargo_check.rc != 0
+    - name: Install cargo-based tools
+      shell: |
+        {{ cargo_path }}/cargo install stylua taplo
+      environment:
+        PATH: '{{ cargo_path }}:{{ ansible_env.PATH }}'
