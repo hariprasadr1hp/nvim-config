@@ -3,8 +3,6 @@
 -- each of these are documented in `:help nvim-tree.OPTION_NAME`
 -- nested options are documented by accessing them with `.` (eg: `:help nvim-tree.view.mappings.list`).
 
-local M = {}
-
 local view = {
     adaptive_size = false,
     width = 30,
@@ -195,46 +193,43 @@ local log = {
     },
 }
 
-local function setup_config()
-    return require("nvim-tree").setup({
-        auto_reload_on_write = true,
-        create_in_closed_folder = false,
-        disable_netrw = false,
-        hijack_cursor = true,
-        hijack_netrw = true,
-        hijack_unnamed_buffer_when_opening = false,
-        sync_root_with_cwd = true,
-        open_on_tab = false,
-        sort_by = "name",
-        update_cwd = false,
-        reload_on_bufenter = true,
-        respect_buf_cwd = false,
-        view = view,
-        renderer = renderer,
-        hijack_directories = hijack_directories,
-        update_focused_file = update_focused_file,
-        system_open = system_open,
-        diagnostics = diagnostics,
-        filters = filters,
-        git = git,
-        actions = actions,
-        trash = trash,
-        live_filter = live_filter,
-        log = log,
-    })
-end
-
-M = {
-    {
-        "kyazdani42/nvim-tree.lua",
-        version = "*",
-        dependencies = {
-            "kyazdani42/nvim-web-devicons", -- optional, for file icons
-        },
-        config = function()
-            setup_config()
-        end,
-    },
+local opts = {
+    auto_reload_on_write = true,
+    create_in_closed_folder = false,
+    disable_netrw = false,
+    hijack_cursor = true,
+    hijack_netrw = true,
+    hijack_unnamed_buffer_when_opening = false,
+    sync_root_with_cwd = true,
+    open_on_tab = false,
+    sort_by = "name",
+    update_cwd = false,
+    reload_on_bufenter = true,
+    respect_buf_cwd = false,
+    view = view,
+    renderer = renderer,
+    hijack_directories = hijack_directories,
+    update_focused_file = update_focused_file,
+    system_open = system_open,
+    diagnostics = diagnostics,
+    filters = filters,
+    git = git,
+    actions = actions,
+    trash = trash,
+    live_filter = live_filter,
+    log = log,
 }
 
-return M
+local setup_explorer = function()
+    MiniDeps.add({
+        source = "kyazdani42/nvim-tree.lua",
+        checkout = "v1.11.0",
+        depends = {
+            "kyazdani42/nvim-web-devicons",
+        },
+    })
+
+    require("nvim-tree").setup(opts)
+end
+
+MiniDeps.later(setup_explorer)

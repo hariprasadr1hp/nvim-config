@@ -1,6 +1,4 @@
--- lua/plugins/code_snap.lua
-
-local M = {}
+-- lua/plugins/snapshot.lua
 
 local opts = {
     -- Optional: Uncomment if you want to set a custom save path
@@ -15,10 +13,17 @@ local opts = {
     -- watermark = "hariprasadr1hp",
 }
 
-M = {
-    "mistricky/codesnap.nvim",
-    build = "make",
-    opts = opts,
-}
+local setup_codesnap = function()
+    MiniDeps.add({
+        source = "mistricky/codesnap.nvim",
+        hooks = {
+            post_checkout = function(path)
+                vim.fn.system({ "make" }, path)
+            end,
+        },
+    })
 
-return M
+    require("codesnap").setup(opts)
+end
+
+MiniDeps.later(setup_codesnap)

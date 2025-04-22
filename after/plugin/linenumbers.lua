@@ -79,6 +79,8 @@ vim.api.nvim_create_autocmd("ModeChanged", {
             set_replace_mode_colors()
         elseif mode == "v" or "V" then
             set_visual_mode_colors()
+        elseif mode == "c" then
+            set_cmdline_mode_colors()
         else
             set_normal_mode_colors()
         end
@@ -91,6 +93,11 @@ vim.api.nvim_create_autocmd("RecordingEnter", {
 })
 
 vim.api.nvim_create_autocmd("RecordingLeave", {
+    pattern = "*",
+    callback = set_normal_mode_colors,
+})
+
+vim.api.nvim_create_autocmd("BufWinEnter", {
     pattern = "*",
     callback = set_normal_mode_colors,
 })

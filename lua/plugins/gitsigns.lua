@@ -1,7 +1,5 @@
 -- lua/plugins/git/gitsigns.lua
 
-local M = {}
-
 local signs = {
     add = { text = "" },
     change = { text = "" },
@@ -65,44 +63,47 @@ local function setup_on_attach()
     end
 end
 
-local function setup_gitsigns_options()
-    return {
-        signs = signs,
-        signs_staged = signs_staged,
-        signs_staged_enable = true,
-        signcolumn = true,
-        numhl = false,
-        linehl = false,
-        word_diff = false,
-        watch_gitdir = {
-            enable = true,
-            follow_files = true,
-        },
-        diff_opts = {
-            ---@type "myers" | "minimal" | "patience" | "histogram"
-            algorithm = "myers", -- default
-            vertical = true,
-        },
-        auto_attach = true,
-        attach_to_untracked = false,
-        current_line_blame = false,
-        current_line_blame_opts = blame_opts,
-        current_line_blame_formatter = "<author>, <author_time:%Y-%m-%d %H:%M:%S> - <summary>",
-        sign_priority = 6,
-        update_debounce = 100,
-        status_formatter = nil, -- Use default
-        max_file_length = 40000, -- Disable if file is longer than this
-        preview_config = preview_config,
-        on_attach = setup_on_attach(),
-    }
-end
-
-M = {
-    {
-        "lewis6991/gitsigns.nvim",
-        event = { "BufReadPre", "BufNewFile" },
-        opts = setup_gitsigns_options(),
+local opts = {
+    signs = signs,
+    signs_staged = signs_staged,
+    signs_staged_enable = true,
+    signcolumn = true,
+    numhl = false,
+    linehl = false,
+    word_diff = false,
+    watch_gitdir = {
+        enable = true,
+        follow_files = true,
     },
+    diff_opts = {
+        ---@type "myers" | "minimal" | "patience" | "histogram"
+        algorithm = "myers", -- default
+        vertical = true,
+    },
+    auto_attach = true,
+    attach_to_untracked = false,
+    current_line_blame = false,
+    current_line_blame_opts = blame_opts,
+    current_line_blame_formatter = "<author>, <author_time:%Y-%m-%d %H:%M:%S> - <summary>",
+    sign_priority = 6,
+    update_debounce = 100,
+    status_formatter = nil, -- Use default
+    max_file_length = 40000, -- Disable if file is longer than this
+    preview_config = preview_config,
+    on_attach = setup_on_attach(),
 }
 
-return M
+local setup_gitsigns = function()
+    MiniDeps.add({
+        source = "lewis6991/gitsigns.nvim",
+    })
+
+    vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
+        pattern = "*",
+        callback = function()
+            require("gitsigns").setup(opts)
+        end,
+    })
+end
+
+MiniDeps.later(setup_gitsigns)

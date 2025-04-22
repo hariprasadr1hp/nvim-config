@@ -1,11 +1,9 @@
--- lua/plugins/git/diffview.lua
-
-local M = {}
+-- lua/plugins/git/diff.lua
 
 local function setup_diffview_config()
     local actions = require("diffview.actions")
 
-    return require("diffview").setup({
+    local opts = {
         diff_binaries = false, -- Show diffs for binaries
         enhanced_diff_hl = false, -- See |diffview-config-enhanced_diff_hl|
         git_cmd = { "git" }, -- The git executable followed by default args.
@@ -596,16 +594,17 @@ local function setup_diffview_config()
                 { "n", "<esc>", actions.close, { desc = "Close help menu" } },
             },
         },
-    })
+    }
+
+    require("diffview").setup(opts)
 end
 
-M = {
-    {
-        "sindrets/diffview.nvim",
-        config = function()
-            setup_diffview_config()
-        end,
-    },
-}
+local setup_diff = function()
+    MiniDeps.add({
+        source = "sindrets/diffview.nvim",
+    })
 
-return M
+    setup_diffview_config()
+end
+
+MiniDeps.later(setup_diff)

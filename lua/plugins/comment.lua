@@ -1,26 +1,53 @@
 -- lua/plugins/comment.lua
 
--- TODO: Comments plugin should be replaced with https://github.com/numToStr/Comment.nvim
+local opts = {
+    -- Options which control module behavior
+    options = {
+        -- Function to compute custom 'commentstring' (optional)
+        custom_commentstring = nil,
 
-local M = {}
+        -- Whether to ignore blank lines in actions and textobject
+        ignore_blank_line = false,
 
-local comment_config = {
-    marker_padding = true, -- Linters prefer a space between comment markers
-    comment_empty = true, -- Allow commenting out empty or whitespace lines
-    comment_empty_trim_whitespace = true, -- Trim whitespace on empty comments
-    create_mappings = true, -- Enable key mappings
-    line_mapping = "gcc", -- Normal mode mapping
-    operator_mapping = "<leader>/", -- Visual/Operator mode mapping
-    comment_chunk_text_object = "ic", -- Text object for comment chunks
-    hook = nil, -- Hook function before commenting
+        -- Whether to recognize as comment only lines without indent
+        start_of_line = false,
+
+        -- Whether to force single space inner padding for comment parts
+        pad_comment_parts = true,
+    },
+
+    -- Module mappings. Use `''` (empty string) to disable one.
+    mappings = {
+        -- Toggle comment (like `gcip` - comment inner paragraph) for both
+        -- Normal and Visual modes
+        -- comment = "gc",
+        comment = "<leader>/",
+
+        -- Toggle comment on current line
+        -- comment_line = "gcc",
+        comment_line = "<leader>/",
+
+        -- Toggle comment on visual selection
+        -- comment_visual = "gc",
+        comment_visual = "<leader>/",
+
+        -- Define "comment" textobject (like `dgc` - delete whole comment block)
+        -- Works also in Visual mode if mapping differs from `comment_visual`
+        -- textobject = "gc",
+        textobject = "<leader>/",
+    },
+
+    -- Hook functions to be executed at certain stage of commenting
+    hooks = {
+        -- Before successful commenting. Does nothing by default.
+        pre = function() end,
+        -- After successful commenting. Does nothing by default.
+        post = function() end,
+    },
 }
 
-M = {
-    "terrortylor/nvim-comment",
-    config = function()
-        local nvim_comment = require("nvim_comment")
-        nvim_comment.setup(comment_config)
-    end,
-}
+local setup_mini_comment = function()
+    require("mini.comment").setup(opts)
+end
 
-return M
+MiniDeps.later(setup_mini_comment)

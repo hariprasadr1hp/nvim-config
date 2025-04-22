@@ -1,7 +1,5 @@
 -- lua/plugins/oil.lua
 
-local M = {}
-
 local columns = {
     "icon",
     -- "permissions",
@@ -122,39 +120,37 @@ local keymaps_help = {
     border = "rounded",
 }
 
-local function setup_oil()
-    return require("oil").setup({
-        default_file_explorer = true,
-        columns = columns,
-        buf_options = buf_options,
-        win_options = win_options,
-        delete_to_trash = false,
-        skip_confirm_for_simple_edits = false,
-        prompt_save_on_select_new_entry = true,
-        cleanup_delay_ms = 2000,
-        lsp_file_methods = lsp_file_methods,
-        constrain_cursor = "editable",
-        watch_for_changes = false,
-        keymaps = keymaps,
-        use_default_keymaps = true,
-        view_options = view_options,
-        extra_scp_args = {},
-        git = git,
-        float = float,
-        preview = preview,
-        progress = progress,
-        ssh = ssh,
-        keymaps_help = keymaps_help,
-    })
-end
-
-M = {
-    "stevearc/oil.nvim",
-    opts = {},
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    config = function()
-        setup_oil()
-    end,
+local opts = {
+    default_file_explorer = true,
+    columns = columns,
+    buf_options = buf_options,
+    win_options = win_options,
+    delete_to_trash = false,
+    skip_confirm_for_simple_edits = false,
+    prompt_save_on_select_new_entry = true,
+    cleanup_delay_ms = 2000,
+    lsp_file_methods = lsp_file_methods,
+    constrain_cursor = "editable",
+    watch_for_changes = false,
+    keymaps = keymaps,
+    use_default_keymaps = true,
+    view_options = view_options,
+    extra_scp_args = {},
+    git = git,
+    float = float,
+    preview = preview,
+    progress = progress,
+    ssh = ssh,
+    keymaps_help = keymaps_help,
 }
 
-return M
+local setup_oil = function()
+    MiniDeps.add({
+        source = "stevearc/oil.nvim",
+        depends = { "echasnovski/mini.icons" },
+    })
+
+    require("oil").setup(opts)
+end
+
+MiniDeps.later(setup_oil)

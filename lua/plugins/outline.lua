@@ -1,7 +1,5 @@
 -- lua/plugins/outline.lua
 
-local M = {}
-
 local function setup_outline_config()
     return -- Call the setup function to change the default behavior
         require("aerial").setup({
@@ -395,19 +393,15 @@ local function setup_outline_config()
     })
 end
 
-M = {
-    {
-        "stevearc/aerial.nvim",
-        opts = {},
-        -- Optional dependencies
-        dependencies = {
+local setup_outline = function()
+    MiniDeps.add({
+        source = "stevearc/aerial.nvim",
+        depends = {
             "nvim-treesitter/nvim-treesitter",
             "nvim-tree/nvim-web-devicons",
         },
-        config = function()
-            setup_outline_config()
-        end,
-    },
-}
+    })
+    setup_outline_config()
+end
 
-return M
+MiniDeps.later(setup_outline)

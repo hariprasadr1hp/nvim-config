@@ -1,8 +1,6 @@
 -- lua/plugins/blink.lua
 
-local M = {}
-
-local function setup_blink()
+local function setup_blink_config()
     local blink_cmp = require("blink.cmp")
 
     ---@module 'blink.cmp'
@@ -41,7 +39,6 @@ local function setup_blink()
             Keyword = "󰻾",
             Constant = "󰏿",
 
-            -- Snippet = "󱄽",
             Snippet = "",
             Color = "󰏘",
             File = "󰈔",
@@ -56,7 +53,11 @@ local function setup_blink()
     opts.cmdline = {
         enabled = true,
         -- use 'inherit' to inherit mappings from top level `keymap` config
-        keymap = { preset = "cmdline" },
+        keymap = {
+            preset = "cmdline",
+            ["<Down>"] = { "select_next", "fallback" },
+            ["<Up>"] = { "select_prev", "fallback" },
+        },
         -- sources = function()
         --     local type = vim.fn.getcmdtype()
         --     -- Search forward and backward
@@ -187,7 +188,7 @@ local function setup_blink()
 
     opts.completion.menu = {
         enabled = true,
-        min_width = 15,
+        min_width = 25,
         max_height = 10,
         border = "rounded", -- Defaults to `vim.o.winborder` on nvim 0.11+
         winblend = 0,
@@ -353,6 +354,9 @@ local function setup_blink()
 
     opts.fuzzy = {
         implementation = "prefer_rust_with_warning",
+        prebuilt_binaries = {
+            force_version = "v1.1.1",
+        },
     }
 
     opts.keymap = {
@@ -362,9 +366,11 @@ local function setup_blink()
         ["<Left>"] = { "select_and_accept", "fallback" },
         ["<C-n>"] = { "select_next", "fallback" },
         ["<C-p>"] = { "select_prev", "fallback" },
+        ["<C-j>"] = { "select_next", "fallback" },
+        ["<C-k>"] = { "select_prev", "fallback" },
 
-        ["<C-j>"] = { "scroll_documentation_down", "fallback" },
-        ["<C-k>"] = { "scroll_documentation_up", "fallback" },
+        ["<C-f>"] = { "scroll_documentation_down", "fallback" },
+        ["<C-b>"] = { "scroll_documentation_up", "fallback" },
         ["<Tab>"] = { "select_and_accept", "fallback" },
         ["<S-Tab>"] = { "select_prev", "fallback" },
         ["<C-y>"] = { "select_and_accept", "fallback" },
@@ -443,10 +449,10 @@ local function setup_blink()
 
     opts.sources = {
         default = {
-            "lazydev",
+            -- "lazydev",
             "lsp",
             "path",
-            -- "snippets",
+            "snippets",
             "buffer",
             "git",
             "emoji",
@@ -616,47 +622,24 @@ local function setup_blink()
         enabled = false,
     }
 
-    return blink_cmp.setup(opts)
+    blink_cmp.setup(opts)
 end
 
-M = {
-    {
-        "saghen/blink.cmp",
-        dependencies = {
+local setup_blink = function()
+    MiniDeps.add({
+        source = "saghen/blink.cmp",
+        checkout = "v1.1.1",
+        depends = {
+            "echasnovski/mini.fuzzy",
+            "echasnovski/mini.snippets",
             "mikavilpas/blink-ripgrep.nvim",
-            {
-                "L3MON4D3/LuaSnip",
-                version = "v2.*",
-                build = (function()
-                    if vim.fn.has("win32") == 1 or vim.fn.executable("make") == 0 then
-                        return
-                    end
-                    return "make install_jsregexp"
-                end)(),
-                dependencies = {
-                    {
-                        "rafamadriz/friendly-snippets",
-                        config = function()
-                            require("luasnip.loaders.from_vscode").lazy_load()
-                            require("luasnip.loaders.from_vscode").lazy_load({
-                                paths = { "./snippets" },
-                            })
-                        end,
-                    },
-                },
-            },
-            -- "echasnovski/mini.snippets"
             "Kaiser-Yang/blink-cmp-git",
             "moyiz/blink-emoji.nvim",
-            "folke/snacks.nvim",
         },
+    })
 
-        version = "1.*",
-        opts = function()
-            return setup_blink()
-        end,
-        opts_extend = { "sources.default" },
-    },
-}
+    -- require("blink.cmp").setup()
+    setup_blink_config()
+end
 
-return M
+MiniDeps.later(setup_blink)

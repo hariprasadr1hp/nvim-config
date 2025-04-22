@@ -1,7 +1,11 @@
 -- init.lua
 
+local config_dir = vim.fn.stdpath("config")
+
+-- vim config
+vim.cmd("source " .. config_dir .. "/vimscript/init.vim")
+
 -- lua config
 require("config")
 
--- vimscript config (should eventually be replaced with lua code)
-vim.cmd("source ~/.config/nvim/vimscript/init.vim")
+vim.notify("sourced `" .. config_dir .. "/init.lua` successfully!", vim.log.levels.INFO)

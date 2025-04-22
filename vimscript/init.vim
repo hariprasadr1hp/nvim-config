@@ -1,13 +1,4 @@
 " #######################################################################
-" files
-
-source ~/.config/nvim/vimscript/keys_xsel.vim
-source ~/.config/nvim/vimscript/keys_surround.vim
-source ~/.config/nvim/vimscript/keys_insert.vim
-source ~/.config/nvim/vimscript/keys_meta.vim
-source ~/.config/nvim/vimscript/keys_terminal.vim
-source ~/.config/nvim/vimscript/functions.vim
-
 
 " Y yanks till the end of the line from the cursor
 nnoremap Y y$
@@ -49,7 +40,7 @@ nnoremap <M-Down> :move +1<CR>
 
 " visually select text for searching, mapped to //
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
- 
+
 
 " `bn` as escape characters
 inoremap bn <Esc>

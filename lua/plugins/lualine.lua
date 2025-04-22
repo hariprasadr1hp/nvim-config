@@ -1,7 +1,5 @@
 -- lua/plugins/lualine.lua
 
-local M = {}
-
 local colors = {
     blue = "#61afef",
     green = "#98c379",
@@ -76,19 +74,20 @@ local function setup_sections()
                 "filename",
                 file_status = true, -- Displays file status (readonly status, modified status)
                 newfile_status = false, -- Display new file status (new file means no write after created)
-                path = 1, -- 0: Just the filename
+                -- 0: Just the filename
                 -- 1: Relative path
                 -- 2: Absolute path
                 -- 3: Absolute path, with tilde as the home directory
                 -- 4: Filename and parent dir, with tilde as the home directory
+                path = 1,
 
                 shorting_target = 40, -- Shortens path to leave 40 spaces in the window
                 -- for other components. (terrible name, any suggestions?)
                 symbols = {
-                    modified = "🖋️", -- Text to show when the file is modified.
-                    readonly = "🔒", -- Text to show when the file is non-modifiable or readonly.
-                    unnamed = "🤖", -- Text to show for unnamed buffers.
-                    newfile = "🌱", -- Text to show for newly created file before first write
+                    modified = "", -- Text to show when the file is modified.
+                    readonly = "", -- Text to show when the file is non-modifiable or readonly.
+                    unnamed = "󱚦 󱚦 󱚦", -- Text to show for unnamed buffers.
+                    newfile = "", -- Text to show for newly created file before first write
                 },
                 ---@diagnostic disable-next-line: unused-local
                 on_click = function(clicks, button, modifiers)
@@ -140,12 +139,12 @@ local function setup_sections()
                 ---@diagnostic disable-next-line: unused-local
                 on_click = function(clicks, button, modifiers)
                     if clicks >= 1 and button == "l" then
-                        vim.cmd("Telescope filetypes")
+                        vim.cmd("FzfLua filetypes")
                     end
                 end,
             },
             "fileformat",
-            "encoding",
+            -- "encoding",
         },
 
         lualine_z = { "filesize", "progress", "location" },
@@ -154,16 +153,16 @@ end
 
 local function setup_inactive_sections()
     return {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_c = { "filename" },
-        lualine_x = { "location" },
+        lualine_a = { "filename" },
+        lualine_b = { "location" },
+        lualine_c = {},
+        lualine_x = {},
         lualine_y = {},
         lualine_z = {},
     }
 end
 
-local function setup_lualine()
+local function setup_lualine_config()
     local velvet = setup_velvet_theme()
 
     local lualine = require("lualine")
@@ -195,18 +194,17 @@ local function setup_lualine()
     })
 end
 
-M = {
-    "hoob3rt/lualine.nvim",
-    dependencies = {
-        { "kyazdani42/nvim-web-devicons", opt = true },
-        { "folke/noice.nvim" },
-    },
-    config = function()
-        setup_lualine()
-    end,
-}
+local setup_lualine = function()
+    MiniDeps.add({
+        source = "hoob3rt/lualine.nvim",
+        depends = {
+            "kyazdani42/nvim-web-devicons",
+        },
+    })
+    setup_lualine_config()
+end
 
-return M
+MiniDeps.later(setup_lualine)
 
 -- TODO: lualine: refer the following links to upgrade the status info
 -- https://github.com/folke/noice.nvim/wiki/Configuration-Recipes#show-recording-messages

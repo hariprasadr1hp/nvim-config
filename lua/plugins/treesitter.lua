@@ -67,34 +67,33 @@ local autotag = {
     enable = true,
 }
 
-local function setup_treesitter_config()
-    return {
-        ensure_installed = ensure_installed,
-        sync_install = false,
-        auto_install = true,
-        ignore_install = { "org" },
-        highlight = highlight,
-        indent = indent,
-        incremental_selection = incremental_selection,
-        autotag = autotag,
-    }
-end
-
-M = {
-    {
-        "nvim-treesitter/nvim-treesitter",
-        build = ":TSUpdate",
-        event = { "BufReadPre", "BufNewFile" },
-        main = "nvim-treesitter.configs",
-        opts = setup_treesitter_config(),
-        dependencies = {
-            "windwp/nvim-ts-autotag",
-            "nvim-treesitter/nvim-treesitter-textobjects",
-        },
-    },
+local opts = {
+    ensure_installed = ensure_installed,
+    sync_install = false,
+    auto_install = true,
+    ignore_install = { "org" },
+    highlight = highlight,
+    indent = indent,
+    incremental_selection = incremental_selection,
+    autotag = autotag,
 }
 
-return M
+local setup_treesitter = function()
+    MiniDeps.add({
+        source = "nvim-treesitter/nvim-treesitter",
+        checkout = "master",
+        monitor = "main",
+        hooks = {
+            post_checkout = function()
+                vim.cmd("TSUpdate")
+            end,
+        },
+    })
+
+    require("nvim-treesitter.configs").setup(opts)
+end
+
+MiniDeps.later(setup_treesitter)
 
 -- TODO: extend selection to neighbouring-node (prev/next)?
 -- TODO: extend selection to [COUNT]neighbouring-node (prev/next)?

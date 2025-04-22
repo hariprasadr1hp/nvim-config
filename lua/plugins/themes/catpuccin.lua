@@ -1,11 +1,7 @@
 -- lua/plugins/themes/catppuccin.lua
 
-local M = {}
-
 local dim_inactive = {
-    enabled = true,
-    shade = "light",
-    percentage = 0.5,
+    enabled = false,
 }
 
 local colors = {
@@ -57,7 +53,7 @@ local integrations = {
     gitsigns = true,
     nvimtree = true,
     treesitter = true,
-    notify = false,
+    notify = true,
     mini = {
         enabled = true,
         indentscope_color = "",
@@ -75,6 +71,7 @@ local catppuccin_config = {
     show_end_of_buffer = false,
     term_colors = false,
     dim_inactive = dim_inactive,
+    -- no_italic = false,
     no_italic = false,
     no_bold = false,
     no_underline = false,
@@ -93,19 +90,9 @@ local catppuccin_config = {
 }
 
 local function setup_catppuccin()
+    MiniDeps.add({ source = "catppuccin/nvim" })
     require("catppuccin").setup(catppuccin_config)
-
-    -- setup must be called before loading the colorscheme
-    vim.cmd.colorscheme("catppuccin")
+    -- vim.cmd.colorscheme("catppuccin-mocha")
 end
 
-M = {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    priority = 1000,
-    config = function()
-        setup_catppuccin()
-    end,
-}
-
-return M
+MiniDeps.later(setup_catppuccin)

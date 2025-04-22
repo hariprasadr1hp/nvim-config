@@ -121,6 +121,16 @@ vim.opt.laststatus = 3
 -- add a trailing newline at the end of the file
 vim.opt.fixendofline = false
 
+-- highlighted yank
+vim.api.nvim_create_autocmd("TextYankPost", {
+    callback = function()
+        vim.highlight.on_yank({
+            higroup = "Visual",
+            timeout = 300,
+        })
+    end,
+})
+
 -- COMPLETION
 -------------------------------------------------------------------
 -- Faster completion
@@ -141,7 +151,7 @@ vim.o.backup = false
 vim.o.writebackup = false
 
 -- undodir
-vim.opt.undodir = vim.fn.expand("~/.config/nvim/.undodir")
+vim.opt.undodir = vim.fn.stdpath("data") .. "/undodir"
 vim.o.undofile = true
 
 -- DICTIONARY

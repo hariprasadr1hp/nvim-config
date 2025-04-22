@@ -1,6 +1,4 @@
--- lua/plugins/todo.lua
-
-local M = {}
+-- lua/plugins/todo_comments.lua
 
 local keywords = {
     FIX = {
@@ -65,31 +63,28 @@ local function setup_keymaps()
     end, { desc = "Previous todo comment" })
 end
 
+local opts = {
+    signs = true,
+    sign_priority = 8,
+    keywords = keywords,
+    gui_style = gui_style,
+    merge_keywords = true,
+    highlight = highlight,
+    colors = colors,
+    search = search,
+}
+
 local function setup_todo_comments()
-    require("todo-comments").setup({
-        signs = true,
-        sign_priority = 8,
-        keywords = keywords,
-        gui_style = gui_style,
-        merge_keywords = true,
-        highlight = highlight,
-        colors = colors,
-        search = search,
+    MiniDeps.add({
+        source = "folke/todo-comments.nvim",
+        depends = {
+            "nvim-lua/plenary.nvim",
+            "ibhagwan/fzf-lua",
+        },
     })
 
-    -- Set keymaps for navigating between TODO comments
+    require("todo-comments").setup(opts)
     setup_keymaps()
 end
 
-M = {
-    "folke/todo-comments.nvim",
-    dependencies = {
-        "nvim-lua/plenary.nvim",
-        "ibhagwan/fzf-lua",
-    },
-    config = function()
-        setup_todo_comments()
-    end,
-}
-
-return M
+MiniDeps.later(setup_todo_comments)

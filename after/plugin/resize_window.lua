@@ -26,15 +26,17 @@ local function enter_window_resize_mode()
         {}
     )
 
-    vim.api.nvim_buf_set_keymap(0, "n", "h", ":vertical resize +1<CR>", { noremap = true, silent = true })
-    vim.api.nvim_buf_set_keymap(0, "n", "k", ":resize +1<CR>", { noremap = true, silent = true })
-    vim.api.nvim_buf_set_keymap(0, "n", "j", ":resize -1<CR>", { noremap = true, silent = true })
-    vim.api.nvim_buf_set_keymap(0, "n", "l", ":vertical resize -1<CR>", { noremap = true, silent = true })
-    vim.api.nvim_buf_set_keymap(0, "n", "q", ":WindowResizeModeExit<CR>", { noremap = true, silent = true })
-    vim.api.nvim_buf_set_keymap(0, "n", "<up>", ":resize +1<CR>", { noremap = true, silent = true })
-    vim.api.nvim_buf_set_keymap(0, "n", "<down>", ":resize -1<CR>", { noremap = true, silent = true })
-    vim.api.nvim_buf_set_keymap(0, "n", "<right>", ":vertical resize +1<CR>", { noremap = true, silent = true })
-    vim.api.nvim_buf_set_keymap(0, "n", "<left>", ":vertical resize -1<CR>", { noremap = true, silent = true })
+    local opts = { noremap = true, silent = true }
+
+    vim.api.nvim_buf_set_keymap(0, "n", "h", ":vertical resize +1<CR>", opts)
+    vim.api.nvim_buf_set_keymap(0, "n", "k", ":resize +1<CR>", opts)
+    vim.api.nvim_buf_set_keymap(0, "n", "j", ":resize -1<CR>", opts)
+    vim.api.nvim_buf_set_keymap(0, "n", "l", ":vertical resize -1<CR>", opts)
+    vim.api.nvim_buf_set_keymap(0, "n", "q", ":WindowResizeModeExit<CR>", opts)
+    vim.api.nvim_buf_set_keymap(0, "n", "<up>", ":resize +1<CR>", opts)
+    vim.api.nvim_buf_set_keymap(0, "n", "<down>", ":resize -1<CR>", opts)
+    vim.api.nvim_buf_set_keymap(0, "n", "<right>", ":vertical resize +1<CR>", opts)
+    vim.api.nvim_buf_set_keymap(0, "n", "<left>", ":vertical resize -1<CR>", opts)
 end
 
 vim.api.nvim_create_user_command("WindowResizeModeEnter", enter_window_resize_mode, {})

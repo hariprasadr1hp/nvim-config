@@ -1,82 +1,146 @@
 -- lua/plugins/whichkey.lua
 
-local telescope_builtins = require("telescope.builtin")
-local conform = require("conform")
-local dap = require("dap")
-local harpoon_list = require("harpoon"):list()
+local config_dir = vim.fn.stdpath("config")
 
-local key_mappings = {
+local function setup_delay_function()
+    return function(ctx)
+        return ctx.plugin and 0 or 200
+    end
+end
+
+local function setup_filter_function()
+    return function(mapping)
+        return mapping == true
+    end
+end
+
+local function setup_defer_function()
+    return function(ctx)
+        return ctx.mode == "V" or ctx.mode == "<C-V>"
+    end
+end
+
+local plugins = {
+    marks = true,
+    registers = true,
+    spelling = {
+        enabled = true,
+        suggestions = 20,
+    },
+    presets = {
+        operators = true,
+        motions = true,
+        text_objects = true,
+        windows = true,
+        nav = true,
+        z = true,
+        g = true,
+    },
+}
+
+local win = {
+    no_overlap = true,
+    padding = { 1, 2 },
+    title = true,
+    title_pos = "center",
+    zindex = 1000,
+    bo = {},
+    wo = {},
+}
+
+local layout = {
+    height = { min = 14, max = 25 },
+    width = { min = 20, max = 50 },
+    spacing = 3,
+}
+
+local keys = {
+    scroll_down = "<c-d>",
+    scroll_up = "<c-u>",
+}
+
+local icons = {
+    breadcrumb = "»",
+    separator = "➜",
+    group = "+",
+    ellipsis = "…",
+    mappings = true,
+    rules = {},
+    colors = true,
+    keys = {
+        Up = " ",
+        Down = " ",
+        Left = " ",
+        Right = " ",
+        C = "󰘴 ",
+        M = "󰘵 ",
+        D = "󰘳 ",
+        S = "󰘶 ",
+        CR = "󰌑 ",
+        Esc = "󱊷 ",
+        ScrollWheelDown = "󱕐 ",
+        ScrollWheelUp = "󱕑 ",
+        NL = "󰌑 ",
+        BS = "󰁮",
+        Space = "󱁐 ",
+        Tab = "󰌒 ",
+        F1 = "󱊫",
+        F2 = "󱊬",
+        F3 = "󱊭",
+        F4 = "󱊮",
+        F5 = "󱊯",
+        F6 = "󱊰",
+        F7 = "󱊱",
+        F8 = "󱊲",
+        F9 = "󱊳",
+        F10 = "󱊴",
+        F11 = "󱊵",
+        F12 = "󱊶",
+    },
+}
+
+local opts = {
+    ---@type false | "classic" | "modern" | "helix"
+    preset = "classic",
+    delay = setup_delay_function(),
+    filter = setup_filter_function(),
+    spec = {},
+    notify = true,
+    triggers = {
+        { "<auto>", mode = "nxsot" },
+    },
+    defer = setup_defer_function(),
+    plugins = plugins,
+    win = win,
+    layout = layout,
+    keys = keys,
+    sort = { "local", "order", "group", "alphanum", "mod" },
+    expand = 0,
+    icons = icons,
+    show_help = true,
+    show_keys = true,
+    disable = {
+        ft = {},
+        bt = {},
+    },
+    debug = false,
+}
+
+local key_maps = {
     --- NORMAL MODE
     {
         mode = "n",
         { "<C-`>", "<cmd>ToggleTerm<CR>", desc = "toggle-term", nowait = false, remap = false },
         { "<C-.><C-.>", "<cmd>NvimTreeToggle<CR>", desc = "toggle-term", nowait = false, remap = false },
         { "<C-w>a", ":WindowResizeModeEnter<CR>", desc = "resize-window-mode", nowait = false, remap = false },
-
-        {
-            ",1",
-            function()
-                harpoon_list:select(1)
-            end,
-            desc = "harpoon-1",
-            nowait = false,
-            remap = false,
-        },
-
-        {
-            ",2",
-            function()
-                harpoon_list:select(2)
-            end,
-            desc = "harpoon-2",
-            nowait = false,
-            remap = false,
-        },
-
-        {
-            ",3",
-            function()
-                harpoon_list:select(3)
-            end,
-            desc = "harpoon-3",
-            nowait = false,
-            remap = false,
-        },
-
-        {
-            ",4",
-            function()
-                harpoon_list:select(4)
-            end,
-            desc = "harpoon-4",
-            nowait = false,
-            remap = false,
-        },
-
-        {
-            ",5",
-            function()
-                harpoon_list:select(5)
-            end,
-            desc = "harpoon-5",
-            nowait = false,
-            remap = false,
-        },
+        { "<M-x>", ":Telescope commands<CR>", desc = "telescope-commands", nowait = false, remap = false },
 
         { ",p", group = "swap-prev", nowait = false, remap = false },
         { ",n", group = "swap-next", nowait = false, remap = false },
 
-        { "<leader>,", ":Telescope find_files<CR>", desc = "files", nowait = false, remap = false },
-        {
-            "<leader>.",
-            function()
-                telescope_builtins.find_files({ no_ignore = true })
-            end,
-            desc = "files",
-            nowait = false,
-            remap = false,
-        },
-        { "<leader>/", ":CommentToggle<CR>", desc = "comment", nowait = false, remap = false },
+        { "<leader>,", "<cmd>Pick files<CR>", desc = "files", nowait = false, remap = false },
+        { "<leader>.", "<cmd>FzfLua files<CR>", desc = "files", nowait = false, remap = false },
+        -- { "<leader>/", ":CommentToggle<CR>", desc = "comment", nowait = false, remap = false },
 
         { "<leader>0", "0", desc = "0", nowait = false, remap = false },
         { "<leader>6", "^", desc = "^", nowait = false, remap = false },
@@ -99,6 +163,7 @@ local key_mappings = {
         { "<leader>bB", "<cmd>Telescope buffers<CR>", desc = "fzf-buffer", nowait = false, remap = false },
         { "<leader>bd", "<cmd>bd!<CR>", desc = "discard-changes", nowait = false, remap = false },
         { "<leader>bf", "<cmd>bfirst<CR>", desc = "first-buffer", nowait = false, remap = false },
+        { "<leader>bi", "<cmd>buffers<CR>", desc = "info-tabs", nowait = false, remap = false },
         { "<leader>bk", "<cmd>bp | bd #<CR>", desc = "kill-buffer", nowait = false, remap = false },
         { "<leader>bK", "<cmd>%bd | enew <CR>", desc = "kill-all-buffers", nowait = false, remap = false },
         { "<leader>bl", "<cmd>blast<CR>", desc = "last-buffer", nowait = false, remap = false },
@@ -119,15 +184,15 @@ local key_mappings = {
             remap = false,
         },
 
-        {
-            "<leader>cf",
-            function()
-                conform.format({ async = true, lsp_format = "fallback" })
-            end,
-            desc = "format",
-            nowait = false,
-            remap = false,
-        },
+        -- {
+        --     "<leader>cf",
+        --     function()
+        --         conform.format({ async = true, lsp_format = "fallback" })
+        --     end,
+        --     desc = "format",
+        --     nowait = false,
+        --     remap = false,
+        -- },
 
         { "<leader>cF", "<cmd>FzfLua filetypes<CR>", desc = "filetype", nowait = false, remap = false },
         {
@@ -149,26 +214,26 @@ local key_mappings = {
 
         -- [D]EBUG ------------------
         { "<leader>d", group = "debug", nowait = false, remap = false },
-        {
-            "<leader>db",
-            function()
-                dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
-            end,
-            desc = "set-breakpoint",
-            nowait = false,
-            remap = false,
-        },
-        { "<leader>dd", "<cmd>DapContinue<CR>", desc = "continue", nowait = false, remap = false },
-        { "<leader>di", "<cmd>DapStepInto<CR>", desc = "step-into", nowait = false, remap = false },
-        { "<leader>do", "<cmd>DapStepOver<CR>", desc = "step-over", nowait = false, remap = false },
-        {
-            "<leader>dm",
-            "<cmd>FloatermNew --autoclose=0 make debug<CR>",
-            desc = "make debug",
-            nowait = false,
-            remap = false,
-        },
-        { "<leader>dr", "<cmd>DapToggleRepl<CR>", desc = "open-repl", nowait = false, remap = false },
+        -- {
+        --     "<leader>db",
+        --     function()
+        --         dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
+        --     end,
+        --     desc = "set-breakpoint",
+        --     nowait = false,
+        --     remap = false,
+        -- },
+        -- { "<leader>dd", "<cmd>DapContinue<CR>", desc = "continue", nowait = false, remap = false },
+        -- { "<leader>di", "<cmd>DapStepInto<CR>", desc = "step-into", nowait = false, remap = false },
+        -- { "<leader>do", "<cmd>DapStepOver<CR>", desc = "step-over", nowait = false, remap = false },
+        -- {
+        --     "<leader>dm",
+        --     "<cmd>FloatermNew --autoclose=0 make debug<CR>",
+        --     desc = "make debug",
+        --     nowait = false,
+        --     remap = false,
+        -- },
+        -- { "<leader>dr", "<cmd>DapToggleRepl<CR>", desc = "open-repl", nowait = false, remap = false },
 
         -- [E]VAL / [E]DIT -------
         { "<leader>e", group = "edit/eval", nowait = false, remap = false },
@@ -181,28 +246,28 @@ local key_mappings = {
         { "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "files", nowait = false, remap = false },
         {
             "<leader>fi",
-            "<cmd>e $HOME/.config/nvim/init.lua<CR>",
+            "<cmd>e " .. config_dir .. "/init.lua<CR>",
             desc = "init.lua",
             nowait = false,
             remap = false,
         },
         {
             "<leader>fI",
-            "<cmd>e $HOME/.config/nvim/vimscript/init.vim<CR>",
+            "<cmd>e " .. config_dir .. "/vimscript/init.vim<CR>",
             desc = "init.vim",
             nowait = false,
             remap = false,
         },
         {
             "<leader>fk",
-            "<cmd>e $HOME/.config/nvim/lua/plugins/whichkey.lua<CR>",
+            "<cmd>e " .. config_dir .. "/lua/plugins/whichkey.lua<CR>",
             desc = "which-key",
             nowait = false,
             remap = false,
         },
         {
             "<leader>fl",
-            "<cmd>e $HOME/.config/nvim/lua/plugins/lsp.lua<CR>",
+            "<cmd>e " .. config_dir .. "/lua/plugins/lspconfig.lua<CR>",
             desc = "lsp",
             nowait = false,
             remap = false,
@@ -210,7 +275,7 @@ local key_mappings = {
         {
             "<leader>fp",
             function()
-                telescope_builtins.find_files({ cwd = "~/.config/nvim/" })
+                require("telescope.builtin").find_files({ cwd = config_dir })
             end,
             desc = "private-config",
             nowait = false,
@@ -218,7 +283,7 @@ local key_mappings = {
         },
         {
             "<leader>fP",
-            "<cmd>e $HOME/.config/nvim/lua/lazy_plugins.lua<CR>",
+            "<cmd>e " .. config_dir .. "/lua/plugins/init.lua<CR>",
             desc = "plugins-config",
             nowait = false,
             remap = false,
@@ -242,21 +307,21 @@ local key_mappings = {
         },
         {
             "<leader>fX",
-            "<cmd>! rm -f $HOME/.config/nvim/undodir/*<CR>",
+            "<cmd>! rm -f " .. config_dir .. "/undodir/*<CR>",
             desc = "delete-undo-files",
             nowait = false,
             remap = false,
         },
         {
             "<leader>fw",
-            "<cmd>e $HOME/.config/nvim/lua/plugins/whichkey.lua<CR>",
+            "<cmd>e " .. config_dir .. "/lua/plugins/whichkey.lua<CR>",
             desc = "whichkey-config",
             nowait = false,
             remap = false,
         },
         {
             "<leader>fz",
-            "<cmd>e /Users/hari/.config/zellij/config.kdl<CR>",
+            "<cmd>e $HOME/.config/zellij/config.kdl<CR>",
             desc = "zellij-config",
             nowait = false,
             remap = false,
@@ -300,56 +365,6 @@ local key_mappings = {
 
         { "<leader>hk", "<cmd>FzfLua keymaps<CR>", desc = "describe-key", nowait = false, remap = false },
         { "<leader>hl", group = "harpoon", nowait = false, remap = false },
-        {
-            "<leader>hla",
-            function()
-                harpoon_list:add()
-            end,
-            desc = "harpoon-add",
-            nowait = false,
-            remap = false,
-        },
-
-        {
-            "<leader>hld",
-            function()
-                harpoon_list:remove()
-            end,
-            desc = "harpoon-delete",
-            nowait = false,
-            remap = false,
-        },
-
-        {
-            "<leader>hll",
-            function()
-                require("harpoon").ui:toggle_quick_menu(harpoon_list)
-            end,
-            desc = "harpoon-list",
-            nowait = false,
-            remap = false,
-        },
-
-        {
-            "<leader>hlp",
-            function()
-                harpoon_list:prev()
-            end,
-            desc = "harpoon-prev",
-            nowait = false,
-            remap = false,
-        },
-
-        {
-            "<leader>hln",
-            function()
-                harpoon_list:next()
-            end,
-            desc = "harpoon-next",
-            nowait = false,
-            remap = false,
-        },
-
         { "<leader>hrr", "<cmd>echo '`emacs` command 🫠'<CR>", desc = "N/A", nowait = false, remap = false },
         {
             "<leader>hs",
@@ -360,10 +375,12 @@ local key_mappings = {
         },
         { "<leader>ht", "<cmd>FzfLua colorschemes<CR>", desc = "themes", nowait = false, remap = false },
 
-        { "<leader>i", group = "info", nowait = false, remap = false }, -- [I]NFO / [I]NSERT --------
+        -- [I]NFO / [I]NSERT --------
+        { "<leader>i", group = "info", nowait = false, remap = false },
         { "<leader>it", "<cmd>InspectTree<CR>", desc = "inspect-tree", nowait = false, remap = false },
 
-        { "<leader>j", group = "tabs", nowait = false, remap = false }, -- TABS ------------
+        -- [J]TABS ------------
+        { "<leader>j", group = "tabs", nowait = false, remap = false },
         { "<leader>j0", "<cmd>tabfirst<CR>", desc = "first-tab", nowait = false, remap = false },
         { "<leader>j1", "<cmd>1tabnext<CR>", desc = "tab-1", nowait = false, remap = false },
         { "<leader>j2", "<cmd>2tabnext<CR>", desc = "tab-2", nowait = false, remap = false },
@@ -374,13 +391,13 @@ local key_mappings = {
         { "<leader>j7", "<cmd>7tabnext<CR>", desc = "tab-7", nowait = false, remap = false },
         { "<leader>j8", "<cmd>8tabnext<CR>", desc = "tab-8", nowait = false, remap = false },
         { "<leader>j9", "<cmd>tablast<CR>", desc = "last-tab", nowait = false, remap = false },
-        { "<leader>jK", "<cmd>tabonly<CR>", desc = "only-current-tab", nowait = false, remap = false },
-        { "<leader>jc", "<cmd>tabclose<CR>", desc = "close-tab", nowait = false, remap = false },
+        { "<leader>jK", "<cmd>tabonly<CR>", desc = "kill-other-than-current-tab", nowait = false, remap = false },
         { "<leader>jh", "<cmd>-tabmove<CR>", desc = "move-left", nowait = false, remap = false },
         { "<leader>ji", "<cmd>tabs<CR>", desc = "info-tabs", nowait = false, remap = false },
         { "<leader>jk", "<cmd>tabclose<CR>", desc = "kill-tab", nowait = false, remap = false },
         { "<leader>jl", "<cmd>+tabmove<CR>", desc = "move-right", nowait = false, remap = false },
         { "<leader>jn", "<cmd>tabnew<CR>", desc = "new-tab", nowait = false, remap = false },
+        { "<leader>jO", "<cmd>tabonly<CR>", desc = "only-current-tab", nowait = false, remap = false },
 
         -- [L]ANGUAGE ----------------
         { "<leader>l", group = "lsp", nowait = false, remap = false },
@@ -531,7 +548,7 @@ local key_mappings = {
         {
             "<leader>njs",
             function()
-                telescope_builtins.find_files({ cwd = "$HOME/my/org/journal/" })
+                require("telescope.builtin").find_files({ cwd = "$HOME/my/org/journal/" })
             end,
             desc = "journal",
             nowait = false,
@@ -543,7 +560,7 @@ local key_mappings = {
         {
             "<leader>nrf",
             function()
-                telescope_builtins.find_files({ cwd = "$HOME/my/org/roam/" })
+                require("telescope.builtin").find_files({ cwd = "$HOME/my/org/roam/" })
             end,
             desc = "roam",
             nowait = false,
@@ -594,7 +611,7 @@ local key_mappings = {
         { "<leader>qq", "<cmd>q<CR>", desc = "quit file, unmodified", nowait = false, remap = false },
         {
             "<leader>qr",
-            "<cmd>luafile $HOME/.config/nvim/init.lua<CR>",
+            "<cmd>luafile " .. config_dir .. "/init.lua<CR>",
             desc = "reload",
             nowait = false,
             remap = false,
@@ -608,7 +625,7 @@ local key_mappings = {
         { "<leader>rf", "<cmd>NvimTreeRefresh<CR>", desc = "explorer", nowait = false, remap = false },
         {
             "<leader>rr",
-            "<cmd>source $HOME/.config/nvim/init.lua<CR>",
+            "<cmd>source " .. config_dir .. "/init.lua<CR>",
             desc = "source init.vim",
             nowait = false,
             remap = false,
@@ -630,24 +647,23 @@ local key_mappings = {
 
         -- [T]OGGLE ----------------
         { "<leader>t", group = "toggle", nowait = false, remap = false },
-        { "<leader>tb", "<cmd>DapToggleBreakpoint<CR>", desc = "toggle-Breakpoint", nowait = false, remap = false },
+        -- { "<leader>tb", "<cmd>DapToggleBreakpoint<CR>", desc = "toggle-Breakpoint", nowait = false, remap = false },
         { "<leader>tc", "<cmd>CloakPreviewLine<CR>", desc = "cloak-line", nowait = false, remap = false },
         { "<leader>tC", "<cmd>CloakToggle<CR>", desc = "cloak-file", nowait = false, remap = false },
         { "<leader>tg", "<cmd>Gitsigns toggle_signs<CR>", desc = "git-signs", nowait = false, remap = false },
         { "<leader>tG", "<cmd>%norm! g??<CR>", desc = "gibberish-rot13", nowait = false, remap = false },
         { "<leader>th", "<cmd>set hls!<CR>", desc = "hl-search", nowait = false, remap = false },
-        { "<leader>tn", "<cmd>set nu! rnu!<CR>", desc = "line-numbers", nowait = false, remap = false },
-        { "<leader>tr", "<cmd>set ro!<CR>", desc = "read-only", nowait = false, remap = false },
-        { "<leader>ts", "<cmd>set spell!<CR>", desc = "spell-check", nowait = false, remap = false },
+        { "<leader>tn", "<cmd>setl nu! rnu!<CR>", desc = "line-numbers", nowait = false, remap = false },
+        { "<leader>tr", "<cmd>setl ro!<CR>", desc = "read-only", nowait = false, remap = false },
+        { "<leader>ts", "<cmd>setl spell!<CR>", desc = "spell-check", nowait = false, remap = false },
+        { "<leader>tT", "<cmd>highlight Normal guibg=black<CR>", desc = "bg-black", nowait = false, remap = false },
         {
-            "<leader>tt",
-            "<cmd>highlight Normal guibg=None<CR>",
-            desc = "bg-transparent",
+            "<leader>tw",
+            "<cmd>setlocal nowrap! linebreak breakindent<CR>",
+            desc = "wrap-text",
             nowait = false,
             remap = false,
         },
-        { "<leader>tT", "<cmd>highlight Normal guibg=black<CR>", desc = "bg-black", nowait = false, remap = false },
-        { "<leader>tw", "<cmd>set nowrap!<CR>", desc = "wrap-text", nowait = false, remap = false },
         { "<leader>tz", "<cmd>ZenMode<CR>", desc = "wrap-text", nowait = false, remap = false },
 
         -- [W]INDOW ----------------
@@ -659,13 +675,14 @@ local key_mappings = {
         { "<leader>w=", "<cmd>wincmd =<CR>", desc = "equalize-window", nowait = false, remap = false },
         { "<leader>wa", ":WindowResizeModeEnter<CR>", desc = "resize-window-mode", nowait = false, remap = false },
         { "<leader>wc", "<cmd>wincmd c<CR>", desc = "close-window", nowait = false, remap = false },
+        { "<leader>we", "<cmd>RandomThemeGenerate<CR>", desc = "random-theme", nowait = false, remap = false },
         { "<leader>wh", "<cmd>wincmd h<CR>", desc = "left-window", nowait = false, remap = false },
         { "<leader>wj", "<cmd>wincmd j<CR>", desc = "bottom-window", nowait = false, remap = false },
         { "<leader>wk", "<cmd>wincmd k<CR>", desc = "top-window", nowait = false, remap = false },
         { "<leader>wl", "<cmd>wincmd l<CR>", desc = "right-window", nowait = false, remap = false },
         { "<leader>wm", "<cmd>wincmd |<CR>", desc = "maximize-window", nowait = false, remap = false },
         { "<leader>wn", "<cmd>new<CR>", desc = "new-window", nowait = false, remap = false },
-        { "<leader>wo", "<cmd>only<CR>", desc = "only-window", nowait = false, remap = false },
+        { "<leader>wO", "<cmd>only<CR>", desc = "only-current-window", nowait = false, remap = false },
         { "<leader>wq", "<cmd>wincmd q<CR>", desc = "quit-window", nowait = false, remap = false },
         { "<leader>ws", "<cmd>wincmd s<CR>", desc = "split-window-below", nowait = false, remap = false },
         { "<leader>wv", "<cmd>wincmd v<CR>", desc = "split-window-right", nowait = false, remap = false },
@@ -707,6 +724,7 @@ local key_mappings = {
         { "<leader>zm", "<cmd>FzfLua marks<CR>", desc = "marks", nowait = false, remap = false },
         { "<leader>zM", "<cmd>FzfLua man_pages<CR>", desc = "man-pages", nowait = false, remap = false },
         -- { "<leader>zn", "<cmd>NoiceTelescope<CR>", desc = "noice", nowait = false, remap = false },
+        { "<leader>zo", "<cmd>FzfLua nvim_options<CR>", desc = "nvim-options", nowait = false, remap = false },
         { "<leader>zr", "<cmd>FzfLua registers<CR>", desc = "registers", nowait = false, remap = false },
         { "<leader>zq", "<cmd>FzfLua quickfix<CR>", desc = "clist", nowait = false, remap = false },
         { "<leader>zQ", "<cmd>FzfLua quickfix_stack<CR>", desc = "clist-history", nowait = false, remap = false },
@@ -737,8 +755,8 @@ local key_mappings = {
 
         -- [H]UNK ------------------
         { "<leader>hh", group = "git-hunk", nowait = false, remap = false },
-        { "<leader>hhs", "<cmd>Gitsigns stage_hunk<CR>", desc = "stage-hunk", nowait = false, remap = false },
-        { "<leader>hhu", "<cmd>Gitsigns undo_stage_hunk<CR>", desc = "unstage-hunk", nowait = false, remap = false },
+        -- { "<leader>hhs", "<cmd>Gitsigns stage_hunk<CR>", desc = "stage-hunk", nowait = false, remap = false },
+        -- { "<leader>hhu", "<cmd>Gitsigns undo_stage_hunk<CR>", desc = "unstage-hunk", nowait = false, remap = false },
 
         -- [S]EARCH -------------
         { "<leader>ss", "<cmd>FzfLua grep_visual<CR>", desc = "search", nowait = false, remap = false },
@@ -754,145 +772,20 @@ local key_mappings = {
     },
 }
 
-local function setup_delay_function()
-    return function(ctx)
-        return ctx.plugin and 0 or 200
-    end
-end
-
-local function setup_filter_function()
-    return function(mapping)
-        return mapping == true
-    end
-end
-
-local function setup_defer_function()
-    return function(ctx)
-        return ctx.mode == "V" or ctx.mode == "<C-V>"
-    end
-end
-
-local function setup_plugins()
-    return {
-        marks = true,
-        registers = true,
-        spelling = {
-            enabled = true,
-            suggestions = 20,
-        },
-        presets = {
-            operators = true,
-            motions = true,
-            text_objects = true,
-            windows = true,
-            nav = true,
-            z = true,
-            g = true,
-        },
-    }
-end
-
-local function setup_window_options()
-    return {
-        no_overlap = true,
-        padding = { 1, 2 },
-        title = true,
-        title_pos = "center",
-        zindex = 1000,
-        bo = {},
-        wo = {},
-    }
-end
-
-local function setup_layout_options()
-    return {
-        height = { min = 14, max = 25 },
-        width = { min = 20, max = 50 },
-        spacing = 3,
-    }
-end
-
-local function setup_keys()
-    return {
-        scroll_down = "<c-d>",
-        scroll_up = "<c-u>",
-    }
-end
-
-local function setup_icons()
-    return {
-        breadcrumb = "»",
-        separator = "➜",
-        group = "+",
-        ellipsis = "…",
-        mappings = true,
-        rules = {},
-        colors = true,
-        keys = {
-            Up = " ",
-            Down = " ",
-            Left = " ",
-            Right = " ",
-            C = "󰘴 ",
-            M = "󰘵 ",
-            D = "󰘳 ",
-            S = "󰘶 ",
-            CR = "󰌑 ",
-            Esc = "󱊷 ",
-            ScrollWheelDown = "󱕐 ",
-            ScrollWheelUp = "󱕑 ",
-            NL = "󰌑 ",
-            BS = "󰁮",
-            Space = "󱁐 ",
-            Tab = "󰌒 ",
-            F1 = "󱊫",
-            F2 = "󱊬",
-            F3 = "󱊭",
-            F4 = "󱊮",
-            F5 = "󱊯",
-            F6 = "󱊰",
-            F7 = "󱊱",
-            F8 = "󱊲",
-            F9 = "󱊳",
-            F10 = "󱊴",
-            F11 = "󱊵",
-            F12 = "󱊶",
-        },
-    }
-end
-
-local function setup_which_key()
-    local wk = require("which-key")
-
-    wk.setup({
-        ---@type false | "classic" | "modern" | "helix"
-        preset = "classic",
-        delay = setup_delay_function(),
-        filter = setup_filter_function(),
-        spec = {},
-        notify = true,
-        triggers = {
-            { "<auto>", mode = "nxsot" },
-        },
-        defer = setup_defer_function(),
-        plugins = setup_plugins(),
-        win = setup_window_options(),
-        layout = setup_layout_options(),
-        keys = setup_keys(),
-        sort = { "local", "order", "group", "alphanum", "mod" },
-        expand = 0,
-        icons = setup_icons(),
-        show_help = true,
-        show_keys = true,
-        disable = {
-            ft = {},
-            bt = {},
-        },
-        debug = false,
+local setup_whichkey = function()
+    MiniDeps.add({
+        source = "folke/which-key.nvim",
     })
 
-    -- Register the key mappings
-    wk.add(key_mappings)
+    vim.api.nvim_create_autocmd("BufWinEnter", {
+        once = true,
+        callback = function()
+            local wk = require("which-key")
+            wk.setup(opts)
+            wk.add(key_maps)
+        end,
+    })
 end
 
-setup_which_key()
+-- MiniDeps.later(setup_whichkey)
+setup_whichkey()

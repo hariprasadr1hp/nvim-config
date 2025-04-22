@@ -70,11 +70,7 @@
   "configurations": {
     "timeout": 30.5,
     "retry_attempts": 3,
-    "allowed_hosts": [
-      "192.168.1.1",
-      "10.0.0.2",
-      "localhost"
-    ]
+    "allowed_hosts": ["192.168.1.1", "10.0.0.2", "localhost"]
   },
   "metadata": {
     "created_at": "2023-08-15T10:00:00Z",
@@ -131,22 +127,14 @@
     "api": "http://localhost:5000/api",
     "db": "postgres://localhost:5432/mydb"
   },
-  "tags": [
-    "json",
-    "example",
-    "test"
-  ],
+  "tags": ["json", "example", "test"],
   "docker_compose": {
     "version": "3.8",
     "services": {
       "web": {
         "image": "nginx:latest",
-        "ports": [
-          "8080:80"
-        ],
-        "volumes": [
-          "./web:/usr/share/nginx/html"
-        ],
+        "ports": ["8080:80"],
+        "volumes": ["./web:/usr/share/nginx/html"],
         "environment": {
           "NGINX_HOST": "localhost",
           "NGINX_PORT": "80"
@@ -157,15 +145,11 @@
           "context": "./app",
           "dockerfile": "Dockerfile"
         },
-        "ports": [
-          "5000:5000"
-        ],
+        "ports": ["5000:5000"],
         "environment": {
           "DATABASE_URL": "${DATABASE_URL}"
         },
-        "depends_on": [
-          "db"
-        ]
+        "depends_on": ["db"]
       },
       "db": {
         "image": "postgres:13",
@@ -175,9 +159,7 @@
           "POSTGRES_PASSWORD": "example_pass",
           "POSTGRES_DB": "example_db"
         },
-        "volumes": [
-          "db_data:/var/lib/postgresql/data"
-        ]
+        "volumes": ["db_data:/var/lib/postgresql/data"]
       }
     },
     "volumes": {
@@ -213,10 +195,7 @@
         {
           "name": "sidecar-container",
           "image": "busybox",
-          "args": [
-            "sleep",
-            "3600"
-          ]
+          "args": ["sleep", "3600"]
         }
       ],
       "volumes": [

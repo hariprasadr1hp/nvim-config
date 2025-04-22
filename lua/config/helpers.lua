@@ -22,7 +22,7 @@ function M.feedkeys(keys, mode)
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, false, true), mode, true)
 end
 
--- Whether it is in recording mode, currently
+-- checks if it is in recording mode
 function M.is_recording()
     return vim.fn.reg_recording() ~= ""
 end
@@ -70,6 +70,8 @@ end
 M.load_env_file()
 
 _G.pprint = M.pprint
+_G.P = M.pprint
 _G.tprint = M.tprint
+_G.T = M.tprint
 
 return M

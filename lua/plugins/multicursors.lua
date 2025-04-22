@@ -1,52 +1,32 @@
 -- lua/plugins/multicursors.lua
 
-local M = {}
-
 -- FIX: multicursor commands only work (on x mode), only after the keymaps are triggered
 
-M = {
-    {
-        "brenton-leighton/multiple-cursors.nvim",
-        version = "*", -- Use the latest tagged version
-        opts = {}, -- This causes the plugin setup function to be called
-        keys = {
-            { "<C-j>", "<Cmd>MultipleCursorsAddDown<CR>", mode = { "n", "x" }, desc = "Add cursor and move down" },
-            { "<C-k>", "<Cmd>MultipleCursorsAddUp<CR>", mode = { "n", "x" }, desc = "Add cursor and move up" },
+local setup_multicursors_config = function()
+    local cursors = require("multiple-cursors")
+    cursors.setup({})
 
-            { "<C-Up>", "<Cmd>MultipleCursorsAddUp<CR>", mode = { "n", "i", "x" }, desc = "Add cursor and move up" },
-            {
-                "<C-Down>",
-                "<Cmd>MultipleCursorsAddDown<CR>",
-                mode = { "n", "i", "x" },
-                desc = "Add cursor and move down",
-            },
+    local map = vim.keymap.set
+    local key_opts = { noremap = true, silent = true }
 
-            {
-                "<C-LeftMouse>",
-                "<Cmd>MultipleCursorsMouseAddDelete<CR>",
-                mode = { "n", "i" },
-                desc = "Add or remove cursor",
-            },
+    map({ "n", "x" }, "<C-j>", ":MultipleCursorsAddDown<CR>", key_opts)
+    map({ "n", "x" }, "<C-k>", ":MultipleCursorsAddUp<CR>", key_opts)
+    map({ "n", "x" }, "<C-Up>", ":MultipleCursorsAddUp<CR>", key_opts)
+    map({ "n", "x" }, "<C-Down>", ":MultipleCursorsAddDown<CR>", key_opts)
+    map({ "n", "x" }, "<C-LeftMouse>", ":MultipleCursorsMouseAddDelete<CR>", key_opts)
+    map({ "n", "x" }, "<leader>xa", ":MultipleCursorsAddMatches<CR>", key_opts)
+    map({ "n", "x" }, "<leader>xA", ":MultipleCursorsAddMatchesV<CR>", key_opts)
+    map({ "n", "x" }, "<leader>xd", ":MultipleCursorsAddJumpNextMatch<CR>", key_opts)
+    map({ "n", "x" }, "<leader>xD", ":MultipleCursorsJumpNextMatch<CR>", key_opts)
+    map({ "n", "x" }, "<leader>xl", ":MultipleCursorsLock<CR>", key_opts)
+end
 
-            { "<Leader>xa", "<Cmd>MultipleCursorsAddMatches<CR>", mode = { "n", "x" }, desc = "Add cursors to cword" },
-            {
-                "<Leader>xA",
-                "<Cmd>MultipleCursorsAddMatchesV<CR>",
-                mode = { "n", "x" },
-                desc = "Add cursors to cword in previous area",
-            },
-            {
+local setup_multicursors = function()
+    MiniDeps.add({
+        source = "brenton-leighton/multiple-cursors.nvim",
+        checkout = "v0.15",
+    })
+    setup_multicursors_config()
+end
 
-                "<Leader>xd",
-                "<Cmd>MultipleCursorsAddJumpNextMatch<CR>",
-                mode = { "n", "x" },
-                desc = "Add cursor and jump to next cword",
-            },
-            { "<Leader>xD", "<Cmd>MultipleCursorsJumpNextMatch<CR>", mode = { "n", "x" }, desc = "Jump to next cword" },
-
-            { "<Leader>xl", "<Cmd>MultipleCursorsLock<CR>", mode = { "n", "x" }, desc = "Lock virtual cursors" },
-        },
-    },
-}
-
-return M
+MiniDeps.later(setup_multicursors)

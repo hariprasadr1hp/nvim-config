@@ -1,7 +1,5 @@
 -- lua/plugins/telescope.lua
 
-local M = {}
-
 local function setup_mappings(actions, actions_layout)
     return {
         i = {
@@ -104,7 +102,7 @@ local function load_extensions()
     pcall(require("telescope").load_extension, "aerial")
 end
 
-local function setup_telescope()
+local function setup_telescope_config()
     require("telescope").setup({
         defaults = setup_defaults(),
         pickers = pickers,
@@ -114,27 +112,17 @@ local function setup_telescope()
     load_extensions()
 end
 
-M = {
-    "nvim-telescope/telescope.nvim",
-    event = "VimEnter",
-    branch = "0.1.x",
-    dependencies = {
-        "nvim-lua/plenary.nvim",
-        {
-            "nvim-telescope/telescope-fzf-native.nvim",
-            build = "make",
-            cond = function()
-                return vim.fn.executable("make") == 1
-            end,
+local setup_telescope = function()
+    MiniDeps.add({
+        source = "nvim-telescope/telescope.nvim",
+        checkout = "0.1.x",
+        depends = {
+            "nvim-lua/plenary.nvim",
         },
-        { "nvim-telescope/telescope-ui-select.nvim" },
-        { "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
-    },
-    config = function()
-        setup_telescope()
-    end,
-}
+    })
 
-return M
+    setup_telescope_config()
+end
 
--- TODO: exclude `*.lock` files from `:Telescope find_files`
+
+MiniDeps.later(setup_telescope)

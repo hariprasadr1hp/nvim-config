@@ -1,8 +1,6 @@
 -- lua/plugins/autopairs.lua
 
-local M = {}
-
-local function setup_autopairs()
+local function setup_autopairs_config()
     local autopairs = require("nvim-autopairs")
     autopairs.setup({
         check_ts = true,
@@ -14,15 +12,22 @@ local function setup_autopairs()
     })
 end
 
+local setup_autopairs = function()
+    MiniDeps.add({
+        source = "windwp/nvim-autopairs",
+    })
+    vim.api.nvim_create_autocmd("InsertEnter", {
+        once = true,
+        callback = setup_autopairs_config,
+    })
+end
+
 M = {
     "windwp/nvim-autopairs",
     event = { "InsertEnter" },
-    dependencies = {
-        "saghen/blink.cmp",
-    },
     config = function()
         setup_autopairs()
     end,
 }
 
-return M
+MiniDeps.later(setup_autopairs)

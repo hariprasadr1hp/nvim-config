@@ -1,8 +1,6 @@
 -- lua/plugins/lsp/lspconfig.lua
 
-local M = {}
-
-local function setup_lsp_handlers()
+local setup_lsp_handlers = function()
     local lspconfig = require("lspconfig")
     local mason_lspconfig = require("mason-lspconfig")
     local blink_cmp = require("blink.cmp")
@@ -10,6 +8,9 @@ local function setup_lsp_handlers()
     -- used to enable autocompletion (assign to every lsp server config)
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = vim.tbl_deep_extend("force", capabilities, blink_cmp.get_lsp_capabilities({}, false))
+    -- capabilities = vim.tbl_deep_extend("force", capabilities, MiniCompletion.get_lsp_capabilities())
+
+    -- vim.lsp.config("*", {capabilities = MiniCompletion.get_lsp_capabilities()})
 
     --  Add any additional override configuration in the following tables. Available keys are:
     --  - cmd (table): Override the default command used to start the server
@@ -122,7 +123,8 @@ local function setup_lsp_handlers()
         ["svelte"] = function()
             lspconfig["svelte"].setup({
                 capabilities = capabilities,
-                on_attach = function(client, bufnr)
+                ---@diagnostic disable-next-line: unused-local
+                on_attach = function(client, _bufnr)
                     vim.api.nvim_create_autocmd("BufWritePost", {
                         pattern = { "*.js", "*.ts" },
                         callback = function(ctx)
@@ -136,7 +138,7 @@ local function setup_lsp_handlers()
     })
 end
 
-local function setup_lsp_mappings(event)
+local setup_lsp_mappings = function(event)
     local map = function(keys, func, desc, mode)
         mode = mode or "n"
         vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = desc })
@@ -149,9 +151,13 @@ local function setup_lsp_mappings(event)
     map("gD", vim.lsp.buf.declaration, "declaration")
     map("gA", vim.lsp.buf.code_action, "code-action")
     map("g.", vim.lsp.buf.code_action, "code-action")
-    map("]d", vim.diagnostic.goto_next, "next-diagnostic")
-    map("[d", vim.diagnostic.goto_prev, "prev-diagnostic")
     map("K", vim.lsp.buf.hover, "show-definition")
+    map("]d", function()
+        vim.diagnostic.jump({ count = 1, float = true })
+    end, "next-diagnostic")
+    map("[d", function()
+        vim.diagnostic.jump({ count = -1, float = true })
+    end, "prev-diagnostic")
 end
 
 local function on_lsp_attach(event)
@@ -164,7 +170,7 @@ local function on_lsp_attach(event)
         return
     end
 
-    if client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+    if client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
         local highlight_augroup = vim.api.nvim_create_augroup("lsp-highlight", { clear = false })
         vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
             buffer = event.buf,
@@ -187,7 +193,13 @@ local function on_lsp_attach(event)
         })
     end
 
-    if client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+    local inlay_hint = vim.lsp.protocol.Methods.textDocument_inlayHint or ""
+
+    if inlay_hint == "" then
+        return
+    end
+
+    if client:supports_method(inlay_hint) then
         vim.keymap.set("n", "<leader>lH", function()
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
         end, { buffer = event.buf, desc = "[T]oggle Inlay [H]ints" })
@@ -208,20 +220,18 @@ local function setup_lsp_autocommands()
     })
 end
 
-local function setup_lsp_config()
+local setup_lsp_config = function()
+    MiniDeps.add({
+        source = "neovim/nvim-lspconfig",
+        depends = {
+            "williamboman/mason.nvim",
+            "williamboman/mason-lspconfig.nvim",
+            "saghen/blink.cmp",
+        },
+    })
+
     setup_lsp_autocommands()
     setup_lsp_handlers()
 end
 
-M = {
-    "neovim/nvim-lspconfig",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-        "williamboman/mason.nvim",
-        "saghen/blink.cmp",
-        { "antosha417/nvim-lsp-file-operations", config = true },
-    },
-    config = setup_lsp_config,
-}
-
-return M
+MiniDeps.now(setup_lsp_config)
