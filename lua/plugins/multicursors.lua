@@ -2,7 +2,7 @@
 
 -- FIX: multicursor commands only work (on x mode), only after the keymaps are triggered
 
-local setup_multicursors_config = function()
+local function setup_multicursors_config()
     local cursors = require("multiple-cursors")
     cursors.setup({})
 
@@ -21,7 +21,7 @@ local setup_multicursors_config = function()
     map({ "n", "x" }, "<leader>xl", ":MultipleCursorsLock<CR>", key_opts)
 end
 
-local setup_multicursors = function()
+local function setup_multicursors()
     MiniDeps.add({
         source = "brenton-leighton/multiple-cursors.nvim",
         checkout = "v0.15",

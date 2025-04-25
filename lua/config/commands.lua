@@ -9,7 +9,7 @@ vim.api.nvim_create_user_command("LoadEnvFile", function()
 end, { desc = "load the environmental variables from a file (`.env` by default)" })
 
 vim.api.nvim_create_user_command("Runme", function()
-    require("config.helpers").runme()
+    vim.cmd("! " .. require("config.helpers").eval_cmd_by_ft())
 end, { desc = "evalute the buffer code (if applicable)" })
 
 vim.api.nvim_create_user_command("GetFilePath", function()

@@ -27,22 +27,15 @@ function M.is_recording()
     return vim.fn.reg_recording() ~= ""
 end
 
-function M.runme()
-    local file_type = vim.bo.filetype
-    if file_type == "python" then
-        local cmd = string.format("! %s %%", vim.g.python3_host_prog)
-        vim.cmd(cmd)
-    elseif file_type == "lua" then
-        vim.cmd("! lua %")
-    elseif file_type == "c" then
-        vim.cmd("! gcc % -o /tmp/a.out && /tmp/a.out")
-    elseif file_type == "cpp" then
-        vim.cmd("! g++ % -o /tmp/a.out && /tmp/a.out")
-    elseif file_type == "" then
-        print("ERROR: no defined filetype to evaluate!")
-    else
-        print(string.format("ERROR: not sure how to execute a `.%s` file :(", file_type))
-    end
+function M.eval_cmd_by_ft()
+    local cmds_by_ft = {
+        python = " python " .. vim.fn.expand("%:p"),
+        javascript = " node " .. vim.fn.expand("%:p"),
+        lua = " lua " .. vim.fn.expand("%:p"),
+        c = " gcc " .. vim.fn.expand("%:p") .. " -o /tmp/a.out && /tmp/a.out",
+        cpp = " g++ " .. vim.fn.expand("%:p") .. " -o /tmp/a.out && /tmp/a.out",
+    }
+    return cmds_by_ft[vim.bo.filetype] or nil
 end
 
 ---@param filepath string | nil

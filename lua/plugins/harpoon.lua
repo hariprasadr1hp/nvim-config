@@ -70,7 +70,7 @@ local function setup_keymaps()
     end, {})
 end
 
-local setup_harpoon = function()
+local function setup_harpoon()
     MiniDeps.add({
         source = "ThePrimeagen/harpoon",
         checkout = "harpoon2",

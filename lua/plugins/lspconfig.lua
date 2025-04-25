@@ -1,25 +1,14 @@
 -- lua/plugins/lsp/lspconfig.lua
 
-local setup_lsp_handlers = function()
+local function setup_lsp_handlers()
     local lspconfig = require("lspconfig")
     local mason_lspconfig = require("mason-lspconfig")
     local blink_cmp = require("blink.cmp")
 
-    -- used to enable autocompletion (assign to every lsp server config)
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = vim.tbl_deep_extend("force", capabilities, blink_cmp.get_lsp_capabilities({}, false))
-    -- capabilities = vim.tbl_deep_extend("force", capabilities, MiniCompletion.get_lsp_capabilities())
 
-    -- vim.lsp.config("*", {capabilities = MiniCompletion.get_lsp_capabilities()})
-
-    --  Add any additional override configuration in the following tables. Available keys are:
-    --  - cmd (table): Override the default command used to start the server
-    --  - filetypes (table): Override the default list of associated filetypes for the server
-    --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
-    --  - settings (table): Override the default settings passed when initializing the server.
-    --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
-
-    mason_lspconfig.setup_handlers({
+    local handlers = {
         -- default handler for installed servers
         function(server_name)
             lspconfig[server_name].setup({
@@ -64,7 +53,11 @@ local setup_lsp_handlers = function()
                         },
                         workspace = {
                             checkThirdParty = false,
-                            library = vim.api.nvim_get_runtime_file("", true),
+                            -- library = vim.api.nvim_get_runtime_file("", true),
+                            library = {
+                                vim.fn.stdpath("config") .. "/lua",
+                                vim.fn.stdpath("data") .. "/site/pack/deps",
+                            },
                         },
                         completion = {
                             callSnippet = "Replace",
@@ -79,24 +72,22 @@ local setup_lsp_handlers = function()
 
         ["pyright"] = function()
             lspconfig["pyright"].setup({
-                {
-                    capabilities = capabilities,
-                    cmd = { "pyright-langserver", "--stdio" },
-                    filetypes = { "python", "ipynb" },
-                    settings = {
-                        pyright = {
-                            disableOrganizeImports = true, -- using Ruff
-                        },
-                        python = {
-                            analysis = {
-                                -- autoImportCompletions = true,
-                                -- autoSearchPaths = true,
-                                -- diagnosticMode = "workspace",
-                                -- useLibraryCodeForTypes = true,
-                                -- typeCheckingMode = "basic",
-                                -- logLevel = "Information",
-                                ignore = { "*" },
-                            },
+                capabilities = capabilities,
+                cmd = { "pyright-langserver", "--stdio" },
+                filetypes = { "python", "ipynb" },
+                settings = {
+                    pyright = {
+                        disableOrganizeImports = true, -- using Ruff
+                    },
+                    python = {
+                        analysis = {
+                            -- autoImportCompletions = true,
+                            -- autoSearchPaths = true,
+                            -- diagnosticMode = "workspace",
+                            -- useLibraryCodeForTypes = true,
+                            -- typeCheckingMode = "basic",
+                            -- logLevel = "Information",
+                            ignore = { "*" },
                         },
                     },
                 },
@@ -135,36 +126,52 @@ local setup_lsp_handlers = function()
                 end,
             })
         end,
-    })
+    }
+
+    mason_lspconfig.setup_handlers(handlers)
 end
 
-local setup_lsp_mappings = function(event)
-    local map = function(keys, func, desc, mode)
-        mode = mode or "n"
-        vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = desc })
+---@diagnostic disable-next-line: unused-local
+local function setup_lsp_keymaps(event, client)
+    local fzflua = require("fzf-lua")
+    local buf = event.buf
+    local function map(mode, lhs, rhs, desc)
+        vim.keymap.set(mode, lhs, rhs, {
+            noremap = true,
+            silent = true,
+            buffer = buf,
+            desc = desc,
+        })
     end
 
-    map("gd", require("telescope.builtin").lsp_definitions, "definition")
-    map("gr", require("telescope.builtin").lsp_references, "references")
-    map("gR", require("telescope.builtin").lsp_references, "references")
-    map("gI", require("telescope.builtin").lsp_implementations, "implementation")
-    map("gD", vim.lsp.buf.declaration, "declaration")
-    map("gA", vim.lsp.buf.code_action, "code-action")
-    map("g.", vim.lsp.buf.code_action, "code-action")
-    map("K", vim.lsp.buf.hover, "show-definition")
-    map("]d", function()
+    map("n", "gd", fzflua.lsp_definitions, "goto-definition")
+    map("n", "gr", fzflua.lsp_references, "find-references")
+    map("n", "gR", fzflua.lsp_references, "find-references")
+    map("n", "gI", fzflua.lsp_implementations, "goto-implementation")
+    map("n", "gD", fzflua.lsp_declarations, "goto-declaration")
+    map("n", "g.", fzflua.lsp_code_actions, "code-action")
+    -- map("n", "gd", vim.lsp.buf.definition, "goto-definition")
+    -- map("n", "gr", vim.lsp.buf.references, "find-references")
+    -- map("n", "gR", vim.lsp.buf.references, "find-references")
+    -- map("n", "gI", vim.lsp.buf.implementation, "goto-implementation")
+    -- map("n", "gD", vim.lsp.buf.declaration, "goto-declaration")
+    -- map("n", "g.", vim.lsp.buf.code_action, "code-action")
+    map("n", "gA", vim.lsp.buf.code_action, "code-action")
+    map("n", "K", vim.lsp.buf.hover, "hover-documentation")
+
+    map("n", "]d", function()
         vim.diagnostic.jump({ count = 1, float = true })
     end, "next-diagnostic")
-    map("[d", function()
+
+    map("n", "[d", function()
         vim.diagnostic.jump({ count = -1, float = true })
     end, "prev-diagnostic")
 end
 
 local function on_lsp_attach(event)
-    local opts = { buffer = event.buf, silent = true }
-    setup_lsp_mappings(event)
-
     local client = vim.lsp.get_client_by_id(event.data.client_id)
+
+    setup_lsp_keymaps(event, client)
 
     if client == nil then
         return
@@ -220,18 +227,22 @@ local function setup_lsp_autocommands()
     })
 end
 
-local setup_lsp_config = function()
+local function setup_lsp_config()
     MiniDeps.add({
         source = "neovim/nvim-lspconfig",
         depends = {
             "williamboman/mason.nvim",
             "williamboman/mason-lspconfig.nvim",
             "saghen/blink.cmp",
+            "folke/lazydev.nvim",
+            "ibhagwan/fzf-lua",
         },
     })
 
-    setup_lsp_autocommands()
+    require("lazydev").setup()
+
     setup_lsp_handlers()
+    setup_lsp_autocommands()
 end
 
-MiniDeps.now(setup_lsp_config)
+MiniDeps.later(setup_lsp_config)

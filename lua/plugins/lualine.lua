@@ -194,7 +194,7 @@ local function setup_lualine_config()
     })
 end
 
-local setup_lualine = function()
+local function setup_lualine()
     MiniDeps.add({
         source = "hoob3rt/lualine.nvim",
         depends = {

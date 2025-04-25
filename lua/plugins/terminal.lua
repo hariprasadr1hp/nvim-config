@@ -5,7 +5,7 @@ local opts = {
     direction = "horizontal",
 }
 
-local setup_terminal = function()
+local function setup_terminal()
     MiniDeps.add({
         source = "voldikss/vim-floaterm",
         depends = {
@@ -33,13 +33,57 @@ local setup_terminal = function()
     -- vim.g.floaterm_keymap_new    = "<F4>"
     -- vim.g.floaterm_title=""
 
-    local key_opts = { noremap = true, silent = true }
-    local map = vim.keymap.set
+    local function map(mode, lhs, rhs, desc)
+        vim.keymap.set(mode, lhs, rhs, {
+            noremap = true,
+            silent = true,
+            desc = desc,
+        })
+    end
 
-    map("t", "<M-m>", "<C-\\><C-n>:ToggleTerm<CR>", key_opts)
-    map("n", "<M-m>", ":ToggleTerm<CR>", key_opts)
-    map("n", "<leader>tt", ":ToggleTermSendCurrentLine<CR>", key_opts)
-    map("x", "<leader>tt", ":ToggleTermSendVisualSelection<CR>", key_opts)
+    map("t", "<M-m>", "<C-\\><C-n>:ToggleTerm<CR>", "toggle-term")
+    map("t", "<C-`>", "<C-\\><C-n>:ToggleTerm<CR>", "toggle-term")
+    -- map("t", "<C-`>", ":ToggleTerm<CR>", "toggle-term")
+    map("n", "<M-m>", ":ToggleTerm<CR>", "toggle-term")
+
+    map("n", "<leader>tt", ":ToggleTermSendCurrentLine<CR>", "send-cline-terminal")
+    map("x", "<leader>tt", ":ToggleTermSendVisualSelection<CR>", "send-vi-select-terminal")
+
+    map("n", "<leader>ma", function()
+        toggleterm.exec(" make temp")
+    end, "make temp")
+
+    map("n", "<leader>mc", function()
+        toggleterm.exec(" make clean")
+    end, "make clean")
+
+    map("n", "<leader>md", function()
+        toggleterm.exec(" make debug")
+    end, "make debug")
+
+    map("n", "<leader>mf", function()
+        toggleterm.exec(" make format")
+    end, "make format")
+
+    map("n", "<leader>m", function()
+        toggleterm.exec(" make all")
+    end, "make all")
+
+    map("n", "<leader>mt", function()
+        toggleterm.exec(" make test")
+    end, "make test")
+
+    local eval_cmd_by_ft = require("config.helpers").eval_cmd_by_ft
+
+    map("n", "<space>ee", function()
+        local cmd = eval_cmd_by_ft()
+        if cmd ~= nil then
+            print("executing...")
+            toggleterm.exec(cmd)
+        else
+            print("Not sure how to execute filetype: " .. vim.bo.filetype)
+        end
+    end, "exec-buffer")
 end
 
 MiniDeps.later(setup_terminal)

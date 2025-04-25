@@ -1,6 +1,6 @@
 -- lua/plugins/lang/rust.lua
 
-local setup_rust = function()
+local function setup_rust()
     MiniDeps.add({
         source = "mrcjkb/rustaceanvim",
         checkout = "v6.0.3",

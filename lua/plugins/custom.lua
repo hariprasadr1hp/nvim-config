@@ -1,6 +1,6 @@
 -- lua/plugins/custom.lua
 
-local setup_hello = function()
+local function setup_hello()
     MiniDeps.add({
         source = vim.env.CUSTOM_PLUGIN_URL,
         name = "hello/",

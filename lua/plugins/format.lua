@@ -59,16 +59,13 @@ local formatters_by_ft = {
 local formatters = {
     yamlfix = {
         -- https://lyz-code.github.io/yamlfix/
-        env = {
-            indent = 2,
-            ---@type "block_style" | "flow_style"
-            sequence_style = "block_style",
-            line_ending = "lf",
-        },
+        command = "yaml-fix",
+        args = { "--stdin", "--quiet", "--config", vim.fn.expand("~/.config/yamlfix.toml") },
+        stdin = true,
     },
 }
 
-local setup_format_config = function()
+local function setup_format_config()
     local conform = require("conform")
 
     ---@module "conform"
@@ -87,7 +84,7 @@ local setup_format_config = function()
     conform.setup(opts)
 end
 
-local setup_format = function()
+local function setup_format()
     MiniDeps.add({
         source = "stevearc/conform.nvim",
     })

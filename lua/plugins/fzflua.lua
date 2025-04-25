@@ -8,8 +8,8 @@ local winopts = {
     -- "aboveleft vnew   : split left
     -- Only valid when using a float window
     -- (i.e. when 'split' is not defined, default)
-    height = 0.85, -- window height
-    width = 0.80, -- window width
+    height = 0.99, -- window height
+    width = 0.99, -- window width
     row = 0.35, -- window row position (0=top, 1=bottom)
     col = 0.50, -- window col position (0=left, 1=right)
     -- border argument passthrough to nvim_open_win()
@@ -17,7 +17,8 @@ local winopts = {
     -- Backdrop opacity, 0 is fully opaque, 100 is fully transparent (i.e. disabled)
     backdrop = 60,
     -- title         = "Title",
-    -- title_pos     = "center",        -- 'left', 'center' or 'right'
+    ---@type "left" | "center" | "right"
+    title_pos = "center",
     -- title_flags   = false,           -- uncomment to disable title flags
     fullscreen = false, -- start fullscreen?
     -- enable treesitter highlighting for the main fzf window will only have
@@ -29,29 +30,29 @@ local winopts = {
         fzf_colors = { ["hl"] = "-1:reverse", ["hl+"] = "-1:reverse" },
     },
     preview = {
-        -- default     = 'bat',           -- override the default previewer?
-        -- default uses the 'builtin' previewer
+        default = "bat",
         border = "rounded", -- preview border: accepts both `nvim_open_win`
         -- and fzf values (e.g. "border-top", "none")
         -- native fzf previewers (bat/cat/git/etc)
         -- can also be set to `fun(winopts, metadata)`
-        wrap = false, -- preview line wrap (fzf's 'wrap|nowrap')
-        hidden = false, -- start preview hidden
-        vertical = "down:45%", -- up|down:size
+        wrap = false,
+        hidden = false,
+        vertical = "up:55%", -- up|down:size
         horizontal = "right:60%", -- right|left:size
-        layout = "flex", -- horizontal|vertical|flex
+        ---@type "horizontal" | "vertical" | "flex"
+        layout = "vertical",
         flip_columns = 100, -- #cols to switch to horizontal on flex
         -- Only used with the builtin previewer:
-        title = true, -- preview border title (file/buf)?
-        title_pos = "center", -- left|center|right, title alignment
-        scrollbar = "float", -- `false` or string:'float|border'
+        title = true,
+        ---@type "left" | "center" | "right"
+        title_pos = "right",
         -- float:  in-window floating border
         -- border: in-border "block" marker
-        scrolloff = -1, -- float scrollbar offset from right
-        -- applies only when scrollbar = 'float'
-        delay = 20, -- delay(ms) displaying the preview
-        -- prevents lag on fast scrolling
-        winopts = { -- builtin previewer window options
+        ---@type false | "float" | "border"
+        scrollbar = "float",
+        scrolloff = -1, -- float scrollbar offset from right (applies only when scrollbar = 'float')
+        delay = 20, -- delay(ms) displaying the preview (prevents lag on fast scrolling)
+        winopts = {
             number = true,
             relativenumber = false,
             cursorline = true,
@@ -73,8 +74,6 @@ local winopts = {
 }
 
 local keymap = {
-    -- Below are the default binds, setting any value in these tables will override
-    -- the defaults, to inherit from the defaults change [1] from `false` to `true`
     builtin = {
         -- neovim `:tmap` mappings for the fzf win
         -- true,        -- uncomment to inherit all the below in your custom config
@@ -97,6 +96,7 @@ local keymap = {
         ["<M-S-down>"] = "preview-down",
         ["<M-S-up>"] = "preview-up",
     },
+
     fzf = {
         -- fzf '--bind=' options
         -- true,        -- uncomment to inherit all the below in your custom config
@@ -109,6 +109,7 @@ local keymap = {
         ["alt-a"] = "toggle-all",
         ["alt-g"] = "first",
         ["alt-G"] = "last",
+        ["alt-t"] = "toggle-preview",
         -- Only valid with fzf previewers (bat/cat/git/etc)
         ["f3"] = "toggle-preview-wrap",
         ["f4"] = "toggle-preview",
@@ -117,8 +118,7 @@ local keymap = {
     },
 }
 
-local setup_actions = function(actions)
-    -- local actions = require("fzf-lua").actions
+local function setup_actions(actions)
     return {
         -- Below are the default actions, setting any value in these tables will override
         -- the defaults, to inherit from the defaults change [1] from `false` to `true`
@@ -133,9 +133,9 @@ local setup_actions = function(actions)
             ["enter"] = actions.file_edit_or_qf,
             ["alt-Q"] = actions.file_sel_to_ll,
             ["alt-f"] = actions.toggle_follow,
-            -- ["alt-h"] = actions.toggle_hidden,
-            -- ["alt-i"] = actions.toggle_ignore,
-            -- ["alt-l"] = actions.file_sel_to_ll,
+            ["alt-h"] = actions.toggle_hidden,
+            ["alt-i"] = actions.toggle_ignore,
+            ["alt-l"] = actions.file_sel_to_ll,
             ["alt-q"] = actions.file_sel_to_qf,
             ["ctrl-h"] = actions.toggle_hidden,
             ["ctrl-i"] = actions.toggle_ignore,
@@ -149,10 +149,6 @@ local setup_actions = function(actions)
 end
 
 local fzf_opts = {
-    -- options are sent as `<left>=<right>`
-    -- set to `false` to remove a flag
-    -- set to `true` for a no-value flag
-    -- for raw args use `fzf_args` instead
     ["--ansi"] = true,
     ["--info"] = "inline-right", -- fzf < v0.42 = "inline"
     ["--height"] = "100%",
@@ -162,8 +158,7 @@ local fzf_opts = {
 }
 
 local fzf_colors = {
-    true, -- inherit fzf colors that aren't specified below from
-    -- the auto-generated theme similar to `fzf_colors=true`
+    true,
     ["fg"] = { "fg", "CursorLine" },
     ["bg"] = { "bg", "Normal" },
     ["hl"] = { "fg", "Comment" },
@@ -180,23 +175,16 @@ local fzf_colors = {
 }
 
 local hls = {
-    normal = "Normal", -- highlight group for normal fg/bg
-    preview_normal = "Normal", -- highlight group for preview fg/bg
+    normal = "Normal",
+    preview_normal = "Normal",
 }
 
 local previewers = {
-    cat = {
-        cmd = "cat",
-        args = "-n",
-    },
-    bat = {
-        cmd = "bat",
-        args = "--color=always --style=numbers,changes",
-    },
-    head = {
-        cmd = "head",
-        args = nil,
-    },
+    cat = { cmd = "cat", args = "-n" },
+    bat = { cmd = "bat", args = "--color=always --style=numbers,changes" },
+    head = { cmd = "head", args = nil },
+    man = { cmd = "man -P cat %s | col -bx" },
+
     git_diff = {
         -- if required, use `{file}` for argument positioning
         -- e.g. `cmd_modified = "git diff --color HEAD {file} | cut -c -30"`
@@ -206,13 +194,9 @@ local previewers = {
         -- git-delta is automatically detected as pager, set `pager=false`
         -- to disable, can also be set under 'git.status.preview_pager'
     },
-    man = {
-        -- NOTE: remove the `-c` flag when using man-db
-        -- replace with `man -P cat %s | col -bx` on OSX
-        cmd = "man -c %s | col -bx",
-    },
+
     builtin = {
-        syntax = true, -- preview syntax highlight?
+        syntax = true,
         syntax_limit_l = 0, -- syntax limit (lines), 0=nolimit
         syntax_limit_b = 1024 * 1024, -- syntax limit (bytes), 0=nolimit
         limit_b = 1024 * 1024 * 10, -- preview limit (bytes), 0=nolimit
@@ -257,22 +241,19 @@ local previewers = {
         -- render_markdown.nvim integration, enabled by default for markdown
         render_markdown = { enabled = true, filetypes = { ["markdown"] = true } },
     },
+
     -- Code Action previewers, default is "codeaction" (set via `lsp.code_actions.previewer`)
     -- "codeaction_native" uses fzf's native previewer, recommended when combined with git-delta
-    codeaction = {
-        -- options for vim.diff(): https://neovim.io/doc/user/lua.html#vim.diff()
-        diff_opts = { ctxlen = 3 },
-    },
-    codeaction_native = {
-        diff_opts = { ctxlen = 3 },
-        -- git-delta is automatically detected as pager, set `pager=false`
-        -- to disable, can also be set under 'lsp.code_actions.preview_pager'
-        -- recommended styling for delta
-        --pager = [[delta --width=$COLUMNS --hunk-header-style="omit" --file-style="omit"]],
-    },
+    -- options for vim.diff(): https://neovim.io/doc/user/lua.html#vim.diff()
+    codeaction = { diff_opts = { ctxlen = 3 } },
+    -- git-delta is automatically detected as pager, set `pager=false`
+    -- to disable, can also be set under 'lsp.code_actions.preview_pager'
+    -- recommended styling for delta
+    --pager = [[delta --width=$COLUMNS --hunk-header-style="omit" --file-style="omit"]],
+    codeaction_native = { diff_opts = { ctxlen = 3 } },
 }
 
-local setup_fzflua_config = function()
+local function setup_fzflua_config()
     local fzflua = require("fzf-lua")
     local fzflua_actions = require("fzf-lua").actions
 
@@ -281,6 +262,7 @@ local setup_fzflua_config = function()
         keymap = keymap,
         actions = setup_actions(fzflua_actions),
         fzf_opts = fzf_opts,
+        fzf_colors = fzf_colors,
         hls = hls,
         previewers = previewers,
     }
@@ -288,7 +270,7 @@ local setup_fzflua_config = function()
     fzflua.setup(opts)
 end
 
-local setup_fzflua = function()
+local function setup_fzflua()
     MiniDeps.add({
         source = "ibhagwan/fzf-lua",
         depends = { "echasnovski/mini.icons" },

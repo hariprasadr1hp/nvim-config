@@ -93,7 +93,7 @@ local opts = {
     on_attach = setup_on_attach(),
 }
 
-local setup_gitsigns = function()
+local function setup_gitsigns()
     MiniDeps.add({
         source = "lewis6991/gitsigns.nvim",
     })

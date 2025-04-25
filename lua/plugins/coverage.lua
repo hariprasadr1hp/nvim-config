@@ -22,7 +22,7 @@ local opts = {
     },
 }
 
-local setup_coverage = function()
+local function setup_coverage()
     MiniDeps.add({ source = "andythigpen/nvim-coverage" })
 
     local coverage = require("coverage")

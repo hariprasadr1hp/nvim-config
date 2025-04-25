@@ -12,7 +12,7 @@ local function setup_autopairs_config()
     })
 end
 
-local setup_autopairs = function()
+local function setup_autopairs()
     MiniDeps.add({
         source = "windwp/nvim-autopairs",
     })

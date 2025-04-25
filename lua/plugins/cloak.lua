@@ -19,7 +19,7 @@ local opts = {
     patterns = patterns,
 }
 
-local setup_cloak = function()
+local function setup_cloak()
     MiniDeps.add({ source = "laytan/cloak.nvim" })
     require("cloak").setup(opts)
 end

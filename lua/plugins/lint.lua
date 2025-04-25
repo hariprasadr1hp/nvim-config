@@ -48,7 +48,7 @@ local function setup_lint_config(lint)
     return lint
 end
 
-local setup_lint = function()
+local function setup_lint()
     MiniDeps.add({ source = "mfussenegger/nvim-lint" })
 
     local lint = require("lint")

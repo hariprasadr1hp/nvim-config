@@ -27,8 +27,11 @@ vim.o.incsearch = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
--- Make substitution work in realtime
+-- Make substitution work in realtime (preview)
 --vim.o.inccommand = "split"
+
+vim.o.grepformat = "%f:%l:%c:%m"
+vim.o.grepprg = "rg --vimgrep -uu"
 
 -- INDENTATION
 -------------------------------------------------------------------
@@ -58,6 +61,9 @@ vim.o.relativenumber = true
 
 -- display long lines as just one line
 vim.o.wrap = false
+
+-- when wrapped, do not hyphenate words
+vim.o.linebreak = true
 
 -- WINDOWS
 -------------------------------------------------------------------
@@ -94,10 +100,18 @@ vim.opt.cursorline = true
 vim.opt.background = "dark"
 
 -- enable showing whitespace characters
-vim.o.list = true
+vim.o.list = false
 
 -- configure characters for spaces and other whitespace
-vim.o.listchars = "space:·,tab:→ "
+vim.opt.listchars = {
+    space = "·",
+    tab = "→ ",
+    trail = "•",
+    extends = "❯",
+    precedes = "❮",
+    nbsp = "␣",
+    eol = "↲",
+}
 
 -- always show the signcolumn, otherwise it would shift the text each time
 vim.o.signcolumn = "yes:1"
@@ -157,15 +171,8 @@ vim.o.undofile = true
 -- DICTIONARY
 -------------------------------------------------------------------
 -- set a dictionary file
+vim.o.spelllang = "en"
 vim.o.dictionary = "/usr/share/dict/american-english"
-
--- MISCELLANEOUS
--------------------------------------------------------------------
--- treat dash separated words as a word text object"
---vim.opt.iskeyword:append("-")
-
--- Copy paste between vim and everything else
-vim.o.clipboard = "unnamedplus"
 
 -- STARTUP
 -------------------------------------------------------------------
@@ -184,6 +191,14 @@ if vim.fn.has("linux") == 1 then
 elseif vim.fn.has("macunix") == 1 then
     vim.g.python3_host_prog = "~/.pyenv/shims/python"
 end
+
+-- MISCELLANEOUS
+-------------------------------------------------------------------
+-- treat dash separated words as a word text object"
+--vim.opt.iskeyword:append("-")
+
+-- Copy paste between vim and everything else
+vim.o.clipboard = "unnamedplus"
 
 -- CUSTOM MESSAGES
 -------------------------------------------------------------------

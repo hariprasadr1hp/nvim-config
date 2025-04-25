@@ -17,7 +17,7 @@ local opts = {
     },
 }
 
-local setup_git = function()
+local function setup_git()
     require("mini.git").setup(opts)
 end
 

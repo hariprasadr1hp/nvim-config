@@ -39,7 +39,7 @@ local opts = {
     silent = false,
 }
 
-local setup_mini_starter = function()
+local function setup_mini_starter()
     require("mini.starter").setup(opts)
 end
 

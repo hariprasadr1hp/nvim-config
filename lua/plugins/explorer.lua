@@ -220,7 +220,7 @@ local opts = {
     log = log,
 }
 
-local setup_explorer = function()
+local function setup_explorer()
     MiniDeps.add({
         source = "kyazdani42/nvim-tree.lua",
         checkout = "v1.11.0",

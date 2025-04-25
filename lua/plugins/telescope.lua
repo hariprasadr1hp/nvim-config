@@ -112,7 +112,7 @@ local function setup_telescope_config()
     load_extensions()
 end
 
-local setup_telescope = function()
+local function setup_telescope()
     MiniDeps.add({
         source = "nvim-telescope/telescope.nvim",
         checkout = "0.1.x",
@@ -123,6 +123,5 @@ local setup_telescope = function()
 
     setup_telescope_config()
 end
-
 
 MiniDeps.later(setup_telescope)

@@ -6,7 +6,7 @@ local opts = {
     cutoff = 100,
 }
 
-local setup_mini_fuzzy = function()
+local function setup_mini_fuzzy()
     require("mini.fuzzy").setup(opts)
 end
 

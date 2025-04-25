@@ -133,7 +133,7 @@ local key_maps = {
         { "<C-`>", "<cmd>ToggleTerm<CR>", desc = "toggle-term", nowait = false, remap = false },
         { "<C-.><C-.>", "<cmd>NvimTreeToggle<CR>", desc = "toggle-term", nowait = false, remap = false },
         { "<C-w>a", ":WindowResizeModeEnter<CR>", desc = "resize-window-mode", nowait = false, remap = false },
-        { "<M-x>", ":Telescope commands<CR>", desc = "telescope-commands", nowait = false, remap = false },
+        { "<M-x>", ":FzfLua commands<CR>", desc = "fzf-commands", nowait = false, remap = false },
 
         { ",p", group = "swap-prev", nowait = false, remap = false },
         { ",n", group = "swap-next", nowait = false, remap = false },
@@ -160,8 +160,8 @@ local key_maps = {
 
         -- [B]UFFER ----------------
         { "<leader>b", group = "buffer", nowait = false, remap = false },
-        { "<leader>bB", "<cmd>Telescope buffers<CR>", desc = "fzf-buffer", nowait = false, remap = false },
-        { "<leader>bd", "<cmd>bd!<CR>", desc = "discard-changes", nowait = false, remap = false },
+        { "<leader>bB", "<cmd>FzfLua buffers<CR>", desc = "fzf-buffer", nowait = false, remap = false },
+        { "<leader>bd", "<cmd>bd<CR>", desc = "discard-changes", nowait = false, remap = false },
         { "<leader>bf", "<cmd>bfirst<CR>", desc = "first-buffer", nowait = false, remap = false },
         { "<leader>bi", "<cmd>buffers<CR>", desc = "info-tabs", nowait = false, remap = false },
         { "<leader>bk", "<cmd>bp | bd #<CR>", desc = "kill-buffer", nowait = false, remap = false },
@@ -171,7 +171,6 @@ local key_maps = {
         { "<leader>bO", "<cmd>%bd | e#<CR>", desc = "kill-other-buffers", nowait = false, remap = false },
         { "<leader>bp", "<cmd>bprevious<CR>", desc = "previous-buffer", nowait = false, remap = false },
         { "<leader>bt", "<C-^>", desc = "toggle-buffer", nowait = false, remap = false },
-        { "<leader>bz", "<cmd>Telescope buffers<CR>", desc = "fzf-buffer", nowait = false, remap = false },
 
         -- [C]ODE -------------------
         { "<leader>c", group = "code", nowait = false, remap = false },
@@ -237,17 +236,17 @@ local key_maps = {
 
         -- [E]VAL / [E]DIT -------
         { "<leader>e", group = "edit/eval", nowait = false, remap = false },
+        { "<leader>eb", "<cmd>Runme<CR>", desc = "luafile", nowait = false, remap = false },
         { "<leader>el", "<cmd>luafile %<CR>", desc = "luafile", nowait = false, remap = false },
-        { "<leader>ep", "<cmd>Runme<CR>", desc = "program", nowait = false, remap = false },
         { "<leader>ev", "<cmd>source %<CR>", desc = "source %", nowait = false, remap = false },
 
         -- [F]ILE -------------------
         { "<leader>f", group = "file", nowait = false, remap = false },
-        { "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "files", nowait = false, remap = false },
+        { "<leader>ff", "<cmd>FzfLua files<CR>", desc = "files", nowait = false, remap = false },
         {
             "<leader>fi",
-            "<cmd>e " .. config_dir .. "/init.lua<CR>",
-            desc = "init.lua",
+            "<cmd>e " .. config_dir .. "/lua/plugins/init.lua<CR>",
+            desc = "plugins-init",
             nowait = false,
             remap = false,
         },
@@ -278,13 +277,6 @@ local key_maps = {
                 require("telescope.builtin").find_files({ cwd = config_dir })
             end,
             desc = "private-config",
-            nowait = false,
-            remap = false,
-        },
-        {
-            "<leader>fP",
-            "<cmd>e " .. config_dir .. "/lua/plugins/init.lua<CR>",
-            desc = "plugins-config",
             nowait = false,
             remap = false,
         },
@@ -342,7 +334,7 @@ local key_maps = {
 
         -- [H]ELP -------------------
         { "<leader>h", group = "help", nowait = false, remap = false },
-        { "<leader>hf", "<cmd>Telescope builtins<CR>", desc = "describe-function", nowait = false, remap = false },
+        { "<leader>hf", "<cmd>FzfLua builtins<CR>", desc = "describe-function", nowait = false, remap = false },
 
         { "<leader>hh", group = "git-hunk", nowait = false, remap = false },
         { "<leader>hhp", "<cmd>Gitsigns prev_hunk<CR>", desc = "preview-hunk", nowait = false, remap = false },
@@ -377,6 +369,7 @@ local key_maps = {
 
         -- [I]NFO / [I]NSERT --------
         { "<leader>i", group = "info", nowait = false, remap = false },
+        { "<leader>is", "<cmd>StartupTime<CR>", desc = "inspect-tree", nowait = false, remap = false },
         { "<leader>it", "<cmd>InspectTree<CR>", desc = "inspect-tree", nowait = false, remap = false },
 
         -- [J]TABS ------------
@@ -411,19 +404,12 @@ local key_maps = {
         },
 
         { "<leader>ld", "FzfLua diagnostics_document", desc = "document-diagnostics", nowait = false, remap = false },
+        { "<leader>le", "<cmd>Inspect<CR>", desc = "element-info", nowait = false, remap = false },
 
         {
             "<leader>lD",
             "<cmd>FzfLua diagnostics_workspace<CR>",
             desc = "workspace-diagnostics",
-            nowait = false,
-            remap = false,
-        },
-
-        {
-            "<leader>lf",
-            "<cmd>lua vim.lsp.buf.type_definition()<CR>",
-            desc = "goto-type-definition",
             nowait = false,
             remap = false,
         },
@@ -466,53 +452,25 @@ local key_maps = {
             remap = false,
         },
 
-        { "<leader>lq", "<cmd>Telescope quickfix<CR>", desc = "quickfix", nowait = false, remap = false },
         { "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", desc = "rename", nowait = false, remap = false },
         { "<leader>lR", "<cmd>LspRestart<CR>", desc = "restart", nowait = false, remap = false },
+
+        {
+            "<leader>lt",
+            "<cmd>lua vim.lsp.buf.type_definition()<CR>",
+            desc = "goto-type-definition",
+            nowait = false,
+            remap = false,
+        },
+
         { "<leader>lx", "<cmd>cclose<CR>", desc = "close-quickfix", nowait = false, remap = false },
 
         -- [M]AKE -------------------
         { "<leader>m", group = "prefix", nowait = false, remap = false },
-        {
-            "<leader>ma",
-            "<cmd>FloatermNew --autoclose=0 make temp<CR>",
-            desc = "make temp",
-            nowait = false,
-            remap = false,
-        },
-        {
-            "<leader>mc",
-            "<cmd>FloatermNew --autoclose=0 make clean<CR>",
-            desc = "make clean",
-            nowait = false,
-            remap = false,
-        },
-        {
-            "<leader>md",
-            "<cmd>FloatermNew --autoclose=0 make debug<CR>",
-            desc = "make debug",
-            nowait = false,
-            remap = false,
-        },
-        {
-            "<leader>mf",
-            "<cmd>FloatermNew --autoclose=0 make format<CR>",
-            desc = "make format",
-            nowait = false,
-            remap = false,
-        },
         { "<leader>ml", group = "link", nowait = false, remap = false },
         { "<leader>mll", "<cmd>echo '`emacs` command 🫠'<CR>", desc = "N/A", nowait = false, remap = false },
         { "<leader>mlt", "<cmd>echo '`emacs` command 🫠'<CR>", desc = "N/A", nowait = false, remap = false },
-        { "<leader>mm", "<cmd>FloatermNew --autoclose=0 make<CR>", desc = "make all", nowait = false, remap = false },
         { "<leader>mo", "<cmd>e Makefile<CR>", desc = "open Makefile", nowait = false, remap = false },
-        {
-            "<leader>mt",
-            "<cmd>FloatermNew --autoclose=0 make test<CR>",
-            desc = "make test",
-            nowait = false,
-            remap = false,
-        },
         { "<leader>mz", "<cmd>MakeFzf<CR>", desc = "make-fzf", nowait = false, remap = false },
 
         -- [N]OTES -------------------
@@ -599,7 +557,6 @@ local key_maps = {
         { "<leader>oP", "<cmd>Lazy<CR>", desc = "plugin-manager", nowait = false, remap = false },
         { "<leader>or", "<cmd>FloatermNew ranger .<CR>", desc = "ranger", nowait = false, remap = false },
         { "<leader>ot", "<cmd>FloatermToggle<CR>", desc = "terminal", nowait = false, remap = false },
-        { "<leader>oz", "<cmd>Telescope builtin<CR>", desc = "telescope", nowait = false, remap = false },
 
         -- [P]ROJECT ----------------
         { "<leader>p", group = "project", nowait = false, remap = false },
@@ -636,7 +593,7 @@ local key_maps = {
         { "<leader>sb", "<cmd>FzfLua grep_curbuf<CR>", desc = "buffer", nowait = false, remap = false },
         { "<leader>sc", "<cmd>FzfLua grep_cword<CR>", desc = "current-word", nowait = false, remap = false },
         { "<leader>sd", "<cmd>!date<CR>", desc = "show-datetime", nowait = false, remap = false },
-        { "<leader>sf", "<cmd>Telescope find_files<CR>", desc = "files", nowait = false, remap = false },
+        { "<leader>sf", "<cmd>FzfLua files<CR>", desc = "files", nowait = false, remap = false },
         { "<leader>sh", "<cmd>FzfLua search_history<CR>", desc = "history", nowait = false, remap = false },
         { "<leader>sm", "<cmd>FzfLua marks<CR>", desc = "marks", nowait = false, remap = false },
         { "<leader>sM", "<cmd>FzfLua man_pages<CR>", desc = "man-pages", nowait = false, remap = false },
@@ -676,10 +633,10 @@ local key_maps = {
         { "<leader>wa", ":WindowResizeModeEnter<CR>", desc = "resize-window-mode", nowait = false, remap = false },
         { "<leader>wc", "<cmd>wincmd c<CR>", desc = "close-window", nowait = false, remap = false },
         { "<leader>we", "<cmd>RandomThemeGenerate<CR>", desc = "random-theme", nowait = false, remap = false },
-        { "<leader>wh", "<cmd>wincmd h<CR>", desc = "left-window", nowait = false, remap = false },
-        { "<leader>wj", "<cmd>wincmd j<CR>", desc = "bottom-window", nowait = false, remap = false },
-        { "<leader>wk", "<cmd>wincmd k<CR>", desc = "top-window", nowait = false, remap = false },
-        { "<leader>wl", "<cmd>wincmd l<CR>", desc = "right-window", nowait = false, remap = false },
+        { "<leader>wh", "<cmd>wincmd H<CR>", desc = "window-to-left", nowait = false, remap = false },
+        { "<leader>wj", "<cmd>wincmd J<CR>", desc = "window-to-bottom", nowait = false, remap = false },
+        { "<leader>wk", "<cmd>wincmd K<CR>", desc = "window-to-top", nowait = false, remap = false },
+        { "<leader>wl", "<cmd>wincmd L<CR>", desc = "window-to-right", nowait = false, remap = false },
         { "<leader>wm", "<cmd>wincmd |<CR>", desc = "maximize-window", nowait = false, remap = false },
         { "<leader>wn", "<cmd>new<CR>", desc = "new-window", nowait = false, remap = false },
         { "<leader>wO", "<cmd>only<CR>", desc = "only-current-window", nowait = false, remap = false },
@@ -694,13 +651,13 @@ local key_maps = {
         { "<leader>x", group = "misc", nowait = false, remap = false },
 
         -- FU[Z]ZY ---------------
-        { "<leader>z", group = "telescope", nowait = false, remap = false },
-        { "<leader>za", "<cmd>Telescope autocommands<CR>", desc = "buffers", nowait = false, remap = false },
-        { "<leader>zb", "<cmd>Telescope buffers<CR>", desc = "buffers", nowait = false, remap = false },
-        { "<leader>zB", "<cmd>Telescope builtin<CR>", desc = "builtins", nowait = false, remap = false },
+        { "<leader>z", group = "fuzzy", nowait = false, remap = false },
+        { "<leader>za", "<cmd>FzfLua autocmds<CR>", desc = "buffers", nowait = false, remap = false },
+        { "<leader>zb", "<cmd>FzfLua buffers<CR>", desc = "buffers", nowait = false, remap = false },
+        { "<leader>zB", "<cmd>FzfLua builtin<CR>", desc = "builtins", nowait = false, remap = false },
         { "<leader>zc", "<cmd>FzfLua commands<CR>", desc = "commands", nowait = false, remap = false },
         { "<leader>zd", "<cmd>FzfLua dap_commands<CR>", desc = "commands", nowait = false, remap = false },
-        { "<leader>zf", "<cmd>Telescope find_files<CR>", desc = "files", nowait = false, remap = false },
+        { "<leader>zf", "<cmd>FzfLua files<CR>", desc = "files", nowait = false, remap = false },
         { "<leader>zF", "<cmd>FzfLua filetypes<CR>", desc = "file type", nowait = false, remap = false },
         {
             "<leader>zH",
@@ -723,7 +680,6 @@ local key_maps = {
         { "<leader>zL", "<cmd>FzfLua loclist_stack<CR>", desc = "llist-history", nowait = false, remap = false },
         { "<leader>zm", "<cmd>FzfLua marks<CR>", desc = "marks", nowait = false, remap = false },
         { "<leader>zM", "<cmd>FzfLua man_pages<CR>", desc = "man-pages", nowait = false, remap = false },
-        -- { "<leader>zn", "<cmd>NoiceTelescope<CR>", desc = "noice", nowait = false, remap = false },
         { "<leader>zo", "<cmd>FzfLua nvim_options<CR>", desc = "nvim-options", nowait = false, remap = false },
         { "<leader>zr", "<cmd>FzfLua registers<CR>", desc = "registers", nowait = false, remap = false },
         { "<leader>zq", "<cmd>FzfLua quickfix<CR>", desc = "clist", nowait = false, remap = false },
@@ -739,12 +695,10 @@ local key_maps = {
             remap = false,
         },
 
-        { "<leader>zt", "<cmd>TodoTelescope keywords=TODO,FIX<CR>", desc = "todo", nowait = false, remap = false },
-        { "<leader>zu", "<cmd>Telescope undo<CR>", desc = "undo", nowait = false, remap = false },
+        { "<leader>zt", "<cmd>TodoFzfLua keywords=TODO,FIX<CR>", desc = "todo", nowait = false, remap = false },
         { "<leader>zv", "<cmd>FzfLua commands<CR>", desc = "vim-commands", nowait = false, remap = false },
         { "<leader>zx", "<cmd>FzfLua resume<CR>", desc = "resume", nowait = false, remap = false },
         { "<leader>zz", "<cmd>FzfLua live_grep<CR>", desc = "live-grep", nowait = false, remap = false },
-        { "<leader>zZ", "<cmd>Telescope grep_string<CR>", desc = "grep-string", nowait = false, remap = false },
     },
 
     --- VISUAL MODE
@@ -764,15 +718,9 @@ local key_maps = {
         -- [T]OGGLE -------------
         { "<leader>tG", "g?", desc = "gibberish-rot13", nowait = false, remap = false },
     },
-
-    --- TERMINAL MODE
-    {
-        mode = "t",
-        { "<C-`>", "<cmd>ToggleTerm<CR>", desc = "toggle-term", nowait = false, remap = false },
-    },
 }
 
-local setup_whichkey = function()
+local function setup_whichkey()
     MiniDeps.add({
         source = "folke/which-key.nvim",
     })
@@ -787,5 +735,4 @@ local setup_whichkey = function()
     })
 end
 
--- MiniDeps.later(setup_whichkey)
-setup_whichkey()
+MiniDeps.now(setup_whichkey)

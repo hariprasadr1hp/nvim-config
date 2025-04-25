@@ -1,0 +1,7 @@
+[settings]
+indent = 2
+sequence_style = "block_style" # or "flow_style"
+line_ending = "lf"             # or "crlf" (Windows)
+quote_type = "double"
+preserve_quotes = false
+remove_comments = false

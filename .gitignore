@@ -11,4 +11,4 @@ tags
 .env
 
 lazy-lock.json
-lua/plugins/.DS_Store
+.DS_Store

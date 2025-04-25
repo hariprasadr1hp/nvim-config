@@ -27,6 +27,9 @@ map("v", ">", ">gv", key_opts)
 map("v", "<C-a>", "<C-a>gv", key_opts)
 map("v", "<C-x>", "<C-x>gv", key_opts)
 
+-- window settings
+map("n", "<C-w>m", "<C-w>|", key_opts)
+
 -- buffer chain
 map("n", "[b", ":bprevious<CR>", key_opts)
 map("n", "]b", ":bnext<CR>", key_opts)

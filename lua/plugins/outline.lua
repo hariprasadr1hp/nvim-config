@@ -393,7 +393,7 @@ local function setup_outline_config()
     })
 end
 
-local setup_outline = function()
+local function setup_outline()
     MiniDeps.add({
         source = "stevearc/aerial.nvim",
         depends = {

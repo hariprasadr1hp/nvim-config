@@ -144,7 +144,7 @@ local opts = {
     keymaps_help = keymaps_help,
 }
 
-local setup_oil = function()
+local function setup_oil()
     MiniDeps.add({
         source = "stevearc/oil.nvim",
         depends = { "echasnovski/mini.icons" },

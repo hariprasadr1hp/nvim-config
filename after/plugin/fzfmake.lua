@@ -2,7 +2,7 @@
 
 ---@param filepath (string | nil)
 ---@return integer
-local get_make_file_buffer_nr = function(filepath)
+local function get_make_file_buffer_nr(filepath)
     local makefile_path = filepath or (vim.fn.getcwd() .. "/Makefile")
 
     if vim.fn.filereadable(makefile_path) == 1 and vim.fn.fnamemodify(makefile_path, ":t") == "Makefile" then
@@ -14,7 +14,7 @@ end
 
 ---@param bufnr integer
 ---@return table<string, string> | nil
-local get_ts_query_matches = function(bufnr)
+local function get_ts_query_matches(bufnr)
     local treesitter = require("vim.treesitter")
 
     -- local parser = vim.treesitter.get_parser(bufnr, "make")
@@ -75,12 +75,14 @@ local get_ts_query_matches = function(bufnr)
 end
 
 ---@param result table<string, string>
-local display_makefile_targets = function(result)
+local function display_makefile_targets(result)
     local pickers = require("telescope.pickers")
     local config = require("telescope.config")
-    local actions = require("telescope.actions")
+    -- local actions = require("telescope.actions")
     local actions_state = require("telescope.actions.state")
     local previewers = require("telescope.previewers")
+
+    local toggleterm = require("toggleterm")
 
     pickers
         .new({}, {
@@ -100,8 +102,8 @@ local display_makefile_targets = function(result)
                 ---@diagnostic disable-next-line: unused-local
                 map("i", "<CR>", function(prompt_bufnr)
                     local selection = actions_state.get_selected_entry()
-                    vim.cmd("FloatermNew --autoclose=0 make " .. selection.value)
-                    -- vim.cmd("FloatermNew --autoclose=0 make " .. selection.value)
+                    local cmd = " make " .. selection.value
+                    toggleterm.exec(cmd)
                 end)
                 return true
             end,

@@ -32,7 +32,7 @@ local opts = {
     },
 }
 
-local setup_notify = function()
+local function setup_notify()
     require("mini.notify").setup(opts)
 end
 

@@ -599,7 +599,7 @@ local function setup_diffview_config()
     require("diffview").setup(opts)
 end
 
-local setup_diff = function()
+local function setup_diff()
     MiniDeps.add({
         source = "sindrets/diffview.nvim",
     })

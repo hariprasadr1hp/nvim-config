@@ -13,7 +13,7 @@ local opts = {
     -- watermark = "hariprasadr1hp",
 }
 
-local setup_codesnap = function()
+local function setup_codesnap()
     MiniDeps.add({
         source = "mistricky/codesnap.nvim",
         hooks = {

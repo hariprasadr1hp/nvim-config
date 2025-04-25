@@ -46,7 +46,7 @@ local opts = {
     },
 }
 
-local setup_mini_comment = function()
+local function setup_mini_comment()
     require("mini.comment").setup(opts)
 end
 

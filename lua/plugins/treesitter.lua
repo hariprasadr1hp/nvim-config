@@ -1,7 +1,5 @@
 -- lua/plugins/treesitter.lua
 
-local M = {}
-
 local ensure_installed = {
     "arduino",
     "awk",
@@ -78,7 +76,7 @@ local opts = {
     autotag = autotag,
 }
 
-local setup_treesitter = function()
+local function setup_treesitter()
     MiniDeps.add({
         source = "nvim-treesitter/nvim-treesitter",
         checkout = "master",

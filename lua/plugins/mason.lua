@@ -50,14 +50,17 @@ local mason_tool_installer_opts = {
     },
 }
 
-local setup_mason = function()
+local function setup_mason()
     MiniDeps.add({
         source = "williamboman/mason.nvim",
-        depends = {
-            "williamboman/mason-lspconfig.nvim",
-            "WhoIsSethDaniel/mason-tool-installer.nvim",
+        hooks = {
+            post_checkout = function()
+                vim.cmd("MasonUpdate")
+            end,
         },
     })
+    MiniDeps.add({ source = "williamboman/mason-lspconfig.nvim" })
+    MiniDeps.add({ source = "WhoIsSethDaniel/mason-tool-installer.nvim" })
 
     require("mason").setup(mason_opts)
     require("mason-lspconfig").setup(mason_lspconfig_opts)

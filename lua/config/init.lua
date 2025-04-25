@@ -3,14 +3,11 @@
 require("config.settings")
 
 require("config.helpers")
+require("config.functions")
 require("config.commands")
 require("config.keybindings")
 require("config.neovide")
 
+-- mini.deps required
 require("config.bootstrap")
 require("plugins")
-
--- require("config.lazy_bootstrap")
--- require("lazy_plugins")
--- require("lazy_settings")
-

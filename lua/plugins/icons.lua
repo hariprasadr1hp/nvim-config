@@ -5,21 +5,20 @@ local opts = {
     style = "glyph",
 
     -- Customize per category. See `:h MiniIcons.config` for details.
-    default   = {},
+    default = {},
     directory = {},
     extension = {},
-    file      = {},
-    filetype  = {},
-    lsp       = {},
-    os        = {},
+    file = {},
+    filetype = {},
+    lsp = {},
+    os = {},
 
     -- Control which extensions will be considered during "file" resolution
-    use_file_extension = function(ext, file) return true end,
+    -- use_file_extension = function(ext, file) return true end,
 }
 
-local setup_mini_icons = function()
+local function setup_mini_icons()
     require("mini.icons").setup(opts)
 end
 
 MiniDeps.later(setup_mini_icons)
-

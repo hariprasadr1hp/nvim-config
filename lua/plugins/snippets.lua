@@ -1,6 +1,6 @@
 -- lua/plugins/snippets.lua
 
-local setup_mini_snippets = function()
+local function setup_mini_snippets()
     local gen_loader = require("mini.snippets").gen_loader
     local opts = {
         snippets = {
