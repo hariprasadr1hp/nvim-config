@@ -133,39 +133,13 @@ end
 
 ---@diagnostic disable-next-line: unused-local
 local function setup_lsp_keymaps(event, client)
+    local map = require("config.helpers").map
     local fzflua = require("fzf-lua")
-    local buf = event.buf
-    local function map(mode, lhs, rhs, desc)
-        vim.keymap.set(mode, lhs, rhs, {
-            noremap = true,
-            silent = true,
-            buffer = buf,
-            desc = desc,
-        })
-    end
+    local buffer = event.buf
 
-    map("n", "gd", fzflua.lsp_definitions, "goto-definition")
-    map("n", "gr", fzflua.lsp_references, "find-references")
-    map("n", "gR", fzflua.lsp_references, "find-references")
-    map("n", "gI", fzflua.lsp_implementations, "goto-implementation")
-    map("n", "gD", fzflua.lsp_declarations, "goto-declaration")
-    map("n", "g.", fzflua.lsp_code_actions, "code-action")
-    -- map("n", "gd", vim.lsp.buf.definition, "goto-definition")
-    -- map("n", "gr", vim.lsp.buf.references, "find-references")
-    -- map("n", "gR", vim.lsp.buf.references, "find-references")
-    -- map("n", "gI", vim.lsp.buf.implementation, "goto-implementation")
-    -- map("n", "gD", vim.lsp.buf.declaration, "goto-declaration")
-    -- map("n", "g.", vim.lsp.buf.code_action, "code-action")
-    map("n", "gA", vim.lsp.buf.code_action, "code-action")
-    map("n", "K", vim.lsp.buf.hover, "hover-documentation")
-
-    map("n", "]d", function()
-        vim.diagnostic.jump({ count = 1, float = true })
-    end, "next-diagnostic")
-
-    map("n", "[d", function()
-        vim.diagnostic.jump({ count = -1, float = true })
-    end, "prev-diagnostic")
+    map("n", "<leader>il", ":LspInfo<CR>", "lsp-info")
+    map("n", "<leader>lI", ":LspInfo<CR>", "lsp-info")
+    map("n", "<leader>lR", ":LspRestart<CR>", "lsp-restart")
 end
 
 local function on_lsp_attach(event)
@@ -228,21 +202,27 @@ local function setup_lsp_autocommands()
 end
 
 local function setup_lsp_config()
-    MiniDeps.add({
-        source = "neovim/nvim-lspconfig",
-        depends = {
-            "williamboman/mason.nvim",
-            "williamboman/mason-lspconfig.nvim",
-            "saghen/blink.cmp",
-            "folke/lazydev.nvim",
-            "ibhagwan/fzf-lua",
-        },
-    })
-
     require("lazydev").setup()
-
     setup_lsp_handlers()
     setup_lsp_autocommands()
 end
 
-MiniDeps.later(setup_lsp_config)
+return {
+    "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+        { "saghen/blink.cmp" },
+        { "ibhagwan/fzf-lua" },
+        { "antosha417/nvim-lsp-file-operations", config = true },
+        {
+            "folke/lazydev.nvim",
+            ft = "lua",
+            opts = {
+                library = {
+                    { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+                },
+            },
+        },
+    },
+    config = setup_lsp_config,
+}

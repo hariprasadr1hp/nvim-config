@@ -19,9 +19,13 @@ local opts = {
     patterns = patterns,
 }
 
-local function setup_cloak()
-    MiniDeps.add({ source = "laytan/cloak.nvim" })
-    require("cloak").setup(opts)
-end
+return {
+    "laytan/cloak.nvim",
+    cmd = { "CloakToggle", "CloakPreviewLine" },
+    keys = {
+        { "<leader>tc", "<cmd>CloakPreviewLine<CR>", desc = "toggle-cloak-line" },
+        { "<leader>tC", "<cmd>CloakToggle<CR>", desc = "toggle-cloak-file" },
+    },
 
-MiniDeps.later(setup_cloak)
+    opts = opts,
+}

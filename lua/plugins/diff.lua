@@ -599,12 +599,11 @@ local function setup_diffview_config()
     require("diffview").setup(opts)
 end
 
-local function setup_diff()
-    MiniDeps.add({
-        source = "sindrets/diffview.nvim",
-    })
-
-    setup_diffview_config()
-end
-
-MiniDeps.later(setup_diff)
+return {
+    "sindrets/diffview.nvim",
+    cmd = { "DiffviewOpen", "DiffviewFileHistory" },
+    keys = {
+        { "<leader>gG", "<cmd>DiffviewOpen --selected-file<CR>", desc = "open-diffview" },
+    },
+    config = setup_diffview_config,
+}

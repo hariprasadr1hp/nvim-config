@@ -1,35 +1,74 @@
 -- lua/plugins/mini.lua
 
--- local mini_pairs_opts = {
---     -- In which modes mappings from this `config` should be created
---     modes = { insert = true, command = false, terminal = false },
---
---     -- Global mappings. Each right hand side should be a pair information, a
---     -- table with at least these fields (see more in |MiniPairs.map|):
---     -- - <action> - one of "open", "close", "closeopen".
---     -- - <pair> - two character string for pair to be used.
---     -- By default pair is not inserted after `\`, quotes are not recognized by
---     -- <CR>, `'` does not insert pair after a letter.
---     -- Only parts of tables can be tweaked (others will use these defaults).
---     -- Supply `false` instead of table to not map particular key.
---     mappings = {
---         ["("] = { action = "open", pair = "()", neigh_pattern = "[^\\]." },
---         ["["] = { action = "open", pair = "[]", neigh_pattern = "[^\\]." },
---         ["{"] = { action = "open", pair = "{}", neigh_pattern = "[^\\]." },
---
---         [")"] = { action = "close", pair = "()", neigh_pattern = "[^\\]." },
---         ["]"] = { action = "close", pair = "[]", neigh_pattern = "[^\\]." },
---         ["}"] = { action = "close", pair = "{}", neigh_pattern = "[^\\]." },
---
---         ['"'] = { action = "closeopen", pair = '""', neigh_pattern = "[^\\].", register = { cr = false } },
---         ["'"] = { action = "closeopen", pair = "''", neigh_pattern = "[^%a\\].", register = { cr = false } },
---         ["`"] = { action = "closeopen", pair = "``", neigh_pattern = "[^\\].", register = { cr = false } },
---     },
--- }
---
--- MiniDeps.later(function()
---     require("mini.pairs").setup(mini_pairs_opts)
--- end)
+local function setup_mini_snippets()
+    local gen_loader = require("mini.snippets").gen_loader
+    local opts = {
+        snippets = {
+            -- Load custom file with global snippets first
+            gen_loader.from_file("~/.config/nvim/snippets/global.json"),
+
+            -- Load snippets based on current language by reading files from
+            -- "snippets/" subdirectories from 'runtimepath' directories.
+            gen_loader.from_lang(),
+        },
+        mappings = {
+            expand = "",
+
+            -- Interact with default `expand.insert` session.
+            -- Created for the duration of active session(s)
+            jump_next = "<C-l>",
+            jump_prev = "<C-h>",
+            stop = "<C-c>",
+        },
+    }
+    require("mini.snippets").setup(opts)
+end
+
+local mini_comment_opts = {
+    -- Options which control module behavior
+    options = {
+        -- Function to compute custom 'commentstring' (optional)
+        custom_commentstring = nil,
+
+        -- Whether to ignore blank lines in actions and textobject
+        ignore_blank_line = false,
+
+        -- Whether to recognize as comment only lines without indent
+        start_of_line = false,
+
+        -- Whether to force single space inner padding for comment parts
+        pad_comment_parts = true,
+    },
+
+    -- Module mappings. Use `''` (empty string) to disable one.
+    mappings = {
+        -- Toggle comment (like `gcip` - comment inner paragraph) for both
+        -- Normal and Visual modes
+        -- comment = "gc",
+        comment = "<leader>/",
+
+        -- Toggle comment on current line
+        -- comment_line = "gcc",
+        comment_line = "<leader>/",
+
+        -- Toggle comment on visual selection
+        -- comment_visual = "gc",
+        comment_visual = "<leader>/",
+
+        -- Define "comment" textobject (like `dgc` - delete whole comment block)
+        -- Works also in Visual mode if mapping differs from `comment_visual`
+        -- textobject = "gc",
+        textobject = "<leader>/",
+    },
+
+    -- Hook functions to be executed at certain stage of commenting
+    hooks = {
+        -- Before successful commenting. Does nothing by default.
+        pre = function() end,
+        -- After successful commenting. Does nothing by default.
+        post = function() end,
+    },
+}
 
 local mini_ai_opts = {
     -- Table with textobject id as fields, textobject specification as values.
@@ -66,10 +105,6 @@ local mini_ai_opts = {
     -- idle time if user input is required.
     silent = false,
 }
-
-MiniDeps.later(function()
-    require("mini.ai").setup(mini_ai_opts)
-end)
 
 local mini_surrround_opts = {
     -- Add custom surroundings to be used on top of builtin ones. For more
@@ -113,10 +148,6 @@ local mini_surrround_opts = {
     silent = false,
 }
 
-MiniDeps.later(function()
-    require("mini.surround").setup(mini_surrround_opts)
-end)
-
 local mini_hipatterns_opts = {
     -- Table with highlighters (see |MiniHipatterns.config| for more details).
     -- Nothing is defined by default. Add manually for visible effect.
@@ -132,69 +163,140 @@ local mini_hipatterns_opts = {
     },
 }
 
-MiniDeps.later(function()
+local mini_icon_opts = {
+    -- Icon style: 'glyph' or 'ascii'
+    style = "glyph",
+
+    -- Customize per category. See `:h MiniIcons.config` for details.
+    default = {},
+    directory = {},
+    extension = {},
+    file = {},
+    filetype = {},
+    lsp = {},
+    os = {},
+
+    -- Control which extensions will be considered during "file" resolution
+    -- use_file_extension = function(ext, file) return true end,
+}
+
+local mini_starter_opts = {
+    -- Whether to open Starter buffer on VimEnter. Not opened if Neovim was
+    -- started with intent to show something else.
+    autoopen = false,
+
+    -- Whether to evaluate action of single active item
+    evaluate_single = false,
+
+    -- Items to be displayed. Should be an array with the following elements:
+    -- - Item: table with <action>, <name>, and <section> keys.
+    -- - Function: should return one of these three categories.
+    -- - Array: elements of these three types (i.e. item, array, function).
+    -- If `nil` (default), default items will be used (see |mini.starter|).
+    items = nil,
+
+    -- Header to be displayed before items. Converted to single string via
+    -- `tostring` (use `\n` to display several lines). If function, it is
+    -- evaluated first. If `nil` (default), polite greeting will be used.
+    header = nil,
+
+    -- Footer to be displayed after items. Converted to single string via
+    -- `tostring` (use `\n` to display several lines). If function, it is
+    -- evaluated first. If `nil` (default), default usage help will be shown.
+    footer = nil,
+
+    -- Array  of functions to be applied consecutively to initial content.
+    -- Each function should take and return content for Starter buffer (see
+    -- |mini.starter| and |MiniStarter.get_content()| for more details).
+    content_hooks = nil,
+
+    -- Characters to update query. Each character will have special buffer
+    -- mapping overriding your global ones. Be careful to not add `:` as it
+    -- allows you to go into command mode.
+    query_updaters = "abcdefghijklmnopqrstuvwxyz0123456789_-.",
+
+    -- Whether to disable showing non-error feedback
+    silent = false,
+}
+
+local mini_notify_opts = {
+    -- Content management
+    content = {
+        -- Function which formats the notification message
+        -- By default prepends message with notification time
+        format = nil,
+        -- Function which orders notification array from most to least important
+        -- By default orders first by level and then by update timestamp
+        sort = nil,
+    },
+
+    -- Notifications about LSP progress
+    lsp_progress = {
+        -- Whether to enable showing
+        enable = true,
+        -- Notification level
+        level = "INFO",
+        -- Duration (in ms) of how long last message should be shown
+        duration_last = 1000,
+    },
+
+    -- Window options
+    window = {
+        -- Floating window config
+        config = {},
+        -- Maximum window width as share (between 0 and 1) of available columns
+        max_width_share = 0.382,
+        -- Value of 'winblend' option
+        winblend = 25,
+    },
+}
+
+local function setup_mini_config()
+    require("mini.ai").setup(mini_ai_opts)
+    require("mini.surround").setup(mini_surrround_opts)
     require("mini.hipatterns").setup(mini_hipatterns_opts)
-end)
-
-MiniDeps.later(function()
     require("mini.pick").setup()
-end)
-
-MiniDeps.later(function()
     require("mini.extra").setup()
-end)
-
-MiniDeps.later(function()
     require("mini.files").setup()
-end)
-
-MiniDeps.later(function()
     require("mini.trailspace").setup()
-end)
-
-MiniDeps.later(function()
     require("mini.operators").setup()
-end)
-
-MiniDeps.later(function()
     require("mini.move").setup()
-end)
-
-MiniDeps.later(function()
     require("mini.splitjoin").setup()
-end)
-
-MiniDeps.later(function()
     require("mini.align").setup()
-end)
-
-MiniDeps.later(function()
     require("mini.test").setup()
-end)
-
-MiniDeps.later(function()
     require("mini.doc").setup()
-end)
-
-MiniDeps.later(function()
     require("mini.diff").setup()
-end)
-
-MiniDeps.later(function()
     require("mini.sessions").setup()
-end)
-
-MiniDeps.later(function()
     require("mini.colors").setup()
-end)
+    require("mini.comment").setup(mini_comment_opts)
+    require("mini.icons").setup(mini_icon_opts)
+    require("mini.fuzzy").setup()
+    require("mini.git").setup()
+    require("mini.starter").setup(mini_starter_opts)
 
-MiniDeps.later(function()
     local hues = require("mini.hues")
     hues.setup(hues.gen_random_base_colors())
-end)
 
-vim.api.nvim_create_user_command("RandomThemeGenerate", function()
-    MiniHues.setup(MiniHues.gen_random_base_colors())
-end, {
-    desc = "generate a theme using random fg and bg colors",
-})
+    vim.api.nvim_create_user_command("RandomThemeGenerate", function()
+        MiniHues.setup(MiniHues.gen_random_base_colors())
+    end, {
+        desc = "generate a theme using random fg and bg colors",
+    })
+
+    setup_mini_snippets()
+    require("mini.notify").setup(mini_notify_opts)
+
+    local map = require("config.helpers").map
+
+    map("n", "<leader>,", ":Pick files<CR>", "files")
+    map("n", "<leader>we", MiniHues.gen_random_base_colors, "files")
+end
+
+return {
+    {
+        "echasnovski/mini.nvim",
+        event = "VeryLazy",
+        version = false,
+        config = setup_mini_config,
+    },
+}

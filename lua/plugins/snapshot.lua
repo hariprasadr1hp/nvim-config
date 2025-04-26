@@ -13,17 +13,9 @@ local opts = {
     -- watermark = "hariprasadr1hp",
 }
 
-local function setup_codesnap()
-    MiniDeps.add({
-        source = "mistricky/codesnap.nvim",
-        hooks = {
-            post_checkout = function(path)
-                vim.fn.system({ "make" }, path)
-            end,
-        },
-    })
-
-    require("codesnap").setup(opts)
-end
-
-MiniDeps.later(setup_codesnap)
+return {
+    "mistricky/codesnap.nvim",
+    build = "make",
+    cmd = { "CodeSnap", "CodeSnapSaveHighlight", "CodeSnapASCII", "CodeSnapHighlight", "CodeSnapSave" },
+    opts = opts,
+}

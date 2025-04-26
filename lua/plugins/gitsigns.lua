@@ -35,23 +35,37 @@ local preview_config = {
 }
 
 local function setup_on_attach()
+    ---@diagnostic disable-next-line: unused-local
     return function(bufnr)
+        local map = require("config.helpers").map
         local gitsigns = require("gitsigns")
 
-        local function map(mode, l, r, opts)
-            opts = opts or {}
-            opts.buffer = bufnr
-            vim.keymap.set(mode, l, r, opts)
-        end
+        map("n", "<leader>gb", gitsigns.blame_line, "blame-line")
+        map("n", "<leader>gB", gitsigns.blame, "blame")
+        map("n", "<leader>gg", gitsigns.preview_hunk_inline, "preview-hunk")
+        map("n", "<leader>tg", gitsigns.toggle_signs, "preview-hunk")
 
-        -- Navigation
+        map("n", "<leader>hhs", gitsigns.stage_hunk, "stage-hunk")
+        -- map("n", "<leader>hhu", gitsigns.unstage_hunk, "unstage-hunk")
+        -- map("v", "<leader>hhv", gitsigns.select_hunk, "visual-select-hunk")
+
+        map("x", "<leader>hhs", gitsigns.stage_hunk, "stage-hunk")
+        -- map("x", "<leader>hhu", gitsigns.unstage_hunk, "unstage-hunk")
+
+        map("n", "<leader>hhp", function()
+            gitsigns.nav_hunk("prev")
+        end, "preview-hunk")
+        map("n", "<leader>hhn", function()
+            gitsigns.nav_hunk("next")
+        end, "preview-hunk")
+
         map("n", "]h", function()
             if vim.wo.diff then
                 vim.cmd.normal({ "]h", bang = true })
             else
                 gitsigns.nav_hunk("next")
             end
-        end, { desc = "next-git-hunk" })
+        end, "next-git-hunk")
 
         map("n", "[h", function()
             if vim.wo.diff then
@@ -59,7 +73,7 @@ local function setup_on_attach()
             else
                 gitsigns.nav_hunk("prev")
             end
-        end, { desc = "prev-git-hunk" })
+        end, "prev-git-hunk")
     end
 end
 
@@ -93,17 +107,9 @@ local opts = {
     on_attach = setup_on_attach(),
 }
 
-local function setup_gitsigns()
-    MiniDeps.add({
-        source = "lewis6991/gitsigns.nvim",
-    })
-
-    vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
-        pattern = "*",
-        callback = function()
-            require("gitsigns").setup(opts)
-        end,
-    })
-end
-
-MiniDeps.later(setup_gitsigns)
+return {
+    "lewis6991/gitsigns.nvim",
+    cmd = "Gitsigns",
+    event = { "BufReadPre", "BufNewFile" },
+    opts = opts,
+}

@@ -1,5 +1,9 @@
 -- lua/plugins/startup.lua
 
-MiniDeps.later(function()
-    MiniDeps.add({ source = "dstein64/vim-startuptime" })
-end)
+return {
+    "dstein64/vim-startuptime",
+    cmd = "StartupTime",
+    keys = {
+        { "<leader>is", "<cmd>StartupTime<CR>", desc = "startup" },
+    },
+}

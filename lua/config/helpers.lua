@@ -22,6 +22,17 @@ function M.feedkeys(keys, mode)
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, false, true), mode, true)
 end
 
+-- Setting Keymaps
+function M.map(mode, lhs, rhs, desc, key_opts)
+    local opts = vim.tbl_extend("force", {
+        noremap = true,
+        silent = true,
+        desc = desc or (type(rhs) == "string" and rhs or nil),
+    }, key_opts or {})
+
+    vim.keymap.set(mode, lhs, rhs, opts)
+end
+
 -- checks if it is in recording mode
 function M.is_recording()
     return vim.fn.reg_recording() ~= ""

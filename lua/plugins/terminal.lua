@@ -1,24 +1,8 @@
 -- lua/plugins/terminal.lua
 
-local opts = {
-    ---@type "float" | "horizontal"
-    direction = "horizontal",
-}
+local map = require("config.helpers").map
 
-local function setup_terminal()
-    MiniDeps.add({
-        source = "voldikss/vim-floaterm",
-        depends = {
-            {
-                source = "akinsho/toggleterm.nvim",
-                checkout = "v2.13.1",
-            },
-        },
-    })
-
-    local toggleterm = require("toggleterm")
-    toggleterm.setup(opts)
-
+local function setup_floaterm_config()
     vim.g.floaterm_gitcommit = "floaterm"
     vim.g.floaterm_autoinsert = 1
     vim.g.floaterm_width = 0.99
@@ -26,56 +10,37 @@ local function setup_terminal()
     vim.g.floaterm_wintitle = 0
     vim.g.floaterm_autoclose = 1
     vim.g.floaterm_opener = "edit"
-    vim.g.floaterm_keymap_toggle = "<Leader>ot"
-    -- vim.g.floaterm_keymap_toggle = "<F1>"
-    -- vim.g.floaterm_keymap_next   = "<F2>"
-    -- vim.g.floaterm_keymap_prev   = "<F3>"
-    -- vim.g.floaterm_keymap_new    = "<F4>"
-    -- vim.g.floaterm_title=""
+    vim.g.floaterm_keymap_toggle = "<leader>ot"
+end
 
-    local function map(mode, lhs, rhs, desc)
-        vim.keymap.set(mode, lhs, rhs, {
-            noremap = true,
-            silent = true,
-            desc = desc,
-        })
+local function setup_toggleterm_config()
+    local toggleterm = require("toggleterm")
+
+    map("n", "<M-m>", toggleterm.toggle, "toggle-term")
+    map("n", "<C-`>", toggleterm.toggle, "toggle-term")
+
+    map("t", "<M-m>", toggleterm.toggle, "toggle-term")
+    map("t", "<C-`>", toggleterm.toggle, "toggle-term")
+
+    -- map("n", "<leader>tt", ":ToggleTermSendCurrentLine<CR>", "send-current-line-terminal")
+    -- map("x", "<leader>tt", ":ToggleTermSendVisualSelection<CR>", "send-vi-select-terminal")
+
+    local function make_runner(target)
+        return function()
+            toggleterm.exec(" make " .. target)
+        end
     end
 
-    map("t", "<M-m>", "<C-\\><C-n>:ToggleTerm<CR>", "toggle-term")
-    map("t", "<C-`>", "<C-\\><C-n>:ToggleTerm<CR>", "toggle-term")
-    -- map("t", "<C-`>", ":ToggleTerm<CR>", "toggle-term")
-    map("n", "<M-m>", ":ToggleTerm<CR>", "toggle-term")
-
-    map("n", "<leader>tt", ":ToggleTermSendCurrentLine<CR>", "send-cline-terminal")
-    map("x", "<leader>tt", ":ToggleTermSendVisualSelection<CR>", "send-vi-select-terminal")
-
-    map("n", "<leader>ma", function()
-        toggleterm.exec(" make temp")
-    end, "make temp")
-
-    map("n", "<leader>mc", function()
-        toggleterm.exec(" make clean")
-    end, "make clean")
-
-    map("n", "<leader>md", function()
-        toggleterm.exec(" make debug")
-    end, "make debug")
-
-    map("n", "<leader>mf", function()
-        toggleterm.exec(" make format")
-    end, "make format")
-
-    map("n", "<leader>m", function()
-        toggleterm.exec(" make all")
-    end, "make all")
-
-    map("n", "<leader>mt", function()
-        toggleterm.exec(" make test")
-    end, "make test")
+    map("n", "<leader>ma", make_runner("temp"), "make-temp")
+    map("n", "<leader>mc", make_runner("clean"), "make-clean")
+    map("n", "<leader>md", make_runner("debug"), "make-debug")
+    map("n", "<leader>mf", make_runner("format"), "make-format")
+    map("n", "<leader>mm", make_runner("all"), "make-all")
+    map("n", "<leader>mt", make_runner("test"), "make-test")
 
     local eval_cmd_by_ft = require("config.helpers").eval_cmd_by_ft
 
-    map("n", "<space>ee", function()
+    map("n", "<leader>ee", function()
         local cmd = eval_cmd_by_ft()
         if cmd ~= nil then
             print("executing...")
@@ -83,7 +48,30 @@ local function setup_terminal()
         else
             print("Not sure how to execute filetype: " .. vim.bo.filetype)
         end
-    end, "exec-buffer")
+    end)
 end
 
-MiniDeps.later(setup_terminal)
+return {
+    {
+        "voldikss/vim-floaterm",
+        cmd = { "FloatermToggle", "FloatermNew" },
+        keys = {
+            { "<leader>od", "<cmd>FloatermNew lazydocker<CR>", "lazydocker" },
+            { "<leader>ol", "<cmd>FloatermNew lazygit<CR>", "lazygit" },
+            { "<leader>or", "<cmd>FloatermNew ranger<CR>", "ranger" },
+            { "<leader>ot", "<cmd>FloatermToggle<CR>", desc = "floaterm" },
+        },
+        config = setup_floaterm_config,
+    },
+    {
+        "akinsho/toggleterm.nvim",
+        version = "*",
+        opts = {
+            direction = "horizontal",
+            shade_terminals = true,
+            start_in_insert = true,
+            persist_size = true,
+        },
+        config = setup_toggleterm_config,
+    },
+}

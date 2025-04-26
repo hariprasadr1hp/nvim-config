@@ -51,20 +51,19 @@ local mason_tool_installer_opts = {
 }
 
 local function setup_mason()
-    MiniDeps.add({
-        source = "williamboman/mason.nvim",
-        hooks = {
-            post_checkout = function()
-                vim.cmd("MasonUpdate")
-            end,
-        },
-    })
-    MiniDeps.add({ source = "williamboman/mason-lspconfig.nvim" })
-    MiniDeps.add({ source = "WhoIsSethDaniel/mason-tool-installer.nvim" })
-
     require("mason").setup(mason_opts)
     require("mason-lspconfig").setup(mason_lspconfig_opts)
     require("mason-tool-installer").setup(mason_tool_installer_opts)
+
+    local map = require("config.helpers").map
+    map("n", "<leader>oM", ":Mason<CR>", "mason-window")
 end
 
-MiniDeps.later(setup_mason)
+return {
+    "williamboman/mason.nvim",
+    dependencies = {
+        "williamboman/mason-lspconfig.nvim",
+        "WhoIsSethDaniel/mason-tool-installer.nvim",
+    },
+    config = setup_mason,
+}

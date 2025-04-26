@@ -8,6 +8,6 @@ require("config.commands")
 require("config.keybindings")
 require("config.neovide")
 
--- mini.deps required
+-- lazy.nvim required
 require("config.bootstrap")
 require("plugins")

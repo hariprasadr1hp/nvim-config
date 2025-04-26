@@ -2,31 +2,24 @@
 
 -- FIX: multicursor commands only work (on x mode), only after the keymaps are triggered
 
-local function setup_multicursors_config()
-    local cursors = require("multiple-cursors")
-    cursors.setup({})
+return {
+    "brenton-leighton/multiple-cursors.nvim",
+    version = "*",
+    opts = {},
+    cmd = { "MultipleCursorsAddVisualArea", },
+    keys = {
+        {"<C-j>", "<Cmd>MultipleCursorsAddDown<CR>", mode = {"n", "x"}, desc = "add-cursor-and-move-down"},
+        {"<C-k>", "<Cmd>MultipleCursorsAddUp<CR>", mode = {"n", "x"}, desc = "add-cursor-and-move-up"},
+        {"<C-Up>", "<Cmd>MultipleCursorsAddUp<CR>", mode = {"n", "i", "x"}, desc = "add-cursor-and-move-up"},
+        {"<C-Down>", "<Cmd>MultipleCursorsAddDown<CR>", mode = {"n", "i", "x"}, desc = "add-cursor-and-move-down"},
+        {"<C-LeftMouse>", "<Cmd>MultipleCursorsMouseAddDelete<CR>", mode = {"n", "i"}, desc = "add-or-remove-cursor"},
+        -- {"<leader>m", "<Cmd>MultipleCursorsAddVisualArea<CR>", mode = {"x"}, desc = "Add cursors to the lines of the visual area"},
+        {"<leader>xa", "<Cmd>MultipleCursorsAddMatches<CR>", mode = {"n", "x"}, desc = "add-cursors-to-cword"},
+        {"<leader>xA", "<Cmd>MultipleCursorsAddMatchesV<CR>", mode = {"n", "x"}, desc = "add-cursors-to-cword-in-previous-area"},
+        {"<leader>xd", "<Cmd>MultipleCursorsAddJumpNextMatch<CR>", mode = {"n", "x"}, desc = "add-cursor-and-jump-to-next-cword"},
+        {"<leader>xD", "<Cmd>MultipleCursorsJumpNextMatch<CR>", mode = {"n", "x"}, desc = "jump-to-next-cword"},
+        {"<leader>xl", "<Cmd>MultipleCursorsLock<CR>", mode = {"n", "x"}, desc = "lock-virtual-cursors"},
+    },
+}
 
-    local map = vim.keymap.set
-    local key_opts = { noremap = true, silent = true }
 
-    map({ "n", "x" }, "<C-j>", ":MultipleCursorsAddDown<CR>", key_opts)
-    map({ "n", "x" }, "<C-k>", ":MultipleCursorsAddUp<CR>", key_opts)
-    map({ "n", "x" }, "<C-Up>", ":MultipleCursorsAddUp<CR>", key_opts)
-    map({ "n", "x" }, "<C-Down>", ":MultipleCursorsAddDown<CR>", key_opts)
-    map({ "n", "x" }, "<C-LeftMouse>", ":MultipleCursorsMouseAddDelete<CR>", key_opts)
-    map({ "n", "x" }, "<leader>xa", ":MultipleCursorsAddMatches<CR>", key_opts)
-    map({ "n", "x" }, "<leader>xA", ":MultipleCursorsAddMatchesV<CR>", key_opts)
-    map({ "n", "x" }, "<leader>xd", ":MultipleCursorsAddJumpNextMatch<CR>", key_opts)
-    map({ "n", "x" }, "<leader>xD", ":MultipleCursorsJumpNextMatch<CR>", key_opts)
-    map({ "n", "x" }, "<leader>xl", ":MultipleCursorsLock<CR>", key_opts)
-end
-
-local function setup_multicursors()
-    MiniDeps.add({
-        source = "brenton-leighton/multiple-cursors.nvim",
-        checkout = "v0.15",
-    })
-    setup_multicursors_config()
-end
-
-MiniDeps.later(setup_multicursors)

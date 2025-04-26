@@ -1,53 +1,51 @@
 -- lua/plugins/init.lua
 
-require("plugins.mini")
+local opts = {
+    require("plugins.mini"),
+    require("plugins.snacks"),
+    require("plugins.startup"),
+    require("plugins.themes.catpuccin"),
 
-require("plugins.comment")
-require("plugins.snippets")
-require("plugins.icons")
+    require("plugins.icons"),
+    require("plugins.telescope"),
+    require("plugins.fzflua"),
 
-require("plugins.fzflua")
-require("plugins.fuzzy")
-require("plugins.telescope")
+    require("plugins.treesitter"),
+    require("plugins.text_objects"),
+    require("plugins.mason"),
+    require("plugins.blink"),
+    require("plugins.lspconfig"),
+    require("plugins.format"),
+    require("plugins.lint"),
+    require("plugins.terminal"),
+    require("plugins.debug"),
+    require("plugins.testing"),
 
-require("plugins.treesitter")
-require("plugins.text_objects")
-require("plugins.mason")
-require("plugins.lspconfig")
-require("plugins.blink")
-require("plugins.autopairs")
-require("plugins.multicursors")
+    require("plugins.lang.rust"),
+    require("plugins.lang.sql"),
 
-require("plugins.format")
-require("plugins.lint")
-require("plugins.debug")
-require("plugins.testing")
+    require("plugins.snippets"),
+    require("plugins.autopairs"),
+    require("plugins.comment"),
+    require("plugins.harpoon"),
+    require("plugins.multicursors"),
+    require("plugins.explorer"),
+    require("plugins.gitsigns"),
+    require("plugins.lualine"),
+    require("plugins.outline"),
+    require("plugins.todo_comments"),
 
-require("plugins.lang.rust")
-require("plugins.lang.sql")
+    require("plugins.diff"),
+    require("plugins.cloak"),
+    require("plugins.notify"),
+    require("plugins.git"),
+    require("plugins.snapshot"),
+    require("plugins.dashboard"),
+    require("plugins.oil"),
+    require("plugins.custom"),
+    require("plugins.whichkey"),
+}
 
-require("plugins.diff")
-require("plugins.gitsigns")
-require("plugins.todo_comments")
-require("plugins.explorer")
-require("plugins.terminal")
-require("plugins.lualine")
-require("plugins.explorer")
-require("plugins.outline")
-require("plugins.notify")
-require("plugins.git")
-require("plugins.harpoon")
--- require("plugins.oil")
+vim.keymap.set("n", "<leader>oL", ":Lazy<CR>", { noremap = true, silent = true, desc = "lazy-window" })
 
-require("plugins.whichkey")
-
-require("plugins.snacks")
-require("plugins.startup")
-require("plugins.cloak")
-require("plugins.dashboard")
-require("plugins.snapshot")
-
-require("plugins.themes.catpuccin")
-require("plugins.misc")
-
-require("plugins.custom")
+require("lazy").setup(opts)

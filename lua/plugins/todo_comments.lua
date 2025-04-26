@@ -53,16 +53,6 @@ local search = {
     pattern = [[\b(KEYWORDS):]], -- ripgrep regex pattern
 }
 
-local function setup_keymaps()
-    vim.keymap.set("n", "]t", function()
-        require("todo-comments").jump_next()
-    end, { desc = "Next todo comment" })
-
-    vim.keymap.set("n", "[t", function()
-        require("todo-comments").jump_prev()
-    end, { desc = "Previous todo comment" })
-end
-
 local opts = {
     signs = true,
     sign_priority = 8,
@@ -74,17 +64,28 @@ local opts = {
     search = search,
 }
 
-local function setup_todo_comments()
-    MiniDeps.add({
-        source = "folke/todo-comments.nvim",
-        depends = {
-            "nvim-lua/plenary.nvim",
-            "ibhagwan/fzf-lua",
-        },
-    })
+local function setup_keymaps()
+    local todo_comments = require("todo-comments")
+    vim.keymap.set("n", "]t", function()
+        todo_comments.jump_next()
+    end, { desc = "Next todo comment" })
 
-    require("todo-comments").setup(opts)
-    setup_keymaps()
+    vim.keymap.set("n", "[t", function()
+        todo_comments.jump_prev()
+    end, { desc = "Previous todo comment" })
 end
 
-MiniDeps.later(setup_todo_comments)
+return {
+    "folke/todo-comments.nvim",
+    cmd = { "TodoFzfLua", "TodoQuickFix" },
+    keys = {
+        { "<leader>pq", "<cmd>TodoQuickFix<CR>", desc = "quickfix-todo" },
+        { "<leader>zt", "<cmd>TodoFzfLua keywords=TODO,FIX<CR>", desc = "todos" },
+    },
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+        "ibhagwan/fzf-lua",
+    },
+    opts = opts,
+    config = setup_keymaps,
+}

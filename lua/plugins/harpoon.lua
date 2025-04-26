@@ -1,57 +1,43 @@
 -- lua/plugins/harpoon.lua
 
 local function setup_keymaps()
+    local map = require("config.helpers").map
     local harpoon_list = require("harpoon"):list()
-    local set_map = vim.keymap.set
     local set_usercmd = vim.api.nvim_create_user_command
 
-    set_map("n", "[n", function()
+    map("n", "[n", function()
         harpoon_list:prev()
-    end, { desc = "prev-harpoon" })
+    end, "prev-harpoon")
 
-    set_map("n", "]n", function()
+    map("n", "]n", function()
         harpoon_list:next()
-    end, { desc = "next-harpoon" })
+    end, "next-harpoon")
 
-    set_map("n", ",1", function()
-        harpoon_list:select(1)
-    end, { desc = "harpoon-1" })
-
-    set_map("n", ",2", function()
-        harpoon_list:select(2)
-    end, { desc = "harpoon-2" })
-
-    set_map("n", ",3", function()
-        harpoon_list:select(3)
-    end, { desc = "harpoon-3" })
-
-    set_map("n", ",4", function()
-        harpoon_list:select(4)
-    end, { desc = "harpoon-4" })
-
-    set_map("n", ",5", function()
-        harpoon_list:select(5)
-    end, { desc = "harpoon-5" })
-
-    set_map("n", "<leader>hla", function()
+    map("n", "<leader>hla", function()
         harpoon_list:add()
-    end, { desc = "harpoon-add" })
+    end, "harpoon-add")
 
-    set_map("n", "<leader>hld", function()
+    map("n", "<leader>hld", function()
         harpoon_list:remove()
-    end, { desc = "harpoon-remove" })
+    end, "harpoon-remove")
 
-    set_map("n", "<leader>hlp", function()
+    map("n", "<leader>hlp", function()
         harpoon_list:prev()
-    end, { desc = "prev-harpoon" })
+    end, "prev-harpoon")
 
-    set_map("n", "<leader>hln", function()
+    map("n", "<leader>hln", function()
         harpoon_list:next()
-    end, { desc = "next-harpoon" })
+    end, "next-harpoon")
 
-    set_map("n", "<leader>hll", function()
+    map("n", "<leader>hll", function()
         require("harpoon").ui:toggle_quick_menu(harpoon_list)
-    end, { desc = "harpoon-list" })
+    end, "harpoon-list")
+
+    for i = 1, 5 do
+        map("n", "," .. i, function()
+            harpoon_list:select(i)
+        end, "harpoon-" .. i)
+    end
 
     set_usercmd("HarpoonAddToList", function()
         harpoon_list:add()
@@ -70,15 +56,14 @@ local function setup_keymaps()
     end, {})
 end
 
-local function setup_harpoon()
-    MiniDeps.add({
-        source = "ThePrimeagen/harpoon",
-        checkout = "harpoon2",
-        depends = { "nvim-lua/plenary.nvim" },
-    })
-
+local function setup_harpoon_config()
     require("harpoon"):setup()
     setup_keymaps()
 end
 
-MiniDeps.later(setup_harpoon)
+return {
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = setup_harpoon_config,
+}

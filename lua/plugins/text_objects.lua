@@ -1,5 +1,7 @@
 -- lua/plugins/text_objects.lua
 
+local M = {}
+
 local opts = {
     textobjects = {
         select = {
@@ -73,12 +75,12 @@ local opts = {
     },
 }
 
-local function setup_text_objects()
-    MiniDeps.add({
-        source = "nvim-treesitter/nvim-treesitter-textobjects",
-    })
+M = {
+    {
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        lazy = true,
+        opts = opts,
+    },
+}
 
-    require("nvim-treesitter.configs").setup(opts)
-end
-
-MiniDeps.later(setup_text_objects)
+return M

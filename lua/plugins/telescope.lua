@@ -112,16 +112,21 @@ local function setup_telescope_config()
     load_extensions()
 end
 
-local function setup_telescope()
-    MiniDeps.add({
-        source = "nvim-telescope/telescope.nvim",
-        checkout = "0.1.x",
-        depends = {
-            "nvim-lua/plenary.nvim",
+return {
+    "nvim-telescope/telescope.nvim",
+    event = "VimEnter",
+    cmd = "Telescope",
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+        {
+            "nvim-telescope/telescope-fzf-native.nvim",
+            build = "make",
+            cond = function()
+                return vim.fn.executable("make") == 1
+            end,
         },
-    })
-
-    setup_telescope_config()
-end
-
-MiniDeps.later(setup_telescope)
+        { "nvim-telescope/telescope-ui-select.nvim" },
+        { "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
+    },
+    config = setup_telescope_config,
+}

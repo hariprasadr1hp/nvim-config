@@ -60,9 +60,9 @@ local integrations = {
     },
 }
 
-local catppuccin_config = {
+local opts = {
     ---@type "auto" | "latte" | "frappe" | "macchiato" | "mocha"
-    flavour = "auto",
+    flavour = "mocha",
     background = {
         light = "latte",
         dark = "mocha",
@@ -89,10 +89,9 @@ local catppuccin_config = {
     integrations = integrations,
 }
 
-local function setup_catppuccin()
-    MiniDeps.add({ source = "catppuccin/nvim" })
-    require("catppuccin").setup(catppuccin_config)
-    -- vim.cmd.colorscheme("catppuccin-mocha")
-end
-
-MiniDeps.later(setup_catppuccin)
+return {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000,
+    opts = opts,
+}

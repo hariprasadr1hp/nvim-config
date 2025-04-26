@@ -220,16 +220,14 @@ local opts = {
     log = log,
 }
 
-local function setup_explorer()
-    MiniDeps.add({
-        source = "kyazdani42/nvim-tree.lua",
-        checkout = "v1.11.0",
-        depends = {
-            "kyazdani42/nvim-web-devicons",
-        },
-    })
-
-    require("nvim-tree").setup(opts)
-end
-
-MiniDeps.later(setup_explorer)
+return {
+    "kyazdani42/nvim-tree.lua",
+    cmd = { "NvimTreeToggle", "NvimTreeRefresh" },
+    keys = {
+        { "<C-.><C-.>", "<cmd>NvimTreeToggle<CR>", desc = "toggle-explorer" },
+        { "<leader>oe", "<cmd>NvimTreeToggle<CR>", desc = "toggle-explorer" },
+        { "<leader>re", "<cmd>NvimTreeRefresh<CR>", desc = "refresh-explorer" },
+    },
+    dependencies = { "kyazdani42/nvim-web-devicons" },
+    opts = opts,
+}

@@ -41,45 +41,30 @@ local linters = {
     },
 }
 
-local function setup_lint_config(lint)
+local function setup_lint_config()
+    local lint = require("lint")
     lint.linters_by_ft = linters_by_ft
     lint.linters = linters
     disable_default_linters(lint)
-    return lint
-end
 
-local function setup_lint()
-    MiniDeps.add({ source = "mfussenegger/nvim-lint" })
-
-    local lint = require("lint")
     local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 
-    vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
-        pattern = "*",
-        callback = function()
-            setup_lint_config(lint)
-        end,
-    })
+    vim.defer_fn(function()
+        vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+            group = lint_augroup,
+            callback = function()
+                pcall(lint.try_lint)
+            end,
+        })
 
-    vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
-        group = lint_augroup,
-        callback = function()
-            setup_lint_config(lint)
-        end,
-    })
-
-    vim.api.nvim_create_user_command("LintFile", function()
-        setup_lint_config(lint)
-    end, { desc = "Trigger linting on the current file" })
+        vim.keymap.set("n", "<leader>cl", function()
+          lint.try_lint()
+        end, { desc = "lint-current-buffer" })
+    end, 0)
 end
 
-MiniDeps.later(setup_lint)
-
--- local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
-
--- vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
---     group = lint_augroup,
---     callback = function()
---         require("lint").try_lint()
---     end,
--- })
+return {
+    "mfussenegger/nvim-lint",
+    event = { "BufReadPre", "BufNewFile" },
+    config = setup_lint_config,
+}

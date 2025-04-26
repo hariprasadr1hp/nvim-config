@@ -46,10 +46,9 @@ local opts = {
     words = { enabled = false },
 }
 
-local function setup_snacks()
-    MiniDeps.add({ source = "folke/snacks.nvim" })
-    local snacks = require("snacks")
-    snacks.setup(opts)
-end
-
-MiniDeps.now(setup_snacks)
+return {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    opts = opts,
+}

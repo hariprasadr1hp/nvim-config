@@ -449,7 +449,7 @@ local function setup_blink_config()
 
     opts.sources = {
         default = {
-            -- "lazydev",
+            "lazydev",
             "lsp",
             "path",
             "snippets",
@@ -625,21 +625,17 @@ local function setup_blink_config()
     blink_cmp.setup(opts)
 end
 
-local function setup_blink()
-    MiniDeps.add({
-        source = "saghen/blink.cmp",
-        checkout = "v1.1.1",
-        depends = {
-            "echasnovski/mini.fuzzy",
-            "echasnovski/mini.snippets",
-            "mikavilpas/blink-ripgrep.nvim",
-            "Kaiser-Yang/blink-cmp-git",
-            "moyiz/blink-emoji.nvim",
-        },
-    })
-
-    -- require("blink.cmp").setup()
-    setup_blink_config()
-end
-
-MiniDeps.later(setup_blink)
+return {
+    'saghen/blink.cmp',
+    event = "InsertEnter",
+    dependencies = {
+        {"echasnovski/mini.fuzzy"},
+        {"rafamadriz/friendly-snippets"},
+        {"echasnovski/mini.snippets"},
+        {"mikavilpas/blink-ripgrep.nvim"},
+        {"Kaiser-Yang/blink-cmp-git"},
+        {"moyiz/blink-emoji.nvim"},
+    },
+    version = '1.*',
+    config = setup_blink_config
+}

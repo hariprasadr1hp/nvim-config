@@ -1,5 +1,7 @@
 -- lua/plugins/fzflua.lua
 
+local M = {}
+
 local winopts = {
     -- split = "belowright new",-- open in a split instead?
     -- "belowright new"  : split below
@@ -254,6 +256,7 @@ local previewers = {
 }
 
 local function setup_fzflua_config()
+    local map = require("config.helpers").map
     local fzflua = require("fzf-lua")
     local fzflua_actions = require("fzf-lua").actions
 
@@ -268,15 +271,80 @@ local function setup_fzflua_config()
     }
 
     fzflua.setup(opts)
+
+    map("n", "<M-x>", fzflua.commands, "commands")
+    map("n", "<leader>.", fzflua.files, "files")
+    map("n", "<leader>bB", fzflua.buffers, "make-buffers")
+    map("n", "<leader>cF", fzflua.filetypes, "make-temp")
+    map("n", "<leader>cs", fzflua.lsp_document_symbols, "lsp-document-symbols")
+    map("n", "<leader>cS", fzflua.lsp_workspace_symbols, "lsp-workspace-symbols")
+    map("n", "<leader>ff", fzflua.files, "files")
+    map("n", "<leader>fp", function()
+        fzflua.files({ cwd = vim.fn.stdpath("config") })
+    end, "files")
+    map("n", "<leader>gc", fzflua.git_commits, "commits")
+    map("n", "<leader>gC", fzflua.git_bcommits, "buffer-commits")
+    map("n", "<leader>gf", fzflua.git_files, "git-files")
+    map("n", "<leader>gy", fzflua.git_branches, "branches")
+
+    map("n", "<leader>hf", fzflua.builtin, "buitins")
+    map("n", "<leader>hk", fzflua.keymaps, "keymaps")
+    map("n", "<leader>ht", fzflua.colorschemes, "themes")
+
+    map("n", "<leader>ld", fzflua.diagnostics_document, "document-diagnostics")
+    map("n", "<leader>lD", fzflua.diagnostics_workspace, "workspace-diagnostics")
+    map("n", "<leader>lq", fzflua.loclist, "llist")
+    map("n", "<leader>njs", function()
+        fzflua.files({ cwd = vim.env.ORG_DIR .. "/journal" })
+    end, "journal-files")
+    map("n", "<leader>nrf", function()
+        fzflua.files({ cwd = vim.env.ORG_DIR .. "/roam" })
+    end, "journal-files")
+    map("n", "<leader>oo", fzflua.diagnostics_document, "document-diagnostics")
+    map("n", "<leader>qq", fzflua.quickfix, "clist")
+
+    map("n", "<leader>sb", fzflua.grep_curbuf, "current-buffer")
+    map("n", "<leader>sf", fzflua.files, "files")
+    map("n", "<leader>sh", fzflua.search_history, "history")
+    map("n", "<leader>sm", fzflua.marks, "marks")
+    map("n", "<leader>sM", fzflua.man_pages, "man-pages")
+    map("n", "<leader>sr", fzflua.oldfiles, "recent-files")
+    map("n", "<leader>sR", fzflua.registers, "registers")
+    map("n", "<leader>ss", fzflua.grep_cword, "current-word")
+
+    map("n", "<leader>za", fzflua.autocmds, "autocmds")
+    map("n", "<leader>zb", fzflua.buffers, "buffers")
+    map("n", "<leader>zB", fzflua.live_grep, "live-grep")
+    map("n", "<leader>zc", fzflua.commands, "commands")
+    map("n", "<leader>zd", fzflua.dap_commands, "dap-commands")
+    map("n", "<leader>zf", fzflua.files, "files")
+    map("n", "<leader>zF", fzflua.filetypes, "filetypes")
+    map("n", "<leader>zg", fzflua.git_status, "git-status")
+    map("n", "<leader>zh", fzflua.help_tags, "help-tags")
+    map("n", "<leader>zj", fzflua.jumps, "jumps")
+    map("n", "<leader>zl", fzflua.loclist, "llist")
+    map("n", "<leader>zL", fzflua.loclist_stack, "llist-history")
+    map("n", "<leader>zm", fzflua.marks, "marks")
+    map("n", "<leader>zM", fzflua.man_pages, "man-pages")
+    map("n", "<leader>zo", fzflua.nvim_options, "nvim-options")
+    map("n", "<leader>zr", fzflua.oldfiles, "recent-files")
+    map("n", "<leader>ZR", fzflua.registers, "registers")
+    map("n", "<leader>zq", fzflua.quickfix, "clist")
+    map("n", "<leader>zQ", fzflua.quickfix_stack, "clist-history")
+    map("n", "<leader>zv", fzflua.commands, "vim-commands")
+    map("n", "<leader>zx", fzflua.resume, "resume")
+    map("n", "<leader>zf", fzflua.files, "files")
+    map("n", "<leader>zH", fzflua.command_history, "command-history")
+    map("n", "<leader>zz", fzflua.live_grep, "live-grep")
+
+    map("x", "<leader>ss", fzflua.grep_visual, "grep-visual")
 end
 
-local function setup_fzflua()
-    MiniDeps.add({
-        source = "ibhagwan/fzf-lua",
-        depends = { "echasnovski/mini.icons" },
-    })
+M = {
+    "ibhagwan/fzf-lua",
+    cmd = "FzfLua",
+    dependencies = { "echasnovski/mini.icons" },
+    config = setup_fzflua_config,
+}
 
-    setup_fzflua_config()
-end
-
-MiniDeps.later(setup_fzflua)
+return M

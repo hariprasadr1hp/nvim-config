@@ -5,6 +5,8 @@
 -- once entered, h/j/k/l or arrow keys to resize interactively
 -- `q` to quit mode
 
+local map = require("config.helpers").map
+
 local function exit_window_resize_mode()
     vim.api.nvim_echo({ { "-- window-resize-mode succesfully exited!", "InfoMsg" } }, false, {})
 
@@ -26,18 +28,19 @@ local function enter_window_resize_mode()
         {}
     )
 
-    local opts = { noremap = true, silent = true }
-
-    vim.api.nvim_buf_set_keymap(0, "n", "h", ":vertical resize +1<CR>", opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "k", ":resize +1<CR>", opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "j", ":resize -1<CR>", opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "l", ":vertical resize -1<CR>", opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "q", ":WindowResizeModeExit<CR>", opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "<up>", ":resize +1<CR>", opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "<down>", ":resize -1<CR>", opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "<right>", ":vertical resize +1<CR>", opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "<left>", ":vertical resize -1<CR>", opts)
+    map("n", "h", ":vertical resize +1<CR>", "move l/r", { buffer = 0 })
+    map("n", "k", ":resize +1<CR>", "move u/d", { buffer = 0 })
+    map("n", "j", ":resize -1<CR>", "move u/d", { buffer = 0 })
+    map("n", "l", ":vertical resize -1<CR>", "move l/r", { buffer = 0 })
+    map("n", "q", ":WindowResizeModeExit<CR>", "quit-resize-mode", { buffer = 0 })
+    map("n", "<up>", ":resize +1<CR>", "move u/d", { buffer = 0 })
+    map("n", "<down>", ":resize -1<CR>", "move u/d", { buffer = 0 })
+    map("n", "<right>", ":vertical resize +1<CR>", "move l/r", { buffer = 0 })
+    map("n", "<left>", ":vertical resize -1<CR>", "move l/r", { buffer = 0 })
 end
+
+map("n", "<C-w>a", enter_window_resize_mode, "window-resize-mode")
+map("n", "<leader>wa", enter_window_resize_mode, "window-resize-mode")
 
 vim.api.nvim_create_user_command("WindowResizeModeEnter", enter_window_resize_mode, {})
 vim.api.nvim_create_user_command("WindowResizeModeExit", exit_window_resize_mode, {})

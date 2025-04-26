@@ -1,5 +1,7 @@
 -- after/plugin/fzfmake.lua
 
+local map = require("config.helpers").map
+
 ---@param filepath (string | nil)
 ---@return integer
 local function get_make_file_buffer_nr(filepath)
@@ -128,5 +130,7 @@ local function make_fzf()
     end
     print("Makefile not found!")
 end
+
+map("n", "<leader>mz", make_fzf, "make-fzf")
 
 vim.api.nvim_create_user_command("MakeFzf", make_fzf, {})

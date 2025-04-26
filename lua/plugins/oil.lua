@@ -120,6 +120,8 @@ local keymaps_help = {
     border = "rounded",
 }
 
+---@module 'oil'
+---@type oil.SetupOpts
 local opts = {
     default_file_explorer = true,
     columns = columns,
@@ -144,13 +146,9 @@ local opts = {
     keymaps_help = keymaps_help,
 }
 
-local function setup_oil()
-    MiniDeps.add({
-        source = "stevearc/oil.nvim",
-        depends = { "echasnovski/mini.icons" },
-    })
-
-    require("oil").setup(opts)
-end
-
-MiniDeps.later(setup_oil)
+return {
+    "stevearc/oil.nvim",
+    dependencies = { "echasnovski/mini.icons" },
+    opts = opts,
+    cmd = "Oil",
+}

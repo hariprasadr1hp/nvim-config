@@ -24,45 +24,43 @@ local colors = {
     fl_pink = "#fe1493",
 }
 
-local function setup_velvet_theme()
-    return {
-        normal = {
-            a = { fg = colors.bg, bg = colors.yellow_green, gui = "bold" },
-            b = { fg = colors.yellow_green, bg = colors.bg, gui = "bold" },
-            c = { fg = colors.yellow_green, bg = colors.bg },
-        },
-        insert = {
-            a = { fg = colors.bg, bg = colors.dandelion, gui = "bold" },
-            b = { fg = colors.dandelion, bg = colors.bg, gui = "bold" },
-            c = { fg = colors.dandelion, bg = colors.bg },
-        },
-        visual = {
-            a = { fg = colors.bg, bg = colors.red1, gui = "bold" },
-            b = { fg = colors.red1, bg = colors.bg, gui = "bold" },
-            c = { fg = colors.red1, bg = colors.bg },
-        },
-        replace = {
-            a = { fg = colors.bg, bg = colors.white, gui = "bold" },
-            b = { fg = colors.white, bg = colors.bg, gui = "bold" },
-            c = { fg = colors.white, bg = colors.bg },
-        },
-        command = {
-            a = { fg = colors.yellow_green, bg = colors.bg, gui = "bold" },
-            b = { fg = colors.bg, bg = colors.yellow_green, gui = "bold" },
-            c = { fg = colors.bg, bg = colors.yellow_green },
-        },
-        terminal = {
-            a = { fg = colors.bg, bg = colors.purple, gui = "bold" },
-            b = { fg = colors.purple, bg = colors.bg, gui = "bold" },
-            c = { fg = colors.purple, bg = colors.bg },
-        },
-        inactive = {
-            a = { fg = colors.gray1, bg = colors.bg, gui = "bold" },
-            b = { fg = colors.gray1, bg = colors.bg },
-            c = { fg = colors.gray1, bg = colors.gray2 },
-        },
-    }
-end
+local velvet_theme = {
+    normal = {
+        a = { fg = colors.bg, bg = colors.yellow_green, gui = "bold" },
+        b = { fg = colors.yellow_green, bg = colors.bg, gui = "bold" },
+        c = { fg = colors.yellow_green, bg = colors.bg },
+    },
+    insert = {
+        a = { fg = colors.bg, bg = colors.dandelion, gui = "bold" },
+        b = { fg = colors.dandelion, bg = colors.bg, gui = "bold" },
+        c = { fg = colors.dandelion, bg = colors.bg },
+    },
+    visual = {
+        a = { fg = colors.bg, bg = colors.red1, gui = "bold" },
+        b = { fg = colors.red1, bg = colors.bg, gui = "bold" },
+        c = { fg = colors.red1, bg = colors.bg },
+    },
+    replace = {
+        a = { fg = colors.bg, bg = colors.white, gui = "bold" },
+        b = { fg = colors.white, bg = colors.bg, gui = "bold" },
+        c = { fg = colors.white, bg = colors.bg },
+    },
+    command = {
+        a = { fg = colors.yellow_green, bg = colors.bg, gui = "bold" },
+        b = { fg = colors.bg, bg = colors.yellow_green, gui = "bold" },
+        c = { fg = colors.bg, bg = colors.yellow_green },
+    },
+    terminal = {
+        a = { fg = colors.bg, bg = colors.purple, gui = "bold" },
+        b = { fg = colors.purple, bg = colors.bg, gui = "bold" },
+        c = { fg = colors.purple, bg = colors.bg },
+    },
+    inactive = {
+        a = { fg = colors.gray1, bg = colors.bg, gui = "bold" },
+        b = { fg = colors.gray1, bg = colors.bg },
+        c = { fg = colors.gray1, bg = colors.gray2 },
+    },
+}
 
 local function setup_sections()
     return {
@@ -162,49 +160,38 @@ local function setup_inactive_sections()
     }
 end
 
-local function setup_lualine_config()
-    local velvet = setup_velvet_theme()
-
-    local lualine = require("lualine")
-    lualine.setup({
-        options = {
-            icons_enabled = true,
-            padding = 1,
-            theme = velvet,
-            component_separators = { "", "" },
-            section_separators = { "", "" },
-            disabled_filetypes = {
-                statusline = {},
-                winbar = {},
-            },
-            ignore_focus = {},
-            always_divide_middle = true,
-            globalstatus = false,
+local opts = {
+    options = {
+        icons_enabled = true,
+        padding = 1,
+        theme = velvet_theme,
+        component_separators = { "", "" },
+        section_separators = { "", "" },
+        disabled_filetypes = {
+            statusline = {},
+            winbar = {},
         },
-        sections = setup_sections(),
-        inactive_sections = setup_inactive_sections(),
-        tabline = {},
-        winbar = {},
-        inactive_winbar = {},
-        extensions = {
-            "nvim-tree",
-            "nvim-dap-ui",
-            "toggleterm",
-        },
-    })
-end
+        ignore_focus = {},
+        always_divide_middle = true,
+        globalstatus = false,
+    },
+    sections = setup_sections(),
+    inactive_sections = setup_inactive_sections(),
+    tabline = {},
+    winbar = {},
+    inactive_winbar = {},
+    extensions = {
+        "nvim-tree",
+        "nvim-dap-ui",
+        "toggleterm",
+    },
+}
 
-local function setup_lualine()
-    MiniDeps.add({
-        source = "hoob3rt/lualine.nvim",
-        depends = {
-            "kyazdani42/nvim-web-devicons",
-        },
-    })
-    setup_lualine_config()
-end
-
-MiniDeps.later(setup_lualine)
+return {
+    "nvim-lualine/lualine.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = opts,
+}
 
 -- TODO: lualine: refer the following links to upgrade the status info
 -- https://github.com/folke/noice.nvim/wiki/Configuration-Recipes#show-recording-messages
