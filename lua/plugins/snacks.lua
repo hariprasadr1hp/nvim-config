@@ -30,7 +30,7 @@ local quickfile = {
     exclude = { "latex" },
 }
 
----@type snacks.Config
+---@class snacks.Config
 local opts = {
     bigfile = bigfile,
     dashboard = { enabled = false },

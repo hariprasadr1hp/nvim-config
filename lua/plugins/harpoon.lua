@@ -33,7 +33,7 @@ local function setup_keymaps()
         require("harpoon").ui:toggle_quick_menu(harpoon_list)
     end, "harpoon-list")
 
-    for i = 1, 5 do
+    for i = 1, 9 do
         map("n", "," .. i, function()
             harpoon_list:select(i)
         end, "harpoon-" .. i)

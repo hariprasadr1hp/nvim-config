@@ -90,7 +90,7 @@ local function setup_sections()
                 ---@diagnostic disable-next-line: unused-local
                 on_click = function(clicks, button, modifiers)
                     if clicks >= 1 and button == "l" then
-                        vim.cmd("Telescope find_files")
+                        vim.cmd("FzfLua files")
                     end
                 end,
             },

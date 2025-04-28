@@ -19,7 +19,6 @@ end
 local function get_ts_query_matches(bufnr)
     local treesitter = require("vim.treesitter")
 
-    -- local parser = vim.treesitter.get_parser(bufnr, "make")
     local ok, parser = pcall(vim.treesitter.get_parser, bufnr, "make")
 
     if (not ok) or (parser == nil) then

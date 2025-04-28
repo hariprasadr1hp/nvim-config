@@ -31,6 +31,7 @@ local function setup_toggleterm_config()
         end
     end
 
+    map("n", "<leader>dm", make_runner("debug"), "make-debug")
     map("n", "<leader>ma", make_runner("temp"), "make-temp")
     map("n", "<leader>mc", make_runner("clean"), "make-clean")
     map("n", "<leader>md", make_runner("debug"), "make-debug")
@@ -48,7 +49,7 @@ local function setup_toggleterm_config()
         else
             print("Not sure how to execute filetype: " .. vim.bo.filetype)
         end
-    end)
+    end, "evaluate")
 end
 
 return {
@@ -56,9 +57,9 @@ return {
         "voldikss/vim-floaterm",
         cmd = { "FloatermToggle", "FloatermNew" },
         keys = {
-            { "<leader>od", "<cmd>FloatermNew lazydocker<CR>", "lazydocker" },
-            { "<leader>ol", "<cmd>FloatermNew lazygit<CR>", "lazygit" },
-            { "<leader>or", "<cmd>FloatermNew ranger<CR>", "ranger" },
+            { "<leader>od", "<cmd>FloatermNew lazydocker<CR>", desc = "lazydocker" },
+            { "<leader>ol", "<cmd>FloatermNew lazygit<CR>", desc = "lazygit" },
+            { "<leader>or", "<cmd>FloatermNew ranger<CR>", desc = "ranger" },
             { "<leader>ot", "<cmd>FloatermToggle<CR>", desc = "floaterm" },
         },
         config = setup_floaterm_config,

@@ -19,13 +19,15 @@ local opts = {
     patterns = patterns,
 }
 
+local function setup_cloak_config()
+    require("cloak").setup(opts)
+
+    local map = require("config.helpers").map
+    map("n", "<leader>tc", "<cmd>CloakPreviewLine<CR>", "toggle-cloak-line")
+    map("n", "<leader>tC", "<cmd>CloakToggle<CR>", "toggle-cloak-file")
+end
+
 return {
     "laytan/cloak.nvim",
-    cmd = { "CloakToggle", "CloakPreviewLine" },
-    keys = {
-        { "<leader>tc", "<cmd>CloakPreviewLine<CR>", desc = "toggle-cloak-line" },
-        { "<leader>tC", "<cmd>CloakToggle<CR>", desc = "toggle-cloak-file" },
-    },
-
-    opts = opts,
+    config = setup_cloak_config,
 }

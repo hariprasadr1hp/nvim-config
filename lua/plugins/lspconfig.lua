@@ -53,10 +53,9 @@ local function setup_lsp_handlers()
                         },
                         workspace = {
                             checkThirdParty = false,
-                            -- library = vim.api.nvim_get_runtime_file("", true),
                             library = {
-                                vim.fn.stdpath("config") .. "/lua",
-                                vim.fn.stdpath("data") .. "/site/pack/deps",
+                                "${3rd}/luv/library",
+                                vim.api.nvim_get_runtime_file("", true),
                             },
                         },
                         completion = {
@@ -132,27 +131,32 @@ local function setup_lsp_handlers()
 end
 
 ---@diagnostic disable-next-line: unused-local
-local function setup_lsp_keymaps(event, client)
+local function setup_lsp_keymaps(buf)
     local map = require("config.helpers").map
-    local fzflua = require("fzf-lua")
-    local buffer = event.buf
+    -- local fzflua = require("fzf-lua")
+    -- local buffer = event.buf
 
     map("n", "<leader>il", ":LspInfo<CR>", "lsp-info")
     map("n", "<leader>lI", ":LspInfo<CR>", "lsp-info")
     map("n", "<leader>lR", ":LspRestart<CR>", "lsp-restart")
 end
 
+-- highlight groups
+local highlight_augroup = vim.api.nvim_create_augroup("LspDocumentHighlight", { clear = true })
+local detach_augroup = vim.api.nvim_create_augroup("LspDetachCleanup", { clear = true })
+
 local function on_lsp_attach(event)
     local client = vim.lsp.get_client_by_id(event.data.client_id)
 
-    setup_lsp_keymaps(event, client)
-
-    if client == nil then
+    if not client then
         return
     end
 
+    local buf = event.buf
+
+    setup_lsp_keymaps(buf)
+
     if client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
-        local highlight_augroup = vim.api.nvim_create_augroup("lsp-highlight", { clear = false })
         vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
             buffer = event.buf,
             group = highlight_augroup,
@@ -166,10 +170,11 @@ local function on_lsp_attach(event)
         })
 
         vim.api.nvim_create_autocmd("LspDetach", {
-            group = vim.api.nvim_create_augroup("lsp-detach", { clear = true }),
+            buffer = event.buf,
+            group = detach_augroup,
             callback = function(event2)
                 vim.lsp.buf.clear_references()
-                vim.api.nvim_clear_autocmds({ group = "lsp-highlight", buffer = event2.buf })
+                vim.api.nvim_clear_autocmds({ group = highlight_augroup, buffer = event2.buf })
             end,
         })
     end
@@ -183,7 +188,7 @@ local function on_lsp_attach(event)
     if client:supports_method(inlay_hint) then
         vim.keymap.set("n", "<leader>lH", function()
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
-        end, { buffer = event.buf, desc = "[T]oggle Inlay [H]ints" })
+        end, { buffer = event.buf, desc = "toggle-inlay-hints" })
     end
 
     if client.name == "ruff" then
@@ -202,7 +207,6 @@ local function setup_lsp_autocommands()
 end
 
 local function setup_lsp_config()
-    require("lazydev").setup()
     setup_lsp_handlers()
     setup_lsp_autocommands()
 end
@@ -217,6 +221,10 @@ return {
         {
             "folke/lazydev.nvim",
             ft = "lua",
+            cmd = "LazyDev",
+            keys = {
+                { "<leader>ic", "<cmd>LazyDev lsp<CR>", desc = "lsp-client-info" },
+            },
             opts = {
                 library = {
                     { path = "${3rd}/luv/library", words = { "vim%.uv" } },

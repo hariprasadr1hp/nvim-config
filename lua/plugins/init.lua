@@ -4,7 +4,7 @@ local opts = {
     require("plugins.mini"),
     require("plugins.snacks"),
     require("plugins.startup"),
-    require("plugins.themes.catpuccin"),
+    require("plugins.themes.catppuccin"),
 
     require("plugins.icons"),
     require("plugins.telescope"),

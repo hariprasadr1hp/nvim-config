@@ -1,7 +1,5 @@
 -- lua/plugins/text_objects.lua
 
-local M = {}
-
 local opts = {
     textobjects = {
         select = {
@@ -75,12 +73,10 @@ local opts = {
     },
 }
 
-M = {
+return {
     {
         "nvim-treesitter/nvim-treesitter-textobjects",
         lazy = true,
         opts = opts,
     },
 }
-
-return M

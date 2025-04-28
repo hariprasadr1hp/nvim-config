@@ -1,3 +1,9 @@
 -- lua/plugins/testing.lua
 
-return {}
+return {
+    {
+        "echasnovski/mini.test",
+        version = false,
+        opts = {},
+    },
+}

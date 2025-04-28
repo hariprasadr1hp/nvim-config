@@ -600,10 +600,17 @@ local function setup_diffview_config()
 end
 
 return {
-    "sindrets/diffview.nvim",
-    cmd = { "DiffviewOpen", "DiffviewFileHistory" },
-    keys = {
-        { "<leader>gG", "<cmd>DiffviewOpen --selected-file<CR>", desc = "open-diffview" },
+    {
+        "sindrets/diffview.nvim",
+        cmd = { "DiffviewOpen", "DiffviewFileHistory" },
+        keys = {
+            { "<leader>gG", "<cmd>DiffviewOpen --selected-file<CR>", desc = "open-diffview" },
+        },
+        config = setup_diffview_config,
     },
-    config = setup_diffview_config,
+    {
+        "echasnovski/mini.diff",
+        version = false,
+        opts = {},
+    },
 }

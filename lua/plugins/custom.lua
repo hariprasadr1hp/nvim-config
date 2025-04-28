@@ -1,5 +1,13 @@
 -- lua/plugins/custom.lua
 
+local function setup_custom_config()
+    -- print("cogito, ergo sum")
+end
+
 return {
-    vim.env.CUSTOM_PLUGIN_URL,
+    {
+        dir = vim.env.CUSTOM_PLUGIN_DIR,
+        name = "cplug",
+        config = setup_custom_config,
+    },
 }

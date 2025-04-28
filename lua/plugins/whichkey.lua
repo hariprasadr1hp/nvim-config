@@ -134,8 +134,7 @@ local key_maps = {
         { ",p", group = "swap-prev", nowait = false, remap = false },
         { ",n", group = "swap-next", nowait = false, remap = false },
 
-        { "<leader>0", "0", desc = "0", nowait = false, remap = false },
-        { "<leader>6", "^", desc = "^", nowait = false, remap = false },
+        { "<leader>0", "0", desc = "^", nowait = false, remap = false },
         { "<leader>9", "$", desc = "$", nowait = false, remap = false },
 
         -- [A]CTION ----------------
@@ -189,16 +188,15 @@ local key_maps = {
 
         -- [I]NFO / [I]NSERT --------
         { "<leader>i", group = "info", nowait = false, remap = false },
-        { "<leader>it", "<cmd>InspectTree<CR>", desc = "inspect-tree", nowait = false, remap = false },
 
         -- [J]TABS ------------
         { "<leader>j", group = "tabs", nowait = false, remap = false },
 
         -- [L]ANGUAGE ----------------
-        { "<leader>l", group = "lsp", nowait = false, remap = false },
+        { "<leader>l", group = "lang", nowait = false, remap = false },
 
         -- [M]AKE -------------------
-        { "<leader>m", group = "prefix", nowait = false, remap = false },
+        { "<leader>m", group = "make", nowait = false, remap = false },
         { "<leader>ml", group = "link", nowait = false, remap = false },
 
         -- [N]OTES -------------------

@@ -16,18 +16,19 @@ map("n", "<leader>bK", ":%bd | enew<CR>", "kill-all-buffers")
 map("n", "<leader>bl", ":blast<CR>", "last-buffer")
 map("n", "<leader>bp", ":bprevious<CR>", "prev-buffer")
 map("n", "<leader>bn", ":bnext<CR>", "next-buffer")
-map("n", "<leader>bO", "%bd | e#<CR>", "only-buffer")
+map("n", "<leader>bO", "%bd | e#<CR>", "only-current-buffer")
 map("n", "<leader>bt", "<C-^>", "toggle-buffer")
 
 map("n", "<leader>eb", ":Runme<CR>", "eval-buffer")
 map("n", "<leader>el", ":luafile %<CR>", "source-luafile")
 map("n", "<leader>ev", ":source %<CR>", "source-vimfile")
 
-map("n", "<leader>fi", ":e " .. config_dir .. "/lua/plugins/init.lua<CR>")
-map("n", "<leader>fl", ":e " .. config_dir .. "/lua/plugins/lspconfig.lua<CR>")
+map("n", "<leader>fe", ":e " .. config_dir .. "/.env<CR>", ".env")
+map("n", "<leader>fi", ":e " .. config_dir .. "/lua/plugins/init.lua<CR>", "plugins/init.lua")
+map("n", "<leader>fl", ":e " .. config_dir .. "/lua/plugins/lspconfig.lua<CR>", "plugins/lspconfig.lua")
 map("n", "<leader>fr", ":e<CR>", "reload-file")
-map("n", "<leader>fs", ":update<CR>")
-map("n", "<leader>fw", ":e " .. config_dir .. "/lua/config/keybindings.lua<CR>")
+map("n", "<leader>fs", ":update<CR>", "save-file")
+map("n", "<leader>fw", ":e " .. config_dir .. "/lua/config/keybindings.lua<CR>", "keybindings.lua")
 map("n", "<leader>fx", ":! rm -f" .. state_dir .. "/swap/*<CR>", "delete-swap-files")
 map("n", "<leader>fX", ":! rm -f" .. data_dir .. "/undodir/*<CR>", "delete-undo-files")
 
@@ -57,10 +58,10 @@ map("n", "<leader>jO", ":tabonly<CR>", "only-current-tab")
 
 map("n", "<leader>la", vim.lsp.buf.code_action, "code-action")
 map("n", "<leader>ld", vim.lsp.buf.definition, "definition")
-map("n", "<leader>le", ":Inspect<CR>", "ts-inspect-element")
 map("n", "<leader>lh", vim.lsp.buf.hover, "hover-docs")
-map("n", "<leader>li", vim.treesitter.inspect_tree, "ts-inspect-tree")
-map("n", "<leader>ll", vim.diagnostic.open_float, "hover-docs")
+map("n", "<leader>li", ":Inspect<CR>", "ts-inspect-element")
+map("n", "<leader>lI", vim.treesitter.inspect_tree, "ts-inspect-tree")
+map("n", "<leader>ll", vim.diagnostic.open_float, "show-diagnostics")
 map("n", "<leader>lr", vim.lsp.buf.rename, "lsp-rename")
 map("n", "<leader>ls", vim.lsp.buf.signature_help, "lsp-signature")
 map("n", "<leader>lt", vim.lsp.buf.type_definition, "goto-typedef")
@@ -76,15 +77,15 @@ map("n", "<leader>njj", ":echo '`emacs` command 🫠'<CR>")
 map("n", "<leader>nri", ":echo '`emacs` command 🫠'<CR>")
 map("n", "<leader>nrr", ":echo '`emacs` command 🫠'<CR>")
 map("n", "<leader>nrs", ":echo '`emacs` command 🫠'<CR>")
-map("n", "<leader>ns", ":echo '`emacs` command 🫠'<CR>")
 
 map("n", "<leader>qx", ":cclose<CR>", "close-quickfix")
 map("n", "<leader>qk", ":cclose<CR>", "close-quickfix")
 map("n", "<leader>qo", ":copen<CR>", "open-quickfix")
-map("n", "<leader>qr", ":luafile " .. config_dir .. "/init.lua<CR>")
+map("n", "<leader>qr", ":luafile " .. config_dir .. "/init.lua<CR>", "reload-config")
 
 map("n", "<leader>tG", ":%norm! g??<CR>", "gibberish-rot13")
 map("n", "<leader>th", ":set hls!<CR>", "hl-search")
+map("n", "<leader>tl", ":setl list!<CR>", "hl-search")
 map("n", "<leader>tn", ":setl nu! rnu!<CR>", "line-numbers")
 map("n", "<leader>tr", ":setl ro!<CR>", "read-only")
 map("n", "<leader>ts", ":setl spell!<CR>", "spell-check")
@@ -122,6 +123,7 @@ map("n", "gd", vim.lsp.buf.definition, "definition")
 map("n", "gD", vim.lsp.buf.declaration, "declararion")
 map("n", "gr", vim.lsp.buf.references, "references")
 map("n", "gI", vim.lsp.buf.implementation, "implementation")
+map("n", "gl", vim.diagnostic.open_float, "show-diagnostics")
 map("n", "gt", vim.lsp.buf.type_definition, "goto-typedef")
 map("n", "K", vim.lsp.buf.hover, "hover-docs")
 
@@ -147,9 +149,6 @@ map("v", "<C-x>", "<C-x>gv")
 
 -- window settings
 map("n", "<C-w>m", "<C-w>|")
-
--- alias for 'escape' to NORMAL from INSERT
--- inoremap klk <Esc>
 
 -- Move selected line / block of text in visual mode
 -- shift + k to move up
@@ -294,12 +293,10 @@ map("v", "<leader>acc", '"+y')
 map("v", "<leader>axx", '"+d')
 
 -- Default register ("-)
-map("n", "<leader>a-x", '"-d')
-map("v", "<leader>a-x", '"-d')
-map("n", "<leader>a-c", '"-y')
-map("v", "<leader>a-c", '"-y')
-map("n", "<leader>a-v", '"-P')
-map("v", "<leader>a-v", '"-P')
+map("n", "<leader>ax-", '"-d')
+map("v", "<leader>ax-", '"-d')
+map("n", "<leader>ac-", '"-y')
+map("v", "<leader>ac-", '"-y')
 
 -- Registers 0-9 and specials
 local reg_keys = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-" }
