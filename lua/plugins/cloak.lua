@@ -23,8 +23,8 @@ local function setup_cloak_config()
     require("cloak").setup(opts)
 
     local map = require("config.helpers").map
-    map("n", "<leader>tc", "<cmd>CloakPreviewLine<CR>", "toggle-cloak-line")
-    map("n", "<leader>tC", "<cmd>CloakToggle<CR>", "toggle-cloak-file")
+    map("n", "<leader>tc", "<cmd>CloakPreviewLine<CR>", "cloak-line")
+    map("n", "<leader>tC", "<cmd>CloakToggle<CR>", "cloak-buffer")
 end
 
 return {

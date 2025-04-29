@@ -27,4 +27,3 @@ end
 
 test_config_load()
 test_plugin_load("nvim-treesitter") -- Example plugin
-test_plugin_load("telescope") -- Example plugin

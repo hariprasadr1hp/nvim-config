@@ -165,7 +165,12 @@ local function setup_blink_config()
             padding = 1,
             gap = 1,
             treesitter = { "lsp" },
-            columns = { { "kind_icon" }, { "label", "label_description", gap = 1 } },
+            columns = {
+                { "kind_icon", "label", gap = 1 },
+                { "label_description", gap = 1 },
+                { "kind", "source_id", gap = 1 },
+            },
+
             components = {
                 kind_icon = {
                     ellipsis = false,
@@ -264,6 +269,7 @@ local function setup_blink_config()
             "score",
             "sort_text",
         },
+        use_frecency = true,
     }
 
     opts.keymap = {
@@ -355,26 +361,37 @@ local function setup_blink_config()
     --     module = "vim_dadbod_completion.blink",
     -- }
 
-    opts.sources.providers.emoji = {
-        module = "blink-emoji",
-        name = "Emoji",
-        score_offset = 15,
-        opts = { insert = true },
-        should_show_items = function()
-            return vim.tbl_contains({ "gitcommit", "markdown" }, vim.o.filetype)
+    opts.sources.providers.lsp = {
+        name = "LSP",
+        module = "blink.cmp.sources.lsp",
+        transform_items = function(_, items)
+            return vim.tbl_filter(function(item)
+                return item.kind ~= require("blink.cmp.types").CompletionItemKind.Text
+            end, items)
         end,
+        opts = { tailwind_color_icon = "██" },
+        enabled = true,
+        async = false,
+        timeout_ms = 2000,
+        should_show_items = true,
+        max_items = nil,
+        min_keyword_length = 0,
+        fallbacks = {},
+        score_offset = 0,
+        override = nil,
     }
 
-    opts.sources.providers.omni = {
-        module = "blink.cmp.sources.complete_func",
-        enabled = function()
-            return vim.bo.omnifunc ~= "v:lua.vim.lsp.omnifunc"
-        end,
-        ---@type blink.cmp.CompleteFuncOpts
+    opts.sources.providers.path = {
+        module = "blink.cmp.sources.path",
+        score_offset = 3,
+        fallbacks = { "buffer" },
         opts = {
-            complete_func = function()
-                return vim.bo.omnifunc
+            trailing_slash = true,
+            label_trailing_slash = true,
+            get_cwd = function(context)
+                return vim.fn.expand(("#%d:p:h"):format(context.bufnr))
             end,
+            show_hidden_files_by_default = false,
         },
     }
 
@@ -397,6 +414,29 @@ local function setup_blink_config()
             use_show_condition = true,
             show_autosnippets = true,
             use_items_cache = true,
+        },
+    }
+
+    opts.sources.providers.emoji = {
+        module = "blink-emoji",
+        name = "Emoji",
+        score_offset = 15,
+        opts = { insert = true },
+        should_show_items = function()
+            return vim.tbl_contains({ "gitcommit", "markdown" }, vim.o.filetype)
+        end,
+    }
+
+    opts.sources.providers.omni = {
+        module = "blink.cmp.sources.complete_func",
+        enabled = function()
+            return vim.bo.omnifunc ~= "v:lua.vim.lsp.omnifunc"
+        end,
+        ---@type blink.cmp.CompleteFuncOpts
+        opts = {
+            complete_func = function()
+                return vim.bo.omnifunc
+            end,
         },
     }
 

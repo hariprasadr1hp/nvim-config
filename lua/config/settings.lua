@@ -110,7 +110,7 @@ vim.opt.listchars = {
     extends = "❯",
     precedes = "❮",
     nbsp = "␣",
-    eol = "↲",
+    -- eol = "↲",
 }
 
 -- always show the signcolumn, otherwise it would shift the text each time

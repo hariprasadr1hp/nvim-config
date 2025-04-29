@@ -56,7 +56,7 @@ local function setup_mason()
     require("mason-tool-installer").setup(mason_tool_installer_opts)
 
     local map = require("config.helpers").map
-    map("n", "<leader>oM", ":Mason<CR>", "mason-window")
+    map("n", "<leader>oM", ":Mason<CR>", "Mason")
 end
 
 return {

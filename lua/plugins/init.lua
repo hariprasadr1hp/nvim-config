@@ -42,10 +42,10 @@ local opts = {
     require("plugins.snapshot"),
     require("plugins.dashboard"),
     require("plugins.oil"),
-    require("plugins.custom"),
+    -- require("plugins.custom"),
     require("plugins.whichkey"),
 }
 
-vim.keymap.set("n", "<leader>oL", ":Lazy<CR>", { noremap = true, silent = true, desc = "lazy-window" })
+vim.keymap.set("n", "<leader>oL", ":Lazy<CR>", { noremap = true, silent = true, desc = "Lazy" })
 
 require("lazy").setup(opts)

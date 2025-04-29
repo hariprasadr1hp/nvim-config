@@ -6,10 +6,10 @@ local opts = {
     default_file_explorer = true,
 
     columns = {
-        "icon",
+        "mtime",
         "permissions",
         "size",
-        "mtime",
+        "icon",
     },
 
     buf_options = {
@@ -68,7 +68,7 @@ local opts = {
     use_default_keymaps = true,
 
     view_options = {
-        show_hidden = false,
+        show_hidden = true,
         is_hidden_file = function(name, _)
             return vim.startswith(name, ".")
         end,
@@ -148,6 +148,6 @@ return {
     opts = opts,
     cmd = "Oil",
     keys = {
-        { "<leader>to", "<cmd>Oil --float<CR>", desc = "oil-explorer" },
+        { "<leader>oi", "<cmd>Oil --float<CR>", desc = "oil" },
     },
 }
