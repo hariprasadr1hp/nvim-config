@@ -1,5 +1,6 @@
 -- lua/keybindings.lua
 
+local helpers = require("config.helpers")
 
 local config_dir = vim.fn.stdpath("config")
 local data_dir = vim.fn.stdpath("data")
@@ -89,6 +90,7 @@ map("n", "<leader>qr", ":luafile " .. config_dir .. "/init.lua<CR>", "reload-con
 map("n", "<leader>td", function()
     vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, "diagnostics")
+map("n", "<leader>tD", helpers.toggle_autocmd_debug, "gibberish-rot13")
 map("n", "<leader>tG", ":%norm! g??<CR>", "gibberish-rot13")
 map("n", "<leader>th", ":set hls!<CR>", "hl-search")
 map("n", "<leader>ti", ":setl list!<CR>", "indent-guide")

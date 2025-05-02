@@ -2,6 +2,7 @@
 
 require("config.settings")
 
+require("config.variables")
 require("config.helpers")
 require("config.functions")
 require("config.commands")
