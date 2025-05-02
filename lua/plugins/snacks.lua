@@ -1,7 +1,7 @@
 --lua/plugins/snacks.lua
 
 ---@class snacks.bigfile.Config
-local bigfile = {
+local bigfile_opts = {
     enabled = true,
     notify = true,
     size = 1.5 * 1024 * 1024,
@@ -22,27 +22,45 @@ local bigfile = {
 }
 
 ---@class snacks.quickfile.Config
-local quickfile = {
+local quickfile_opts = {
     exclude = { "latex" },
     enabled = true,
 }
 
+---@class snacks.zen.Config
+local zen_opts = {
+    ---@type table<string, boolean>
+    toggles = {
+        dim = false,
+        git_signs = false,
+        mini_diff_signs = false,
+    },
+    show = {
+        statusline = false,
+        tabline = false,
+    },
+    ---@type snacks.win.Config
+    win = { style = "zen" },
+}
+
 ---@class snacks.Config
 local opts = {
-    bigfile = bigfile,
+    bigfile = bigfile_opts,
     bufdelete = { enabled = true },
     dashboard = { enabled = false },
     indent = { enabled = false },
     image = { enabled = vim.g.neovide ~= nil },
     input = { enabled = true },
-    picker = { enabled = false },
+    picker = { enabled = true },
     notifier = { enabled = false },
     notify = { enabled = false },
-    quickfile = quickfile,
+    quickfile = quickfile_opts,
+    rename = { enabled = false },
     scope = { enabled = false },
     scroll = { enabled = false },
     statuscolumn = { enabled = false },
     words = { enabled = false },
+    zen = zen_opts,
 }
 
 local function setup_snacks_config()
@@ -65,7 +83,8 @@ local function setup_snacks_config()
         toggle_indent_line,
         { desc = "toggle hightlight for the indent lines" }
     )
-    map("n", "<leader>ti", toggle_indent_line, "toggle-indent-hl")
+    map("n", "<leader>ti", toggle_indent_line, "indent-hl")
+    map("n", "<leader>tz", snacks.zen.zen, "zen-mode")
 end
 
 return {

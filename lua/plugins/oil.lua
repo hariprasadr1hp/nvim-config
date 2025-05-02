@@ -142,12 +142,29 @@ local opts = {
     },
 }
 
+local function setup_oil_config()
+    require("oil").setup(opts)
+    local snacks = require("snacks")
+
+    vim.api.nvim_create_autocmd("User", {
+        pattern = "OilActionsPost",
+        callback = function(event)
+            if event.data.actions.type == "move" then
+                snacks.rename.on_rename_file(event.data.actions.src_url, event.data.actions.dest_url)
+            end
+        end,
+    })
+end
+
 return {
     "stevearc/oil.nvim",
-    dependencies = { { "echasnovski/mini.icons", opts = {} } },
-    opts = opts,
+    dependencies = {
+        { "echasnovski/mini.icons", opts = {} },
+        { "folke/snacks.nvim" },
+    },
     cmd = "Oil",
     keys = {
         { "<leader>oi", "<cmd>Oil --float<CR>", desc = "oil" },
     },
+    config = setup_oil_config,
 }

@@ -168,7 +168,8 @@ local function setup_blink_config()
             columns = {
                 { "kind_icon", "label", gap = 1 },
                 { "label_description", gap = 1 },
-                { "kind", "source_id", gap = 1 },
+                { "source_id" },
+                { "kind" },
             },
 
             components = {

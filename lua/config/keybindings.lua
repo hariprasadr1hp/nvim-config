@@ -1,6 +1,5 @@
 -- lua/keybindings.lua
 
--- TODO: transfer the remaining keybindings from vimscript to lua
 
 local config_dir = vim.fn.stdpath("config")
 local data_dir = vim.fn.stdpath("data")
@@ -10,6 +9,7 @@ local map = require("config.helpers").map
 -- LEADER KEY-BINDINGS
 -------------------------------------------------------------------
 map("n", "<leader>bd", ":bd<CR>", "delete-buffer")
+map("n", "<leader>bD", ":bd!<CR>", "DELETE-BUFFER")
 map("n", "<leader>bf", ":bfirst<CR>", "first-buffer")
 map("n", "<leader>bk", ":bp | bd #<CR>", "kill-buffer")
 map("n", "<leader>bK", ":%bd | enew<CR>", "kill-all-buffers")
@@ -155,7 +155,8 @@ map("v", "<C-a>", "<C-a>gv")
 map("v", "<C-x>", "<C-x>gv")
 
 -- window settings
-map("n", "<C-w>m", "<C-w>|")
+map("n", "<C-w>m", "<C-w>|", "maximize-horizontal")
+map("n", "<C-w>M", "<C-w>_", "maximize-vertical")
 
 -- Move selected line / block of text in visual mode
 -- shift + k to move up

@@ -58,6 +58,7 @@ return {
         cmd = { "FloatermToggle", "FloatermNew" },
         keys = {
             { "<leader>od", "<cmd>FloatermNew lazydocker<CR>", desc = "lazydocker" },
+            { "<leader>oh", "<cmd>FloatermNew htop<CR>", desc = "htop" },
             { "<leader>ol", "<cmd>FloatermNew lazygit<CR>", desc = "lazygit" },
             { "<leader>or", "<cmd>FloatermNew ranger<CR>", desc = "ranger" },
             { "<leader>ot", "<cmd>FloatermToggle<CR>", desc = "floaterm" },

@@ -48,7 +48,9 @@ local highlight = {
 
 local indent = {
     enable = true,
-    disable = { "ruby" },
+    disable = {
+        "ruby",
+    },
 }
 
 local incremental_selection = {
@@ -81,15 +83,14 @@ local function setup_treesitter_config()
     treesitter.setup(opts)
 end
 
-
 return {
     "nvim-treesitter/nvim-treesitter",
-     event = { "BufReadPre", "BufNewFile" },
+    event = { "BufReadPre", "BufNewFile" },
     build = ":TSUpdate",
     dependencies = {
         "windwp/nvim-ts-autotag",
     },
-    config = setup_treesitter_config
+    config = setup_treesitter_config,
 }
 -- TODO: extend selection to neighbouring-node (prev/next)?
 -- TODO: extend selection to [COUNT]neighbouring-node (prev/next)?
