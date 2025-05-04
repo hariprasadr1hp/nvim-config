@@ -24,14 +24,14 @@ if vim.g.neovide then
 
     -- CLIPBOARD
     -------------------------------------------------------------------
-    local map = require("config.helpers").map
+    local keymap_set = require("config.helpers").keymap_set
 
     -- vim.keymap.set('n', '<D-s>', ':w')
-    map("v", "<D-c>", '"+y')
-    map("n", "<D-v>", '"+P')
-    map("v", "<D-v>", '"+P')
-    map("c", "<D-v>", "+")
-    map("i", "<D-v>", '<C-o>"+P')
+    keymap_set("v", "<D-c>", '"+y')
+    keymap_set("n", "<D-v>", '"+P')
+    keymap_set("v", "<D-v>", '"+P')
+    keymap_set("c", "<D-v>", "+")
+    keymap_set("i", "<D-v>", '<C-o>"+P')
 
     -- RUNTIME MODIFICATIONS
     -------------------------------------------------------------------

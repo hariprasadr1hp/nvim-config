@@ -55,8 +55,8 @@ local function setup_mason()
     require("mason-lspconfig").setup(mason_lspconfig_opts)
     require("mason-tool-installer").setup(mason_tool_installer_opts)
 
-    local map = require("config.helpers").map
-    map("n", "<leader>oM", ":Mason<CR>", "Mason")
+    local keymap_set = require("config.helpers").keymap_set
+    keymap_set("n", "<leader>oM", ":Mason<CR>", "Mason")
 end
 
 return {

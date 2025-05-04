@@ -5,7 +5,7 @@
 -- once entered, h/j/k/l or arrow keys to resize interactively
 -- `q/i` to quit mode
 
-local map = require("config.helpers").map
+local keymap_set = require("config.helpers").keymap_set
 
 local function exit_window_resize_mode()
     vim.api.nvim_echo({ { "-- window-resize-mode succesfully exited!", "InfoMsg" } }, false, {})
@@ -29,20 +29,20 @@ local function enter_window_resize_mode()
         {}
     )
 
-    map("n", "h", ":vertical resize +1<CR>", "move l/r", { buffer = 0 })
-    map("n", "k", ":resize +1<CR>", "move u/d", { buffer = 0 })
-    map("n", "j", ":resize -1<CR>", "move u/d", { buffer = 0 })
-    map("n", "l", ":vertical resize -1<CR>", "move l/r", { buffer = 0 })
-    map("n", "q", ":WindowResizeModeExit<CR>", "quit-resize-mode", { buffer = 0 })
-    map("n", "i", ":WindowResizeModeExit<CR>", "quit-resize-mode", { buffer = 0 })
-    map("n", "<up>", ":resize +1<CR>", "move u/d", { buffer = 0 })
-    map("n", "<down>", ":resize -1<CR>", "move u/d", { buffer = 0 })
-    map("n", "<right>", ":vertical resize +1<CR>", "move l/r", { buffer = 0 })
-    map("n", "<left>", ":vertical resize -1<CR>", "move l/r", { buffer = 0 })
+    keymap_set("n", "h", ":vertical resize +1<CR>", "move l/r", { buffer = 0 })
+    keymap_set("n", "k", ":resize +1<CR>", "move u/d", { buffer = 0 })
+    keymap_set("n", "j", ":resize -1<CR>", "move u/d", { buffer = 0 })
+    keymap_set("n", "l", ":vertical resize -1<CR>", "move l/r", { buffer = 0 })
+    keymap_set("n", "q", ":WindowResizeModeExit<CR>", "quit-resize-mode", { buffer = 0 })
+    keymap_set("n", "i", ":WindowResizeModeExit<CR>", "quit-resize-mode", { buffer = 0 })
+    keymap_set("n", "<up>", ":resize +1<CR>", "move u/d", { buffer = 0 })
+    keymap_set("n", "<down>", ":resize -1<CR>", "move u/d", { buffer = 0 })
+    keymap_set("n", "<right>", ":vertical resize +1<CR>", "move l/r", { buffer = 0 })
+    keymap_set("n", "<left>", ":vertical resize -1<CR>", "move l/r", { buffer = 0 })
 end
 
-map("n", "<C-w>a", enter_window_resize_mode, "window-resize-mode")
-map("n", "<leader>wa", enter_window_resize_mode, "window-resize-mode")
+keymap_set("n", "<C-w>a", enter_window_resize_mode, "window-resize-mode")
+keymap_set("n", "<leader>wa", enter_window_resize_mode, "window-resize-mode")
 
 vim.api.nvim_create_user_command("WindowResizeModeEnter", enter_window_resize_mode, {})
 vim.api.nvim_create_user_command("WindowResizeModeExit", exit_window_resize_mode, {})

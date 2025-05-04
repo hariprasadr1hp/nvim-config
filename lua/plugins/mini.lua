@@ -85,10 +85,10 @@ local function setup_mini_config()
     --     desc = "generate a theme using random fg and bg colors",
     -- })
 
-    local map = require("config.helpers").map
+    local keymap_set = require("config.helpers").keymap_set
 
-    map("n", "<leader>,", ":Pick files<CR>", "files")
-    map("n", "<leader>bB", ":Pick buffers<CR>", "buffers")
+    keymap_set("n", "<leader>,", ":Pick files<CR>", "files")
+    keymap_set("n", "<leader>bB", ":Pick buffers<CR>", "buffers")
     -- map("n", "<leader>tt", ":RandomThemeGenerate<CR>", "random-theme")
 end
 

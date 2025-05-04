@@ -1,6 +1,6 @@
 -- after/plugin/buffer_info.lua
 
-local map = require("config.helpers").map
+local keymap_set = require("config.helpers").keymap_set
 
 local function get_lsp_clients(buf_id)
     local clients = vim.lsp.get_clients({ bufnr = buf_id })
@@ -119,4 +119,4 @@ end
 
 vim.api.nvim_create_user_command("BufferInfo", get_buffer_info, {})
 
-map("n", "<leader>ib", get_buffer_info, "buffer-info")
+keymap_set("n", "<leader>ib", get_buffer_info, "buffer-info")

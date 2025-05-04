@@ -1,6 +1,6 @@
 -- lua/plugins/terminal.lua
 
-local map = require("config.helpers").map
+local keymap_set = require("config.helpers").keymap_set
 
 local function setup_floaterm_config()
     vim.g.floaterm_gitcommit = "floaterm"
@@ -16,14 +16,14 @@ end
 local function setup_toggleterm_config()
     local toggleterm = require("toggleterm")
 
-    map("n", "<M-m>", toggleterm.toggle, "toggle-term")
-    map("n", "<C-`>", toggleterm.toggle, "toggle-term")
+    keymap_set("n", "<M-m>", toggleterm.toggle, "toggle-term")
+    keymap_set("n", "<C-`>", toggleterm.toggle, "toggle-term")
 
-    map("t", "<M-m>", toggleterm.toggle, "toggle-term")
-    map("t", "<C-`>", toggleterm.toggle, "toggle-term")
+    keymap_set("t", "<M-m>", toggleterm.toggle, "toggle-term")
+    keymap_set("t", "<C-`>", toggleterm.toggle, "toggle-term")
 
-    -- map("n", "<leader>tt", ":ToggleTermSendCurrentLine<CR>", "send-current-line-terminal")
-    -- map("x", "<leader>tt", ":ToggleTermSendVisualSelection<CR>", "send-vi-select-terminal")
+    -- keymap_set("n", "<leader>tt", ":ToggleTermSendCurrentLine<CR>", "send-current-line-terminal")
+    -- keymap_set("x", "<leader>tt", ":ToggleTermSendVisualSelection<CR>", "send-vi-select-terminal")
 
     local function make_runner(target)
         return function()
@@ -31,17 +31,29 @@ local function setup_toggleterm_config()
         end
     end
 
-    map("n", "<leader>dm", make_runner("debug"), "make-debug")
-    map("n", "<leader>ma", make_runner("temp"), "make-temp")
-    map("n", "<leader>mc", make_runner("clean"), "make-clean")
-    map("n", "<leader>md", make_runner("debug"), "make-debug")
-    map("n", "<leader>mf", make_runner("format"), "make-format")
-    map("n", "<leader>mm", make_runner("all"), "make-all")
-    map("n", "<leader>mt", make_runner("test"), "make-test")
+    keymap_set("n", "<leader>dm", make_runner("debug"), "make-debug")
+    keymap_set("n", "<leader>ma", make_runner("temp"), "make-temp")
+    keymap_set("n", "<leader>mc", make_runner("clean"), "make-clean")
+    keymap_set("n", "<leader>md", make_runner("debug"), "make-debug")
+    keymap_set("n", "<leader>mf", make_runner("format"), "make-format")
+    keymap_set("n", "<leader>mm", make_runner("all"), "make-all")
+    keymap_set("n", "<leader>mt", make_runner("test"), "make-test")
+
+    keymap_set("n", "<leader>tt", function()
+        toggleterm.send_lines_to_terminal("single_line", false, { args = vim.v.count })
+    end, "send-cline-to-term")
+
+    keymap_set("v", "<leader>tt", function()
+        toggleterm.send_lines_to_terminal("visual_lines", false, { args = vim.v.count })
+    end, "send-vlines-to-term")
+
+    keymap_set("v", "<leader>tT", function()
+        toggleterm.send_lines_to_terminal("visual_selection", false, { args = vim.v.count })
+    end, "send-vlines-to-term")
 
     local eval_cmd_by_ft = require("config.helpers").eval_cmd_by_ft
 
-    map("n", "<leader>ee", function()
+    keymap_set("n", "<leader>ee", function()
         local cmd = eval_cmd_by_ft()
         if cmd ~= nil then
             print("executing...")

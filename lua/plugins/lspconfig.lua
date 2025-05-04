@@ -132,13 +132,13 @@ end
 
 ---@diagnostic disable-next-line: unused-local
 local function setup_lsp_keymaps(buf)
-    local map = require("config.helpers").map
+    local keymap_set = require("config.helpers").keymap_set
     -- local fzflua = require("fzf-lua")
     -- local buffer = event.buf
 
-    map("n", "<leader>il", ":LspInfo<CR>", "lsp-info")
-    map("n", "<leader>lI", ":LspInfo<CR>", "lsp-info")
-    map("n", "<leader>lR", ":LspRestart<CR>", "lsp-restart")
+    keymap_set("n", "<leader>il", ":LspInfo<CR>", "lsp-info")
+    keymap_set("n", "<leader>lI", ":LspInfo<CR>", "lsp-info")
+    keymap_set("n", "<leader>lR", ":LspRestart<CR>", "lsp-restart")
 end
 
 -- highlight groups

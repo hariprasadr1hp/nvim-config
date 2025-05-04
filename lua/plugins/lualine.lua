@@ -189,6 +189,7 @@ local opts = {
 
 return {
     "nvim-lualine/lualine.nvim",
+    event = { "WinEnter" },
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = opts,
 }

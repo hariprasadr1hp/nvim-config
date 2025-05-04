@@ -20,7 +20,7 @@ function M.tprint(value)
 end
 
 -- setting keymaps
-function M.map(mode, lhs, rhs, desc, key_opts)
+function M.keymap_set(mode, lhs, rhs, desc, key_opts)
     local opts = vim.tbl_extend("force", {
         noremap = true,
         silent = true,

@@ -1,40 +1,40 @@
 -- lua/plugins/harpoon.lua
 
 local function setup_keymaps()
-    local map = require("config.helpers").map
+    local keymap_set = require("config.helpers").keymap_set
     local harpoon_list = require("harpoon"):list()
     local set_usercmd = vim.api.nvim_create_user_command
 
-    map("n", "[n", function()
+    keymap_set("n", "[n", function()
         harpoon_list:prev()
     end, "prev-harpoon")
 
-    map("n", "]n", function()
+    keymap_set("n", "]n", function()
         harpoon_list:next()
     end, "next-harpoon")
 
-    map("n", "<leader>hla", function()
+    keymap_set("n", "<leader>hla", function()
         harpoon_list:add()
     end, "harpoon-add")
 
-    map("n", "<leader>hld", function()
+    keymap_set("n", "<leader>hld", function()
         harpoon_list:remove()
     end, "harpoon-remove")
 
-    map("n", "<leader>hlp", function()
+    keymap_set("n", "<leader>hlp", function()
         harpoon_list:prev()
     end, "prev-harpoon")
 
-    map("n", "<leader>hln", function()
+    keymap_set("n", "<leader>hln", function()
         harpoon_list:next()
     end, "next-harpoon")
 
-    map("n", "<leader>hll", function()
+    keymap_set("n", "<leader>hll", function()
         require("harpoon").ui:toggle_quick_menu(harpoon_list)
     end, "harpoon-list")
 
     for i = 1, 9 do
-        map("n", "," .. i, function()
+        keymap_set("n", "," .. i, function()
             harpoon_list:select(i)
         end, "harpoon-" .. i)
     end

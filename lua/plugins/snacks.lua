@@ -64,7 +64,7 @@ local opts = {
 }
 
 local function setup_snacks_config()
-    local map = require("config.helpers").map
+    local keymap_set = require("config.helpers").keymap_set
     local snacks = require("snacks")
     snacks.setup(opts)
 
@@ -83,8 +83,8 @@ local function setup_snacks_config()
         toggle_indent_line,
         { desc = "toggle hightlight for the indent lines" }
     )
-    map("n", "<leader>ti", toggle_indent_line, "indent-hl")
-    map("n", "<leader>tz", snacks.zen.zen, "zen-mode")
+    keymap_set("n", "<leader>ti", toggle_indent_line, "indent-hl")
+    keymap_set("n", "<leader>tz", snacks.zen.zen, "zen-mode")
 end
 
 return {

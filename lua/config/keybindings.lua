@@ -5,240 +5,241 @@ local helpers = require("config.helpers")
 local config_dir = vim.fn.stdpath("config")
 local data_dir = vim.fn.stdpath("data")
 local state_dir = vim.fn.stdpath("state")
-local map = require("config.helpers").map
+local keymap_set = require("config.helpers").keymap_set
 
 -- LEADER KEY-BINDINGS
 -------------------------------------------------------------------
-map("n", "<leader>bd", ":bd<CR>", "delete-buffer")
-map("n", "<leader>bD", ":bd!<CR>", "DELETE-BUFFER")
-map("n", "<leader>bf", ":bfirst<CR>", "first-buffer")
-map("n", "<leader>bk", ":bp | bd #<CR>", "kill-buffer")
-map("n", "<leader>bK", ":%bd | enew<CR>", "kill-all-buffers")
-map("n", "<leader>bl", ":blast<CR>", "last-buffer")
-map("n", "<leader>bp", ":bprevious<CR>", "prev-buffer")
-map("n", "<leader>bn", ":bnext<CR>", "next-buffer")
-map("n", "<leader>bN", ":enew<CR>", "new-buffer")
-map("n", "<leader>bO", "%bd | e#<CR>", "only-current-buffer")
-map("n", "<leader>bt", "<C-^>", "toggle-buffer")
+keymap_set("n", "<leader>bd", ":bd<CR>", "delete-buffer")
+keymap_set("n", "<leader>bD", ":bd!<CR>", "DELETE-BUFFER")
+keymap_set("n", "<leader>bf", ":bfirst<CR>", "first-buffer")
+keymap_set("n", "<leader>bk", ":bp | bd #<CR>", "kill-buffer")
+keymap_set("n", "<leader>bK", ":%bd | enew<CR>", "kill-all-buffers")
+keymap_set("n", "<leader>bl", ":blast<CR>", "last-buffer")
+keymap_set("n", "<leader>bp", ":bprevious<CR>", "prev-buffer")
+keymap_set("n", "<leader>bn", ":bnext<CR>", "next-buffer")
+keymap_set("n", "<leader>bN", ":enew<CR>", "new-buffer")
+keymap_set("n", "<leader>bO", "%bd | e#<CR>", "only-current-buffer")
+keymap_set("n", "<leader>bt", "<C-^>", "toggle-buffer")
 
-map("n", "<leader>cm", ":make<CR>", "make-prg")
+keymap_set("n", "<leader>cm", ":make<CR>", "make-prg")
 
-map("n", "<leader>eb", ":Runme<CR>", "eval-buffer")
-map("n", "<leader>el", ":luafile %<CR>", "source-luafile")
-map("n", "<leader>ev", ":source %<CR>", "source-vimfile")
+keymap_set("n", "<leader>eb", ":Runme<CR>", "eval-buffer")
+keymap_set("n", "<leader>el", ":luafile %<CR>", "source-luafile")
+keymap_set("n", "<leader>ev", ":source %<CR>", "source-vimfile")
 
-map("n", "<leader>fe", ":e " .. config_dir .. "/.env<CR>", ".env")
-map("n", "<leader>fi", ":e " .. config_dir .. "/lua/plugins/init.lua<CR>", "plugins/init.lua")
-map("n", "<leader>fl", ":e " .. config_dir .. "/lua/plugins/lspconfig.lua<CR>", "plugins/lspconfig.lua")
-map("n", "<leader>fr", ":e<CR>", "reload-file")
-map("n", "<leader>fs", ":update<CR>", "save-file")
-map("n", "<leader>fw", ":e " .. config_dir .. "/lua/config/keybindings.lua<CR>", "keybindings.lua")
-map("n", "<leader>fx", ":! rm -f" .. state_dir .. "/swap/*<CR>", "delete-swap-files")
-map("n", "<leader>fX", ":! rm -f" .. data_dir .. "/undodir/*<CR>", "delete-undo-files")
+keymap_set("n", "<leader>fe", ":e " .. config_dir .. "/.env<CR>", ".env")
+keymap_set("n", "<leader>fi", ":e " .. config_dir .. "/lua/plugins/init.lua<CR>", "plugins/init.lua")
+keymap_set("n", "<leader>fI", ":e " .. config_dir .. "/lua/config/init.lua<CR>", "config/init.lua")
+keymap_set("n", "<leader>fl", ":e " .. config_dir .. "/lua/plugins/lspconfig.lua<CR>", "plugins/lspconfig.lua")
+keymap_set("n", "<leader>fr", ":e<CR>", "reload-file")
+keymap_set("n", "<leader>fs", ":update<CR>", "save-file")
+keymap_set("n", "<leader>fw", ":e " .. config_dir .. "/lua/config/keybindings.lua<CR>", "keybindings.lua")
+keymap_set("n", "<leader>fx", ":! rm -f" .. state_dir .. "/swap/*<CR>", "delete-swap-files")
+keymap_set("n", "<leader>fX", ":! rm -f" .. data_dir .. "/undodir/*<CR>", "delete-undo-files")
 
-map("n", "<leader>hrr", ":echo '`emacs` command 🫠'<CR>")
-map("n", "<leader>hs", vim.lsp.buf.signature_help, "lsp-signature-help")
+keymap_set("n", "<leader>hrr", ":echo '`emacs` command 🫠'<CR>")
+keymap_set("n", "<leader>hs", vim.lsp.buf.signature_help, "lsp-signature-help")
 
-map("n", "<leader>it", ":Inspect<CR>", "ts-inspect-element")
-map("n", "<leader>iT", vim.treesitter.inspect_tree, "ts-inspect-tree")
+keymap_set("n", "<leader>it", ":Inspect<CR>", "ts-inspect-element")
+keymap_set("n", "<leader>iT", vim.treesitter.inspect_tree, "ts-inspect-tree")
 
-map("n", "<leader>j0", ":tabfirst<CR>", "first-tab")
-map("n", "<leader>j1", ":1tabnext<CR>", "tab-1")
-map("n", "<leader>j2", ":2tabnext<CR>", "tab-2")
-map("n", "<leader>j3", ":3tabnext<CR>", "tab-3")
-map("n", "<leader>j4", ":4tabnext<CR>", "tab-4")
-map("n", "<leader>j5", ":5tabnext<CR>", "tab-5")
-map("n", "<leader>j6", ":6tabnext<CR>", "tab-6")
-map("n", "<leader>j7", ":7tabnext<CR>", "tab-7")
-map("n", "<leader>j8", ":8tabnext<CR>", "tab-8")
-map("n", "<leader>j9", ":tablast<CR>", "last-tab")
-map("n", "<leader>jK", ":tabonly<CR>", "kill-other-than-current-tab")
-map("n", "<leader>jh", ":-tabmove<CR>", "move-left")
-map("n", "<leader>ji", ":tabs<CR>", "info-tabs")
-map("n", "<leader>jk", ":tabclose<CR>", "kill-tab")
-map("n", "<leader>jl", ":+tabmove<CR>", "move-right")
-map("n", "<leader>jn", ":tabnew<CR>", "new-tab")
-map("n", "<leader>jO", ":tabonly<CR>", "only-current-tab")
+keymap_set("n", "<leader>j0", ":tabfirst<CR>", "first-tab")
+keymap_set("n", "<leader>j1", ":1tabnext<CR>", "tab-1")
+keymap_set("n", "<leader>j2", ":2tabnext<CR>", "tab-2")
+keymap_set("n", "<leader>j3", ":3tabnext<CR>", "tab-3")
+keymap_set("n", "<leader>j4", ":4tabnext<CR>", "tab-4")
+keymap_set("n", "<leader>j5", ":5tabnext<CR>", "tab-5")
+keymap_set("n", "<leader>j6", ":6tabnext<CR>", "tab-6")
+keymap_set("n", "<leader>j7", ":7tabnext<CR>", "tab-7")
+keymap_set("n", "<leader>j8", ":8tabnext<CR>", "tab-8")
+keymap_set("n", "<leader>j9", ":tablast<CR>", "last-tab")
+keymap_set("n", "<leader>jK", ":tabonly<CR>", "kill-other-than-current-tab")
+keymap_set("n", "<leader>jh", ":-tabmove<CR>", "move-left")
+keymap_set("n", "<leader>ji", ":tabs<CR>", "info-tabs")
+keymap_set("n", "<leader>jk", ":tabclose<CR>", "kill-tab")
+keymap_set("n", "<leader>jl", ":+tabmove<CR>", "move-right")
+keymap_set("n", "<leader>jn", ":tabnew<CR>", "new-tab")
+keymap_set("n", "<leader>jO", ":tabonly<CR>", "only-current-tab")
 
-map("n", "<leader>la", vim.lsp.buf.code_action, "code-action")
-map("n", "<leader>ld", vim.lsp.buf.definition, "definition")
-map("n", "<leader>lh", vim.lsp.buf.hover, "hover-docs")
-map("n", "<leader>li", ":Inspect<CR>", "ts-inspect-element")
-map("n", "<leader>lI", vim.treesitter.inspect_tree, "ts-inspect-tree")
-map("n", "<leader>ll", vim.diagnostic.open_float, "show-diagnostics")
-map("n", "<leader>lr", vim.lsp.buf.rename, "lsp-rename")
-map("n", "<leader>ls", vim.lsp.buf.signature_help, "lsp-signature")
-map("n", "<leader>lt", vim.lsp.buf.type_definition, "goto-typedef")
-map("n", "<leader>lx", ":lclose<CR>", "close-loclist")
+keymap_set("n", "<leader>la", vim.lsp.buf.code_action, "code-action")
+keymap_set("n", "<leader>ld", vim.lsp.buf.definition, "definition")
+keymap_set("n", "<leader>lh", vim.lsp.buf.hover, "hover-docs")
+keymap_set("n", "<leader>li", ":Inspect<CR>", "ts-inspect-element")
+keymap_set("n", "<leader>lI", vim.treesitter.inspect_tree, "ts-inspect-tree")
+keymap_set("n", "<leader>ll", vim.diagnostic.open_float, "show-diagnostics")
+keymap_set("n", "<leader>lr", vim.lsp.buf.rename, "lsp-rename")
+keymap_set("n", "<leader>ls", vim.lsp.buf.signature_help, "lsp-signature")
+keymap_set("n", "<leader>lt", vim.lsp.buf.type_definition, "goto-typedef")
+keymap_set("n", "<leader>lx", ":lclose<CR>", "close-loclist")
 
-map("n", "<leader>mll", ":echo '`emacs` command 🫠'<CR>")
-map("n", "<leader>mlt", ":echo '`emacs` command 🫠'<CR>")
+keymap_set("n", "<leader>mll", ":echo '`emacs` command 🫠'<CR>")
+keymap_set("n", "<leader>mlt", ":echo '`emacs` command 🫠'<CR>")
 
-map("n", "<leader>om", ":e Makefile<CR>", "Makefile")
-map("n", "<leader>on", ":messages<CR>", "notifications")
+keymap_set("n", "<leader>om", ":e Makefile<CR>", "Makefile")
+keymap_set("n", "<leader>on", ":messages<CR>", "notifications")
 
-map("n", "<leader>njj", ":echo '`emacs` command 🫠'<CR>")
-map("n", "<leader>nri", ":echo '`emacs` command 🫠'<CR>")
-map("n", "<leader>nrr", ":echo '`emacs` command 🫠'<CR>")
-map("n", "<leader>nrs", ":echo '`emacs` command 🫠'<CR>")
+keymap_set("n", "<leader>njj", ":echo '`emacs` command 🫠'<CR>")
+keymap_set("n", "<leader>nri", ":echo '`emacs` command 🫠'<CR>")
+keymap_set("n", "<leader>nrr", ":echo '`emacs` command 🫠'<CR>")
+keymap_set("n", "<leader>nrs", ":echo '`emacs` command 🫠'<CR>")
 
-map("n", "<leader>qx", ":cclose<CR>", "close-quickfix")
-map("n", "<leader>qk", ":cclose<CR>", "close-quickfix")
-map("n", "<leader>qo", ":copen<CR>", "open-quickfix")
-map("n", "<leader>qr", ":luafile " .. config_dir .. "/init.lua<CR>", "reload-config")
+keymap_set("n", "<leader>qx", ":cclose<CR>", "close-quickfix")
+keymap_set("n", "<leader>qk", ":cclose<CR>", "close-quickfix")
+keymap_set("n", "<leader>qo", ":copen<CR>", "open-quickfix")
+keymap_set("n", "<leader>qr", ":luafile " .. config_dir .. "/init.lua<CR>", "reload-config")
 
-map("n", "<leader>td", function()
+keymap_set("n", "<leader>td", function()
     vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, "diagnostics")
-map("n", "<leader>tD", helpers.toggle_autocmd_debug, "gibberish-rot13")
-map("n", "<leader>tG", ":%norm! g??<CR>", "gibberish-rot13")
-map("n", "<leader>th", ":set hls!<CR>", "hl-search")
-map("n", "<leader>ti", ":setl list!<CR>", "indent-guide")
-map("n", "<leader>tn", ":setl nu! rnu!<CR>", "line-numbers")
-map("n", "<leader>tr", ":setl ro!<CR>", "read-only")
-map("n", "<leader>ts", ":setl spell!<CR>", "spell-check")
-map("n", "<leader>tT", ":highlight Normal guibg=black<CR>", "bg-black")
-map("n", "<leader>tw", ":setl nowrap! linebreak breakindent<CR>", "wrap-text")
+keymap_set("n", "<leader>tD", helpers.toggle_autocmd_debug, "gibberish-rot13")
+keymap_set("n", "<leader>tG", ":%norm! g??<CR>", "gibberish-rot13")
+keymap_set("n", "<leader>th", ":set hls!<CR>", "hl-search")
+keymap_set("n", "<leader>ti", ":setl list!<CR>", "indent-guide")
+keymap_set("n", "<leader>tn", ":setl nu! rnu!<CR>", "line-numbers")
+keymap_set("n", "<leader>tr", ":setl ro!<CR>", "read-only")
+keymap_set("n", "<leader>ts", ":setl spell!<CR>", "spell-check")
+keymap_set("n", "<leader>tT", ":highlight Normal guibg=black<CR>", "bg-black")
+keymap_set("n", "<leader>tw", ":setl nowrap! linebreak breakindent<CR>", "wrap-text")
 
-map("n", "<leader>w6", ":wincmd +<CR>", "increase-height")
-map("n", "<leader>w7", ":wincmd -<CR>", "decrease-height")
-map("n", "<leader>w9", ":wincmd <<CR>", "decrease-width")
-map("n", "<leader>w0", ":wincmd ><CR>", "increase-width")
-map("n", "<leader>w=", ":wincmd =<CR>", "equalize-window")
-map("n", "<leader>wc", ":wincmd c<CR>", "close-window")
-map("n", "<leader>wh", ":wincmd H<CR>", "window-to-left")
-map("n", "<leader>wj", ":wincmd J<CR>", "window-to-bottom")
-map("n", "<leader>wk", ":wincmd K<CR>", "window-to-top")
-map("n", "<leader>wl", ":wincmd L<CR>", "window-to-right")
-map("n", "<leader>wm", ":wincmd |<CR>", "maximize-window-width")
-map("n", "<leader>wM", ":wincmd _<CR>", "maximize-window-height")
-map("n", "<leader>wn", ":new<CR>", "new-window")
-map("n", "<leader>wO", ":only<CR>", "only-current-window")
-map("n", "<leader>wq", ":wincmd q<CR>", "quit-window")
-map("n", "<leader>ws", ":wincmd s<CR>", "split-window-below")
-map("n", "<leader>wv", ":wincmd v<CR>", "split-window-right")
-map("n", "<leader>ww", ":wincmd w<CR>", "switch-window")
-map("n", "<leader>wx", ":wincmd x<CR>", "swap-window")
-map("n", "<leader>w|", ":wincmd <<CR>", "max-out-width")
+keymap_set("n", "<leader>w6", ":wincmd +<CR>", "increase-height")
+keymap_set("n", "<leader>w7", ":wincmd -<CR>", "decrease-height")
+keymap_set("n", "<leader>w9", ":wincmd <<CR>", "decrease-width")
+keymap_set("n", "<leader>w0", ":wincmd ><CR>", "increase-width")
+keymap_set("n", "<leader>w=", ":wincmd =<CR>", "equalize-window")
+keymap_set("n", "<leader>wc", ":wincmd c<CR>", "close-window")
+keymap_set("n", "<leader>wh", ":wincmd H<CR>", "window-to-left")
+keymap_set("n", "<leader>wj", ":wincmd J<CR>", "window-to-bottom")
+keymap_set("n", "<leader>wk", ":wincmd K<CR>", "window-to-top")
+keymap_set("n", "<leader>wl", ":wincmd L<CR>", "window-to-right")
+keymap_set("n", "<leader>wm", ":wincmd |<CR>", "maximize-window-width")
+keymap_set("n", "<leader>wM", ":wincmd _<CR>", "maximize-window-height")
+keymap_set("n", "<leader>wn", ":new<CR>", "new-window")
+keymap_set("n", "<leader>wO", ":only<CR>", "only-current-window")
+keymap_set("n", "<leader>wq", ":wincmd q<CR>", "quit-window")
+keymap_set("n", "<leader>ws", ":wincmd s<CR>", "split-window-below")
+keymap_set("n", "<leader>wv", ":wincmd v<CR>", "split-window-right")
+keymap_set("n", "<leader>ww", ":wincmd w<CR>", "switch-window")
+keymap_set("n", "<leader>wx", ":wincmd x<CR>", "swap-window")
+keymap_set("n", "<leader>w|", ":wincmd <<CR>", "max-out-width")
 
-map("x", "<leader>tG", "g?", "gibberish-rot13")
+keymap_set("x", "<leader>tG", "g?", "gibberish-rot13")
 
 -- SANE DEFAULTS
 -------------------------------------------------------------------
 -- `vim.lsp`
-map("n", "g.", vim.lsp.buf.code_action, "code-action")
-map("n", "gA", vim.lsp.buf.code_action, "code-action")
-map("n", "gd", vim.lsp.buf.definition, "definition")
-map("n", "gD", vim.lsp.buf.declaration, "declararion")
-map("n", "gr", vim.lsp.buf.references, "references")
-map("n", "gI", vim.lsp.buf.implementation, "implementation")
-map("n", "gl", vim.diagnostic.open_float, "show-diagnostics")
-map("n", "gt", vim.lsp.buf.type_definition, "goto-typedef")
-map("n", "K", vim.lsp.buf.hover, "hover-docs")
+keymap_set("n", "g.", vim.lsp.buf.code_action, "code-action")
+keymap_set("n", "gA", vim.lsp.buf.code_action, "code-action")
+keymap_set("n", "gd", vim.lsp.buf.definition, "definition")
+keymap_set("n", "gD", vim.lsp.buf.declaration, "declararion")
+keymap_set("n", "gr", vim.lsp.buf.references, "references")
+keymap_set("n", "gI", vim.lsp.buf.implementation, "implementation")
+keymap_set("n", "gl", vim.diagnostic.open_float, "show-diagnostics")
+keymap_set("n", "gt", vim.lsp.buf.type_definition, "goto-typedef")
+keymap_set("n", "K", vim.lsp.buf.hover, "hover-docs")
 
 -- `Y` yanks till the end of the line from the cursor
-map("n", "Y", "y$")
+keymap_set("n", "Y", "y$")
 
 -- g chords
-map("n", "g2", "@")
-map("n", "g3", "#")
-map("n", "g4", "$")
-map("n", "g5", "%")
-map("n", "g6", "^")
-map("n", "g9", "g$")
-map("n", "g/", "/\\v")
+keymap_set("n", "g2", "@")
+keymap_set("n", "g3", "#")
+keymap_set("n", "g4", "$")
+keymap_set("n", "g5", "%")
+keymap_set("n", "g6", "^")
+keymap_set("n", "g9", "g$")
+keymap_set("n", "g/", "/\\v")
 
 -- continued visual selection while indenting
-map("v", "<", "<gv")
-map("v", ">", ">gv")
+keymap_set("v", "<", "<gv")
+keymap_set("v", ">", ">gv")
 
 -- continued visual selection while counting
-map("v", "<C-a>", "<C-a>gv")
-map("v", "<C-x>", "<C-x>gv")
+keymap_set("v", "<C-a>", "<C-a>gv")
+keymap_set("v", "<C-x>", "<C-x>gv")
 
 -- window settings
-map("n", "<C-w>m", "<C-w>|", "maximize-horizontal")
-map("n", "<C-w>M", "<C-w>_", "maximize-vertical")
+keymap_set("n", "<C-w>m", "<C-w>|", "maximize-horizontal")
+keymap_set("n", "<C-w>M", "<C-w>_", "maximize-vertical")
 
 -- Move selected line / block of text in visual mode
 -- shift + k to move up
 -- shift + j to move down
-map("x", "J", "move '<+1<CR>gv-gv", "move-select-lines-down")
-map("x", "K", "move '<-2<CR>gv-gv", "move-select-lines-up")
+keymap_set("x", "J", "move '<+1<CR>gv-gv", "move-select-lines-down")
+keymap_set("x", "K", "move '<-2<CR>gv-gv", "move-select-lines-up")
 
 -- visually select text for searching, mapped to //
 -- using \V (no-magic)
-map("x", "//", [[y/\V<C-R>=escape(@", '/\')<CR><CR>]], "search-selected")
+keymap_set("x", "//", [[y/\V<C-R>=escape(@", '/\')<CR><CR>]], "search-selected")
 
 -- `bn` as escape characters
-map("i", "bn", "<Esc>", "to-normal-mode")
+keymap_set("i", "bn", "<Esc>", "to-normal-mode")
 
 -- JUMPS
 -------------------------------------------------------------------
 -- [b] buffer chain
-map("n", "[b", ":bprevious<CR>", "prev-buffer")
-map("n", "]b", ":bnext<CR>", "next-buffer")
-map("n", "[B", ":bfirst<CR>", "first-buffer")
-map("n", "]B", ":blast<CR>", "last-buffer")
+keymap_set("n", "[b", ":bprevious<CR>", "prev-buffer")
+keymap_set("n", "]b", ":bnext<CR>", "next-buffer")
+keymap_set("n", "[B", ":bfirst<CR>", "first-buffer")
+keymap_set("n", "]B", ":blast<CR>", "last-buffer")
 
 -- [d] diagnostic chain
-map("n", "]d", function()
+keymap_set("n", "]d", function()
     vim.diagnostic.jump({ count = 1, float = true })
 end, "next-diagnostic")
 
-map("n", "[d", function()
+keymap_set("n", "[d", function()
     vim.diagnostic.jump({ count = -1, float = true })
 end, "prev-diagnostic")
 
 -- [j] tab chain
-map("n", "[j", ":tabprevious<CR>", "prev-tab")
-map("n", "]j", ":tabnext<CR>", "next-tab")
-map("n", "[J", ":tabfirst<CR>", "first-tab")
-map("n", "]J", ":tablast<CR>", "last-tab")
+keymap_set("n", "[j", ":tabprevious<CR>", "prev-tab")
+keymap_set("n", "]j", ":tabnext<CR>", "next-tab")
+keymap_set("n", "[J", ":tabfirst<CR>", "first-tab")
+keymap_set("n", "]J", ":tablast<CR>", "last-tab")
 
 -- TERMINAL
 -------------------------------------------------------------------
 -- toggle to normal-mode from terminal-mode (inside terminal)
 -- to switch back, use `i` (back in terminal mode, inside terminal)
-map("t", "<M-n>", "<C-\\><C-N>", "term-to-normal mode")
+keymap_set("t", "<M-n>", "<C-\\><C-N>", "term-to-normal mode")
 
 -- SURROUND
 -------------------------------------------------------------------
 -- TODO: should be transeferred to mini.ai
 
 -- `d` for double quotess
-map("n", "cad", 'ca"')
-map("n", "cid", 'ci"')
-map("n", "dad", 'da"')
-map("n", "did", 'di"')
-map("n", "vad", 'va"')
-map("n", "vid", 'vi"')
-map("n", "yad", 'ya"')
-map("n", "yid", 'yi"')
+keymap_set("n", "cad", 'ca"')
+keymap_set("n", "cid", 'ci"')
+keymap_set("n", "dad", 'da"')
+keymap_set("n", "did", 'di"')
+keymap_set("n", "vad", 'va"')
+keymap_set("n", "vid", 'vi"')
+keymap_set("n", "yad", 'ya"')
+keymap_set("n", "yid", 'yi"')
 
 -- `q` for single quotes
-map("n", "caq", "ca'")
-map("n", "ciq", "ci'")
-map("n", "daq", "da'")
-map("n", "diq", "di'")
-map("n", "vaq", "va'")
-map("n", "viq", "vi'")
-map("n", "yaq", "ya'")
-map("n", "yiq", "yi'")
+keymap_set("n", "caq", "ca'")
+keymap_set("n", "ciq", "ci'")
+keymap_set("n", "daq", "da'")
+keymap_set("n", "diq", "di'")
+keymap_set("n", "vaq", "va'")
+keymap_set("n", "viq", "vi'")
+keymap_set("n", "yaq", "ya'")
+keymap_set("n", "yiq", "yi'")
 
 -- `x` for backticks
-map("n", "cax", "ca`")
-map("n", "cix", "ci`")
-map("n", "dax", "da`")
-map("n", "dix", "di`")
-map("n", "vax", "va`")
-map("n", "vix", "vi`")
-map("n", "yax", "ya`")
-map("n", "yix", "yi`")
+keymap_set("n", "cax", "ca`")
+keymap_set("n", "cix", "ci`")
+keymap_set("n", "dax", "da`")
+keymap_set("n", "dix", "di`")
+keymap_set("n", "vax", "va`")
+keymap_set("n", "vix", "vi`")
+keymap_set("n", "yax", "ya`")
+keymap_set("n", "yix", "yi`")
 
 -- META-KEYS
 -------------------------------------------------------------------
-map("n", "<M-s>", ":update<CR>")
+keymap_set("n", "<M-s>", ":update<CR>")
 
 -- INSERT-MODE
 -------------------------------------------------------------------
@@ -252,42 +253,42 @@ map("n", "<M-s>", ":update<CR>")
 
 -- shift key selection
 -- starts selecting, but defaults to normal mode
-map("i", "<S-Left>", "<C-c>v")
-map("i", "<S-Right>", "<Right><C-c>v")
+keymap_set("i", "<S-Left>", "<C-c>v")
+keymap_set("i", "<S-Right>", "<Right><C-c>v")
 
 -- meta(alt) keys in insert and command line mode
 -- *CAUTION*: not to use <M-D> !!!
-map({ "i", "c" }, "<M-h>", "<Left>")
-map({ "i", "c" }, "<M-j>", "<Down>")
-map({ "i", "c" }, "<M-k>", "<Up>")
-map({ "i", "c" }, "<M-l>", "<Right>")
-map({ "i", "c" }, "<M-Left>", "<Left>")
-map({ "i", "c" }, "<M-Right>", "<Right>")
-map({ "i", "c" }, "<M-Up>", "<Up>")
-map({ "i", "c" }, "<M-Down>", "<Down>")
+keymap_set({ "i", "c" }, "<M-h>", "<Left>")
+keymap_set({ "i", "c" }, "<M-j>", "<Down>")
+keymap_set({ "i", "c" }, "<M-k>", "<Up>")
+keymap_set({ "i", "c" }, "<M-l>", "<Right>")
+keymap_set({ "i", "c" }, "<M-Left>", "<Left>")
+keymap_set({ "i", "c" }, "<M-Right>", "<Right>")
+keymap_set({ "i", "c" }, "<M-Up>", "<Up>")
+keymap_set({ "i", "c" }, "<M-Down>", "<Down>")
 
 -- meta keys only for insert mode
-map("i", "<M-a>", "<C-o>^")
-map("i", "<M-e>", "<C-o>$")
-map("i", "<M-u>", "<C-o>d0")
-map("i", "<M-w>", "<C-o>db")
-map("i", "<M-Left>", "<C-o>^")
-map("i", "<M-Right>", "<C-o>$")
+keymap_set("i", "<M-a>", "<C-o>^")
+keymap_set("i", "<M-e>", "<C-o>$")
+keymap_set("i", "<M-u>", "<C-o>d0")
+keymap_set("i", "<M-w>", "<C-o>db")
+keymap_set("i", "<M-Left>", "<C-o>^")
+keymap_set("i", "<M-Right>", "<C-o>$")
 
 -- meta keys for entering a new line
-map("i", "<M-o>", "<C-o>o")
-map("i", "<M-O>", "<C-o>O")
+keymap_set("i", "<M-o>", "<C-o>o")
+keymap_set("i", "<M-O>", "<C-o>O")
 
 -- place the cursor infront of the character
 -- use `<M-;>` and `<M-,>` for next/prev
-map("i", "<M-t>", "<C-o>f")
+keymap_set("i", "<M-t>", "<C-o>f")
 
 -- ; and , in insert mode
-map("i", "<M-;>", "<C-o>;")
-map("i", "<M-,>", "<C-o>,")
+keymap_set("i", "<M-;>", "<C-o>;")
+keymap_set("i", "<M-,>", "<C-o>,")
 
 -- meta key `s` to save/update and go to normal mode
-map("i", "<M-s>", "<C-c>:update<CR>")
+keymap_set("i", "<M-s>", "<C-c>:update<CR>")
 
 -- CLIPBOARD
 -------------------------------------------------------------------
@@ -295,24 +296,24 @@ map("i", "<M-s>", "<C-c>:update<CR>")
 -- ex: `<leader>acf` copies (c) contents to the register `f`
 
 -- Basic mappings
-map("n", "<leader>avv", "+P")
-map("n", "<leader>acc", 'V"+y')
-map("n", "<leader>axx", 'V"+d')
-map("v", "<leader>avv", "+P")
-map("v", "<leader>acc", '"+y')
-map("v", "<leader>axx", '"+d')
+keymap_set("n", "<leader>avv", "+P")
+keymap_set("n", "<leader>acc", 'V"+y')
+keymap_set("n", "<leader>axx", 'V"+d')
+keymap_set("v", "<leader>avv", "+P")
+keymap_set("v", "<leader>acc", '"+y')
+keymap_set("v", "<leader>axx", '"+d')
 
 -- Default register ("-)
-map("n", "<leader>ax-", '"-d')
-map("v", "<leader>ax-", '"-d')
-map("n", "<leader>ac-", '"-y')
-map("v", "<leader>ac-", '"-y')
+keymap_set("n", "<leader>ax-", '"-d')
+keymap_set("v", "<leader>ax-", '"-d')
+keymap_set("n", "<leader>ac-", '"-y')
+keymap_set("v", "<leader>ac-", '"-y')
 
 -- Registers 0-9 and specials
 local reg_keys = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-" }
 for _, r in ipairs(reg_keys) do
-    map("n", "<leader>a" .. "v" .. r, '"' .. r .. "P")
-    map("v", "<leader>a" .. "v" .. r, '"' .. r .. "P")
+    keymap_set("n", "<leader>a" .. "v" .. r, '"' .. r .. "P")
+    keymap_set("v", "<leader>a" .. "v" .. r, '"' .. r .. "P")
 end
 
 -- Registers a-z and A-Z (except 'xcvXCV')
@@ -321,12 +322,12 @@ for _, r in
         vim.fn.split("a,b,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,w,y,z,A,B,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,W,Y,Z", ",")
     )
 do
-    map("n", "<leader>a" .. "c" .. r, 'V"' .. r .. "y")
-    map("v", "<leader>a" .. "c" .. r, '"' .. r .. "y")
-    map("n", "<leader>a" .. "x" .. r, 'V"' .. r .. "d")
-    map("v", "<leader>a" .. "x" .. r, '"' .. r .. "d")
-    map("n", "<leader>a" .. "v" .. r, '"' .. r .. "P")
-    map("v", "<leader>a" .. "v" .. r, '"' .. r .. "P")
+    keymap_set("n", "<leader>a" .. "c" .. r, 'V"' .. r .. "y")
+    keymap_set("v", "<leader>a" .. "c" .. r, '"' .. r .. "y")
+    keymap_set("n", "<leader>a" .. "x" .. r, 'V"' .. r .. "d")
+    keymap_set("v", "<leader>a" .. "x" .. r, '"' .. r .. "d")
+    keymap_set("n", "<leader>a" .. "v" .. r, '"' .. r .. "P")
+    keymap_set("v", "<leader>a" .. "v" .. r, '"' .. r .. "P")
 end
 
 ------------------------------------------------------------------

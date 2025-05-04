@@ -1,6 +1,6 @@
 -- after/plugin/fzfmake.lua
 
-local map = require("config.helpers").map
+local keymap_set = require("config.helpers").keymap_set
 
 ---@param filepath (string | nil)
 ---@return integer
@@ -130,6 +130,6 @@ local function make_fzf()
     print("Makefile not found!")
 end
 
-map("n", "<leader>mz", make_fzf, "make-fzf")
+keymap_set("n", "<leader>mz", make_fzf, "make-fzf")
 
 vim.api.nvim_create_user_command("MakeFzf", make_fzf, {})

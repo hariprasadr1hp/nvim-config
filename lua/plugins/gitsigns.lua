@@ -37,29 +37,29 @@ local preview_config = {
 local function setup_on_attach()
     ---@diagnostic disable-next-line: unused-local
     return function(bufnr)
-        local map = require("config.helpers").map
+        local keymap_set = require("config.helpers").keymap_set
         local gitsigns = require("gitsigns")
 
-        map("n", "<leader>gb", gitsigns.blame_line, "blame-line")
-        map("n", "<leader>gB", gitsigns.blame, "blame")
-        map("n", "<leader>gg", gitsigns.preview_hunk_inline, "preview-hunk")
-        map("n", "<leader>tg", gitsigns.toggle_signs, "preview-hunk")
+        keymap_set("n", "<leader>gb", gitsigns.blame_line, "blame-line")
+        keymap_set("n", "<leader>gB", gitsigns.blame, "blame")
+        keymap_set("n", "<leader>gg", gitsigns.preview_hunk_inline, "preview-hunk")
+        keymap_set("n", "<leader>tg", gitsigns.toggle_signs, "preview-hunk")
 
-        map("n", "<leader>hhs", gitsigns.stage_hunk, "stage-hunk")
+        keymap_set("n", "<leader>hhs", gitsigns.stage_hunk, "stage-hunk")
         -- map("n", "<leader>hhu", gitsigns.unstage_hunk, "unstage-hunk")
         -- map("v", "<leader>hhv", gitsigns.select_hunk, "visual-select-hunk")
 
-        map("x", "<leader>hhs", gitsigns.stage_hunk, "stage-hunk")
+        keymap_set("x", "<leader>hhs", gitsigns.stage_hunk, "stage-hunk")
         -- map("x", "<leader>hhu", gitsigns.unstage_hunk, "unstage-hunk")
 
-        map("n", "<leader>hhp", function()
+        keymap_set("n", "<leader>hhp", function()
             gitsigns.nav_hunk("prev")
         end, "preview-hunk")
-        map("n", "<leader>hhn", function()
+        keymap_set("n", "<leader>hhn", function()
             gitsigns.nav_hunk("next")
         end, "preview-hunk")
 
-        map("n", "]h", function()
+        keymap_set("n", "]h", function()
             if vim.wo.diff then
                 vim.cmd.normal({ "]h", bang = true })
             else
@@ -67,7 +67,7 @@ local function setup_on_attach()
             end
         end, "next-git-hunk")
 
-        map("n", "[h", function()
+        keymap_set("n", "[h", function()
             if vim.wo.diff then
                 vim.cmd.normal({ "[h", bang = true })
             else
