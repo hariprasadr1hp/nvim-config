@@ -1,18 +1,17 @@
 -- lua/plugins/lint.lua
 
-local function disable_default_linters(lint)
-    lint.linters_by_ft["clojure"] = nil
-    lint.linters_by_ft["dockerfile"] = nil
-    lint.linters_by_ft["inko"] = nil
-    lint.linters_by_ft["janet"] = nil
-    lint.linters_by_ft["json"] = nil
-    lint.linters_by_ft["markdown"] = nil
-    lint.linters_by_ft["rst"] = nil
-    lint.linters_by_ft["ruby"] = nil
-    lint.linters_by_ft["terraform"] = nil
-    lint.linters_by_ft["text"] = nil
-    return lint
-end
+local disable_linters_for_ft = {
+    "clojure",
+    "dockerfile",
+    "inko",
+    "janet",
+    "json",
+    "markdown",
+    "rst",
+    "ruby",
+    "terraform",
+    "text",
+}
 
 local linters_by_ft = {
     bash = { "shellcheck" },
@@ -30,22 +29,36 @@ local linters_by_ft = {
     typescriptreact = { "eslint_d" },
 }
 
-local linters = {
-    sqlfluff = {
-        args = {
-            "lint",
-            "--format=json",
-            -- note: users will have to replace the --dialect argument accordingly
-            "--dialect=postgres",
+local function setup_linters(parser)
+    local linters = {
+        sqlfluff = {
+            args = {
+                "lint",
+                "--format=json",
+                -- note: users will have to replace the --dialect argument accordingly
+                "--dialect=postgres",
+                parser = parser.from_errorformat("%f:%l:%c: %t%n %m", {
+                    source = "sqlfluff",
+                    severity = {
+                        W = vim.diagnostic.severity.WARN,
+                        E = vim.diagnostic.severity.ERROR,
+                    },
+                }),
+            },
         },
-    },
-}
+    }
+    return linters
+end
 
 local function setup_lint_config()
     local lint = require("lint")
+    local parser = require("lint.parser")
     lint.linters_by_ft = linters_by_ft
-    lint.linters = linters
-    disable_default_linters(lint)
+    lint.linters = setup_linters(parser)
+
+    for _, ft in ipairs(disable_linters_for_ft) do
+        lint.linters_by_ft[ft] = nil
+    end
 
     local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 
@@ -58,7 +71,7 @@ local function setup_lint_config()
         })
 
         vim.keymap.set("n", "<leader>cl", function()
-          lint.try_lint()
+            lint.try_lint()
         end, { desc = "lint-current-buffer" })
     end, 0)
 end

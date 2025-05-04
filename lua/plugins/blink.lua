@@ -356,6 +356,10 @@ local function setup_blink_config()
     opts.sources = {}
     opts.sources.default = { "lsp", "path", "snippets", "buffer", "emoji" }
 
+    opts.sources.per_filetype = {
+        sql = { "snippets", "dadbod", "buffer" },
+    }
+
     opts.sources.providers = {}
 
     -- opts.sources.providers.dadbod = {
@@ -441,6 +445,11 @@ local function setup_blink_config()
         },
     }
 
+    opts.sources.providers.dadbod = {
+        name = "Dadbod",
+        module = "vim_dadbod_completion.blink",
+    }
+
     opts.term = {
         enabled = false,
     }
@@ -452,12 +461,13 @@ return {
     {
         "saghen/blink.compat",
         version = "*",
-        lazy = true,
+        event = { "InsertEnter" },
         opts = {},
     },
     {
         "saghen/blink.cmp",
-        event = "VimEnter",
+        -- event = "VimEnter",
+        lazy = true,
         dependencies = {
             { "rafamadriz/friendly-snippets" },
             { "echasnovski/mini.snippets" },

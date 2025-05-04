@@ -34,17 +34,30 @@ local function get_ts_query_matches(bufnr)
 
     local root = syntax_tree[1]:root()
 
+    -- normal: (prerequisites (word) @prereq)
+
     local query = [[
 			(rule
 				(targets
 					(word)
-					@word
-					(#not-eq? @word ".PHONY"))
+					@target
+					(#not-eq? @target ".PHONY"))
 				(recipe
 				  (recipe_line
 					(shell_text)
-					@text)))
-		]]
+					@recipe)))
+
+            (rule
+				(targets
+					(word)
+					@target
+					(#not-eq? @target ".PHONY"))
+                normal: (prerequisites (word) @prereq)
+				(recipe
+				  (recipe_line
+					(shell_text)
+					@recipe)))
+    ]]
 
     local query_ok, parsed_query = pcall(function()
         return vim.treesitter.query.parse("make", query)
@@ -55,76 +68,60 @@ local function get_ts_query_matches(bufnr)
         return nil
     end
 
-    local result = {}
-    local target, recipe = nil, nil
+    local entries = {}
+    local target, recipe, prereq = nil, nil, nil
+    local sep = string.rep("-", 30)
 
     for id, node in parsed_query:iter_captures(root, bufnr) do
         local name = parsed_query.captures[id]
-        if name == "word" then
+        if name == "target" then
             target = treesitter.get_node_text(node, bufnr)
-        elseif name == "text" then
+        elseif name == "recipe" then
             recipe = treesitter.get_node_text(node, bufnr)
+        elseif name == "prereq" then
+            prereq = treesitter.get_node_text(node, bufnr)
         end
 
         if target and recipe then
-            result[target] = recipe
-            target, recipe = nil, nil -- reset for next match
+            entries[target] = string.format("%s:\t%s\n%s\n\n%s", target, prereq or "(none)", sep, recipe)
+            target, recipe, prereq = nil, nil, nil -- reset for next match
         end
     end
 
-    return result
+    return entries
 end
 
----@param result table<string, string>
-local function display_makefile_targets(result)
-    local pickers = require("telescope.pickers")
-    local config = require("telescope.config")
-    -- local actions = require("telescope.actions")
-    local actions_state = require("telescope.actions.state")
-    local previewers = require("telescope.previewers")
-
+local function display_makefile_target(entries)
+    local fzflua = require("fzf-lua")
     local toggleterm = require("toggleterm")
 
-    pickers
-        .new({}, {
-            title = "Makefile Targets",
-            finder = require("telescope.finders").new_table({
-                results = vim.tbl_keys(result),
-                entry_maker = function(entry)
-                    return {
-                        value = entry,
-                        display = entry,
-                        ordinal = entry,
-                    }
-                end,
-            }),
-            sorter = config.values.generic_sorter({}),
-            attach_mappings = function(_, map)
-                ---@diagnostic disable-next-line: unused-local
-                map("i", "<CR>", function(prompt_bufnr)
-                    local selection = actions_state.get_selected_entry()
-                    local cmd = " make " .. selection.value
-                    toggleterm.exec(cmd)
-                end)
-                return true
+    local targets = {}
+
+    for key, _ in pairs(entries) do
+        table.insert(targets, key)
+    end
+
+    fzflua.fzf_exec(targets, {
+        prompt = "Make target> ",
+        preview = function(item)
+            local preview = entries[item[1]] or "No preview available"
+            return preview
+        end,
+        actions = {
+            default = function(selected, _)
+                toggleterm.exec(" make " .. selected[1])
             end,
-            previewer = previewers.new_buffer_previewer({
-                ---@diagnostic disable-next-line: unused-local
-                define_preview = function(self, entry, status)
-                    vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, vim.split(result[entry.value], "\n"))
-                end,
-            }),
-        })
-        :find()
+        },
+    })
 end
 
 local function make_fzf()
     local bufnr = get_make_file_buffer_nr()
     if bufnr and bufnr ~= -1 then
-        local result = get_ts_query_matches(bufnr)
+        local entries = get_ts_query_matches(bufnr)
 
-        if result ~= nil then
-            display_makefile_targets(result)
+        if entries ~= nil then
+            display_makefile_target(entries)
         end
     end
     print("Makefile not found!")

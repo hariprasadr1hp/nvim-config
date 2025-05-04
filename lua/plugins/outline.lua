@@ -74,7 +74,7 @@ local opts = {
         ["g?"] = "actions.show_help",
         ["h"] = "actions.tree_close",
         ["l"] = "actions.tree_open",
-        ["o"] = "actions.tree_toggle",
+        ["o"] = "actions.jump",
         ["p"] = "actions.scroll",
         ["q"] = "actions.close",
         ["s"] = "actions.jump",
@@ -394,6 +394,8 @@ return {
     "stevearc/aerial.nvim",
     cmd = { "AerialToggle", "AerialInfo" },
     keys = {
+        { "<leader>kj", "<cmd>AerialToggle<CR>", desc = "outline" },
+        { "<leader>lj", "<cmd>AerialToggle<CR>", desc = "outline" },
         { "<leader>lo", "<cmd>AerialToggle<CR>", desc = "outline" },
         { "<leader>oA", "<cmd>AerialInfo<CR>", desc = "outline-info" },
     },
