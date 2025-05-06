@@ -104,6 +104,7 @@ _G.P = M.pprint
 _G.tprint = M.tprint
 _G.T = M.tprint
 
-M.load_env_file()
+-- load nvim-config .env variables
+M.load_env_file(vim.fn.stdpath("config") .. "/.env")
 
 return M
