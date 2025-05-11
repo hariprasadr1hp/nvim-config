@@ -7,12 +7,12 @@ local opts = {
     require("plugins.themes.catppuccin"),
 
     require("plugins.icons"),
+    require("plugins.pick"),
     require("plugins.telescope"),
     require("plugins.fzflua"),
 
     require("plugins.treesitter"),
     require("plugins.text_objects"),
-    require("plugins.mason"),
     require("plugins.blink"),
     require("plugins.lspconfig"),
     require("plugins.format"),
@@ -42,10 +42,14 @@ local opts = {
     require("plugins.snapshot"),
     require("plugins.dashboard"),
     require("plugins.oil"),
-    -- require("plugins.custom"),
+    require("plugins.custom"),
     require("plugins.whichkey"),
+
+    -- require("plugins.actions"),
+
+    -- require("plugins.tabline"),
 }
 
-vim.keymap.set("n", "<leader>oL", ":Lazy<CR>", { noremap = true, silent = true, desc = "Lazy" })
-
 require("lazy").setup(opts)
+
+vim.keymap.set("n", "<leader>oL", ":Lazy<CR>", { noremap = true, silent = true, desc = "Lazy" })

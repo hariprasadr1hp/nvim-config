@@ -1,236 +1,227 @@
 -- lua/plugins/lsp/lspconfig.lua
+--
 
-local function setup_lsp_handlers()
-    local lspconfig = require("lspconfig")
-    local mason_lspconfig = require("mason-lspconfig")
-    local blink_cmp = require("blink.cmp")
+local mason_opts = {
+    ui = {
+        icons = {
+            package_installed = "✓",
+            package_pending = "➜",
+            package_uninstalled = "✗",
+        },
+    },
+}
 
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities = vim.tbl_deep_extend("force", capabilities, blink_cmp.get_lsp_capabilities({}, false))
+local function buf_keymap_set(mode, lhs, rhs, buf, desc, key_opts)
+    local opts = vim.tbl_extend("force", {
+        noremap = true,
+        silent = true,
+        buffer = buf,
+        desc = desc or (type(rhs) == "string" and rhs or nil),
+    }, key_opts or {})
 
-    local handlers = {
-        -- default handler for installed servers
-        function(server_name)
-            lspconfig[server_name].setup({
-                capabilities = capabilities,
-            })
-        end,
-
-        ["emmet_ls"] = function()
-            lspconfig["emmet_ls"].setup({
-                capabilities = capabilities,
-                filetypes = {
-                    "html",
-                    "typescriptreact",
-                    "javascriptreact",
-                    "css",
-                    "sass",
-                    "scss",
-                    "less",
-                    "svelte",
-                },
-            })
-        end,
-
-        ["graphql"] = function()
-            lspconfig["graphql"].setup({
-                capabilities = capabilities,
-                filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
-            })
-        end,
-
-        ["lua_ls"] = function()
-            lspconfig["lua_ls"].setup({
-                capabilities = capabilities,
-                settings = {
-                    Lua = {
-                        runtime = {
-                            version = "LuaJIT",
-                        },
-                        diagnostics = {
-                            globals = { "vim" },
-                            disable = {},
-                        },
-                        workspace = {
-                            checkThirdParty = false,
-                            library = {
-                                "${3rd}/luv/library",
-                                vim.api.nvim_get_runtime_file("", true),
-                            },
-                        },
-                        completion = {
-                            callSnippet = "Replace",
-                        },
-                        telemetry = {
-                            enable = false,
-                        },
-                    },
-                },
-            })
-        end,
-
-        ["pyright"] = function()
-            lspconfig["pyright"].setup({
-                capabilities = capabilities,
-                cmd = { "pyright-langserver", "--stdio" },
-                filetypes = { "python", "ipynb" },
-                settings = {
-                    pyright = {
-                        disableOrganizeImports = true, -- using Ruff
-                    },
-                    python = {
-                        analysis = {
-                            -- autoImportCompletions = true,
-                            -- autoSearchPaths = true,
-                            -- diagnosticMode = "workspace",
-                            -- useLibraryCodeForTypes = true,
-                            -- typeCheckingMode = "basic",
-                            -- logLevel = "Information",
-                            ignore = { "*" },
-                        },
-                    },
-                },
-            })
-        end,
-
-        ["ruff"] = function()
-            lspconfig["ruff"].setup({
-                capabilities = capabilities,
-                filetypes = { "python", "ipynb" },
-                init_options = {
-                    settings = {
-                        trace = "messages",
-                        init_options = {
-                            settings = {
-                                logLevel = "debug",
-                            },
-                        },
-                    },
-                },
-            })
-        end,
-
-        ["svelte"] = function()
-            lspconfig["svelte"].setup({
-                capabilities = capabilities,
-                ---@diagnostic disable-next-line: unused-local
-                on_attach = function(client, _bufnr)
-                    vim.api.nvim_create_autocmd("BufWritePost", {
-                        pattern = { "*.js", "*.ts" },
-                        callback = function(ctx)
-                            -- Here use ctx.match instead of ctx.file
-                            client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
-                        end,
-                    })
-                end,
-            })
-        end,
-    }
-
-    mason_lspconfig.setup_handlers(handlers)
+    vim.keymap.set(mode, lhs, rhs, opts)
 end
 
----@diagnostic disable-next-line: unused-local
-local function setup_lsp_keymaps(buf)
-    local keymap_set = require("config.helpers").keymap_set
-    -- local fzflua = require("fzf-lua")
-    -- local buffer = event.buf
-
-    keymap_set("n", "<leader>il", ":LspInfo<CR>", "lsp-info")
-    keymap_set("n", "<leader>lI", ":LspInfo<CR>", "lsp-info")
-    keymap_set("n", "<leader>lR", ":LspRestart<CR>", "lsp-restart")
+local function client_supports_method(client, method, bufnr)
+    if vim.fn.has("nvim-0.11") == 1 then
+        return client:supports_method(method, bufnr)
+    else
+        return client.supports_method(method, { bufnr = bufnr })
+    end
 end
 
--- highlight groups
-local highlight_augroup = vim.api.nvim_create_augroup("LspDocumentHighlight", { clear = true })
-local detach_augroup = vim.api.nvim_create_augroup("LspDetachCleanup", { clear = true })
-
-local function on_lsp_attach(event)
+local function setup_lsp_autocmds(event)
     local client = vim.lsp.get_client_by_id(event.data.client_id)
-
     if not client then
         return
     end
 
-    local buf = event.buf
+    local current_buffer = event.buf
 
-    setup_lsp_keymaps(buf)
+    -- Disable hover in Ruff in favor of Pyright
+    if client.name == "ruff" then
+        client.server_capabilities.hoverProvider = false
+    end
 
-    if client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+    local keymap_set = require("config.helpers").keymap_set
+    keymap_set("n", "<leader>oM", ":Mason<CR>", "Mason")
+
+    buf_keymap_set("n", "<leader>il", ":LspInfo<CR>", current_buffer, "lsp-info")
+    buf_keymap_set("n", "<leader>lI", ":LspInfo<CR>", current_buffer, "lsp-info")
+    buf_keymap_set("n", "<leader>lR", ":LspRestart<CR>", current_buffer, "lsp-restart")
+
+    -- Document Highlight
+    if client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, current_buffer) then
+        local highlight_group = vim.api.nvim_create_augroup("hp-lsp-highlight", { clear = false })
+
         vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-            buffer = event.buf,
-            group = highlight_augroup,
+            buffer = current_buffer,
+            group = highlight_group,
             callback = vim.lsp.buf.document_highlight,
         })
 
         vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-            buffer = event.buf,
-            group = highlight_augroup,
+            buffer = current_buffer,
+            group = highlight_group,
             callback = vim.lsp.buf.clear_references,
         })
 
         vim.api.nvim_create_autocmd("LspDetach", {
-            buffer = event.buf,
-            group = detach_augroup,
-            callback = function(event2)
+            group = vim.api.nvim_create_augroup("hp-lsp-detach", { clear = true }),
+            callback = function(ev)
                 vim.lsp.buf.clear_references()
-                vim.api.nvim_clear_autocmds({ group = highlight_augroup, buffer = event2.buf })
+                vim.api.nvim_clear_autocmds({ group = highlight_group, buffer = ev.buf })
             end,
         })
     end
 
-    local inlay_hint = vim.lsp.protocol.Methods.textDocument_inlayHint or ""
-
-    if inlay_hint == "" then
-        return
+    -- Inlay Hints
+    if client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, current_buffer) then
+        buf_keymap_set("n", "<leader>lH", function()
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = current_buffer }))
+        end, current_buffer, "inlay hints")
     end
-
-    if client:supports_method(inlay_hint) then
-        vim.keymap.set("n", "<leader>lH", function()
-            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
-        end, { buffer = event.buf, desc = "toggle-inlay-hints" })
-    end
-
-    if client.name == "ruff" then
-        -- Disable hover in favor of Pyright
-        client.server_capabilities.hoverProvider = false
-    end
-end
-
-local function setup_lsp_autocommands()
-    vim.api.nvim_create_autocmd("LspAttach", {
-        group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-        callback = function(event)
-            on_lsp_attach(event)
-        end,
-    })
 end
 
 local function setup_lsp_config()
-    setup_lsp_handlers()
-    setup_lsp_autocommands()
-end
+    local lspconfig = require("lspconfig")
+    local mason_lspconfig = require("mason-lspconfig")
+    local mason_tool_installer = require("mason-tool-installer")
+    local blink_cmp = require("blink.cmp")
 
-return {
-    "neovim/nvim-lspconfig",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-        { "saghen/blink.cmp" },
-        { "ibhagwan/fzf-lua" },
-        { "antosha417/nvim-lsp-file-operations", config = true },
-        {
-            "folke/lazydev.nvim",
-            ft = "lua",
-            cmd = "LazyDev",
-            keys = {
-                { "<leader>ic", "<cmd>LazyDev lsp<CR>", desc = "lsp-client-info" },
+    vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("hp-lsp-attach", { clear = true }),
+        callback = setup_lsp_autocmds,
+    })
+
+    local capabilities = blink_cmp.get_lsp_capabilities()
+
+    local servers = {
+        ansiblels = {},
+        arduino_language_server = {},
+        clangd = {},
+        gitlab_ci_ls = {},
+        jinja_lsp = {},
+        sqls = {},
+        ts_ls = {},
+        terraformls = {},
+        tflint = {},
+        vimls = {},
+        volar = {},
+
+        emmet_ls = {
+            filetypes = {
+                "html",
+                "typescriptreact",
+                "javascriptreact",
+                "css",
+                "sass",
+                "scss",
+                "less",
+                "svelte",
             },
-            opts = {
-                library = {
-                    { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+        },
+
+        graphql = {
+            filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
+        },
+
+        lua_ls = {
+            settings = {
+                Lua = {
+                    completion = { callSnippet = "Replace" },
+                    diagnostics = { disable = { "missing-fields" } },
                 },
             },
         },
+
+        pyright = {
+            cmd = { "pyright-langserver", "--stdio" },
+            filetypes = { "python", "ipynb" },
+            settings = {
+                pyright = { disableOrganizeImports = true },
+                python = { analysis = { ignore = { "*" } } },
+            },
+        },
+
+        ruff = {
+            filetypes = { "python", "ipynb" },
+            init_options = {
+                settings = {
+                    trace = "messages",
+                    init_options = {
+                        settings = { logLevel = "debug" },
+                    },
+                },
+            },
+        },
+
+        svelte = {
+            on_attach = function(client)
+                vim.api.nvim_create_autocmd("BufWritePost", {
+                    pattern = { "*.js", "*.ts" },
+                    callback = function(ctx)
+                        client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
+                    end,
+                })
+            end,
+        },
+    }
+
+    local tools = {
+        "black",
+        "isort",
+        "pylint",
+        "mypy",
+        "ruff",
+        "eslint_d",
+        "prettier",
+        "biome",
+        "stylua",
+        "taplo",
+        "sqlfluff",
+        "standardrb",
+        "yamlfix",
+    }
+
+    local ensure_installed = vim.tbl_keys(servers)
+    vim.list_extend(ensure_installed, tools)
+
+    mason_tool_installer.setup({ ensure_installed = ensure_installed })
+
+    mason_lspconfig.setup({
+        ensure_installed = {}, -- already handled above
+        automatic_installation = false,
+        handlers = {
+            function(server_name)
+                local server = servers[server_name] or {}
+                server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+                lspconfig[server_name].setup(server)
+            end,
+        },
+    })
+end
+
+return {
+    {
+        "folke/lazydev.nvim",
+        ft = "lua",
+        opts = {
+            library = {
+                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+            },
+        },
     },
-    config = setup_lsp_config,
+
+    {
+        "neovim/nvim-lspconfig",
+        dependencies = {
+            { "williamboman/mason.nvim", opts = mason_opts },
+            "williamboman/mason-lspconfig.nvim",
+            "WhoIsSethDaniel/mason-tool-installer.nvim",
+            { "j-hui/fidget.nvim", opts = {} },
+            "saghen/blink.cmp",
+        },
+        config = setup_lsp_config,
+    },
 }
