@@ -4,14 +4,15 @@ local keywords = {
     FIX = {
         icon = " ",
         color = "error",
-        alt = { "FIXME", "BUG", "FIXIT", "ISSUE", "FIX" },
+        alt = { "BUG", "ISSUE" },
     },
     TODO = { icon = " ", color = "info" },
     HACK = { icon = " ", color = "warning" },
     WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
     PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
     NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
-    TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+    TEST = { icon = "⏲ ", color = "test", alt = { "PASSED", "FAILED" } },
+    LEARN = { icon = " ", color = "info" },
 }
 
 local gui_style = {
@@ -65,25 +66,24 @@ local opts = {
 }
 
 local function setup_keymaps()
+    local keymap_set = require("config.helpers").keymap_set
     local todo_comments = require("todo-comments")
-    todo_comments.setup()
+    todo_comments.setup(opts)
 
-    vim.keymap.set("n", "]t", function()
-        todo_comments.jump_next()
-    end, { desc = "Next todo comment" })
-
-    vim.keymap.set("n", "[t", function()
-        todo_comments.jump_prev()
-    end, { desc = "Previous todo comment" })
+    -- TODO: jumplists for todo comments need to cycle-through after reach the last one
+    keymap_set("n", "]t", todo_comments.jump_next, "Next todo comment")
+    keymap_set("n", "[t", todo_comments.jump_prev, "Previous todo comment")
+    keymap_set("n", "<leader>pq", ":TodoQuickFix<CR>", "Previous todo comment")
+    keymap_set("n", "<leader>zt", ":TodoFzfLua keywords=TODO,FIX<CR>", "Previous todo comment")
 end
 
 return {
     "folke/todo-comments.nvim",
-    cmd = { "TodoFzfLua", "TodoQuickFix" },
-    keys = {
-        { "<leader>pq", "<cmd>TodoQuickFix<CR>", desc = "quickfix-todo" },
-        { "<leader>zt", "<cmd>TodoFzfLua keywords=TODO,FIX<CR>", desc = "todos" },
-    },
+    -- cmd = { "TodoFzfLua", "TodoQuickFix" },
+    -- keys = {
+    --     { "<leader>pq", "<cmd>TodoQuickFix<CR>", desc = "quickfix-todo" },
+    --     { "<leader>zt", "<cmd>TodoFzfLua keywords=TODO,FIX<CR>", desc = "todos" },
+    -- },
     dependencies = {
         "nvim-lua/plenary.nvim",
         "ibhagwan/fzf-lua",

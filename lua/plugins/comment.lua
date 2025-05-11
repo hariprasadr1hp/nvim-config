@@ -28,3 +28,5 @@ return {
         opts = opts,
     },
 }
+
+-- TODO: `;;` instead of ``; for comments in `*.el` files

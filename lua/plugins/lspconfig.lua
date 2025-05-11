@@ -190,7 +190,7 @@ local function setup_lsp_config()
     mason_tool_installer.setup({ ensure_installed = ensure_installed })
 
     mason_lspconfig.setup({
-        ensure_installed = {}, -- already handled above
+        ensure_installed = {},
         automatic_installation = false,
         handlers = {
             function(server_name)

@@ -4,6 +4,7 @@
 -- or something mimicking a mode (macros for example)
 
 local is_recording = require("config.helpers").is_recording
+local line_numbers_augroup = vim.api.nvim_create_augroup("LineNumebers", { clear = true })
 
 local colors = {
     red = "#e06c75",
@@ -89,15 +90,18 @@ vim.api.nvim_create_autocmd("ModeChanged", {
 
 vim.api.nvim_create_autocmd("RecordingEnter", {
     pattern = "*",
+    group = line_numbers_augroup,
     callback = set_while_recording_colors,
 })
 
 vim.api.nvim_create_autocmd("RecordingLeave", {
     pattern = "*",
+    group = line_numbers_augroup,
     callback = set_normal_mode_colors,
 })
 
 vim.api.nvim_create_autocmd("BufWinEnter", {
     pattern = "*",
+    group = line_numbers_augroup,
     callback = set_normal_mode_colors,
 })

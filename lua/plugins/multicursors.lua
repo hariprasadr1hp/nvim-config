@@ -1,6 +1,7 @@
 -- lua/plugins/multicursors.lua
 
 -- FIX: multicursor commands only work (on x mode), only after the keymaps are triggered
+-- FIX: disable autopairs while using multicursors
 
 return {
     "brenton-leighton/multiple-cursors.nvim",

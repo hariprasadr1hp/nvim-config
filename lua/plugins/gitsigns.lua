@@ -43,7 +43,8 @@ local function setup_on_attach()
         keymap_set("n", "<leader>gb", gitsigns.blame_line, "blame-line")
         keymap_set("n", "<leader>gB", gitsigns.blame, "blame")
         keymap_set("n", "<leader>gg", gitsigns.preview_hunk_inline, "preview-hunk")
-        keymap_set("n", "<leader>tg", gitsigns.toggle_signs, "preview-hunk")
+        -- BUG: toggling git signs doesn't work once turned-off
+        keymap_set("n", "<leader>tg", gitsigns.toggle_signs, "git-signs")
 
         keymap_set("n", "<leader>hhs", gitsigns.stage_hunk, "stage-hunk")
         -- map("n", "<leader>hhu", gitsigns.unstage_hunk, "unstage-hunk")
@@ -113,3 +114,7 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     opts = opts,
 }
+
+-- TODO: git signs shouldn't intervene with the coloring of the line numbers
+-- TODO: functionality/keymap for unstaging hunks
+-- TODO: functionality/keymap for deleting unstaged hunks

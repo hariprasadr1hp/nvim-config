@@ -7,6 +7,9 @@ local keymap_set = require("config.helpers").keymap_set
 local function get_make_file_buffer_nr(filepath)
     local makefile_path = filepath or (vim.fn.getcwd() .. "/Makefile")
 
+    -- FIX: currently, need to ensure that the makefile is open in order to run.
+    -- need to update the mechanism
+
     if vim.fn.filereadable(makefile_path) == 1 and vim.fn.fnamemodify(makefile_path, ":t") == "Makefile" then
         return vim.fn.bufnr(makefile_path, true)
     end
@@ -34,29 +37,23 @@ local function get_ts_query_matches(bufnr)
 
     local root = syntax_tree[1]:root()
 
-    -- normal: (prerequisites (word) @prereq)
+    -- TODO: capture the comment block on top of the target
+    -- starting with `## `. Use it in the fzf-preview for viewing help
+    -- docs for the target
 
     local query = [[
 			(rule
 				(targets
 					(word)
-					@target
-					(#not-eq? @target ".PHONY"))
-				(recipe
-				  (recipe_line
-					(shell_text)
-					@recipe)))
+					@target)
+				(recipe) @recipe)
 
             (rule
 				(targets
 					(word)
-					@target
-					(#not-eq? @target ".PHONY"))
+					@target)
                 normal: (prerequisites (word) @prereq)
-				(recipe
-				  (recipe_line
-					(shell_text)
-					@recipe)))
+				(recipe) @recipe)
     ]]
 
     local query_ok, parsed_query = pcall(function()
@@ -127,6 +124,7 @@ local function make_fzf()
     print("Makefile not found!")
 end
 
+-- TODO: Selection always on the last-run target, by default
 keymap_set("n", "<leader>mz", make_fzf, "make-fzf")
 
 vim.api.nvim_create_user_command("MakeFzf", make_fzf, {})

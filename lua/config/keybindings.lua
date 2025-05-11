@@ -12,6 +12,8 @@ local keymap_set = require("config.helpers").keymap_set
 keymap_set("n", "<leader>bd", ":bd<CR>", "delete-buffer")
 keymap_set("n", "<leader>bD", ":bd!<CR>", "DELETE-BUFFER")
 keymap_set("n", "<leader>bf", ":bfirst<CR>", "first-buffer")
+-- FIX: killing a buffer `<leader>bk` should take to the last viewed buffer, not otherwise
+-- FIX: killing a buffer `<leader>bk` should still respct the window layout
 keymap_set("n", "<leader>bk", ":bp | bd #<CR>", "kill-buffer")
 keymap_set("n", "<leader>bK", ":%bd | enew<CR>", "kill-all-buffers")
 keymap_set("n", "<leader>bl", ":blast<CR>", "last-buffer")
@@ -60,7 +62,7 @@ keymap_set("n", "<leader>ji", ":tabs<CR>", "info-tabs")
 keymap_set("n", "<leader>jk", ":tabclose<CR>", "kill-tab")
 keymap_set("n", "<leader>jl", ":+tabmove<CR>", "move-right")
 keymap_set("n", "<leader>jn", ":tabnew<CR>", "new-tab")
-keymap_set("n", "<leader>jO", ":tabonly<CR>", "only-current-tab")
+keymap_set("n", "<leader>jo", ":tabonly<CR>", "only-current-tab")
 
 keymap_set("n", "<leader>la", vim.lsp.buf.code_action, "code-action")
 keymap_set("n", "<leader>ld", vim.lsp.buf.definition, "definition")
@@ -84,10 +86,11 @@ keymap_set("n", "<leader>nri", ":echo '`emacs` command 🫠'<CR>")
 keymap_set("n", "<leader>nrr", ":echo '`emacs` command 🫠'<CR>")
 keymap_set("n", "<leader>nrs", ":echo '`emacs` command 🫠'<CR>")
 
-keymap_set("n", "<leader>qx", ":cclose<CR>", "close-quickfix")
+keymap_set("n", "<leader>qa", ":qa<CR>", "quit-all")
 keymap_set("n", "<leader>qk", ":cclose<CR>", "close-quickfix")
 keymap_set("n", "<leader>qo", ":copen<CR>", "open-quickfix")
 keymap_set("n", "<leader>qr", ":luafile " .. config_dir .. "/init.lua<CR>", "reload-config")
+keymap_set("n", "<leader>qx", ":cclose<CR>", "close-quickfix")
 
 keymap_set("n", "<leader>td", function()
     vim.diagnostic.enable(not vim.diagnostic.is_enabled())

@@ -34,3 +34,6 @@ return {
         },
     },
 }
+
+-- TODO: select the complete query using TS objects
+-- TODO: run the whole query at the cursor
