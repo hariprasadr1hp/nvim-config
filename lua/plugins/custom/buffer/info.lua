@@ -1,13 +1,12 @@
--- after/plugin/buffer_info.lua
+-- lua/plugins/custom/buffer/info.lua
 
-local keymap_set = require("config.helpers").keymap_set
+local M = {}
 
 local function get_lsp_clients(buf_id)
     local clients = vim.lsp.get_clients({ bufnr = buf_id })
     if #clients == 0 then
         return "None"
     end
-
     local names = {}
     for _, client in ipairs(clients) do
         table.insert(names, client.name)
@@ -28,14 +27,12 @@ local function get_blink_sources()
     if not ok or not blink.sources then
         return "None"
     end
-
     local sources = {}
     for name, source in pairs(blink.sources) do
         if not source.is_available or source.is_available() then
             table.insert(sources, name)
         end
     end
-
     return #sources > 0 and table.concat(sources, ", ") or "None"
 end
 
@@ -44,7 +41,6 @@ local function get_diagnostics_count(buf_id)
     if not ok or not diag then
         return "Unavailable"
     end
-
     return string.format(
         "E:%d W:%d I:%d H:%d",
         diag[vim.diagnostic.severity.ERROR] or 0,
@@ -80,7 +76,7 @@ local function get_buffer_metadata(buf_id)
     }
 end
 
-local function get_buffer_info()
+function M.show_buffer_info()
     local buf_id = vim.api.nvim_get_current_buf()
     local items = get_buffer_metadata(buf_id)
 
@@ -95,8 +91,7 @@ local function get_buffer_info()
     vim.bo[info_buf].filetype = "BufferInfo"
     vim.api.nvim_buf_set_lines(info_buf, 0, -1, false, lines)
 
-    local width = 70
-    local height = #lines
+    local width, height = 70, #lines
     local row = math.floor((vim.o.lines - height) / 2)
     local col = math.floor((vim.o.columns - width) / 2)
 
@@ -114,9 +109,12 @@ local function get_buffer_info()
     vim.wo[win].cursorline = true
     vim.bo[info_buf].modifiable = false
     vim.bo[info_buf].readonly = true
+
     vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = info_buf, silent = true })
 end
 
-vim.api.nvim_create_user_command("BufferInfo", get_buffer_info, {})
+if ... == nil then
+    M.show_buffer_info()
+end
 
-keymap_set("n", "<leader>ib", get_buffer_info, "buffer-info")
+return M
