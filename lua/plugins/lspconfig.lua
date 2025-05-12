@@ -183,7 +183,6 @@ local function setup_lsp_config()
         "stylua",
         "taplo",
         "sqlfluff",
-        "standardrb",
         "yamlfix",
     }
 

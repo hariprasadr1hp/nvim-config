@@ -88,7 +88,7 @@ function M.show_buffer_info()
     table.insert(lines, "Press 'q' to close this window.")
 
     local info_buf = vim.api.nvim_create_buf(false, true)
-    vim.bo[info_buf].filetype = "BufferInfo"
+    vim.bo[info_buf].filetype = "InfoBuffer"
     vim.api.nvim_buf_set_lines(info_buf, 0, -1, false, lines)
 
     local width, height = 70, #lines
@@ -114,7 +114,7 @@ function M.show_buffer_info()
 end
 
 if ... == nil then
-    M.show_buffer_info()
+    M.show_actions()
 end
 
 return M
