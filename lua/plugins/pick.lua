@@ -69,10 +69,19 @@ local opts = {
     },
 }
 
+local function setup_mini_pick_config()
+    require("mini.pick").setup(opts)
+
+    local keymap_set = require("config.helpers").keymap_set
+
+    keymap_set("n", "<leader>,", ":Pick files<CR>", "files")
+    keymap_set("n", "<leader>bB", ":Pick buffers<CR>", "buffers")
+end
+
 return {
     {
         "echasnovski/mini.pick",
         version = false,
-        opts = opts,
+        config = setup_mini_pick_config,
     },
 }

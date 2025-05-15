@@ -116,5 +116,7 @@ return {
 }
 
 -- TODO: git signs shouldn't intervene with the coloring of the line numbers
+
 -- TODO: functionality/keymap for unstaging hunks
+
 -- TODO: functionality/keymap for deleting unstaged hunks

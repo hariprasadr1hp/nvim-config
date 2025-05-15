@@ -91,6 +91,9 @@ return {
 }
 
 -- FIX: <C-`> doesn't always work as a toggling mechanism (terminal)
+
 -- TODO: managing multiple terminal tabs
+
 -- TODO: fzf-search terminals
+
 -- TODO: but <C-`> toggles to the last active terminal

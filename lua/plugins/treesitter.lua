@@ -92,5 +92,7 @@ return {
     },
     config = setup_treesitter_config,
 }
+
 -- TODO: extend selection to neighbouring-node (prev/next)?
+
 -- TODO: extend selection to [COUNT]neighbouring-node (prev/next)?

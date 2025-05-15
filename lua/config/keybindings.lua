@@ -12,8 +12,11 @@ local keymap_set = require("config.helpers").keymap_set
 keymap_set("n", "<leader>bd", ":bd<CR>", "delete-buffer")
 keymap_set("n", "<leader>bD", ":bd!<CR>", "DELETE-BUFFER")
 keymap_set("n", "<leader>bf", ":bfirst<CR>", "first-buffer")
+
 -- FIX: killing a buffer `<leader>bk` should take to the last viewed buffer, not otherwise
+
 -- FIX: killing a buffer `<leader>bk` should still respct the window layout
+
 keymap_set("n", "<leader>bk", ":bp | bd #<CR>", "kill-buffer")
 keymap_set("n", "<leader>bK", ":%bd | enew<CR>", "kill-all-buffers")
 keymap_set("n", "<leader>bl", ":blast<CR>", "last-buffer")
@@ -70,6 +73,7 @@ keymap_set("n", "<leader>lh", vim.lsp.buf.hover, "hover-docs")
 keymap_set("n", "<leader>li", ":Inspect<CR>", "ts-inspect-element")
 keymap_set("n", "<leader>lI", vim.treesitter.inspect_tree, "ts-inspect-tree")
 keymap_set("n", "<leader>ll", vim.diagnostic.open_float, "show-diagnostics")
+keymap_set("n", "<leader>lo", ":lopen<CR>", "open-loclist")
 keymap_set("n", "<leader>lr", vim.lsp.buf.rename, "lsp-rename")
 keymap_set("n", "<leader>ls", vim.lsp.buf.signature_help, "lsp-signature")
 keymap_set("n", "<leader>lt", vim.lsp.buf.type_definition, "goto-typedef")

@@ -5,6 +5,8 @@ local opts = {
     require("plugins.snacks"),
     require("plugins.startup"),
     require("plugins.themes.catppuccin"),
+    require("plugins.themes.kanagawa"),
+    require("plugins.themes.oxocarbon"),
 
     require("plugins.icons"),
     require("plugins.pick"),
@@ -44,8 +46,6 @@ local opts = {
     require("plugins.oil"),
     require("plugins.custom"),
     require("plugins.whichkey"),
-
-    -- require("plugins.actions"),
 
     -- require("plugins.tabline"),
 }

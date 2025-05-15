@@ -395,8 +395,6 @@ return {
     cmd = { "AerialToggle", "AerialInfo" },
     keys = {
         { "<leader>kj", "<cmd>AerialToggle<CR>", desc = "outline" },
-        { "<leader>lj", "<cmd>AerialToggle<CR>", desc = "outline" },
-        { "<leader>lo", "<cmd>AerialToggle<CR>", desc = "outline" },
         { "<leader>oA", "<cmd>AerialInfo<CR>", desc = "outline-info" },
     },
     dependencies = {
