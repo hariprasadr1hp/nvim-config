@@ -22,9 +22,6 @@ local function setup_toggleterm_config()
     keymap_set("t", "<M-m>", toggleterm.toggle, "toggle-term")
     keymap_set("t", "<C-`>", toggleterm.toggle, "toggle-term")
 
-    -- keymap_set("n", "<leader>tt", ":ToggleTermSendCurrentLine<CR>", "send-current-line-terminal")
-    -- keymap_set("x", "<leader>tt", ":ToggleTermSendVisualSelection<CR>", "send-vi-select-terminal")
-
     local function make_runner(target)
         return function()
             toggleterm.exec(" make " .. target)
@@ -33,10 +30,11 @@ local function setup_toggleterm_config()
 
     keymap_set("n", "<leader>dm", make_runner("debug"), "make-debug")
     keymap_set("n", "<leader>ma", make_runner("temp"), "make-temp")
+    keymap_set("n", "<leader>mb", make_runner("build"), "make-build")
     keymap_set("n", "<leader>mc", make_runner("clean"), "make-clean")
     keymap_set("n", "<leader>md", make_runner("debug"), "make-debug")
     keymap_set("n", "<leader>mf", make_runner("format"), "make-format")
-    keymap_set("n", "<leader>mm", make_runner("all"), "make-all")
+    keymap_set("n", "<leader>mm", make_runner("all"), "make")
     keymap_set("n", "<leader>mt", make_runner("test"), "make-test")
 
     keymap_set("n", "<leader>tt", function()
@@ -49,7 +47,7 @@ local function setup_toggleterm_config()
 
     keymap_set("v", "<leader>tT", function()
         toggleterm.send_lines_to_terminal("visual_selection", false, { args = vim.v.count })
-    end, "send-vlines-to-term")
+    end, "send-vselect-to-term")
 
     local eval_cmd_by_ft = require("config.helpers").eval_cmd_by_ft
 

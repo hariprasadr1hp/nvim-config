@@ -85,7 +85,27 @@ local opts = {
     color_overrides = {
         mocha = colors,
     },
-    custom_highlights = {},
+    -- custom_highlights = {},
+    custom_highlights = function(cl)
+        return {
+            -- Completion popup menu
+            Pmenu = { bg = "#000000", fg = cl.text },
+            PmenuSel = { bg = cl.surface0, fg = cl.blue, style = { "bold" } },
+            PmenuSbar = { bg = cl.surface0 },
+            PmenuThumb = { bg = cl.surface2 },
+
+            -- nvim-cmp specific
+            CmpItemAbbr = { fg = cl.subtext1 },
+            CmpItemAbbrMatch = { fg = cl.blue, style = { "bold" } },
+            CmpItemAbbrMatchFuzzy = { fg = cl.sky, style = { "italic" } },
+            CmpItemMenu = { fg = cl.overlay1 },
+
+            CmpItemKind = { fg = cl.lavender },
+            CmpItemKindFunction = { fg = cl.mauve },
+            CmpItemKindVariable = { fg = cl.flamingo },
+            CmpItemKindKeyword = { fg = cl.red },
+        }
+    end,
     default_integrations = true,
     integrations = integrations,
 }

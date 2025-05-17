@@ -43,15 +43,22 @@ local function setup_on_attach()
         keymap_set("n", "<leader>gb", gitsigns.blame_line, "blame-line")
         keymap_set("n", "<leader>gB", gitsigns.blame, "blame")
         keymap_set("n", "<leader>gg", gitsigns.preview_hunk_inline, "preview-hunk")
+        keymap_set("n", "<leader>qh", gitsigns.setqflist, "hunks-to-quickfix")
         -- BUG: toggling git signs doesn't work once turned-off
-        keymap_set("n", "<leader>tg", gitsigns.toggle_signs, "git-signs")
+        -- keymap_set("n", "<leader>tg", gitsigns.toggle_signs, "git-signs")
 
-        keymap_set("n", "<leader>hhs", gitsigns.stage_hunk, "stage-hunk")
-        -- map("n", "<leader>hhu", gitsigns.unstage_hunk, "unstage-hunk")
-        -- map("v", "<leader>hhv", gitsigns.select_hunk, "visual-select-hunk")
+        keymap_set("n", "<leader>hhr", gitsigns.reset_hunk, "reset-hunk")
+        keymap_set("n", "<leader>hhR", gitsigns.reset_buffer, "reset-buffer-hunks")
+        keymap_set("n", "<leader>hhS", gitsigns.stage_buffer, "stage-buffer-hunks")
+        keymap_set("n", "<leader>hht", gitsigns.stage_hunk, "toggle-hunk (staging)")
+        keymap_set("n", "<leader>tH", gitsigns.stage_hunk, "toggle-hunk (staging)")
+        -- keymap_set("n", "<leader>hhu", gitsigns., "unstage-hunk")
+        -- keymap_set("v", "<leader>hhv", gitsigns.select_hunk, "visual-select-hunk")
 
-        keymap_set("x", "<leader>hhs", gitsigns.stage_hunk, "stage-hunk")
-        -- map("x", "<leader>hhu", gitsigns.unstage_hunk, "unstage-hunk")
+        -- BUG: unable to control staging hunks by "visual selection"
+        -- stages the entire hunk
+        -- keymap_set("x", "<leader>hht", gitsigns.stage_hunk, "toggle-hunk (staging)")
+        -- keymap_set("x", "<leader>hhR", gitsigns.reset_hunk, "reset-hunk")
 
         keymap_set("n", "<leader>hhp", function()
             gitsigns.nav_hunk("prev")

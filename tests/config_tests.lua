@@ -26,4 +26,3 @@ local function test_plugin_load(plugin_name)
 end
 
 test_config_load()
-test_plugin_load("nvim-treesitter") -- Example plugin

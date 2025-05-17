@@ -73,7 +73,8 @@ local function setup_keymaps()
     -- TODO: jumplists for todo comments need to cycle-through after reach the last one
     keymap_set("n", "]t", todo_comments.jump_next, "Next todo comment")
     keymap_set("n", "[t", todo_comments.jump_prev, "Previous todo comment")
-    keymap_set("n", "<leader>pq", ":TodoQuickFix<CR>", "Previous todo comment")
+    keymap_set("n", "<leader>pq", ":TodoQuickFix<CR>", "todos-to-quickfix")
+    keymap_set("n", "<leader>qt", ":TodoQuickFix<CR>", "todos-to-quickfix")
     keymap_set("n", "<leader>zt", ":TodoFzfLua keywords=TODO,FIX<CR>", "Previous todo comment")
 end
 

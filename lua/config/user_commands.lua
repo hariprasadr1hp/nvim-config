@@ -1,4 +1,4 @@
--- lua/commands.lua
+-- lua/config/user_commands.lua
 
 local helpers = require("config.helpers")
 
@@ -27,6 +27,10 @@ user_cmd("PytestAsMakePrg", function()
     vim.o.makeprg = "pytest"
 end, { desc = "sets `pytest` as the `makeprg`" })
 
+user_cmd("DoesItComeInBlack", function()
+    vim.api.nvim_set_hl(0, "Normal", { bg = "#000000" })
+end, { desc = "sets the background color to black" })
+
 user_cmd("GetFilePath", function()
     print(vim.fn.expand("%:p"))
 end, {})
@@ -44,21 +48,3 @@ user_cmd("GetFileExt", function()
 end, {})
 
 vim.api.nvim_create_user_command("ToggleAutocmdDebug", helpers.toggle_autocmd_debug, {})
-
--- AUTO-COMMANDS
-------------------------------------------------------------------------------------------------
-autocmd("TermOpen", {
-    callback = function()
-        vim.schedule(function()
-            vim.wo.number = true
-            vim.wo.relativenumber = false
-        end)
-    end,
-})
-
-autocmd("TermEnter", {
-    callback = function()
-        vim.wo.number = true
-        vim.wo.relativenumber = true
-    end,
-})

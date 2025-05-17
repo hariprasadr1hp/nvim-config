@@ -49,6 +49,8 @@ local function setup_blink_config()
         enabled = true,
         keymap = {
             preset = "cmdline",
+            ["<Down>"] = { "select_next", "fallback" },
+            ["<Up>"] = { "select_prev", "fallback" },
         },
 
         ---@diagnostic disable-next-line: assign-type-mismatch
@@ -354,10 +356,11 @@ local function setup_blink_config()
     }
 
     opts.sources = {}
-    opts.sources.default = { "lsp", "path", "snippets", "buffer", "emoji" }
+    opts.sources.default = { "avante", "lsp", "path", "snippets", "buffer", "emoji" }
 
     opts.sources.per_filetype = {
         sql = { "snippets", "dadbod", "buffer" },
+        codecompanion = { "codecompanion" },
     }
 
     opts.sources.providers = {}
@@ -450,6 +453,12 @@ local function setup_blink_config()
         module = "vim_dadbod_completion.blink",
     }
 
+    opts.sources.providers.avante = {
+        module = "blink-cmp-avante",
+        name = "Avante",
+        opts = {},
+    }
+
     opts.term = {
         enabled = false,
     }
@@ -469,8 +478,14 @@ return {
         -- event = "VimEnter",
         lazy = true,
         dependencies = {
+            { "Kaiser-Yang/blink-cmp-avante" },
             { "rafamadriz/friendly-snippets" },
             { "echasnovski/mini.snippets" },
+            {
+                "kristijanhusak/vim-dadbod-completion",
+                ft = { "sql", "mysql", "plsql", "bqsql" },
+                lazy = true,
+            },
             { "moyiz/blink-emoji.nvim" },
         },
         version = "1.*",

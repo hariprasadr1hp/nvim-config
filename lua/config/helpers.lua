@@ -73,6 +73,35 @@ function M.load_env_file(filepath)
     file:close()
 end
 
+-- read a file and return its contents as a string.
+---@param path string
+---@return string|nil
+function M.read_file_as_str(path)
+    local file, _ = io.open(path, "r")
+    if not file then
+        vim.notify(string.format("Error: `%s` not found!", path), vim.log.levels.ERROR)
+        return nil
+    end
+    print("file exiists...")
+    local content = file:read("*a")
+    file:close()
+    return content
+end
+
+-- read and decode a JSON file.
+---@param path string
+---@return table|nil
+function M.read_json(path)
+    local content = M.read_file_as_str(path)
+    if not content then
+        return nil
+    end
+
+    ---@type boolean, table
+    local ok, result = pcall(vim.fn.json_decode, content)
+    return ok and result or nil
+end
+
 -- handle toggling to "automcmd debugging"
 -- when toggled on, prints the triggered events
 function M.toggle_autocmd_debug()

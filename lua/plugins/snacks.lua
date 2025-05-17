@@ -68,22 +68,25 @@ local function setup_snacks_config()
     local snacks = require("snacks")
     snacks.setup(opts)
 
-    local function toggle_indent_line()
+    local function toggle_indent_hl()
         if snacks.indent.enabled then
             snacks.indent.disable()
             vim.wo.list = false
+            vim.wo.cursorline = false
         else
             snacks.indent.enable()
             vim.wo.list = true
+            vim.wo.cursorline = true
         end
     end
 
     vim.api.nvim_create_user_command(
-        "ToggleIndentLines",
-        toggle_indent_line,
+        "ToggleIndentHl",
+        toggle_indent_hl,
         { desc = "toggle hightlight for the indent lines" }
     )
-    keymap_set("n", "<leader>ti", toggle_indent_line, "indent-hl")
+
+    keymap_set("n", "<leader>ti", toggle_indent_hl, "indent-hl")
     keymap_set("n", "<leader>tz", snacks.zen.zen, "zen-mode")
 end
 

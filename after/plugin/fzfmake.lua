@@ -88,6 +88,7 @@ local function get_ts_query_matches(bufnr)
     return entries
 end
 
+---@param entries table<string, string>
 local function display_makefile_target(entries)
     local fzflua = require("fzf-lua")
     local toggleterm = require("toggleterm")
@@ -101,8 +102,8 @@ local function display_makefile_target(entries)
     fzflua.fzf_exec(targets, {
         prompt = "Make target> ",
         preview = function(item)
-            local preview = entries[item[1]] or "No preview available"
-            return preview
+            local preview_text = entries[item[1]] or "No preview available"
+            return preview_text
         end,
         actions = {
             default = function(selected, _)

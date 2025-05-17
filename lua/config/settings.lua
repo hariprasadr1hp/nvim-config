@@ -93,7 +93,7 @@ vim.cmd("syntax on")
 vim.opt.termguicolors = true
 
 -- highlight cursor line
-vim.opt.cursorline = true
+vim.opt.cursorline = false
 
 -- colorschemes that can be light or dark will default to dark
 ---@type "dark" | "light"
@@ -138,7 +138,7 @@ vim.opt.fixendofline = false
 -- highlighted yank
 vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function()
-        vim.highlight.on_yank({
+        vim.hl.on_yank({
             higroup = "Visual",
             timeout = 300,
         })
@@ -183,6 +183,21 @@ vim.api.nvim_create_autocmd("VimEnter", {
         end
     end,
 })
+
+-- SHELL
+-------------------------------------------------------------------
+-- only set shell if it exists
+local bash_path = "/opt/homebrew/bin/bash"
+
+if vim.fn.has("mac") == 1 and vim.fn.executable(bash_path) == 1 then
+    vim.opt.shell = bash_path
+end
+
+-- LOCAL CONFIG
+-------------------------------------------------------------------
+-- to read local project configuration inside `.nvim.lua` or `.exrc`
+vim.opt.exrc = true
+vim.opt.secure = true
 
 -- CODING
 -------------------------------------------------------------------

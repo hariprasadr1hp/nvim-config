@@ -12,12 +12,16 @@ local keymap_set = require("config.helpers").keymap_set
 keymap_set("n", "<leader>bd", ":bd<CR>", "delete-buffer")
 keymap_set("n", "<leader>bD", ":bd!<CR>", "DELETE-BUFFER")
 keymap_set("n", "<leader>bf", ":bfirst<CR>", "first-buffer")
-
--- FIX: killing a buffer `<leader>bk` should take to the last viewed buffer, not otherwise
-
--- FIX: killing a buffer `<leader>bk` should still respct the window layout
-
-keymap_set("n", "<leader>bk", ":bp | bd #<CR>", "kill-buffer")
+keymap_set("n", "<leader>bk", function()
+    local curr_buf = vim.api.nvim_get_current_buf()
+    local alt_buf = vim.fn.bufnr("#")
+    if alt_buf > 0 and vim.api.nvim_buf_is_loaded(alt_buf) then
+        vim.cmd("buffer #")
+    else
+        vim.cmd("bnext")
+    end
+    vim.cmd("bdelete " .. curr_buf)
+end, "kill-buffer")
 keymap_set("n", "<leader>bK", ":%bd | enew<CR>", "kill-all-buffers")
 keymap_set("n", "<leader>bl", ":blast<CR>", "last-buffer")
 keymap_set("n", "<leader>bp", ":bprevious<CR>", "prev-buffer")
@@ -78,6 +82,9 @@ keymap_set("n", "<leader>lr", vim.lsp.buf.rename, "lsp-rename")
 keymap_set("n", "<leader>ls", vim.lsp.buf.signature_help, "lsp-signature")
 keymap_set("n", "<leader>lt", vim.lsp.buf.type_definition, "goto-typedef")
 keymap_set("n", "<leader>lx", ":lclose<CR>", "close-loclist")
+keymap_set("n", "<leader>lX", function()
+    vim.fn.setloclist(0, {})
+end, "clear-llist")
 
 keymap_set("n", "<leader>mll", ":echo '`emacs` command 🫠'<CR>")
 keymap_set("n", "<leader>mlt", ":echo '`emacs` command 🫠'<CR>")
@@ -85,16 +92,26 @@ keymap_set("n", "<leader>mlt", ":echo '`emacs` command 🫠'<CR>")
 keymap_set("n", "<leader>om", ":e Makefile<CR>", "Makefile")
 keymap_set("n", "<leader>on", ":messages<CR>", "notifications")
 
+keymap_set("n", "<leader>pc", ":e .nvim.lua<CR>", "config-project")
+keymap_set("n", "<leader>pe", ":e .env<CR>", ".env")
+
 keymap_set("n", "<leader>njj", ":echo '`emacs` command 🫠'<CR>")
 keymap_set("n", "<leader>nri", ":echo '`emacs` command 🫠'<CR>")
 keymap_set("n", "<leader>nrr", ":echo '`emacs` command 🫠'<CR>")
 keymap_set("n", "<leader>nrs", ":echo '`emacs` command 🫠'<CR>")
 
 keymap_set("n", "<leader>qa", ":qa<CR>", "quit-all")
+keymap_set("n", "<leader>qd", vim.diagnostic.setqflist, "diagnostics-to-quickfix")
 keymap_set("n", "<leader>qk", ":cclose<CR>", "close-quickfix")
+keymap_set("n", "<leader>qK", function()
+    vim.fn.setqflist({})
+end, "clear-quickfix")
 keymap_set("n", "<leader>qo", ":copen<CR>", "open-quickfix")
 keymap_set("n", "<leader>qr", ":luafile " .. config_dir .. "/init.lua<CR>", "reload-config")
 keymap_set("n", "<leader>qx", ":cclose<CR>", "close-quickfix")
+keymap_set("n", "<leader>qX", function()
+    vim.fn.setqflist({})
+end, "clear-quickfix")
 
 keymap_set("n", "<leader>td", function()
     vim.diagnostic.enable(not vim.diagnostic.is_enabled())
@@ -106,7 +123,6 @@ keymap_set("n", "<leader>ti", ":setl list!<CR>", "indent-guide")
 keymap_set("n", "<leader>tn", ":setl nu! rnu!<CR>", "line-numbers")
 keymap_set("n", "<leader>tr", ":setl ro!<CR>", "read-only")
 keymap_set("n", "<leader>ts", ":setl spell!<CR>", "spell-check")
-keymap_set("n", "<leader>tT", ":highlight Normal guibg=black<CR>", "bg-black")
 keymap_set("n", "<leader>tw", ":setl nowrap! linebreak breakindent<CR>", "wrap-text")
 
 keymap_set("n", "<leader>w6", ":wincmd +<CR>", "increase-height")
