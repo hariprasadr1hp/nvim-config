@@ -32,19 +32,20 @@ local linters_by_ft = {
 local function setup_linters(parser)
     local linters = {
         sqlfluff = {
+            cmd = "sqlfluff",
+            stdin = false,
             args = {
                 "lint",
-                "--format=json",
-                -- note: users will have to replace the --dialect argument accordingly
                 "--dialect=postgres",
-                parser = parser.from_errorformat("%f:%l:%c: %t%n %m", {
-                    source = "sqlfluff",
-                    severity = {
-                        W = vim.diagnostic.severity.WARN,
-                        E = vim.diagnostic.severity.ERROR,
-                    },
-                }),
             },
+            stream = "stdout",
+            parser = parser.from_errorformat("%f:%l:%c: %t%n %m", {
+                source = "sqlfluff",
+                severity = {
+                    W = vim.diagnostic.severity.WARN,
+                    E = vim.diagnostic.severity.ERROR,
+                },
+            }),
         },
     }
     return linters

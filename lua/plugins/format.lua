@@ -19,7 +19,7 @@ local function format_on_save(bufnr)
     end
 
     -- additional logic, if any
-    return { timeout_ms = 500, lsp_format = true }
+    return { timeout_ms = 10000, lsp_format = true }
 end
 
 local function format_after_save(bufnr)

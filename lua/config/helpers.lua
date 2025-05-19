@@ -4,7 +4,7 @@ local vars = require("config.variables")
 
 local M = {}
 
--- print table, as well as numbers/strings
+-- Print table, as well as numbers/strings
 function M.pprint(value)
     if type(value) == "table" then
         print(vim.inspect(value))
@@ -14,12 +14,12 @@ function M.pprint(value)
     return value
 end
 
--- prints (type) of table, as well as numbers/strings
+-- Prints (type) of table, as well as numbers/strings
 function M.tprint(value)
     print(type(value))
 end
 
--- setting keymaps
+-- Setting keymaps
 function M.keymap_set(mode, lhs, rhs, desc, key_opts)
     local opts = vim.tbl_extend("force", {
         noremap = true,
@@ -30,13 +30,13 @@ function M.keymap_set(mode, lhs, rhs, desc, key_opts)
     vim.keymap.set(mode, lhs, rhs, opts)
 end
 
--- checks if it is in recording mode
+-- Checks if it is in recording mode
 ---@return boolean
 function M.is_recording()
     return vim.fn.reg_recording() ~= ""
 end
 
--- command string to execute the file, based on filetype (if defined)
+-- Command string to execute the file, based on filetype (if defined)
 ---@return string | nil
 function M.eval_cmd_by_ft()
     local cmds_by_ft = {
@@ -49,8 +49,8 @@ function M.eval_cmd_by_ft()
     return cmds_by_ft[vim.bo.filetype] or nil
 end
 
--- load all the variables from the `.env` file (by default)
--- for custom loading, pass the filename as an argument
+-- Load all the variables from the `.env` file (by default)
+-- For custom loading, pass the filename as an argument
 ---@param filepath string | nil
 function M.load_env_file(filepath)
     local file = io.open(filepath or ".env", "r")
@@ -73,7 +73,7 @@ function M.load_env_file(filepath)
     file:close()
 end
 
--- read a file and return its contents as a string.
+-- Read a file and return its contents as a string.
 ---@param path string
 ---@return string|nil
 function M.read_file_as_str(path)
@@ -88,7 +88,7 @@ function M.read_file_as_str(path)
     return content
 end
 
--- read and decode a JSON file.
+-- Read and decode a JSON file.
 ---@param path string
 ---@return table|nil
 function M.read_json(path)
@@ -102,8 +102,8 @@ function M.read_json(path)
     return ok and result or nil
 end
 
--- handle toggling to "automcmd debugging"
--- when toggled on, prints the triggered events
+-- Handle toggling to "automcmd debugging"
+-- When toggled on, prints the triggered events
 function M.toggle_autocmd_debug()
     if vars.autocmd_debug_enabled then
         vim.api.nvim_clear_autocmds({ group = vars.autocmd_debug_augroup })

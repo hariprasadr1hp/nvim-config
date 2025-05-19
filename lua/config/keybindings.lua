@@ -114,7 +114,13 @@ keymap_set("n", "<leader>qX", function()
 end, "clear-quickfix")
 
 keymap_set("n", "<leader>td", function()
-    vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+    local status = vim.diagnostic.is_enabled()
+    vim.diagnostic.enable(not status)
+    if status then
+        vim.notify("diagnotics disabled!", vim.log.levels.INFO)
+    else
+        vim.notify("diagnostics enabled!", vim.log.levels.INFO)
+    end
 end, "diagnostics")
 keymap_set("n", "<leader>tD", helpers.toggle_autocmd_debug, "gibberish-rot13")
 keymap_set("n", "<leader>tG", ":%norm! g??<CR>", "gibberish-rot13")
@@ -147,6 +153,7 @@ keymap_set("n", "<leader>wx", ":wincmd x<CR>", "swap-window")
 keymap_set("n", "<leader>w|", ":wincmd <<CR>", "max-out-width")
 
 keymap_set("x", "<leader>tG", "g?", "gibberish-rot13")
+keymap_set("n", "<leader>sq", HP.SaveVisualSelection, "save-vselect-as-file")
 
 -- SANE DEFAULTS
 -------------------------------------------------------------------

@@ -1,6 +1,53 @@
 {
-  "github ci workflow": {
-    "prefix": "jci",
+  "jdbt_schema_model_tests": {
+    "prefix": "jdbt_schema_model_tests",
+    "body": [
+      "version: 2",
+      "",
+      "models:",
+      "  - name: ${1:MODEL_NAME}",
+      "    description: \"hp snippet for describing the model\"",
+      "    columns:",
+      "      - name: ${2:COLUMN_NAME}",
+      "        description: \"hp snippet for describing the column\"",
+      "        tests:",
+      "          - not_null",
+      "          - unique"
+    ],
+    "description": "hp snippet for writing schema tests for a model"
+  },
+
+  "jdbt_schema_source": {
+    "prefix": "jdbt_schema_source",
+    "body": [
+      "version: 2",
+      "",
+      "sources:",
+      "  - name: ${1:SOURCE_NAME}",
+      "    database: ${2:DATABASE}",
+      "    schema: ${3:SCHEMA}",
+      "    tables:",
+      "      - name: ${4:TABLE_NAME}",
+      "        description: \"hp snippet for describing the source table\""
+    ],
+    "description": "hp snippet for defining a dbt source in schema.yml"
+  },
+
+  "jdbt_seed_config": {
+    "prefix": "jdbt_seed_config",
+    "body": [
+      "seeds:",
+      "  ${1:PROJECT_NAME}:",
+      "    ${2:SEED_NAME}:",
+      "      file: ${2:SEED_NAME}.csv",
+      "      column_types:",
+      "        ${3:COLUMN_NAME}: ${4:DATA_TYPE}"
+    ],
+    "description": "hp snippet for configuring a seed in dbt_project.yml"
+  },
+
+  "jgithub_ci": {
+    "prefix": "jgithub_ci",
     "body": [
       "name: CI",
       "on:",

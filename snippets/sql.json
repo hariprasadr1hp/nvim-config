@@ -1,1 +1,160 @@
-{}
+{
+  "jdbt_config_table": {
+    "prefix": "jdbt_config_table",
+    "body": ["{{ config(", "    materialized='table'", ") }}"],
+    "description": "hp snippet for configuring model as a table"
+  },
+
+  "jdbt_config_view": {
+    "prefix": "jdbt_config_view",
+    "body": ["{{ config(", "    materialized='view'", ") }}"],
+    "description": "hp snippet for configuring model as a view"
+  },
+
+  "jdbt_config_incremental": {
+    "prefix": "jsql_dbt_config_incremental",
+    "body": [
+      "{{ config(",
+      "    materialized='incremental',",
+      "    unique_key='${1:ID_COLUMN}'",
+      ") }}"
+    ],
+    "description": "hp snippet for configuring model as incremental"
+  },
+
+  "jdbt_incremental_logic": {
+    "prefix": "jsql_dbt_incremental_logic",
+    "body": [
+      "{% if is_incremental() %}",
+      "  where ${1:UPDATED_AT_COLUMN} > (",
+      "    select max(${1:UPDATED_AT_COLUMN}) from {{ this }}",
+      "  )",
+      "{% endif %}"
+    ],
+    "description": "hp snippet for adding incremental filtering logic"
+  },
+
+  "jdbt_ref": {
+    "prefix": "jdbt_ref",
+    "body": ["{{ ref('${1:MODEL_NAME}') }}"],
+    "description": "hp snippet for referencing another model using ref"
+  },
+
+  "jdbt_source": {
+    "prefix": "jdbt_source",
+    "body": ["{{ source('${1:SOURCE_NAME}', '${2:TABLE_NAME}') }}"],
+    "description": "hp snippet for referencing a source table"
+  },
+
+  "jdbt_var": {
+    "prefix": "jdbt_var",
+    "body": ["{{ var('${1:VAR_NAME}', '${2:DEFAULT_VALUE}') }}"],
+    "description": "hp snippet for using a variable with default"
+  },
+
+  "jdbt_macro_call": {
+    "prefix": "jdbt_macro_call",
+    "body": ["{{ ${1:MACRO_NAME}(${2:ARGS}) }}"],
+    "description": "hp snippet for calling a jinja macro"
+  },
+
+  "jdbt_if_else": {
+    "prefix": "jdbt_if_else",
+    "body": [
+      "{% if ${1:CONDITION} %}",
+      "  ${2:LOGIC}",
+      "{% else %}",
+      "  ${3:ALT_LOGIC}",
+      "{% endif %}"
+    ],
+    "description": "hp snippet for writing an if-else block in jinja"
+  },
+
+  "jdbt_for_loop": {
+    "prefix": "jdbt_for_loop",
+    "body": [
+      "{% for ${1:ITEM} in ${2:LIST} %}",
+      "  ${3:OUTPUT_LINE}",
+      "{% endfor %}"
+    ],
+    "description": "hp snippet for writing a jinja for loop"
+  },
+
+  "jdbt_model_boilerplate": {
+    "prefix": "jdbt_model_boilerplate",
+    "body": [
+      "{{ config(",
+      "    materialized='table'",
+      ") }}",
+      "",
+      "select *",
+      "from {{ ref('${1:SOURCE_MODEL}') }}"
+    ],
+    "description": "hp snippet for starting a new dbt model"
+  },
+
+  "jmysql_upsert": {
+    "prefix": "jmysql_upsert",
+    "body": [
+      "insert into ${1:TABLE_NAME} (${2:ID}, ${3:COLUMN})",
+      "values (${4:VALUE1}, '${5:VALUE2}')",
+      "on duplicate key update ${3:COLUMN} = values(${3:COLUMN});"
+    ],
+    "description": "hp snippet for performing upsert in mysql"
+  },
+
+  "jpostgres_describe_table": {
+    "prefix": "jpostgres_describe_table",
+    "body": [
+      "select {1:COLUMN_NAME}, {2:COLUMN_TYPE}",
+      "from information_schema.columns",
+      "where table_name = '{3:TABLE}';"
+    ],
+    "description": "hp snippet for table description (postgres)"
+  },
+
+  "jpostgres_exists_table": {
+    "prefix": "jpostgres_exists_table",
+    "body": ["select to_regclass('public.${1:TABLE_NAME}');"],
+    "description": "hp snippet for checking if table exists in postgres"
+  },
+
+  "jpostgres_list_tables": {
+    "prefix": "jpostgres_list_tables",
+    "body": [
+      "select ${1:TABLE} from information_schema.tables where table_schema = 'public';"
+    ],
+    "description": "hp snippet to list tables (postgres)"
+  },
+
+  "jpostgres_upsert": {
+    "prefix": "jpostgres_upsert",
+    "body": [
+      "insert into ${1:TABLE_NAME} (${2:ID}, ${3:COLUMN})",
+      "values (${4:VALUE1}, '${5:VALUE2}')",
+      "on conflict (${2:ID})",
+      "do update set ${3:COLUMN} = excluded.${3:COLUMN};"
+    ],
+    "description": "hp snippet for performing upsert in postgres"
+  },
+
+  "jsqlite_describe_table": {
+    "prefix": "jsqlite_describe_table",
+    "body": ["pragma table_info(${1:TABLE});"],
+    "description": "hp snippet for table description (sqlite)"
+  },
+
+  "jsqlite_exists_table": {
+    "prefix": "jsqlite_exists_table",
+    "body": [
+      "select name from sqlite_master where type='table' and name='${1:TABLE_NAME}';"
+    ],
+    "description": "hp snippet for checking if table exists in sqlite"
+  },
+
+  "jsqlite_list_tables": {
+    "prefix": "jsqlite_list_tables",
+    "body": ["select ${1:TABLE} from sqlite_master where type = 'table';"],
+    "description": "hp snippet to list tables (sqlite)"
+  }
+}

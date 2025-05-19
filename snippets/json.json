@@ -3,11 +3,11 @@
     "prefix": "jsnippetAdd",
     "body": [
       "\"${1:NAME}\": {",
-      "\t\"prefix\": \"$1\",",
+      "\t\"prefix\": \"${2:PREFIX}\",",
       "\t\"body\": [",
       "\t\t$0",
       "\t],",
-      "\t\"description\": \"${2:description for $1}\"",
+      "\t\"description\": \"${3:DESCRIPTION}\"",
       "},"
     ],
     "description": "snippet for adding snippet"
