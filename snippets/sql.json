@@ -138,6 +138,20 @@
     "description": "hp snippet for performing upsert in postgres"
   },
 
+  "jsql_stats": {
+    "prefix": "jsql_stats",
+    "body": [
+      "select",
+      "\tmin(${1:COLUMN}) as min_val,",
+      "\tmax($1) as max_val,",
+      "\tavg($1) as avg_val,",
+      "\tstddev($1) as stddev_val,",
+      "\tsum($1) as total",
+      "from ${2:TABLE};"
+    ],
+    "description": "hp snippet for sql stats (like `df.describe()`)"
+  },
+
   "jsqlite_describe_table": {
     "prefix": "jsqlite_describe_table",
     "body": ["pragma table_info(${1:TABLE});"],

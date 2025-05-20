@@ -36,6 +36,7 @@ keymap_set("n", "<leader>eb", ":Runme<CR>", "eval-buffer")
 keymap_set("n", "<leader>el", ":luafile %<CR>", "source-luafile")
 keymap_set("n", "<leader>ev", ":source %<CR>", "source-vimfile")
 
+keymap_set("n", "<leader>fd", ":e ~/.local/share/db_ui/connections.json<CR>", "dbui-file")
 keymap_set("n", "<leader>fe", ":e .env<CR>", ".env")
 keymap_set("n", "<leader>fi", ":e " .. config_dir .. "/lua/plugins/init.lua<CR>", "plugins/init.lua")
 keymap_set("n", "<leader>fI", ":e " .. config_dir .. "/lua/config/init.lua<CR>", "config/init.lua")
@@ -122,7 +123,7 @@ keymap_set("n", "<leader>td", function()
         vim.notify("diagnostics enabled!", vim.log.levels.INFO)
     end
 end, "diagnostics")
-keymap_set("n", "<leader>tD", helpers.toggle_autocmd_debug, "gibberish-rot13")
+keymap_set("n", "<leader>tD", helpers.toggle_autocmd_debug, "debug-autocmds")
 keymap_set("n", "<leader>tG", ":%norm! g??<CR>", "gibberish-rot13")
 keymap_set("n", "<leader>th", ":set hls!<CR>", "hl-search")
 keymap_set("n", "<leader>ti", ":setl list!<CR>", "indent-guide")
@@ -191,6 +192,11 @@ keymap_set("v", "<C-x>", "<C-x>gv")
 -- window settings
 keymap_set("n", "<C-w>m", "<C-w>|", "maximize-horizontal")
 keymap_set("n", "<C-w>M", "<C-w>_", "maximize-vertical")
+
+keymap_set("n", "<C-w><C-Left>", "<C-w>h", "goto-left-window")
+keymap_set("n", "<C-w><C-Right>", "<C-w>l", "goto-right-window")
+keymap_set("n", "<C-w><C-Up>", "<C-w>k", "goto-top-window")
+keymap_set("n", "<C-w><C-Down>", "<C-w>j", "goto-bottom-window")
 
 -- Move selected line / block of text in visual mode
 -- shift + k to move up

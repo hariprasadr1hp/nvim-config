@@ -1,13 +1,27 @@
 -- lua/plugins/lang/sql.lua
 
-local keymap_set = require("config.helpers").keymap_set
-
 -- NOTE: can find saved connections at `~/.local/share/db_ui/connections.json`
+
+local function setup_dadbod_init()
+    vim.g.db_ui_use_nerd_fonts = 1
+
+    vim.g.db_ui_table_helpers = {
+        postgresql = {
+            Count = 'select count(*) from "{table}"',
+        },
+    }
+
+    vim.g.db_ui_icons = {
+        expanded = "-",
+        collapsed = "+",
+    }
+end
 
 return {
     "kristijanhusak/vim-dadbod-ui",
     dependencies = {
         { "tpope/vim-dadbod", lazy = true },
+        { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql", "bqsql" }, lazy = true },
     },
     cmd = {
         "DBUI",
@@ -18,13 +32,8 @@ return {
     keys = {
         { "<leader>dd", "<cmd>DBUIToggle<CR>", desc = "DBUI" },
     },
-    init = function()
-        vim.g.db_ui_use_nerd_fonts = 1
-    end,
-    config = function()
-        local connection_fpath = "~/.local/share/db_ui/connections.json"
-        keymap_set("n", "<leader>fd", ":e " .. connection_fpath .. "<CR>", "db-connections-file")
-    end,
+    init = setup_dadbod_init,
+    config = function() end,
 }
 
 -- TODO: select the complete query using TS objects

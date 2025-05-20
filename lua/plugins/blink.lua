@@ -365,10 +365,6 @@ local function setup_blink_config()
 
     opts.sources.providers = {}
 
-    -- opts.sources.providers.dadbod = {
-    --     module = "vim_dadbod_completion.blink",
-    -- }
-
     opts.sources.providers.lsp = {
         name = "LSP",
         module = "blink.cmp.sources.lsp",
