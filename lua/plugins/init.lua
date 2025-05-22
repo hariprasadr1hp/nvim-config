@@ -47,6 +47,7 @@ local opts = {
 
     require("plugins.ai.mcphub"),
     require("plugins.ai.codecompanion"),
+    require("plugins.ai.windsurf"),
     -- require("plugins.ai.avante"),
 
     require("plugins.custom"),

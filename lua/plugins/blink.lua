@@ -356,10 +356,19 @@ local function setup_blink_config()
     }
 
     opts.sources = {}
-    opts.sources.default = { "avante", "lsp", "path", "snippets", "buffer", "emoji" }
+    opts.sources.default = {
+        "lsp",
+        "path",
+        "snippets",
+        "buffer",
+        "emoji",
+        -- "avante",
+        "codeium",
+    }
 
     opts.sources.per_filetype = {
         sql = { "snippets", "dadbod", "buffer" },
+        oil = { "path", "buffer" },
         codecompanion = { "codecompanion" },
     }
 
@@ -449,10 +458,16 @@ local function setup_blink_config()
         module = "vim_dadbod_completion.blink",
     }
 
-    opts.sources.providers.avante = {
-        module = "blink-cmp-avante",
-        name = "Avante",
-        opts = {},
+    -- opts.sources.providers.avante = {
+    --     module = "blink-cmp-avante",
+    --     name = "Avante",
+    --     opts = {},
+    -- }
+
+    opts.sources.providers.codeium = {
+        name = "Codeium",
+        module = "codeium.blink",
+        async = true,
     }
 
     opts.term = {
@@ -474,7 +489,8 @@ return {
         -- event = "VimEnter",
         lazy = true,
         dependencies = {
-            { "Kaiser-Yang/blink-cmp-avante" },
+            -- { "Kaiser-Yang/blink-cmp-avante" },
+            { "Exafunction/windsurf.nvim" },
             { "rafamadriz/friendly-snippets" },
             { "echasnovski/mini.snippets" },
             {
