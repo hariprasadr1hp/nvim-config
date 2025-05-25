@@ -90,7 +90,7 @@ end, "clear-llist")
 keymap_set("n", "<leader>mll", ":echo '`emacs` command 🫠'<CR>")
 keymap_set("n", "<leader>mlt", ":echo '`emacs` command 🫠'<CR>")
 
-keymap_set("n", "<leader>om", ":e Makefile<CR>", "Makefile")
+keymap_set("n", "<leader>om", ":e Makefile<CR>", "makefile")
 keymap_set("n", "<leader>on", ":messages<CR>", "notifications")
 
 keymap_set("n", "<leader>pc", ":e .nvim.lua<CR>", "config-project")

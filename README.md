@@ -22,12 +22,27 @@ sudo apt install neovim
 
 ## Setting up
 
-- clone the repo at `~/.config/nvim`
-- inside `neovim`, `:Lazy` and `:Mason` to load plugins and lsp support for languages
+```bash
+cd ~/.config/
+gh repo clone hariprasadr1hp/nvim-config nvim
+ansible-playbook nvim_playbook.yml
+```
 
-## References
+Add a `.env` file
 
-- [https://www.lazyvim.org/](https://www.lazyvim.org/)
-- [gh:nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
-- [gh:mason.nvim](https://github.com/williamboman/mason.nvim)
-- [gh:nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
+```
+# [ORG MODE]
+ORG_DIR=
+ORG_ROAM_DB_PATH=
+
+# [LLM]
+OLLAMA_SERVER_HOST=
+OLLAMA_LOCAL_HOST=
+OLLAMA_DEFAULT_SERVER_MODEL=
+OLLAMA_DEFAULT_LOCAL_MODEL=
+OPENAI_API_KEY=
+CODEIUM_API_KEY=
+CHATGPT_URL=
+```
+
+- inside `neovim`, `:Lazy` and `:Mason` to load plugins and lsp/language-related-tools respectively

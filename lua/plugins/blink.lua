@@ -367,9 +367,10 @@ local function setup_blink_config()
     }
 
     opts.sources.per_filetype = {
-        sql = { "snippets", "dadbod", "buffer" },
+        -- sql = { "snippets", "dadbod", "buffer" },
         oil = { "path", "buffer" },
         codecompanion = { "codecompanion" },
+        dap_repl = {},
     }
 
     opts.sources.providers = {}
@@ -456,6 +457,9 @@ local function setup_blink_config()
     opts.sources.providers.dadbod = {
         name = "Dadbod",
         module = "vim_dadbod_completion.blink",
+        should_show_items = function()
+            return vim.tbl_contains({ "sql", "bqsql", "mysql", "plsql" }, vim.bo.filetype)
+        end,
     }
 
     -- opts.sources.providers.avante = {

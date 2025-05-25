@@ -44,7 +44,7 @@ local function setup_lsp_autocmds(event)
     end
 
     local keymap_set = require("config.helpers").keymap_set
-    keymap_set("n", "<leader>oM", ":Mason<CR>", "Mason")
+    -- keymap_set("n", "<leader>oM", ":Mason<CR>", "Mason")
 
     buf_keymap_set("n", "<leader>il", ":LspInfo<CR>", current_buffer, "lsp-info")
     buf_keymap_set("n", "<leader>lI", ":LspInfo<CR>", current_buffer, "lsp-info")
@@ -107,7 +107,6 @@ local function setup_lsp_config()
         terraformls = {},
         tflint = {},
         vimls = {},
-        volar = {},
 
         emmet_ls = {
             filetypes = {
@@ -218,7 +217,13 @@ return {
     {
         "neovim/nvim-lspconfig",
         dependencies = {
-            { "williamboman/mason.nvim", opts = mason_opts },
+            {
+                "williamboman/mason.nvim",
+                keys = {
+                    { "<leader>oT", "<cmd>Mason<CR>", desc = "tools-mason" },
+                },
+                opts = mason_opts,
+            },
             "williamboman/mason-lspconfig.nvim",
             "WhoIsSethDaniel/mason-tool-installer.nvim",
             { "j-hui/fidget.nvim", opts = {} },
