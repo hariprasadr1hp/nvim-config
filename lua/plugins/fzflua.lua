@@ -252,7 +252,7 @@ local function setup_fzflua_keymaps()
     keymap_set("n", "<leader>zV", fzflua.command_history, "vim-command-history")
     keymap_set("n", "<leader>zx", fzflua.resume, "resume")
     keymap_set("n", "<leader>zz", function()
-        fzflua.live_grep_resume({ cwd = vim.fn.stdpath("config") })
+        fzflua.live_grep_resume({ cwd = "." })
     end, "live-grep")
 
     -- keymap_set("n", "<leader>zz", fzflua.live_grep_resume, "live-grep")

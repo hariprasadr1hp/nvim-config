@@ -49,10 +49,23 @@ local actions_markdown = {
     },
 }
 
+local actions_mermaid = {
+    {
+        name = "preview as `.svg`",
+        action = function()
+            local open_cmd = vim.fn.has("mac") == 1 and "open" or "xdg-open"
+            local file = vim.fn.expand("%")
+            local out = vim.fn.expand("%:r") .. ".svg"
+            vim.cmd(("!mmdc -i %s -o %s && %s %s"):format(file, out, open_cmd, out))
+        end,
+    },
+}
+
 local filetype_actions = {
     lua = actions_lua,
     python = actions_python,
     markdown = actions_markdown,
+    mermaid = actions_mermaid,
 }
 
 function M.show_actions()
