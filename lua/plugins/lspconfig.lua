@@ -1,5 +1,4 @@
--- lua/plugins/lsp/lspconfig.lua
---
+-- lua/plugins/lspconfig.lua
 
 local mason_opts = {
     ui = {
@@ -164,6 +163,37 @@ local function setup_lsp_config()
                     end,
                 })
             end,
+        },
+
+        yamlls = {
+            filetypes = { "yaml", "yml" },
+            settings = {
+                yaml = {
+                    schemas = {
+                        kubernetes = "k8s-*.yaml",
+                        ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/**/*.{yml,yaml}",
+                        ["https://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
+                        ["https://json.schemastore.org/circleciconfig"] = ".circleci/**/*.{yml,yaml}",
+                        ["https://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
+                        ["https://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
+                        ["https://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
+                        ["https://json.schemastore.org/github-workflow"] = ".github/workflows/*",
+                        ["https://json.schemastore.org/mkdocs-1.6"] = "mkdocs.{yml,yaml}",
+                        ["https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/dbt_yml_files-latest.json"] = {
+                            "/**/*.yml",
+                            "!profiles.yml",
+                            "!dbt_project.yml",
+                            "!packages.yml",
+                            "!selectors.yml",
+                            "!profile_template.yml",
+                            "!package-lock.yml",
+                        },
+                        ["https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/dbt_project-latest.json"] = "dbt_project.yml",
+                        ["https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/selectors-latest.json"] = "selectors.yml",
+                        ["https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/packages-latest.json"] = "packages.yml",
+                    },
+                },
+            },
         },
     }
 

@@ -34,6 +34,7 @@ local function setup_toggleterm_config()
     keymap_set("n", "<leader>mc", make_runner("clean"), "make-clean")
     keymap_set("n", "<leader>md", make_runner("debug"), "make-debug")
     keymap_set("n", "<leader>mf", make_runner("format"), "make-format")
+    keymap_set("n", "<leader>ml", make_runner("lint"), "make-lint")
     keymap_set("n", "<leader>mm", make_runner("all"), "make")
     keymap_set("n", "<leader>mt", make_runner("test"), "make-test")
 

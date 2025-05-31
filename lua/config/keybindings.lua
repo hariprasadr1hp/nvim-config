@@ -87,9 +87,6 @@ keymap_set("n", "<leader>lX", function()
     vim.fn.setloclist(0, {})
 end, "clear-llist")
 
-keymap_set("n", "<leader>mll", ":echo '`emacs` command 🫠'<CR>")
-keymap_set("n", "<leader>mlt", ":echo '`emacs` command 🫠'<CR>")
-
 keymap_set("n", "<leader>om", ":e Makefile<CR>", "makefile")
 keymap_set("n", "<leader>on", ":messages<CR>", "notifications")
 
