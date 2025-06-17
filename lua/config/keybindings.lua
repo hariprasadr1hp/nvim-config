@@ -9,6 +9,16 @@ local keymap_set = require("config.helpers").keymap_set
 
 -- LEADER KEY-BINDINGS
 -------------------------------------------------------------------
+keymap_set("n", "<leader>b0", ":bfirst<CR>", "first-buffer")
+keymap_set("n", "<leader>b1", ":1bnext<CR>", "buffer-1")
+keymap_set("n", "<leader>b2", ":2bnext<CR>", "buffer-2")
+keymap_set("n", "<leader>b3", ":3bnext<CR>", "buffer-3")
+keymap_set("n", "<leader>b4", ":4bnext<CR>", "buffer-4")
+keymap_set("n", "<leader>b5", ":5bnext<CR>", "buffer-5")
+keymap_set("n", "<leader>b6", ":6bnext<CR>", "buffer-6")
+keymap_set("n", "<leader>b7", ":7bnext<CR>", "buffer-7")
+keymap_set("n", "<leader>b8", ":8bnext<CR>", "buffer-8")
+keymap_set("n", "<leader>b9", ":blast<CR>", "last-buffer")
 keymap_set("n", "<leader>bd", ":bd<CR>", "delete-buffer")
 keymap_set("n", "<leader>bD", ":bd!<CR>", "DELETE-BUFFER")
 keymap_set("n", "<leader>bf", ":bfirst<CR>", "first-buffer")
@@ -151,7 +161,7 @@ keymap_set("n", "<leader>wx", ":wincmd x<CR>", "swap-window")
 keymap_set("n", "<leader>w|", ":wincmd <<CR>", "max-out-width")
 
 keymap_set("x", "<leader>tG", "g?", "gibberish-rot13")
-keymap_set("n", "<leader>sq", HP.SaveVisualSelection, "save-vselect-as-file")
+keymap_set("x", "<leader>sq", HP.SaveVisualSelection, "save-vselect-as-file")
 
 -- SANE DEFAULTS
 -------------------------------------------------------------------

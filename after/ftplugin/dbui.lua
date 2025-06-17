@@ -23,5 +23,5 @@ vim.api.nvim_create_autocmd("WinLeave", {
 })
 
 -- Define highlight groups (use `default`, to not override plugin themes)
-vim.cmd("highlight default DBUIWindowBg guibg=#2a2e36")
-vim.cmd("highlight default DBUIActiveWindowBg guibg=#3b4252")
+-- vim.cmd("highlight default DBUIWindowBg guibg=#2a2e36")
+-- vim.cmd("highlight default DBUIActiveWindowBg guibg=#3b4252")

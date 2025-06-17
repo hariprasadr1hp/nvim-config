@@ -75,6 +75,7 @@ local function setup_mini_pick_config()
     local keymap_set = require("config.helpers").keymap_set
 
     keymap_set("n", "<leader>,", ":Pick files<CR>", "files")
+    keymap_set("n", "<leader>bb", ":Pick buffers<CR>", "buffers")
     keymap_set("n", "<leader>bB", ":Pick buffers<CR>", "buffers")
 end
 
@@ -85,3 +86,5 @@ return {
         config = setup_mini_pick_config,
     },
 }
+
+-- TODO: keymap `<M-{1,2,3,4,5}>` to select choice, by the order

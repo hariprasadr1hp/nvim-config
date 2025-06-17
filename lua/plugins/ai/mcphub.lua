@@ -49,6 +49,9 @@ return {
         "nvim-lua/plenary.nvim",
     },
     cmd = "MCPHub",
+    keys = {
+        { "<leader>oM", "<cmd>MCPHub<CR>", desc = "MCPHub" },
+    },
     build = "bundled_build.lua",
     config = setup_mcphub,
 }

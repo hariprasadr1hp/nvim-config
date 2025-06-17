@@ -508,3 +508,9 @@ return {
         config = setup_blink_config,
     },
 }
+
+-- TODO: show numbers before completions (1, 2, 3 etc.)
+
+-- TODO: possible to filter by a specific source? (lsp, buffer etc.,)
+
+-- TODO: possible to filter by a specific symbol (show-only)?

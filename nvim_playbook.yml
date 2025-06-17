@@ -10,12 +10,41 @@
     - name: Install packages (MacOS)
       when: ansible_facts['os_family'] == 'Darwin'
       homebrew:
-        name: [make cmake git ripgrep, fd, jq, bat, go, node, gh, glab, curl, xclip, sox, ffmpeg, tidy-html5]
+        name:
+          - make cmake git ripgrep
+          - fd
+          - jq
+          - bat
+          - go
+          - node
+          - gh
+          - glab
+          - curl
+          - xclip
+          - sox
+          - ffmpeg
+          - tidy-html5
+          - yamlfix
+          - yamlfmt
         state: present
     - name: Install packages on (Debian/Ubuntu)
       when: ansible_facts['os_family'] == 'Debian'
       apt:
-        name: [make cmake git ripgrep, fd-find, jq, bat, golang, nodejs, npm, gh, glab, curl, xclip, sox, ffmpeg, tidy]
+        name:
+          - make cmake git ripgrep
+          - fd-find
+          - jq
+          - bat
+          - golang
+          - nodejs
+          - npm
+          - gh
+          - glab
+          - curl
+          - xclip
+          - sox
+          - ffmpeg
+          - tidy
         state: present
         update_cache: true
     - name: Install global npm packages
