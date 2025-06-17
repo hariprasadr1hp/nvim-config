@@ -52,15 +52,43 @@ local formatters_by_ft = {
     typescript = { "prettier", stop_after_first = true },
     typescriptreact = { "prettier", stop_after_first = true },
     vue = { "prettier", stop_after_first = true },
-    yaml = { "yamlfix" },
+    -- yaml = { "yamlfix", "yamlfmt" },
+    yaml = function(bufnr)
+        local filename = vim.api.nvim_buf_get_name(bufnr)
+        if filename:match("k8s") or filename:match("deployment") then
+            return { "yamlfmt" }
+        else
+            return { "yamlfix" }
+        end
+    end,
     zsh = { "shfmt" },
 }
 
 local formatters = {
     yamlfix = {
-        -- https://lyz-code.github.io/yamlfix/
-        command = "yaml-fix",
-        args = { "--stdin", "--quiet", "--config", vim.fn.expand("~/.config/yamlfix.toml") },
+        command = "yamlfix",
+        args = {
+            "--config-file",
+            vim.fn.expand("~/.config/yamlfix.toml"),
+            "$FILENAME",
+        },
+        stdin = false,
+    },
+
+    yamlfmt = {
+        command = "yamlfmt",
+        args = { "$FILENAME" },
+        stdin = false,
+    },
+
+    sqlfluff = {
+        command = "sqlfluff",
+        args = {
+            "fix",
+            "--dialect=postgres",
+            "--disable-progress-bar",
+            "-",
+        },
         stdin = true,
     },
 }
@@ -108,6 +136,8 @@ local function setup_format_config()
             bang = true,
         })
 
+        -- BUG: enabling formatting after disabling requires an additional modify to start working again
+        -- i.e) the formatter doesn't correct unformatted code, unless a new change in induced
         vim.api.nvim_create_user_command("FormatEnable", function()
             vim.b.disable_autoformat = false
             vim.g.disable_autoformat = false

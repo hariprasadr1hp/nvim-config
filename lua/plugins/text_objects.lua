@@ -46,28 +46,26 @@ local opts = {
             enable = true,
             set_jumps = true,
 
+            -- TODO: `[o` jumps: to goto prev/next text object under cursor
+            -- TODO: `[f` jumps: to goto prev/next functions,
             goto_previous_start = {
                 ["[f"] = { query = "@function.outer", desc = "prev-function" },
-                ["[i"] = { query = "@conditional.outer", desc = "prev-conditional" },
-                ["[l"] = { query = "@loop.outer", desc = "prev-loop" },
+                ["[o"] = { query = "", desc = "prev-object" },
             },
 
             goto_previous_end = {
                 ["[F"] = { query = "@function.outer", desc = "prev-function" },
-                ["[I"] = { query = "@conditional.outer", desc = "prev-conditional" },
-                ["[L"] = { query = "@loop.outer", desc = "prev-loop" },
+                ["[O"] = { query = "", desc = "prev-object" },
             },
 
             goto_next_start = {
                 ["]f"] = { query = "@function.outer", desc = "next-function" },
-                ["]i"] = { query = "@conditional.outer", desc = "next-conditional" },
-                ["]l"] = { query = "@loop.outer", desc = "next-loop" },
+                ["]o"] = { query = "", desc = "next-object" },
             },
 
             goto_next_end = {
                 ["]F"] = { query = "@function.outer", desc = "next-function" },
-                ["]I"] = { query = "@conditional.outer", desc = "next-conditional" },
-                ["]L"] = { query = "@loop.outer", desc = "next-loop" },
+                ["]O"] = { query = "", desc = "next-object" },
             },
         },
     },
