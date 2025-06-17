@@ -4,7 +4,10 @@ return {
     {
         dir = vim.fn.stdpath("config") .. "/lua/plugins/custom/buffer",
         name = "zzbuffer",
-        cmd = { "BufferActions", "BufferInfo" },
+        cmd = {
+            "BufferActions",
+            "BufferInfo",
+        },
         keys = {
             { "<leader>aa", "<cmd>BufferActions<CR>", desc = "actions-by-ft" },
             { "<leader>ib", "<cmd>BufferInfo<CR>", desc = "buffer-info" },

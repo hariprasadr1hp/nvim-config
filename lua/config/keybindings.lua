@@ -215,9 +215,6 @@ keymap_set("x", "K", "move '<-2<CR>gv-gv", "move-select-lines-up")
 -- using \V (no-magic)
 keymap_set("x", "//", [[y/\V<C-R>=escape(@", '/\')<CR><CR>]], "search-selected")
 
--- `bn` as escape characters
-keymap_set("i", "bn", "<Esc>", "to-normal-mode")
-
 -- JUMPS
 -------------------------------------------------------------------
 -- [b] buffer chain

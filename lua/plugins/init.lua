@@ -50,6 +50,8 @@ local opts = {
     require("plugins.ai.windsurf"),
     -- require("plugins.ai.avante"),
 
+    require("plugins.dbt"),
+
     require("plugins.custom"),
     require("plugins.whichkey"),
 

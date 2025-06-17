@@ -102,6 +102,26 @@ function M.read_json(path)
     return ok and result or nil
 end
 
+--- Resolve local or remote plugin source
+---@param name string
+---@param local_path string
+---@param remote string
+---@param opts table?
+---@return table
+function M.use_local_or_remote_plugin_path(name, local_path, remote, opts)
+    opts = opts or {}
+    opts.name = name
+
+    ---@diagnostic disable-next-line: undefined-field
+    if vim.loop.fs_stat(local_path) then
+        opts.dir = local_path
+    else
+        opts[1] = remote
+    end
+
+    return opts
+end
+
 -- Handle toggling to "automcmd debugging"
 -- When toggled on, prints the triggered events
 function M.toggle_autocmd_debug()

@@ -26,19 +26,87 @@ local actions_lua = {
 
 local actions_python = {
     {
-        name = "format with black",
+        name = "format: using `black`",
         action = function()
             vim.cmd("!black %")
         end,
     },
 
     {
-        name = "run pytest",
+        name = "tests: run `pytest`",
         action = function()
             vim.cmd("!pytest %")
         end,
     },
 }
+
+local function get_actions_sql()
+    local dbt = require("dbt")
+
+    return {
+        {
+            name = "dbt: jump: to `compiled` file",
+            action = function()
+                dbt.jump_to_compiled()
+            end,
+        },
+
+        {
+            name = "dbt: jump: to `run` file",
+            action = function()
+                dbt.jump_to_run()
+            end,
+        },
+
+        {
+            name = "dbt: jump: to `model` file",
+            action = function()
+                dbt.jump_to_model()
+            end,
+        },
+
+        {
+            name = "dbt: select: upstream `models`",
+            action = function()
+                dbt.select_upstream_models()
+            end,
+        },
+
+        {
+            name = "dbt: select: downstream `models`",
+            action = function()
+                dbt.select_downstream_models()
+            end,
+        },
+
+        {
+            name = "dbt: diff: `model` vs `compiled`",
+            action = function()
+                dbt.diff_model_vs_compiled()
+            end,
+        },
+
+        {
+            name = "dbt: jump: between `model` and `schema`",
+            action = function()
+                dbt.jump_between_model_and_schema()
+            end,
+        },
+    }
+end
+
+local function get_actions_yaml()
+    local dbt = require("dbt")
+
+    return {
+        {
+            name = "dbt: jump: between `model` and `schema`",
+            action = function()
+                dbt.jump_between_model_and_schema()
+            end,
+        },
+    }
+end
 
 local actions_markdown = {
     {
@@ -64,6 +132,8 @@ local actions_mermaid = {
 local filetype_actions = {
     lua = actions_lua,
     python = actions_python,
+    sql = get_actions_sql(),
+    yaml = get_actions_yaml(),
     markdown = actions_markdown,
     mermaid = actions_mermaid,
 }
