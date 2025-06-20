@@ -265,7 +265,7 @@ local function setup_blink_config()
     opts.fuzzy = {
         implementation = "rust",
         prebuilt_binaries = {
-            force_version = "v1.1.1",
+            force_version = "v1.4.1",
         },
         sorts = {
             "exact",
