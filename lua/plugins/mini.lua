@@ -61,7 +61,7 @@ local mini_icon_opts = {
 
 local function setup_mini_config()
     require("mini.ai").setup(mini_ai_opts)
-    require("mini.surround").setup(mini_surrround_opts)
+    -- require("mini.surround").setup(mini_surrround_opts)
     require("mini.hipatterns").setup(mini_hipatterns_opts)
     require("mini.extra").setup()
     require("mini.trailspace").setup()

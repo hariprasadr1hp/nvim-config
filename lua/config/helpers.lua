@@ -40,11 +40,12 @@ end
 ---@return string | nil
 function M.eval_cmd_by_ft()
     local cmds_by_ft = {
-        python = " python " .. vim.fn.expand("%:p"),
-        javascript = " node " .. vim.fn.expand("%:p"),
-        lua = " lua " .. vim.fn.expand("%:p"),
         c = " gcc " .. vim.fn.expand("%:p") .. " -o /tmp/a.out && /tmp/a.out",
         cpp = " g++ " .. vim.fn.expand("%:p") .. " -o /tmp/a.out && /tmp/a.out",
+        javascript = " node " .. vim.fn.expand("%:p"),
+        julia = " julia " .. vim.fn.expand("%:p"),
+        lua = " lua " .. vim.fn.expand("%:p"),
+        python = " python " .. vim.fn.expand("%:p"),
     }
     return cmds_by_ft[vim.bo.filetype] or nil
 end

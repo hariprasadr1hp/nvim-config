@@ -101,6 +101,7 @@ local function setup_lsp_config()
         clangd = {},
         gitlab_ci_ls = {},
         jinja_lsp = {},
+        julials = {},
         sqls = {},
         ts_ls = {},
         terraformls = {},
