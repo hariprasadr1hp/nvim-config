@@ -1,0 +1,125 @@
+{
+  "jcumsum": {
+    "prefix": "jcumsum",
+    "body": [
+      "def cumsum:",
+      "\treduce .[] as \\$x ([];",
+      "\t. + [(\\$x + (.[-1] // 0))]);"
+    ],
+    "description": "snippet for cumulative sum function"
+  },
+
+  "jcumprod": {
+    "prefix": "jcumprod",
+    "body": [
+      "def cumprod:",
+      "\treduce .[] as \\$x ([];",
+      "\t. + [(\\$x * (.[-1] // 1))]);"
+    ],
+    "description": "snippet for cumulative product function"
+  },
+
+  "jdense_rank": {
+    "prefix": "jdense_rank",
+    "body": [
+      "def dense_rank:",
+      "\t. as \\$orig",
+      "\t| (sort | unique | to_entries | map({value: .value, rank: (.key + 1)})) as \\$ranks",
+      "\t| \\$orig",
+      "\t| map(",
+      "\t\t. as \\$val",
+      "\t\t| {",
+      "\t\t    value: \\$val,",
+      "\t\t    rank: (\\$ranks[] | select(.value == \\$val) | .rank)",
+      "\t\t}",
+      "\t);"
+    ],
+    "description": "`dense_rank` function to return a list to ranks (densely-packed) for a list of values"
+  },
+
+  "jlag": {
+    "prefix": "jlag",
+    "body": [
+      "def lag_n(n; default):",
+      "\t. as \\$a",
+      "\t| [ range(0; (\\$a|length))",
+      "\t| if . - n >= 0 then \\$a[. - n] else default end",
+      "\t];"
+    ],
+    "description": "`lag` function, to compute the previous values for a list of values"
+  },
+
+  "jlead": {
+    "prefix": "jlead",
+    "body": [
+      "def lead_n(n; default):",
+      "\t. as \\$a",
+      "\t| [ range(0; (\\$a|length))",
+      "\t| if . + n < (\\$a|length) then \\$a[. + n] else default end",
+      "\t];"
+    ],
+    "description": "`lead` function, to compute the next values for a list of values"
+  },
+
+  "jmedian": {
+    "prefix": "jmedian",
+    "body": [
+      "def median:",
+      "\tsort |",
+      "\t\tif (length % 2 == 1)",
+      "\t\t\tthen .[length / 2]",
+      "\t\telse",
+      "\t\t\t(.[(length / 2) - 1] + .[length / 2]) / 2",
+      " \tend;"
+    ],
+    "description": "`median` function, to return the median of a list of values"
+  },
+
+  "jmode": {
+    "prefix": "jmode",
+    "body": [
+      "def mode:",
+      "\tgroup_by(.)",
+      "\t| map({value: .[0], count: length})",
+      "\t| max_by(.count)",
+      "\t| .value;"
+    ],
+    "description": "`mode` function, to return the most frequent value, for a list of values"
+  },
+
+  "jmoving_avg": {
+    "prefix": "jmoving_avg",
+    "body": [
+      "def moving_avg(w):",
+      "\t. as \\$a",
+      "\t| [ range(0; ($a|length) - w + 1)",
+      "\t| (\\$a[. : . + w] | add / w)",
+      "\t];"
+    ],
+    "description": "`moving_average` function to compute the moving averages for a list, based on the kernel size"
+  },
+
+  "jpercentile": {
+    "prefix": "jpercentile",
+    "body": ["def percentile(n):", "\tsort | .[(length * n / 100 | floor)];"],
+    "description": "`percentile` function, to return the nth percentile value for a list"
+  },
+
+  "jquartile": {
+    "prefix": "jquartile",
+    "body": [
+      "def quartiles:",
+      "\tsort",
+      "\t| . as \\$a",
+      "\t| \\$a[ ( (length * 0.25) | floor ) ] as \\$q1",
+      "\t| \\$a[ ( (length * 0.50) | floor ) ] as \\$q2",
+      "\t| \\$a[ ( (length * 0.75) | floor ) ] as \\$q3",
+      "\t| {",
+      "\t\tQ1: \\$q1,",
+      "\t\tQ2: \\$q2,",
+      "\t\tQ3: \\$q3",
+      "\t};"
+    ],
+    "description": "`quartile` function, to return Q1, Q2, Q3 for the given list of values"
+  }
+}
