@@ -36,6 +36,7 @@ local opts = {
     require("plugins.lualine"),
     require("plugins.outline"),
     require("plugins.todo_comments"),
+    require("plugins.text_transform"),
 
     require("plugins.diff"),
     require("plugins.cloak"),
