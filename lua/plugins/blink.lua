@@ -272,7 +272,9 @@ local function setup_blink_config()
             "score",
             "sort_text",
         },
-        use_frecency = true,
+        frecency = {
+            enabled = true,
+        },
     }
 
     opts.keymap = {
