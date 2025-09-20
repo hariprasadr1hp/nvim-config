@@ -43,5 +43,5 @@ vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 
 
 " `bn` as escape characters
-inoremap bn <Esc>
+" inoremap bn <Esc>
 

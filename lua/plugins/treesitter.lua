@@ -18,6 +18,7 @@ local ensure_installed = {
     "hurl",
     "javascript",
     "json",
+    "jsonc",
     "julia",
     "kdl",
     "lua",
@@ -45,7 +46,7 @@ local ensure_installed = {
 
 local highlight = {
     enable = true,
-    additional_vim_regex_highlighting = { "ruby" },
+    additional_vim_regex_highlighting = { "ruby", "sqlx" },
 }
 
 local indent = {
@@ -81,6 +82,18 @@ local opts = {
 }
 
 local function setup_treesitter_config()
+    local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+    parser_config.sql_bigquery = {
+        install_info = {
+            url = "https://github.com/takegue/tree-sitter-sql-bigquery",
+            files = { "src/parser.c", "src/scanner.c" },
+            branch = "main",
+        },
+        filetype = "sql",
+    }
+
+    vim.treesitter.language.register("sql_bigquery", "sqlx")
+
     local treesitter = require("nvim-treesitter.configs")
     treesitter.setup(opts)
 end
