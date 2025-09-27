@@ -59,11 +59,11 @@ local keymap = {
         ["<F7>"] = "toggle-preview-ts-ctx",
         ["<F8>"] = "preview-ts-ctx-dec",
         ["<F9>"] = "preview-ts-ctx-inc",
-        ["<S-Left>"] = "preview-reset",
-        ["<S-down>"] = "preview-page-down",
-        ["<S-up>"] = "preview-page-up",
-        ["<M-S-down>"] = "preview-down",
-        ["<M-S-up>"] = "preview-up",
+
+        ["<M-p>"] = "toggle-preview-cw",
+        ["<M-S-p>"] = "toggle-preview-ccw",
+        ["<M-t>"] = "toggle-preview",
+        ["<M-/>"] = "toggle-help",
     },
 
     fzf = {
@@ -195,9 +195,15 @@ local function setup_fzflua_keymaps()
         fzflua.files({ cwd = vim.fn.stdpath("config") })
     end, "config-files")
     keymap_set("n", "<leader>gc", fzflua.git_commits, "commits")
-    keymap_set("n", "<leader>gC", fzflua.git_bcommits, "buffer-commits")
     keymap_set("n", "<leader>gf", fzflua.git_bcommits, "buffer-commits")
+    keymap_set("n", "<leader>gF", fzflua.git_files, "branches")
+    keymap_set("n", "<leader>gs", fzflua.git_stash, "buffer-commits")
+    keymap_set("n", "<leader>gt", fzflua.git_tags, "buffer-commits")
+    keymap_set("n", "<leader>gw", function()
+        fzflua.files({ cwd = "./.github/workflows" })
+    end, "github-workflows")
     keymap_set("n", "<leader>gy", fzflua.git_branches, "branches")
+    keymap_set("n", "<leader>g.", fzflua.git_files, "branches")
 
     keymap_set("n", "<leader>hf", fzflua.builtin, "buitins")
     keymap_set("n", "<leader>hk", fzflua.keymaps, "keymaps")
@@ -251,6 +257,7 @@ local function setup_fzflua_keymaps()
     keymap_set("n", "<leader>zv", fzflua.commands, "vim-commands")
     keymap_set("n", "<leader>zV", fzflua.command_history, "vim-command-history")
     keymap_set("n", "<leader>zx", fzflua.resume, "resume")
+    --TODO: a toggling option for hidden/ignore files on live-grep
     keymap_set("n", "<leader>zz", function()
         fzflua.live_grep({ cwd = ".", resume = true })
     end, "live-grep")

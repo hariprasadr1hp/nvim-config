@@ -14,6 +14,7 @@ local ensure_installed = {
     "gitignore",
     "graphql",
     "haskell",
+    "hcl",
     "html",
     "hurl",
     "javascript",

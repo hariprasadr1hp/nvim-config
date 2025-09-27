@@ -145,6 +145,9 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     end,
 })
 
+-- add border to windows
+vim.opt.winborder = "rounded"
+
 -- COMPLETION
 -------------------------------------------------------------------
 -- Faster completion

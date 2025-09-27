@@ -15,12 +15,12 @@ vnoremap <C-x> <C-x>gv
 
 
 " buffer chain
-nnoremap [b :bp<CR>
-nnoremap ]b :bn<CR>
+" nnoremap [b :bp<CR>
+" nnoremap ]b :bn<CR>
 
 " tab chain
-nnoremap [j :tabprevious<CR>
-nnoremap ]j :tabnext<CR>
+" nnoremap [j :tabprevious<CR>
+" nnoremap ]j :tabnext<CR>
 
 " alias for 'escape' to NORMAL from INSERT
 " inoremap klk <Esc>
@@ -40,8 +40,4 @@ nnoremap <M-Down> :move +1<CR>
 
 " visually select text for searching, mapped to //
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
-
-
-" `bn` as escape characters
-" inoremap bn <Esc>
 

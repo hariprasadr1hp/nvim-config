@@ -511,6 +511,8 @@ return {
     },
 }
 
+-- TODO: <C-Space> to trigger completion (also to toggle-off)
+
 -- TODO: show numbers before completions (1, 2, 3 etc.)
 
 -- TODO: possible to filter by a specific source? (lsp, buffer etc.,)

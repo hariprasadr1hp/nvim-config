@@ -93,3 +93,6 @@ return {
         config = setup_codecompanion_config,
     },
 }
+
+-- TODO: add ACP (Agent Client Protocol) support
+-- refer https://github.com/olimorris/codecompanion.nvim/discussions/2030
