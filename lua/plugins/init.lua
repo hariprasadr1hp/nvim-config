@@ -45,13 +45,16 @@ local opts = {
     require("plugins.snapshot"),
     require("plugins.dashboard"),
     require("plugins.oil"),
+    require("plugins.images"),
 
     require("plugins.ai.mcphub"),
     require("plugins.ai.codecompanion"),
     require("plugins.ai.windsurf"),
     -- require("plugins.ai.avante"),
+    require("plugins.ai.cursor"),
 
     require("plugins.dbt"),
+    require("plugins.dagster"),
 
     require("plugins.custom"),
     require("plugins.whichkey"),

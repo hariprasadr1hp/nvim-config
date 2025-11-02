@@ -17,4 +17,6 @@ lazy-lock.json
 spell
 rust/nvimrs/target
 
+lua/plugins/custom/cursor.nvim
+lua/plugins/custom/dagster.nvim
 lua/plugins/custom/dbt.nvim
