@@ -4,10 +4,12 @@ local ensure_installed = {
     "arduino",
     "awk",
     "bash",
+    "bruno",
     "c",
     "cpp",
     "css",
     "csv",
+    "cypher",
     "diff",
     "dockerfile",
     "gdscript",
@@ -84,6 +86,25 @@ local opts = {
 
 local function setup_treesitter_config()
     local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+
+    parser_config.bruno = {
+        install_info = {
+            url = "https://github.com/Scalamando/tree-sitter-bruno",
+            files = { "src/parser.c", "src/scanner.c" },
+            branch = "main",
+        },
+        filetype = "bruno",
+    }
+
+    parser_config.cypher = {
+        install_info = {
+            url = "https://github.com/simplificare-org/tree-sitter-cypher",
+            files = { "src/parser.c" },
+            branch = "main",
+        },
+        filetype = "cypher",
+    }
+
     parser_config.sql_bigquery = {
         install_info = {
             url = "https://github.com/takegue/tree-sitter-sql-bigquery",
@@ -94,6 +115,7 @@ local function setup_treesitter_config()
     }
 
     vim.treesitter.language.register("sql_bigquery", "sqlx")
+    vim.treesitter.language.register("cypher", "cypher")
 
     local treesitter = require("nvim-treesitter.configs")
     treesitter.setup(opts)

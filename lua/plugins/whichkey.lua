@@ -1,7 +1,5 @@
 -- lua/plugins/whichkey.lua
 
-local config_dir = vim.fn.stdpath("config")
-
 local function setup_delay_function()
     return function(ctx)
         return ctx.plugin and 0 or 200

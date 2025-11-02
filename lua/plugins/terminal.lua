@@ -69,10 +69,13 @@ return {
         cmd = { "FloatermToggle", "FloatermNew" },
         keys = {
             { "<leader>od", "<cmd>FloatermNew lazydocker<CR>", desc = "lazydocker" },
+            { "<leader>oc", "<cmd>FloatermNew claude<CR>", desc = "claude" },
+            { "<leader>og", "<cmd>FloatermNew gemini<CR>", desc = "gemini" },
             { "<leader>oh", "<cmd>FloatermNew htop<CR>", desc = "htop" },
             { "<leader>ol", "<cmd>FloatermNew lazygit<CR>", desc = "lazygit" },
             { "<leader>or", "<cmd>FloatermNew ranger<CR>", desc = "ranger" },
             { "<leader>ot", "<cmd>FloatermToggle<CR>", desc = "floaterm" },
+            { "<leader>ox", "<cmd>FloatermNew codex<CR>", desc = "codex" },
         },
         config = setup_floaterm_config,
     },

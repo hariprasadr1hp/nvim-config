@@ -99,6 +99,7 @@ local function setup_lsp_config()
         ansiblels = {},
         arduino_language_server = {},
         clangd = {},
+        cypher_ls = {},
         gitlab_ci_ls = {},
         jinja_lsp = {},
         julials = {},

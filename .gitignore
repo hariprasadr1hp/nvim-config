@@ -3,6 +3,8 @@
 node_modules/
 lua/temp.lua
 .hypothesis/
+__pycache__/
+**/*/__pycache__/
 
 #files
 package-lock.json
