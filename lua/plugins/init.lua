@@ -25,6 +25,7 @@ local opts = {
 
     require("plugins.lang.rust"),
     require("plugins.lang.sql"),
+    require("plugins.lang.hurl"),
 
     require("plugins.snippets"),
     require("plugins.autopairs"),
