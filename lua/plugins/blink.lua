@@ -377,6 +377,8 @@ local function setup_blink_config()
 
     opts.sources.providers = {}
 
+    --TODO: all text completion for markdown files
+
     opts.sources.providers.lsp = {
         name = "LSP",
         module = "blink.cmp.sources.lsp",

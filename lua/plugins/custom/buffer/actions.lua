@@ -129,6 +129,15 @@ local actions_mermaid = {
     },
 }
 
+local actions_hurl = {
+    {
+        name = "run `hurl` file",
+        action = function()
+            vim.cmd("HurlRunner")
+        end,
+    },
+}
+
 local filetype_actions = {
     lua = actions_lua,
     python = actions_python,
@@ -136,6 +145,7 @@ local filetype_actions = {
     yaml = get_actions_yaml(),
     markdown = actions_markdown,
     mermaid = actions_mermaid,
+    hurl = actions_hurl,
 }
 
 function M.show_actions()

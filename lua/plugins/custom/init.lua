@@ -3,10 +3,12 @@
 return {
     {
         dir = vim.fn.stdpath("config") .. "/lua/plugins/custom/buffer",
-        name = "zzbuffer",
+        name = "hpcustom",
         cmd = {
             "BufferActions",
             "BufferInfo",
+            "ProjectPrintEnv",
+            "ProjectCopyEnv",
         },
         keys = {
             { "<leader>aa", "<cmd>BufferActions<CR>", desc = "actions-by-ft" },
@@ -17,6 +19,7 @@ return {
         },
         config = function()
             require("plugins.custom.buffer").setup({})
+            require("plugins.custom.project").setup({})
         end,
         -- opts = {},
     },

@@ -134,3 +134,5 @@ return {
 -- TODO: extend selection to neighbouring-node (prev/next)?
 
 -- TODO: extend selection to [COUNT]neighbouring-node (prev/next)?
+
+-- TODO: export LST as json on a buffer level (using buffer-actions)
