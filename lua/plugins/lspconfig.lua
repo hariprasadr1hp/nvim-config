@@ -105,7 +105,9 @@ local function setup_lsp_config()
         julials = {},
         sqls = {},
         ts_ls = {},
-        terraformls = {},
+        terraformls = {
+            filetypes = { "terraform", "tf" },
+        },
         tflint = {},
         vimls = {},
 

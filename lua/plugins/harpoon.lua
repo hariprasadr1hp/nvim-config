@@ -34,7 +34,7 @@ local function setup_keymaps()
     end, "harpoon-list")
 
     for i = 1, 9 do
-        keymap_set("n", "," .. i, function()
+        keymap_set("n", "<leader>h" .. i, function()
             harpoon_list:select(i)
         end, "harpoon-" .. i)
     end

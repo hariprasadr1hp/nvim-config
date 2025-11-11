@@ -30,24 +30,18 @@ local function setup_text_transform()
             title_case = { enabled = true },
         },
 
-        --- Sort the replacers in the popup.
-        --- Possible values: 'frequency', 'name'
+        ---@type "frequency" | "name"
         sort_by = "frequency",
 
-        --- The popup type to show.
-        --- Possible values: 'telescope', 'select'
-        popup_type = "telescope",
+        ---@type "telescope" | "select"
+        popup_type = "select",
     })
 end
 
 return {
     {
         "chenasraf/text-transform.nvim",
-        -- stable version
-        version = "*", -- or: tag = "stable"
-        -- dev version
-        -- branch = "develop",
-        -- Optional - for Telescope popup
+        version = "*",
         dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
         config = setup_text_transform,
     },

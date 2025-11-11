@@ -13,6 +13,7 @@ local keywords = {
     NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
     TEST = { icon = "⏲ ", color = "test", alt = { "PASSED", "FAILED" } },
     LEARN = { icon = " ", color = "info" },
+    REFER = { icon = "󰏢", color = "info" },
 }
 
 local gui_style = {
@@ -91,3 +92,6 @@ return {
     },
     config = setup_keymaps,
 }
+
+-- TODO: a function to toggle dimming todo hightlights
+-- FIX: ability to select todo-keyword options

@@ -11,6 +11,7 @@ package-lock.json
 .netrwhist
 tags
 .env
+temp.lua
 
 lazy-lock.json
 .DS_Store
