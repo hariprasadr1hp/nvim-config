@@ -2,14 +2,21 @@
 
 require("config.settings")
 
-require("config.variables")
-require("config.helpers")
-require("config.functions")
-require("config.user_commands")
-require("config.autocmds")
-require("config.keybindings")
-require("config.neovide")
+if not vim.g.vscode then
+    require("config.variables")
+    require("config.helpers")
+    require("config.functions")
+    require("config.user_commands")
+    require("config.autocmds")
+    require("config.keybindings")
 
--- lazy.nvim required
-require("config.bootstrap")
-require("plugins")
+    -- lazy.nvim required
+    require("config.bootstrap")
+    require("plugins")
+end
+
+if vim.g.neovide then
+    require("config.neovide")
+elseif vim.g.vscode then
+    require("config.vscode")
+end

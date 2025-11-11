@@ -1,5 +1,9 @@
 -- after/plugin/ask.lua
 
+if vim.g.vscode then
+    return
+end
+
 local keymap_set = require("config.helpers").keymap_set
 
 local function open_browser(url)
