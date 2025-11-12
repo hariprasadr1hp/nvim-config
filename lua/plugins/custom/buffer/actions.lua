@@ -133,7 +133,21 @@ local actions_hurl = {
     {
         name = "run `hurl` file",
         action = function()
-            vim.cmd("HurlRunner")
+            vim.cmd("HurlVeryVerbose")
+        end,
+    },
+
+    {
+        name = "manage `hurl` env variables",
+        action = function()
+            vim.cmd("HurlManageVariable")
+        end,
+    },
+
+    {
+        name = "show last reponse",
+        action = function()
+            vim.cmd("HurlShowLastResponse")
         end,
     },
 }

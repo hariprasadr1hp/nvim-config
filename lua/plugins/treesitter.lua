@@ -18,6 +18,7 @@ local ensure_installed = {
     "haskell",
     "hcl",
     "html",
+    "http",
     "hurl",
     "javascript",
     "json",
