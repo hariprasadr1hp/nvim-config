@@ -24,9 +24,9 @@ local opts = {
     require("plugins.testing"),
 
     require("plugins.lang.rust"),
-    require("plugins.lang.sql"),
     require("plugins.lang.hurl"),
 
+    require("plugins.dadbod"),
     require("plugins.snippets"),
     require("plugins.autopairs"),
     require("plugins.comment"),

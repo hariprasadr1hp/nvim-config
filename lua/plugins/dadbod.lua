@@ -1,4 +1,4 @@
--- lua/plugins/lang/sql.lua
+-- lua/plugins/dadbod.lua
 
 -- NOTE: can find saved connections at `~/.local/share/db_ui/connections.json`
 

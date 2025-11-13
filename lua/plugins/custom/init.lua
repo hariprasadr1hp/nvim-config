@@ -18,6 +18,8 @@ return {
             { "saghen/blink.cmp" },
         },
         config = function()
+            require("plugins.custom.extract").setup({})
+            require("plugins.custom.ui").setup({})
             require("plugins.custom.buffer").setup({})
             require("plugins.custom.project").setup({})
         end,

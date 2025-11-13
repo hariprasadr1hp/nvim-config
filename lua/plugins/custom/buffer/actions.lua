@@ -8,9 +8,11 @@ local fzf_lua = require("fzf-lua")
 -- local conform = require("conform")
 -- local lint = require("lint")
 
+local jq_sibling_action = require("plugins.custom.buffer.lang.json").jq_sibling_action
+
 local actions_lua = {
     {
-        name = "format lua",
+        name = "Format file [lua]",
         action = function()
             vim.cmd("FormatBuffer")
         end,
@@ -26,14 +28,14 @@ local actions_lua = {
 
 local actions_python = {
     {
-        name = "format: using `black`",
+        name = "Format using `black` [python]",
         action = function()
             vim.cmd("!black %")
         end,
     },
 
     {
-        name = "tests: run `pytest`",
+        name = "Run `pytest` [python]",
         action = function()
             vim.cmd("!pytest %")
         end,
@@ -45,49 +47,49 @@ local function get_actions_sql()
 
     return {
         {
-            name = "dbt: jump: to `compiled` file",
+            name = "Jump to `compiled` file [DBT]",
             action = function()
                 dbt.jump_to_compiled()
             end,
         },
 
         {
-            name = "dbt: jump: to `run` file",
+            name = "Jump to `run` file [DBT]",
             action = function()
                 dbt.jump_to_run()
             end,
         },
 
         {
-            name = "dbt: jump: to `model` file",
+            name = "Jump to `model` file [DBT]",
             action = function()
                 dbt.jump_to_model()
             end,
         },
 
         {
-            name = "dbt: select: upstream `models`",
+            name = "Select upstream `models` [DBT]",
             action = function()
                 dbt.select_upstream_models()
             end,
         },
 
         {
-            name = "dbt: select: downstream `models`",
+            name = "Select downstream `models` [DBT]",
             action = function()
                 dbt.select_downstream_models()
             end,
         },
 
         {
-            name = "dbt: diff: `model` vs `compiled`",
+            name = "Diff: `model` vs `compiled` [DBT]",
             action = function()
                 dbt.diff_model_vs_compiled()
             end,
         },
 
         {
-            name = "dbt: jump: between `model` and `schema`",
+            name = "Jump between `model` and `schema` [DBT]",
             action = function()
                 dbt.jump_between_model_and_schema()
             end,
@@ -100,7 +102,7 @@ local function get_actions_yaml()
 
     return {
         {
-            name = "dbt: jump: between `model` and `schema`",
+            name = "Jump between `model` and `schema` [DBT]",
             action = function()
                 dbt.jump_between_model_and_schema()
             end,
@@ -110,16 +112,23 @@ end
 
 local actions_markdown = {
     {
-        name = "preview markdown",
+        name = "Preview Markdown",
         action = function()
-            vim.cmd("MarkdownPreview")
+            -- vim.cmd("MarkdownPreview")
         end,
+    },
+}
+
+local actions_json = {
+    {
+        name = "Run JQ on sibling nodes [JSON]",
+        action = jq_sibling_action,
     },
 }
 
 local actions_mermaid = {
     {
-        name = "preview as `.svg`",
+        name = "Preview as `.svg` [mermaid]",
         action = function()
             local open_cmd = vim.fn.has("mac") == 1 and "open" or "xdg-open"
             local file = vim.fn.expand("%")
@@ -131,40 +140,41 @@ local actions_mermaid = {
 
 local actions_hurl = {
     {
-        name = "run `hurl` file",
+        name = "Run file [hurl]",
         action = function()
             vim.cmd("HurlVeryVerbose")
         end,
     },
 
     {
-        name = "manage `hurl` env variables",
+        name = "Manage ENV variables [hurl]",
         action = function()
             vim.cmd("HurlManageVariable")
         end,
     },
 
     {
-        name = "show last reponse",
+        name = "Show last response [hurl]",
         action = function()
             vim.cmd("HurlShowLastResponse")
         end,
     },
 }
 
-local filetype_actions = {
+_G.ft_actions = {
     lua = actions_lua,
     python = actions_python,
     sql = get_actions_sql(),
     yaml = get_actions_yaml(),
     markdown = actions_markdown,
+    json = actions_json,
     mermaid = actions_mermaid,
     hurl = actions_hurl,
 }
 
 function M.show_actions()
     local ft = vim.bo.filetype
-    local actions = filetype_actions[ft]
+    local actions = ft_actions[ft]
 
     if not actions then
         vim.notify(string.format("No actions defined for filetype `%s`!", ft), vim.log.levels.INFO)
