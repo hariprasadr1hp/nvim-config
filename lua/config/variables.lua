@@ -2,6 +2,8 @@
 
 local M = {}
 
+vim.env.kulala = vim.fn.stdpath("data") .. "/lazy/kulala.nvim/lua/cli/kulala_cli.lua"
+
 -- Flag to track if autocmd debug is enabled
 M.autocmd_debug_enabled = false
 

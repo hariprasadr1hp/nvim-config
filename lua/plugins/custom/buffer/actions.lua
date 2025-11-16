@@ -126,6 +126,68 @@ local actions_json = {
     },
 }
 
+local function actions_http()
+    local kulala = require("kulala")
+    local kulala_ui = require("kulala.ui")
+
+    return {
+        {
+            name = "Run Block [http]",
+            action = kulala.run,
+        },
+
+        {
+            name = "Run All Blocks [http]",
+            action = kulala.run_all,
+        },
+
+        {
+            name = "Download GraphQL Schema [http]",
+            action = kulala.download_graphql_schema,
+        },
+
+        {
+            name = "Export Current Buffer [http]",
+            action = kulala.export,
+        },
+
+        {
+            name = "Inspect??? [http]",
+            action = kulala.inspect,
+        },
+
+        {
+            name = "Open Cookies Jar [http]",
+            action = kulala.open_cookies_jar,
+        },
+
+        {
+            name = "Replay Request [http]",
+            action = kulala.replay,
+        },
+
+        {
+            name = "Show Stats [http]",
+            action = kulala.show_stats,
+        },
+
+        {
+            name = "Toggle View [http]",
+            action = kulala.toggle_view,
+        },
+
+        {
+            name = "ScratchPad [http]",
+            action = kulala_ui.show_headers,
+        },
+
+        {
+            name = "ScratchPad [http]",
+            action = kulala.scratchpad,
+        },
+    }
+end
+
 local actions_mermaid = {
     {
         name = "Preview as `.svg` [mermaid]",
@@ -168,6 +230,7 @@ _G.ft_actions = {
     yaml = get_actions_yaml(),
     markdown = actions_markdown,
     json = actions_json,
+    http = actions_http(),
     mermaid = actions_mermaid,
     hurl = actions_hurl,
 }

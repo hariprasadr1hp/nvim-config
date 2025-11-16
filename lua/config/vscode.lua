@@ -212,10 +212,13 @@ end, "ai-chat")
 keymap_set("n", "<leader>ff", function()
     vsaction("workbench.action.openRecent")
 end, "recent-files")
-
 keymap_set("n", "<leader>fs", function()
     vsaction("workbench.action.files.save")
 end, "save-file")
+
+keymap_set("n", "<leader>ht", function()
+    vsaction("workbench.action.selectTheme")
+end, "recent-files")
 
 keymap_set("n", "<leader>oe", function()
     vsaction("workbench.action.toggleSidebarVisibility")

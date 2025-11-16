@@ -27,6 +27,7 @@ local opts = {
     require("plugins.lang.hurl"),
 
     require("plugins.dadbod"),
+    require("plugins.kulala"),
     require("plugins.snippets"),
     require("plugins.autopairs"),
     require("plugins.comment"),
@@ -59,6 +60,7 @@ local opts = {
 
     require("plugins.custom"),
     require("plugins.whichkey"),
+    require("plugins.finally"),
 
     -- require("plugins.tabline"),
 }
