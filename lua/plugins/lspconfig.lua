@@ -169,6 +169,11 @@ local function setup_lsp_config()
             end,
         },
 
+        -- turtle_languageserver = {
+        --     cmd = "turtle_languageserver",
+        --     filetypes = { "turtle", "ttl" },
+        -- },
+
         yamlls = {
             filetypes = { "yaml", "yml" },
             settings = {

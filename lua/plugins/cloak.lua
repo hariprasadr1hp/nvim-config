@@ -2,7 +2,14 @@
 
 local patterns = {
     {
-        file_pattern = { ".env*", "dev.vars" },
+        file_pattern = {
+            ".env*",
+            "dev.vars",
+            ".bash_exports",
+            ".bash_my",
+            ".bash_dc",
+            ".bash_su",
+        },
         cloak_pattern = "=.+",
         replace = nil, -- Keeps the first character by default
     },

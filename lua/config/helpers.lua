@@ -103,6 +103,43 @@ function M.read_json(path)
     return ok and result or nil
 end
 
+---Get the operating system name
+---@return OSName
+function M.get_os()
+    local sys = vim.uv.os_uname().sysname
+
+    if sys == "Darwin" then
+        return "macos"
+    elseif sys == "Linux" then
+        return "linux"
+    elseif sys == "Windows_NT" or sys:match("Windows") then
+        return "windows"
+    else
+        return "unknown"
+    end
+end
+
+---Get distro ID
+---@return Distro
+function M.get_distro()
+    local os = M.get_os()
+    if os == "macos" then
+        return "macos"
+    elseif os == "windows" then
+        return "windows"
+    elseif os == "linux" then
+        local ok, lines = pcall(vim.fn.readfile, "/etc/os-release")
+        if not ok or not lines then
+            return "other"
+        end
+        local data = table.concat(lines, "\n")
+        local id = data:match("ID=([%w%-_]+)")
+        return id or "other"
+    else
+        return "other"
+    end
+end
+
 --- Resolve local or remote plugin source
 ---@param name string
 ---@param local_path string

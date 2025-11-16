@@ -2,6 +2,53 @@
 
 local keymap_set = require("config.helpers").keymap_set
 
+local provider_choices = {
+    "Codex [OpenAI ChatGPT]",
+    "Cursor Agent",
+    "Claude Code [Anthropic]",
+    "Gemini [Google]",
+    "Copilot [Microsoft Github]",
+    "OpenCode",
+}
+
+local function select_provider(on_choice)
+    vim.ui.select(provider_choices, {
+        prompt = "Choose Provider",
+        format_item = function(item)
+            return item
+        end,
+    }, function(choice)
+        if choice then
+            on_choice(choice)
+        end
+    end)
+end
+
+local function start_ai_provider()
+    select_provider(function(provider)
+        local prg = ""
+        if provider == "Codex [OpenAI ChatGPT]" then
+            prg = "codex"
+        elseif provider == "Cursor Agent" then
+            prg = "cursor-agent"
+        elseif provider == "Claude Code [Anthropic]" then
+            prg = "claude"
+        elseif provider == "Gemini [Google]" then
+            prg = "gemini"
+        elseif provider == "Copilot [Microsoft Github]" then
+            prg = "copilot"
+        elseif provider == "OpenCode" then
+            prg = "opencode"
+        else
+            vim.notify("Error: not a valid provider!", vim.log.levels.ERROR)
+        end
+        pcall(function()
+            local cmd = string.format("FloatermNew %s", prg)
+            vim.cmd(cmd)
+        end)
+    end)
+end
+
 local function setup_floaterm_config()
     vim.g.floaterm_gitcommit = "floaterm"
     vim.g.floaterm_autoinsert = 1
@@ -56,7 +103,14 @@ local function setup_toggleterm_config()
         local cmd = eval_cmd_by_ft()
         if cmd ~= nil then
             print("executing...")
-            toggleterm.exec(cmd)
+            -- toggleterm.exec(cmd)
+            vim.ui.input({
+                prompt = "add additional arguments (if any)",
+            }, function(input)
+                pcall(function()
+                    toggleterm.exec(string.format("%s %s", cmd, input))
+                end)
+            end)
         else
             print("Not sure how to execute filetype: " .. vim.bo.filetype)
         end
@@ -68,14 +122,12 @@ return {
         "voldikss/vim-floaterm",
         cmd = { "FloatermToggle", "FloatermNew" },
         keys = {
+            { "<leader>oa", start_ai_provider, desc = "ai-agent" },
             { "<leader>od", "<cmd>FloatermNew lazydocker<CR>", desc = "lazydocker" },
-            { "<leader>oc", "<cmd>FloatermNew claude<CR>", desc = "claude" },
-            { "<leader>og", "<cmd>FloatermNew gemini<CR>", desc = "gemini" },
             { "<leader>oh", "<cmd>FloatermNew htop<CR>", desc = "htop" },
             { "<leader>ol", "<cmd>FloatermNew lazygit<CR>", desc = "lazygit" },
             { "<leader>or", "<cmd>FloatermNew ranger<CR>", desc = "ranger" },
             { "<leader>ot", "<cmd>FloatermToggle<CR>", desc = "floaterm" },
-            { "<leader>ox", "<cmd>FloatermNew codex<CR>", desc = "codex" },
         },
         config = setup_floaterm_config,
     },
