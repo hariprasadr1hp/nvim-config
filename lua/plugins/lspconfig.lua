@@ -216,7 +216,6 @@ local function setup_lsp_config()
         "shellcheck",
         "biome",
         "eslint_d",
-        "rustfmt",
         "prettier",
         "stylua",
         "taplo",

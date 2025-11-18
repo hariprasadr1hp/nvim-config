@@ -1,22 +1,41 @@
 # directories
 .undodir/
-node_modules/
-lua/temp.lua
+spell/
+
+# ai
+.grok
+.cursor
+.claude
+.gemini
+.codex
+
+# lua
+lua/*.so
+lua/*.dylib
+lua/*.dll
+
+# rust
+rust/*/target
+
+# python
 .hypothesis/
 __pycache__/
 **/*/__pycache__/
 
-#files
+# node
+node_modules/
 package-lock.json
+
+#files
 .netrwhist
 tags
 .env
-
 lazy-lock.json
 .DS_Store
-spell
-rust/nvimrs/target
+.nvim.lua
 
+# do not track
 lua/plugins/custom/cursor.nvim
 lua/plugins/custom/dagster.nvim
 lua/plugins/custom/dbt.nvim
+lua/temp.lua

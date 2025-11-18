@@ -8,6 +8,7 @@ local provider_choices = {
     "Claude Code [Anthropic]",
     "Gemini [Google]",
     "Copilot [Microsoft Github]",
+    "Grok [Twitter X]",
     "OpenCode",
 }
 
@@ -37,6 +38,8 @@ local function start_ai_provider()
             prg = "gemini"
         elseif provider == "Copilot [Microsoft Github]" then
             prg = "copilot"
+        elseif provider == "Grok [Twitter X]" then
+            prg = "grok"
         elseif provider == "OpenCode" then
             prg = "opencode"
         else
