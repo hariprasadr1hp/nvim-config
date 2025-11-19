@@ -11,7 +11,9 @@ return {
             cmd = {
                 "DagsterInfo",
             },
-            dependencies = {},
+            dependencies = {
+                { "mistweaverco/kulala.nvim" },
+            },
             config = function()
                 require("dagster").setup({
                     keymaps_enabled = true,

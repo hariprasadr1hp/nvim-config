@@ -128,7 +128,6 @@ local actions_json = {
 
 local function actions_http()
     local kulala = require("kulala")
-    local kulala_ui = require("kulala.ui")
 
     return {
         {
@@ -178,11 +177,6 @@ local function actions_http()
 
         {
             name = "ScratchPad [http]",
-            action = kulala_ui.show_headers,
-        },
-
-        {
-            name = "ScratchPad [http]",
             action = kulala.scratchpad,
         },
     }
@@ -196,6 +190,16 @@ local actions_mermaid = {
             local file = vim.fn.expand("%")
             local out = vim.fn.expand("%:r") .. ".svg"
             vim.cmd(("!mmdc -i %s -o %s && %s %s"):format(file, out, open_cmd, out))
+        end,
+    },
+}
+
+local actions_turtle = {
+    {
+        name = "Pre-process file [turtle]",
+        action = function()
+            local file = vim.fn.expand("%")
+            vim.cmd(("! riot %s"):format(file))
         end,
     },
 }
@@ -232,6 +236,7 @@ _G.ft_actions = {
     json = actions_json,
     http = actions_http(),
     mermaid = actions_mermaid,
+    turtle = actions_turtle,
     hurl = actions_hurl,
 }
 

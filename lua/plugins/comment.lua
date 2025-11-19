@@ -2,7 +2,15 @@
 
 local opts = {
     options = {
-        custom_commentstring = nil,
+        custom_commentstring = function()
+            local ft = vim.bo.filetype
+            if ft == "sparql" then
+                return "# %s"
+            elseif ft == "lisp" then
+                return ";; %s"
+            end
+            -- return vim.bo.commentstring
+        end,
         ignore_blank_line = false,
         start_of_line = false,
         pad_comment_parts = true,
@@ -28,5 +36,3 @@ return {
         opts = opts,
     },
 }
-
--- TODO: `;;` instead of ``; for comments in `*.el` files

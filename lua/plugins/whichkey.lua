@@ -178,6 +178,7 @@ local key_maps = {
 
         -- [G]IT --------------------
         { "<leader>g", group = "git", nowait = false, remap = false },
+        { "<leader>gh", group = "github", nowait = false, remap = false },
 
         -- [H]ELP -------------------
         { "<leader>h", group = "help", nowait = false, remap = false },

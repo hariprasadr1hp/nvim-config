@@ -153,15 +153,6 @@ local opts = {
                 layout = function()
                     local has_snacks, snacks_picker = pcall(require, "snacks.picker")
                     return not has_snacks and {}
-                        or vim.tbl_deep_extend("force", snacks_picker.config.layout("telescope"), {
-                            reverse = true,
-                            layout = {
-                                { { win = "list" }, { height = 1, win = "input" }, box = "vertical" },
-                                { win = "preview", width = 0.6 },
-                                box = "horizontal",
-                                width = 0.8,
-                            },
-                        })
                 end,
             },
         },

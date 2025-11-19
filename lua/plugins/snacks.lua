@@ -60,6 +60,7 @@ local opts = {
     scroll = { enabled = false },
     statuscolumn = { enabled = false },
     words = { enabled = false },
+    win = { enabled = true },
     zen = zen_opts,
 }
 
@@ -86,6 +87,9 @@ local function setup_snacks_config()
         { desc = "toggle hightlight for the indent lines" }
     )
 
+    keymap_set("n", "<leader>ghi", snacks.picker.gh_issue, "gh-pull-requests")
+    keymap_set("n", "<leader>ghp", snacks.picker.gh_pr, "gh-issues")
+    keymap_set("n", "<leader>lc", snacks.picker.lsp_config, "lsp_config")
     keymap_set("n", "<leader>ti", toggle_indent_hl, "indent-hl")
     keymap_set("n", "<leader>tz", snacks.zen.zen, "zen-mode")
 end

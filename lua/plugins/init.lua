@@ -10,7 +10,7 @@ local opts = {
 
     require("plugins.icons"),
     require("plugins.pick"),
-    require("plugins.telescope"),
+    -- require("plugins.telescope"),
     require("plugins.fzflua"),
 
     require("plugins.treesitter"),

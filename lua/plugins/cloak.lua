@@ -21,7 +21,7 @@ local opts = {
     highlight_group = "Comment",
     cloak_length = nil, -- Use a number to hide the actual length of the value.
     try_all_patterns = true,
-    cloak_telescope = true,
+    cloak_telescope = false,
     cloak_on_leave = false,
     patterns = patterns,
 }

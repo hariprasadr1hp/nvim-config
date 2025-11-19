@@ -26,7 +26,6 @@ local dependencies = {
     "nvim-lua/plenary.nvim",
     "MunifTanjim/nui.nvim",
     "echasnovski/mini.pick",
-    "nvim-telescope/telescope.nvim",
     "ibhagwan/fzf-lua",
     "nvim-tree/nvim-web-devicons",
     -- "zbirenbaum/copilot.lua",
