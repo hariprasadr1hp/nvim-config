@@ -141,23 +141,8 @@ local function actions_http()
         },
 
         {
-            name = "Download GraphQL Schema [http]",
-            action = kulala.download_graphql_schema,
-        },
-
-        {
-            name = "Export Current Buffer [http]",
-            action = kulala.export,
-        },
-
-        {
-            name = "Inspect??? [http]",
+            name = "Inspect [http]",
             action = kulala.inspect,
-        },
-
-        {
-            name = "Open Cookies Jar [http]",
-            action = kulala.open_cookies_jar,
         },
 
         {
@@ -168,6 +153,21 @@ local function actions_http()
         {
             name = "Show Stats [http]",
             action = kulala.show_stats,
+        },
+
+        {
+            name = "Download GraphQL Schema [http]",
+            action = kulala.download_graphql_schema,
+        },
+
+        {
+            name = "Export Current Buffer [http]",
+            action = kulala.export,
+        },
+
+        {
+            name = "Open Cookies Jar [http]",
+            action = kulala.open_cookies_jar,
         },
 
         {

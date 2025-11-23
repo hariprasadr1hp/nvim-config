@@ -105,7 +105,7 @@ keymap_set("n", "<leader>om", ":e Makefile<CR>", "makefile")
 keymap_set("n", "<leader>on", ":messages<CR>", "notifications")
 
 keymap_set("n", "<leader>pc", ":e .nvim.lua<CR>", "config-project")
-keymap_set("n", "<leader>pe", ":e .env<CR>", ".env")
+keymap_set("n", "<leader>pe", ":e http-client.private.env.json<CR>", "http-client.private.env.json")
 
 keymap_set("n", "<leader>njj", ":echo '`emacs` command 🫠'<CR>")
 keymap_set("n", "<leader>nri", ":echo '`emacs` command 🫠'<CR>")
@@ -136,6 +136,7 @@ keymap_set("n", "<leader>td", function()
     end
 end, "diagnostics")
 keymap_set("n", "<leader>tD", helpers.toggle_autocmd_debug, "debug-autocmds")
+keymap_set("n", "<leader>tf", "zi", "folds")
 keymap_set("n", "<leader>tG", ":%norm! g??<CR>", "gibberish-rot13")
 keymap_set("n", "<leader>th", ":set hls!<CR>", "hl-search")
 keymap_set("n", "<leader>ti", ":setl list!<CR>", "indent-guide")

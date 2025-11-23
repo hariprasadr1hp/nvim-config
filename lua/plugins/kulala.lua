@@ -72,7 +72,7 @@ local opts = {
 
     ui = {
         -- display mode: possible values: "split", "float"
-        display_mode = "split",
+        display_mode = "float",
         -- split direction: possible values: "vertical", "horizontal"
         split_direction = "vertical",
         -- window options to override win_config: width/height/split/vertical.., buffer/window options

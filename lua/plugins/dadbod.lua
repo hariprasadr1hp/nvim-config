@@ -2,7 +2,7 @@
 
 -- NOTE: can find saved connections at `~/.local/share/db_ui/connections.json`
 
-local function setup_dadbod_init()
+local function setup_dadbod_ui_init()
     vim.g.db_ui_use_nerd_fonts = 1
 
     vim.g.db_ui_table_helpers = {
@@ -25,10 +25,18 @@ local function setup_dadbod_init()
     }
 end
 
+local function setup_dadbod_config()
+    --
+end
+
 return {
     "kristijanhusak/vim-dadbod-ui",
     dependencies = {
-        { "tpope/vim-dadbod", lazy = true },
+        {
+            "tpope/vim-dadbod",
+            lazy = true,
+            config = setup_dadbod_config,
+        },
         { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql", "bqsql" }, lazy = true },
     },
     cmd = {
@@ -40,7 +48,7 @@ return {
     keys = {
         { "<leader>oq", "<cmd>DBUIToggle<CR>", desc = "DBUI" },
     },
-    init = setup_dadbod_init,
+    init = setup_dadbod_ui_init,
     config = function() end,
 }
 

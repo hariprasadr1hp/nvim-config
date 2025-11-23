@@ -20,6 +20,8 @@
           - gh
           - glab
           - curl
+          - grpcurl
+          - websocat
           - xclip
           - sox
           - ffmpeg
@@ -37,8 +39,8 @@
           - bat
           - golang
           - nodejs
-          - npm
           - gh
+          - npm
           - glab
           - curl
           - xclip
