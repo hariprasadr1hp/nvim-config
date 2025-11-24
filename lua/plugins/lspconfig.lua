@@ -123,6 +123,17 @@ local function setup_lsp_config()
             filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
         },
 
+        jsonls = {
+            filetypes = { "json", "jsonc", "jsonld" },
+            settings = {
+                json = {
+                    schemas = {
+                        ["./src/validate/json-schema/instance.schema.json"] = "data/instances/**/*.jsonld",
+                    },
+                },
+            },
+        },
+
         lua_ls = {
             settings = {
                 Lua = {
@@ -168,6 +179,20 @@ local function setup_lsp_config()
         --     cmd = "turtle_languageserver",
         --     filetypes = { "turtle", "ttl" },
         -- },
+
+        taplo = {
+            -- Refer: https://taplo.tamasfe.dev/configuration/file.html
+            filetypes = { "toml" },
+            settings = {
+                evenBetterToml = {
+                    schema = {
+                        associations = {
+                            ["example\\.toml$"] = "https://json.schemastore.org/example.json",
+                        },
+                    },
+                },
+            },
+        },
 
         yamlls = {
             filetypes = { "yaml", "yml" },

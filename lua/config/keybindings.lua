@@ -84,7 +84,7 @@ keymap_set("n", "<leader>ji", ":tabs<CR>", "info-tabs")
 keymap_set("n", "<leader>jk", ":tabclose<CR>", "kill-tab")
 keymap_set("n", "<leader>jl", ":+tabmove<CR>", "move-right")
 keymap_set("n", "<leader>jn", ":tabnew<CR>", "new-tab")
-keymap_set("n", "<leader>jo", ":tabonly<CR>", "only-current-tab")
+keymap_set("n", "<leader>jO", ":tabonly<CR>", "only-current-tab")
 
 keymap_set("n", "<leader>l0", vim.lsp.buf.outgoing_calls, "lsp-incoming-calls")
 keymap_set("n", "<leader>l1", vim.lsp.buf.incoming_calls, "lsp-outgoing-calls")

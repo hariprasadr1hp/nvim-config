@@ -65,6 +65,17 @@ local formatters_by_ft = {
 }
 
 local formatters = {
+    sqlfluff = {
+        command = "sqlfluff",
+        args = {
+            "fix",
+            "--dialect=postgres",
+            "--disable-progress-bar",
+            "-",
+        },
+        stdin = true,
+    },
+
     yamlfix = {
         command = "yamlfix",
         args = {
@@ -79,17 +90,6 @@ local formatters = {
         command = "yamlfmt",
         args = { "$FILENAME" },
         stdin = false,
-    },
-
-    sqlfluff = {
-        command = "sqlfluff",
-        args = {
-            "fix",
-            "--dialect=postgres",
-            "--disable-progress-bar",
-            "-",
-        },
-        stdin = true,
     },
 }
 
