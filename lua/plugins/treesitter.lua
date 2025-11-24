@@ -24,7 +24,7 @@ local ensure_installed = {
     "jsonc",
     "julia",
     "kdl",
-    "kulala_http",
+    -- "kulala_http",
     "lua",
     "luadoc",
     "markdown",

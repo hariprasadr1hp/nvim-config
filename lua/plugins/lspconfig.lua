@@ -42,12 +42,7 @@ local function setup_lsp_autocmds(event)
         client.server_capabilities.hoverProvider = false
     end
 
-    local keymap_set = require("config.helpers").keymap_set
-    -- keymap_set("n", "<leader>oM", ":Mason<CR>", "Mason")
-
     buf_keymap_set("n", "<leader>il", ":LspInfo<CR>", current_buffer, "lsp-info")
-    buf_keymap_set("n", "<leader>lI", ":LspInfo<CR>", current_buffer, "lsp-info")
-    buf_keymap_set("n", "<leader>lR", ":LspRestart<CR>", current_buffer, "lsp-restart")
 
     -- Document Highlight
     if client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, current_buffer) then
