@@ -96,6 +96,7 @@ local function setup_lsp_config()
         clangd = {},
         cypher_ls = {},
         gitlab_ci_ls = {},
+        gdtoolkit = {},
         jinja_lsp = {},
         julials = {},
         sqls = {},
@@ -164,6 +165,30 @@ local function setup_lsp_config()
             },
         },
 
+        rust_analyzer = {
+            on_attach = function(_, bufnr)
+                vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+            end,
+            settings = {
+                ["rust-analyzer"] = {
+                    imports = {
+                        granularity = {
+                            group = "module",
+                        },
+                        prefix = "self",
+                    },
+                    cargo = {
+                        buildScripts = {
+                            enable = true,
+                        },
+                    },
+                    procMacro = {
+                        enable = true,
+                    },
+                },
+            },
+        },
+
         svelte = {
             on_attach = function(client)
                 vim.api.nvim_create_autocmd("BufWritePost", {
@@ -227,19 +252,21 @@ local function setup_lsp_config()
     }
 
     local tools = {
+        "biome",
         "black",
+        "eslint_d",
         "isort",
         "mypy",
-        "ruff",
-        "pylint",
-        "shfmt",
-        "shellcheck",
-        "biome",
-        "eslint_d",
         "prettier",
+        "pylint",
+        "ruff",
+        "shellcheck",
+        "shfmt",
+        "sleek",
+        "sqlfluff",
+        "sqlfmt",
         "stylua",
         "taplo",
-        "sqlfluff",
         "yamlfix",
     }
 

@@ -48,6 +48,7 @@ local opts = {
     require("plugins.dashboard"),
     require("plugins.oil"),
     require("plugins.images"),
+    require("plugins.flash"),
 
     require("plugins.ai.mcphub"),
     require("plugins.ai.codecompanion"),

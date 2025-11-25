@@ -31,33 +31,19 @@ local linters_by_ft = {
     typescriptreact = { "eslint_d" },
 }
 
-local function setup_linters(parser)
-    local linters = {
-        sqlfluff = {
-            cmd = "sqlfluff",
-            stdin = false,
-            args = {
-                "lint",
-                "--dialect=postgres",
-            },
-            stream = "stdout",
-            parser = parser.from_errorformat("%f:%l:%c: %t%n %m", {
-                source = "sqlfluff",
-                severity = {
-                    W = vim.diagnostic.severity.WARN,
-                    E = vim.diagnostic.severity.ERROR,
-                },
-            }),
-        },
-    }
-    return linters
-end
-
 local function setup_lint_config()
     local lint = require("lint")
-    local parser = require("lint.parser")
+
     lint.linters_by_ft = linters_by_ft
-    lint.linters = setup_linters(parser)
+
+    if lint.linters.sqlfluff then
+        lint.linters.sqlfluff.args = {
+            "lint",
+            "--format=json",
+            "--dialect=ansi",
+        }
+        lint.linters.sqlfluff.stdin = false
+    end
 
     for _, ft in ipairs(disable_linters_for_ft) do
         lint.linters_by_ft[ft] = nil
