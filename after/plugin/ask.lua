@@ -11,6 +11,7 @@ local function open_browser(url)
 end
 
 local prompt_choices = {
+    "(custom message)",
     "explain the following code:",
     "correct the following code:",
     "improve the following code:",
@@ -58,7 +59,8 @@ local function select_language(on_choice)
 end
 
 function HP._finalize_ai_prompt(prompt, code)
-    local formatted = string.format("%s\n```%s\n%s\n```", prompt, vim.bo.filetype, code)
+    local template_str = "%s\n```%s\n%s\n```"
+    local formatted = string.format(template_str, prompt, vim.bo.filetype, code)
 
     vim.fn.setreg("+", formatted)
 
@@ -77,13 +79,14 @@ end
 
 function HP.ask_ai()
     local lines = table.concat(HP.GetTextFromVisual(), "\n")
-
     select_prompt(function(prompt)
-        if prompt == "convert the code to" then
+        if prompt == "convert the following code to" then
             select_language(function(lang)
-                local final_prompt = prompt .. " " .. lang
+                local final_prompt = string.format("%s `%s`:", prompt, lang)
                 HP._finalize_ai_prompt(final_prompt, lines)
             end)
+        elseif prompt == "(custom message)" then
+            HP._finalize_ai_prompt("", lines)
         else
             HP._finalize_ai_prompt(prompt, lines)
         end

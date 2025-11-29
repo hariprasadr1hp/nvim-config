@@ -149,7 +149,13 @@ local function setup_lsp_config()
             filetypes = { "python", "ipynb" },
             settings = {
                 pyright = { disableOrganizeImports = true },
-                python = { analysis = { ignore = { "*" } } },
+                python = {
+                    analysis = {
+                        ignore = { "*" },
+                        useLibraryCodeForTypes = true,
+                        diagnosticMode = "openFilesOnly",
+                    },
+                },
             },
         },
 
@@ -254,6 +260,7 @@ local function setup_lsp_config()
     local tools = {
         "biome",
         "black",
+        "codelldb",
         "eslint_d",
         "isort",
         "mypy",

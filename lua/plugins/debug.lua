@@ -35,6 +35,8 @@ local function setup_dap_config()
     dap.listeners.before.event_terminated.dapui_config = dapui.close
     dap.listeners.before.event_exited.dapui_config = dapui.close
 
+    dap.listeners.after.event_initialized.dapui_config = dapui.close
+
     -- local keymap_set = require("config.helpers").keymap_set
     -- keymap_set("n", "<leader>db", dap.toggle_breakpoint, "breakpoint")
     -- keymap_set("n", "<leader>dc", dap.continue, "continue")

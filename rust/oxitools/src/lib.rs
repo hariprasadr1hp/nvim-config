@@ -1,10 +1,10 @@
-use nvim_oxi::{self as nvim_oxi};
+use nvim_oxi::{self as oxi};
 
 mod commands;
 mod windows;
 
-#[nvim_oxi::plugin]
-fn oxitools() -> nvim_oxi::Result<()> {
+#[oxi::plugin]
+fn oxitools() -> oxi::Result<()> {
     commands::register()?;
     windows::register()?;
 

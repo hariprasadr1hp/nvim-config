@@ -71,7 +71,7 @@ local function setup_keymaps()
     local todo_comments = require("todo-comments")
     todo_comments.setup(opts)
 
-    -- TODO: jumplists for todo comments need to cycle-through after reach the last one
+    -- BUG: jumplists for todo comments need to cycle-through after reaching the last one
     keymap_set("n", "]t", todo_comments.jump_next, "Next todo comment")
     keymap_set("n", "[t", todo_comments.jump_prev, "Previous todo comment")
     keymap_set("n", "<leader>pq", ":TodoQuickFix<CR>", "todos-to-quickfix")
@@ -94,4 +94,4 @@ return {
 }
 
 -- TODO: a function to toggle dimming todo hightlights
--- FIX: ability to select todo-keyword options
+-- TODO: ability to select todo-keyword options

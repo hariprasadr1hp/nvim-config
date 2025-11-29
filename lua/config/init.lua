@@ -1,6 +1,7 @@
 -- lua/config/init.lua
 
 require("config.settings")
+require("config.mathx")
 
 if not vim.g.vscode then
     require("config.variables")

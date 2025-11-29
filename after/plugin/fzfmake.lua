@@ -7,9 +7,6 @@ local keymap_set = require("config.helpers").keymap_set
 local function get_make_file_buffer_nr(filepath)
     local makefile_path = filepath or (vim.fn.getcwd() .. "/Makefile")
 
-    -- FIX: currently, need to ensure that the makefile is open in order to run.
-    -- need to update the mechanism
-
     if vim.fn.filereadable(makefile_path) == 1 and vim.fn.fnamemodify(makefile_path, ":t") == "Makefile" then
         return vim.fn.bufnr(makefile_path, true)
     end
@@ -114,6 +111,9 @@ local function display_makefile_target(entries)
 end
 
 local function make_fzf()
+    -- FIX: update makefile loading mechanism
+    -- instead of extracting TS from buffer, use fpath
+    -- therefore, no need for an active Makefile buffer
     local bufnr = get_make_file_buffer_nr()
     if bufnr and bufnr ~= -1 then
         local entries = get_ts_query_matches(bufnr)

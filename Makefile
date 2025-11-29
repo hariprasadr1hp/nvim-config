@@ -44,29 +44,38 @@ LIB_DEST := $(NVIM_CONFIG_DIR)/lua/$(RUST_PLUGIN).$(INSTALL_EXT)
 # Targets
 # ============================================
 
+## Run make
 all:
 	@echo "running make ..."
 
-rs-plugin: rs-build rs-plugin-copy
+## Build rust plugin and locate the shared object
+rs-plugin: rs-build
+	@echo "==> Installing $(RUST_PLUGIN) → $(LIB_DEST)"
+	mkdir -p "$(NVIM_CONFIG_DIR)/lua"
+	\cp "$(LIB_SRC)" "$(LIB_DEST)"
+	@echo "✔ Installed"
 
+## Build rust plugin
 rs-build:
 	@echo "==> Building Rust plugin '$(RUST_PLUGIN)'"
 	cd "$(RUST_CRATE_DIR)" && cargo build --$(TARGET)
 
-rs-plugin-copy: build
-	@echo "==> Installing $(RUST_PLUGIN) → $(LIB_DEST)"
-	mkdir -p "$(NVIM_CONFIG_DIR)/lua"
-	cp "$(LIB_SRC)" "$(LIB_DEST)"
-	@echo "✔ Installed"
+## Remove rust shared object
+rs-remove:
+	@echo "==> Removing .so object from '$(LIB_DEST)'"
+	\shred -uzn3 $(LIB_DEST)
 
+## clean artifacts
 clean: rs-clean py-clean
 	@echo "Cleaning up..."
 	@echo "Clean up complete."
 
+## clean rust-related artifacts
 rs-clean:
 	@echo "==> Cleaning plugin '$(RUST_PLUGIN)'"
 	cd "$(RUST_CRATE_DIR)" && cargo clean
 
+## clean python-related artifacts
 py-clean:
 	find . -name '__pycache__' -exec rm -rf {} +
 	find . -name '*.pyc' -exec rm -rf {} +
@@ -74,13 +83,13 @@ py-clean:
 	rm -rf .pytest_cache/
 	rm -rf .ruff_cache/
 	rm -rf __pycache__/
-	rm -rf **/*/__pycache__/
 
-rs-list-plugins:
+## list all rust plugins
+rs-list:
 	@echo "Rust plugins in $(RUST_DIR):"
 	@ls -1 "$(RUST_DIR)"
 
-.PHONY: rs-clean rs-plugins \
+.PHONY: rs-clean rs-plugin rs-plugin-build rs-list\
 	py-clean \
-	all build copy clean temp
+	all build copy clean temp debug test
 
