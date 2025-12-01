@@ -1,0 +1,109 @@
+{
+  "RDF": {
+    "prefix": "RDF",
+    "body": ["@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ."],
+    "description": "rdf IRI"
+  },
+  "RDFS": {
+    "prefix": "RDFS",
+    "body": ["@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> ."],
+    "description": "rdfs IRI"
+  },
+  "OWL": {
+    "prefix": "OWL",
+    "body": ["@prefix owl: <http://www.w3.org/2002/07/owl#> ."],
+    "description": "owl IRI"
+  },
+  "XSD": {
+    "prefix": "XSD",
+    "body": ["@prefix xsd: <http://www.w3.org/2001/XMLSchema#> ."],
+    "description": "xsd IRI"
+  },
+  "FOAF": {
+    "prefix": "FOAF",
+    "body": ["@prefix foaf: <http://xmlns.com/foaf/0.1/> ."],
+    "description": "foaf IRI"
+  },
+  "VCARD": {
+    "prefix": "VCARD",
+    "body": ["@prefix vcard: <http://www.w3.org/2006/vcard/ns#> ."],
+    "description": "vcard IRI"
+  },
+  "DC": {
+    "prefix": "DC",
+    "body": ["@prefix dc: <http://purl.org/dc/elements/1.1/> ."],
+    "description": "dc IRI"
+  },
+  "DCTERMS": {
+    "prefix": "DCTERMS",
+    "body": ["@prefix dcterms: <http://purl.org/dc/terms/> ."],
+    "description": "dcterms IRI"
+  },
+  "BIBO": {
+    "prefix": "BIBO",
+    "body": ["@prefix bibo: <http://purl.org/ontology/bibo/> ."],
+    "description": "bibo IRI"
+  },
+  "SCHEMA": {
+    "prefix": "SCHEMA",
+    "body": ["@prefix schema: <https://schema.org/> ."],
+    "description": "schema IRI"
+  },
+  "SKOS": {
+    "prefix": "SKOS",
+    "body": ["@prefix skos: <http://www.w3.org/2004/02/skos/core#> ."],
+    "description": "skos IRI"
+  },
+  "SKOSXL": {
+    "prefix": "SKOSXL",
+    "body": ["@prefix skosxl: <http://www.w3.org/2008/05/skos-xl#> ."],
+    "description": "skosxl IRI"
+  },
+  "GEO": {
+    "prefix": "GEO",
+    "body": ["@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> ."],
+    "description": "geo IRI"
+  },
+  "GEOSPARQL": {
+    "prefix": "GEOSPARQL",
+    "body": ["@prefix geosparql: <http://www.opengis.net/ont/geosparql#> ."],
+    "description": "geosparql IRI"
+  },
+  "ORG": {
+    "prefix": "ORG",
+    "body": ["@prefix org: <http://www.w3.org/ns/org#> ."],
+    "description": "org IRI"
+  },
+  "VOID": {
+    "prefix": "VOID",
+    "body": ["@prefix void: <http://rdfs.org/ns/void#> ."],
+    "description": "void IRI"
+  },
+  "DCAT": {
+    "prefix": "DCAT",
+    "body": ["@prefix dcat: <http://www.w3.org/ns/dcat#> ."],
+    "description": "dcat IRI"
+  },
+  "PROV": {
+    "prefix": "PROV",
+    "body": ["@prefix prov: <http://www.w3.org/ns/prov#> ."],
+    "description": "prov IRI"
+  },
+  "LDP": {
+    "prefix": "LDP",
+    "body": ["@prefix ldp: <http://www.w3.org/ns/ldp#> ."],
+    "description": "ldp IRI"
+  },
+  "SD": {
+    "prefix": "SD",
+    "body": [
+      "@prefix sd: <http://www.w3.org/ns/sparql-service-description#> ."
+    ],
+    "description": "sd IRI"
+  },
+  "EX": {
+    "prefix": "EX",
+    "body": ["@prefix ex: <http://example.org/> ."],
+    "description": "ex IRI"
+  }
+}

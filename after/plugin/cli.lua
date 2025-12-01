@@ -1,5 +1,9 @@
 -- after/plugin/cli.lua
 
+if vim.g.vscode then
+    return
+end
+
 local keymap_set = require("config.helpers").keymap_set
 local fzf_lua = require("fzf-lua")
 local toggleterm_exec = require("toggleterm").exec
@@ -27,7 +31,7 @@ local actions_gcloud = {
     {
         name = "list permissions by role",
         action = function()
-            vim.ui.input({ prompt = "enter `role`" }, function(role)
+            vim.ui.input({ prompt = "Enter `role`" }, function(role)
                 pcall(toggleterm_exec, string.format(" gcloud iam roles describe roles/%s", role))
             end)
         end,

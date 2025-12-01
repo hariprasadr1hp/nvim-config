@@ -3,6 +3,10 @@
 -- Render the color of linenumbers based on its mode,
 -- or something mimicking a mode (macros for example)
 
+if vim.g.vscode then
+    return
+end
+
 local is_recording = require("config.helpers").is_recording
 local line_numbers_augroup = vim.api.nvim_create_augroup("LineNumebers", { clear = true })
 

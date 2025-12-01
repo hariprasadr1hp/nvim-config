@@ -66,20 +66,23 @@ function M.as_floating_window(content)
 end
 
 --- Save the current visual selection to a temporary file under ~/.temp/zzz_XXXX.
---- The file is written to ~/.temp/zzz_{4-digit-random}. Example: ~/.temp/zzz_0243
---- @return nil
-function M.SaveVisualSelection()
+--- The file is written to ~/.temp/zzz_{4-digit-random}.{ft}. Example: ~/.temp/zzz_0243
+--- Returns name of the file
+---@param ft string
+---@return string
+function M.SaveVisualSelection(ft)
     -- Ensure ~/.temp exists
     vim.fn.mkdir(vim.fn.expand("~/.temp"), "p")
 
     -- Generate 4-digit random number
-    local filename = string.format("%s/.temp/zzz_%04d", vim.fn.expand("~"), math.random(0, 9999))
+    local filename = string.format("%s/.temp/zzz_%04d.%s", vim.fn.expand("~"), math.random(0, 9999), ft)
 
     -- Save visual selection to file
     vim.cmd('silent! normal! "vy') -- Yank visual selection into register v
     local content = HP.GetTextFromVisual()
     vim.fn.writefile(content, filename)
     print("Wrote selection to " .. filename)
+    return filename
 end
 
 _G.HP = M

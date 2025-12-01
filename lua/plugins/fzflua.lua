@@ -101,6 +101,9 @@ local function setup_actions(actions)
             ["ctrl-s"] = actions.file_split,
             ["ctrl-t"] = actions.file_tabedit,
             ["ctrl-v"] = actions.file_vsplit,
+            ["ctrl-y"] = function(selected)
+                vim.fn.setreg("*", selected[1])
+            end,
         },
     }
 end
@@ -189,12 +192,15 @@ local function setup_fzflua_keymaps()
     keymap_set("n", "<leader>cS", fzflua.lsp_workspace_symbols, "lsp-workspace-symbols")
 
     keymap_set("n", "<leader>fc", function()
-        fzflua.files({ cwd = vim.env.HURL_COLLECTIONS_DIR })
-    end, "collections-hurl")
+        fzflua.files({ cwd = vim.env.CORPUS_DIR .. "/http" })
+    end, "http-collections")
     keymap_set("n", "<leader>ff", fzflua.oldfiles, "recent-files")
     keymap_set("n", "<leader>fF", function()
         fzflua.files({ cwd = vim.fn.stdpath("config") .. "/lua/plugins/custom" })
     end, "custom-plugin-files")
+    keymap_set("n", "<leader>fo", function()
+        fzflua.files({ cwd = vim.env.CORPUS_DIR .. "/ontologies" })
+    end, "ontologies")
     keymap_set("n", "<leader>fp", function()
         fzflua.files({ cwd = vim.fn.stdpath("config") })
     end, "config-files")
@@ -235,7 +241,7 @@ local function setup_fzflua_keymaps()
         fzflua.live_grep({ cwd = vim.env.ORG_DIR .. "/journal", resume = true })
     end, "journal-search")
     keymap_set("n", "<leader>nm", function()
-        fzflua.files({ cwd = vim.env.ORG_DIR .. "/markdown" })
+        fzflua.files({ cwd = vim.env.CORPUS_DIR .. "/markdown" })
     end, "md-notes")
     keymap_set("n", "<leader>nrf", function()
         fzflua.files({ cwd = vim.env.ORG_DIR .. "/roam" })

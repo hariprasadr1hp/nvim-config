@@ -184,6 +184,12 @@
       },
       {
         "language": [
+          "turtle"
+        ],
+        "path": "./turtle.json"
+      },
+      {
+        "language": [
           "typescript"
         ],
         "path": "./typescript.json"

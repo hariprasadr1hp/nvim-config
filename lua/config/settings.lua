@@ -205,9 +205,9 @@ vim.opt.secure = true
 -- CODING
 -------------------------------------------------------------------
 if vim.fn.has("linux") == 1 then
-    vim.g.python3_host_prog = "~/.pyenv/shims/python"
+    vim.g.python3_host_prog = vim.fn.expand("~/.config/nvim/.venv/bin/python")
 elseif vim.fn.has("macunix") == 1 then
-    vim.g.python3_host_prog = "~/.pyenv/shims/python"
+    vim.g.python3_host_prog = vim.fn.expand("~/.config/nvim/.venv/bin/python")
 end
 
 -- MISCELLANEOUS

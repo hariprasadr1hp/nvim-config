@@ -148,7 +148,9 @@ local function setup_lsp_config()
             cmd = { "pyright-langserver", "--stdio" },
             filetypes = { "python", "ipynb" },
             settings = {
-                pyright = { disableOrganizeImports = true },
+                pyright = {
+                    disableOrganizeImports = true,
+                },
                 python = {
                     analysis = {
                         ignore = { "*" },
@@ -206,10 +208,10 @@ local function setup_lsp_config()
             end,
         },
 
-        -- turtle_languageserver = {
-        --     cmd = "turtle_languageserver",
-        --     filetypes = { "turtle", "ttl" },
-        -- },
+        ["turtle-language-server"] = {
+            cmd = "turtle_languageserver",
+            filetypes = { "turtle", "ttl" },
+        },
 
         taplo = {
             -- Refer: https://taplo.tamasfe.dev/configuration/file.html

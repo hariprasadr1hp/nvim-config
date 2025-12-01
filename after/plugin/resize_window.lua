@@ -5,6 +5,10 @@
 -- once entered, h/j/k/l or arrow keys to resize interactively
 -- `q/i` to quit mode
 
+if vim.g.vscode then
+    return
+end
+
 local keymap_set = require("config.helpers").keymap_set
 
 local function exit_window_resize_mode()

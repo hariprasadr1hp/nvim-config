@@ -175,6 +175,7 @@ local key_maps = {
 
         -- [F]ILE -------------------
         { "<leader>f", group = "file", nowait = false, remap = false },
+        { "<leader>fl", group = "logs", nowait = false, remap = false },
 
         -- [G]IT --------------------
         { "<leader>g", group = "git", nowait = false, remap = false },

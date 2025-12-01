@@ -1,5 +1,9 @@
 -- after/plugin/fzfmake.lua
 
+if vim.g.vscode then
+    return
+end
+
 local keymap_set = require("config.helpers").keymap_set
 
 ---@param filepath (string | nil)

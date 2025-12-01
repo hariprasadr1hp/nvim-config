@@ -240,7 +240,7 @@ return {
     keys = {
         { "<C-.><C-.>", "<cmd>NvimTreeToggle<CR>", desc = "toggle-explorer" },
         { "<leader>oe", "<cmd>NvimTreeToggle<CR>", desc = "toggle-explorer" },
-        { "<leader>re", "<cmd>NvimTreeRefresh<CR>", desc = "refresh-explorer" },
+        { "<leader>re", "<cmd>NvimTreeRefresh<CR>", desc = "explorer-reload" },
     },
     dependencies = { "kyazdani42/nvim-web-devicons" },
     opts = opts,

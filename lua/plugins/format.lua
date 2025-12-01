@@ -42,7 +42,7 @@ local formatters_by_ft = {
     json = { "prettier", stop_after_first = true },
     lua = { "stylua" },
     markdown = { "prettier" },
-    python = { "isort", "black", "ruff_format" },
+    python = { "ruff_format" },
     ruby = { "standardrb" },
     rust = { "rustfmt", lsp_format = true },
     sh = { "shfmt" },

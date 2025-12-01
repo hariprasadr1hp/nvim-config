@@ -25,6 +25,11 @@ sudo apt install neovim
 ```bash
 cd ~/.config/
 gh repo clone hariprasadr1hp/nvim-config nvim
+
+# for python rplugin
+curl -LsSf https://astral.sh/uv/install.sh | sh
+uv sync
+
 ansible-playbook nvim_playbook.yml
 ```
 
@@ -34,6 +39,9 @@ Add a `.env` file
 # [ORG MODE]
 ORG_DIR=
 ORG_ROAM_DB_PATH=
+
+# [CORPUS]
+CORPUS_DIR=
 
 # [LLM]
 OLLAMA_SERVER_HOST=
