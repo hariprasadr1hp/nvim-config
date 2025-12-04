@@ -318,3 +318,5 @@ return {
     dependencies = { "echasnovski/mini.icons" },
     config = setup_fzflua_config,
 }
+
+-- TODO: how to add native cli arguments?

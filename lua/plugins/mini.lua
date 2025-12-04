@@ -40,14 +40,6 @@ local mini_surrround_opts = {
     silent = false,
 }
 
-local mini_hipatterns_opts = {
-    highlighters = {},
-    delay = {
-        text_change = 200,
-        scroll = 50,
-    },
-}
-
 local mini_icon_opts = {
     style = "glyph",
     default = {},
@@ -59,9 +51,39 @@ local mini_icon_opts = {
     os = {},
 }
 
+local function setup_mini_hipatterns_config()
+    local mini_hipatterns = require("mini.hipatterns")
+    mini_hipatterns.setup({
+        highlighters = {
+            -- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
+            -- fixme = { pattern = "%f[%w]()FIXME()%f[%W]", group = "MiniHipatternsFixme" },
+            -- hack = { pattern = "%f[%w]()HACK()%f[%W]", group = "MiniHipatternsHack" },
+            -- todo = { pattern = "%f[%w]()TODO()%f[%W]", group = "MiniHipatternsTodo" },
+            -- note = { pattern = "%f[%w]()NOTE()%f[%W]", group = "MiniHipatternsNote" },
+
+            hex_color = mini_hipatterns.gen_highlighter.hex_color(),
+        },
+        delay = {
+            text_change = 200,
+            scroll = 50,
+        },
+    })
+
+    vim.api.nvim_create_user_command("HexColorToggle", function()
+        local highlighters = mini_hipatterns.config.highlighters
+        local hex_color = highlighters.hex_color
+        if hex_color == nil then
+            highlighters.hex_color = mini_hipatterns.gen_highlighter.hex_color()
+        else
+            highlighters.hex_color = nil
+        end
+    end, {
+        desc = "toggle-hex-color-highlight",
+    })
+end
+
 local function setup_mini_config()
     require("mini.ai").setup(mini_ai_opts)
-    require("mini.hipatterns").setup(mini_hipatterns_opts)
     require("mini.extra").setup()
     require("mini.trailspace").setup()
     require("mini.operators").setup()
@@ -72,6 +94,8 @@ local function setup_mini_config()
     require("mini.colors").setup()
     require("mini.icons").setup(mini_icon_opts)
     require("mini.fuzzy").setup()
+
+    setup_mini_hipatterns_config()
 
     -- local hues = require("mini.hues")
     -- hues.setup(hues.gen_random_base_colors())

@@ -89,7 +89,7 @@ local opts = {
     custom_highlights = function(cl)
         return {
             -- Completion popup menu
-            Pmenu = { bg = "#000000", fg = cl.text },
+            Pmenu = { bg = cl.base, fg = cl.text },
             PmenuSel = { bg = cl.surface0, fg = cl.blue, style = { "bold" } },
             PmenuSbar = { bg = cl.surface0 },
             PmenuThumb = { bg = cl.surface2 },

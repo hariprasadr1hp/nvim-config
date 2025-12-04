@@ -40,7 +40,7 @@ local function setup_lint_config()
         lint.linters.sqlfluff.args = {
             "lint",
             "--format=json",
-            "--dialect=ansi",
+            "--dialect=bigquery",
         }
         lint.linters.sqlfluff.stdin = false
     end

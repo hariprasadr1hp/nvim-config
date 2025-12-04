@@ -17,7 +17,7 @@ local prompt_choices = {
     "improve the following code:",
     "convert the following code to",
     "debug the following code:",
-    "need to write unit tests for the following code:",
+    "need to write tests for the following code:",
 }
 
 local language_choices = {

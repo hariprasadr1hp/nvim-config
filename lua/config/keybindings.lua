@@ -192,9 +192,6 @@ keymap_set("n", "K", vim.lsp.buf.hover, "hover-docs")
 keymap_set("n", "Y", "y$")
 
 -- g chords
-keymap_set("n", "g2", "@")
-keymap_set("n", "g3", "#")
-keymap_set("n", "g4", "$")
 keymap_set("n", "g5", "%")
 keymap_set("n", "g6", "^")
 keymap_set("n", "g9", "g$")

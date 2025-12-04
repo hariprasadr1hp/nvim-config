@@ -50,9 +50,12 @@ OLLAMA_DEFAULT_SERVER_MODEL=
 OLLAMA_DEFAULT_LOCAL_MODEL=
 OPENAI_API_KEY=
 ANTHROPIC_API_KEY=
+VENICE_API_KEY=
+XAI_API_KEY=
 CODEIUM_API_KEY=
-CHATGPT_URL=
 CLAUDE_CODE_OAUTH_TOKEN=
+CHATGPT_URL=
+GROK_URL=
 ```
 
 - inside `neovim`, `:Lazy` and `:Mason` to load plugins and lsp/language-related-tools respectively

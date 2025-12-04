@@ -5,7 +5,8 @@ M = {}
 -- local keymap_set = require("config.helpers").keymap_set
 
 local fzf_lua = require("fzf-lua")
--- local conform = require("conform")
+local formatters = require("conform").formatters
+-- local formatters_by_ft = require("conform").formatters_by_ft
 -- local lint = require("lint")
 
 local jq_sibling_action = require("plugins.custom.buffer.lang.json").jq_sibling_action

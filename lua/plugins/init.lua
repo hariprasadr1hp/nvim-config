@@ -69,3 +69,8 @@ local opts = {
 require("lazy").setup(opts)
 
 vim.keymap.set("n", "<leader>oL", ":Lazy<CR>", { noremap = true, silent = true, desc = "Lazy" })
+
+-- TODO: plugins to add
+-- ThePrimeagen/refactoring.nvim
+-- folke/ts-comments.nvim
+-- stevearc/overseer.nvim
