@@ -46,7 +46,7 @@ local formatters_by_ft = {
     ruby = { "standardrb" },
     rust = { "rustfmt", lsp_format = true },
     sh = { "shfmt" },
-    sql = { "sleek" },
+    sql = { "sqlfluff", "sleek" },
     svelte = { "prettier", stop_after_first = true },
     toml = { "taplo" },
     typescript = { "prettier", stop_after_first = true },
@@ -69,7 +69,7 @@ local formatters = {
         command = "sqlfluff",
         args = {
             "fix",
-            "--dialect=postgres",
+            "--dialect=ansi",
             "--disable-progress-bar",
             "-",
         },

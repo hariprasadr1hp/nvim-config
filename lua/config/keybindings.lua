@@ -132,6 +132,8 @@ keymap_set("n", "<leader>qX", function()
     vim.fn.setloclist(0, {})
 end, "clear-loclist")
 
+-- TODO: while disabling, instead of switching diagnostics completely off,
+-- turn off only the virtual text. Keep the diagnostic signs on
 keymap_set("n", "<leader>td", function()
     local status = vim.diagnostic.is_enabled()
     vim.diagnostic.enable(not status)

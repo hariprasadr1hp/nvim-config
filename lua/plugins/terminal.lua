@@ -109,6 +109,8 @@ local function setup_toggleterm_config()
         if cmd ~= nil then
             print("executing...")
             -- toggleterm.exec(cmd)
+            -- TODO: input should be replaced to a float-window,
+            -- displaying the contents to be executed
             vim.ui.input({
                 prompt = "add additional arguments (if any)",
             }, function(input)

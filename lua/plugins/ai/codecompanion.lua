@@ -4,7 +4,9 @@
 
 -- TODO: add model name besides adapter on chat
 -- TODO: add a header on top for codecompanion buffers, describing model-info
--- TODO: UI updates (markdown, bgcolor etc.,)
+-- TODO: UI updates (markdown, bgcolor, fidget-spinner etc.,)
+-- TODO: swap keymaps for allow-once and allow-always (g1,g2) (1,2)
+-- TODO: Keymap to diff changes done by the language model
 
 local function setup_codecompanion_config()
     local companion = require("codecompanion")
@@ -19,6 +21,12 @@ local function setup_codecompanion_config()
 
             -- FIX: choose between haiku and sonnet models, with default as haiku
             -- refer how the models are named for claude code
+            commands = {
+                default = {
+                    -- https://github.com/zed-industries/claude-code-acp
+                    "claude-code-acp",
+                },
+            },
         }
 
         return companion_adapters.extend("claude_code", claude_acp_opts)
@@ -33,14 +41,14 @@ local function setup_codecompanion_config()
                 ---@type "openai-api-key" | "codex-api-key" | "chatgpt"
                 auth_method = "chatgpt",
             },
-
             commands = {
                 default = {
+                    -- https://github.com/zed-industries/codex-acp
                     "codex-acp",
                 },
             },
         }
-        return require("codecompanion.adapters").extend("codex", codex_acp_opts)
+        return companion_adapters.extend("codex", codex_acp_opts)
     end
 
     -- FIX: get gemini acp adapter working, along with model selection, and default model
@@ -52,14 +60,24 @@ local function setup_codecompanion_config()
                 ---@type "oauth-personal" | "gemini-api-key" | "vertex-ai"
                 auth_method = "oauth-personal",
             },
+            schema = {
+                model = {
+                    ---@type "gemini-2.5-flash" | "gemini-2.5-flash-lite" | "gemini-2.5-pro"
+                    default = "gemini-2.5-flash",
+                },
+            },
         }
-        return require("codecompanion.adapters").extend("gemini_cli", gemini_acp_opts)
+        return companion_adapters.extend("gemini_cli", gemini_acp_opts)
     end
 
     local function setup_opencode_acp_adapter()
         ---@type CodeCompanion.ACPAdapter.OpenCode
-        local opencode_acp_opts = {}
-        return require("codecompanion.adapters").extend("opencode", opencode_acp_opts)
+        local opencode_acp_opts = {
+            model = {
+                default = vim.env.OLLAMA_DEFAULT_SERVER_MODEL,
+            },
+        }
+        return companion_adapters.extend("opencode", opencode_acp_opts)
     end
 
     local function setup_ollama_http_adapter()
@@ -81,18 +99,87 @@ local function setup_codecompanion_config()
                 },
             },
         }
-        return require("codecompanion.adapters").extend("ollama", ollama_http_adapter)
+        return companion_adapters.extend("ollama", ollama_http_adapter)
+    end
+
+    local function setup_cursor_acp_adapter()
+        local helpers = require("codecompanion.adapters.acp.helpers")
+
+        ---@class CodeCompanion.ACPAdapter.Cursor: CodeCompanion.ACPAdapter
+        return {
+            name = "cursor",
+            formatted_name = "Cursor",
+            type = "acp",
+            roles = {
+                llm = "assistant",
+                user = "user",
+            },
+            opts = {
+                vision = false,
+            },
+            commands = {
+                default = {
+                    "cursor-agent-acp",
+                },
+            },
+            defaults = {
+                mcpServers = {},
+                timeout = 20000, -- 20 seconds
+            },
+            parameters = {
+                protocolVersion = 1,
+                clientCapabilities = {
+                    fs = { readTextFile = true, writeTextFile = true },
+                },
+                clientInfo = {
+                    name = "CodeCompanion.nvim",
+                    version = "1.0.0",
+                },
+            },
+            handlers = {
+                ---@param self CodeCompanion.ACPAdapter
+                ---@return boolean
+                ---@diagnostic disable-next-line: unused-local
+                setup = function(self)
+                    return true
+                end,
+
+                ---@param self CodeCompanion.ACPAdapter
+                ---@return boolean
+                ---@diagnostic disable-next-line: unused-local
+                auth = function(self)
+                    -- authentication handled externally via cursor-agent CLI
+                    -- via `cursor-agent login`
+                    return true
+                end,
+
+                ---@param self CodeCompanion.ACPAdapter
+                ---@param messages table
+                ---@param capabilities table
+                ---@return table
+                form_messages = function(self, messages, capabilities)
+                    return helpers.form_messages(self, messages, capabilities)
+                end,
+
+                ---@param self CodeCompanion.ACPAdapter
+                ---@param code number
+                ---@return nil
+                ---@diagnostic disable-next-line: unused-local
+                on_exit = function(self, code) end,
+            },
+        }
     end
 
     -- FIX: gracefully exit, when the API key is not available
     local function setup_anthropic_http_adapter()
+        local api_key = vim.env.ANTHROPIC_API_KEY
         ---@type CodeCompanion.HTTPAdapter.Anthropic
         local anthropic_http_opts = {
             env = {
-                api_key = vim.env.ANTHROPIC_API_KEY,
+                api_key = api_key,
             },
         }
-        return require("codecompanion.adapters").extend("anthropic", anthropic_http_opts)
+        return companion_adapters.extend("anthropic", anthropic_http_opts)
     end
 
     local function setup_gemini_http_adapter()
@@ -109,7 +196,7 @@ local function setup_codecompanion_config()
                 },
             },
         }
-        return require("codecompanion.adapters").extend("gemini", gemini_http_opts)
+        return companion_adapters.extend("gemini", gemini_http_opts)
     end
 
     local function setup_xai_http_adapter()
@@ -129,7 +216,7 @@ local function setup_codecompanion_config()
                 },
             },
         }
-        return require("codecompanion.adapters").extend("xai", xai_http_opts)
+        return companion_adapters.extend("xai", xai_http_opts)
     end
 
     local function setup_venice_http_adapter()
@@ -149,7 +236,7 @@ local function setup_codecompanion_config()
                 vision = false,
             },
         }
-        return require("codecompanion.adapters").extend("openai_compatible", venice_http_opts)
+        return companion_adapters.extend("openai_compatible", venice_http_opts)
     end
 
     ---@module "codecompanion"
@@ -160,7 +247,7 @@ local function setup_codecompanion_config()
                 codex = setup_codex_acp_adapter,
                 gemini_cli = setup_gemini_acp_adapter,
                 opencode = setup_opencode_acp_adapter,
-                -- TODO: cursor cli adapter
+                cursor = setup_cursor_acp_adapter,
 
                 opts = {
                     show_model_choices = true,
@@ -183,6 +270,7 @@ local function setup_codecompanion_config()
             },
         },
 
+        ---@module "codecompanion.strategies"
         strategies = {
             chat = {
                 adapter = {
@@ -310,6 +398,27 @@ local function setup_codecompanion_config()
                         relativenumber = false,
                     },
                 },
+                window = {
+                    -- layout = "float",
+                    layout = "buffer",
+                    position = "right",
+                    sticky = false,
+                    relative = "editor",
+                    height = 0.9,
+                    width = 0.4,
+                    opts = {
+                        breakindent = true,
+                        cursorcolumn = false,
+                        cursorline = false,
+                        foldcolumn = "0",
+                        linebreak = true,
+                        list = false,
+                        numberwidth = 1,
+                        signcolumn = "no",
+                        spell = false,
+                        wrap = true,
+                    },
+                },
             },
         },
 
@@ -324,15 +433,15 @@ end
 return {
     {
         "olimorris/codecompanion.nvim",
+        version = "17.33.0",
         cmd = {
             "CodeCompanion",
             "CodeCompanionChat",
             "CodeCompanionActions",
-            "CodeCompanionCmd",
         },
         keys = {
-            { "<leader>ai", ":CodeCompanionChat<CR>", mode = "n", desc = "ai-chat-companion" },
-            { "<leader>ai", ":CodeCompanionChat<CR>", mode = "v", desc = "ai-chat-companion" },
+            { "<leader>ai", ":CodeCompanionChat Toggle<CR>", mode = "n", desc = "ai-chat-companion" },
+            { "<leader>ai", ":CodeCompanionChat Toggle<CR>", mode = "v", desc = "ai-chat-companion" },
         },
         dependencies = {
             "nvim-lua/plenary.nvim",

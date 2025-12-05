@@ -1,5 +1,9 @@
 -- after/plugin/snippetify.lua
 
+if vim.g.vscode then
+    return
+end
+
 -- Function to escape special characters for JSON strings
 local function escape_json_string(str)
     str = str:gsub("\\", "\\\\")
