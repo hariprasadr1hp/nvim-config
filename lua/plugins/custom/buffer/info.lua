@@ -14,6 +14,15 @@ local function get_lsp_clients(buf_id)
     return table.concat(names, ", ")
 end
 
+local function get_formatters(buf_id)
+    local conform = require("conform")
+    local formatters = conform.list_formatters(0)
+    local names = vim.tbl_map(function(i)
+        return i.name
+    end, formatters)
+    return table.concat(names, ", ")
+end
+
 local function get_treesitter_status(buf_id)
     local ok, hl = pcall(require, "vim.treesitter.highlighter")
     if not ok or not hl.active then
@@ -62,13 +71,14 @@ local function get_buffer_metadata(buf_id)
         { "Filetype:", bo.filetype },
         { "Lines:", vim.api.nvim_buf_line_count(buf_id) },
         { "Encoding:", bo.fileencoding },
-        { "Format:", bo.fileformat },
+        { "FileFormat:", bo.fileformat },
         { "Listed:", bo.buflisted and "✔" or "✘" },
         { "Loaded:", vim.api.nvim_buf_is_loaded(buf_id) and "✔" or "✘" },
         { "Modifiable:", bo.modifiable and "✔" or "✘" },
         { "Hidden:", bo.bufhidden ~= "" and bo.bufhidden or "none" },
         { "Modified:", bo.modified and "✔ Yes" or "✘ No" },
         { "LSP Clients:", get_lsp_clients(buf_id) },
+        { "Formatters", get_formatters(buf_id) },
         { "Tree-sitter:", get_treesitter_status(buf_id) },
         { "Completion:", get_blink_sources() },
         { "Diagnostics:", get_diagnostics_count(buf_id) },

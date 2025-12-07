@@ -45,8 +45,13 @@ local actions_python = {
 
 local function get_actions_sql()
     local dbt = require("dbt")
+    local actions = {}
 
-    return {
+    if vim.env.DBT_PROJECT_DIR == nil then
+        return actions
+    end
+
+    local dbt_actions = {
         {
             name = "Jump to `compiled` file [DBT]",
             action = function()
@@ -96,6 +101,9 @@ local function get_actions_sql()
             end,
         },
     }
+
+    actions = vim.tbl_extend("keep", actions, dbt_actions)
+    return actions
 end
 
 local function get_actions_yaml()

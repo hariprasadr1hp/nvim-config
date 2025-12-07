@@ -46,7 +46,14 @@ local formatters_by_ft = {
     ruby = { "standardrb" },
     rust = { "rustfmt", lsp_format = true },
     sh = { "shfmt" },
-    sql = { "sqlfluff", "sleek" },
+    sql = function(bufnr)
+        local bufname = vim.api.nvim_buf_get_name(bufnr)
+        if vim.env.DBT_PROJECT_DIR and bufname:find(vim.env.DBT_PROJECT_DIR, 1, true) then
+            return { "sqlfluff" }
+        else
+            return { "sleek" }
+        end
+    end,
     svelte = { "prettier", stop_after_first = true },
     toml = { "taplo" },
     typescript = { "prettier", stop_after_first = true },
