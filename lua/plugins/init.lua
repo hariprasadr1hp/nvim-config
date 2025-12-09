@@ -7,6 +7,7 @@ local opts = {
     require("plugins.themes.catppuccin"),
     require("plugins.themes.kanagawa"),
     require("plugins.themes.oxocarbon"),
+    require("plugins.themes.onedark"),
 
     require("plugins.icons"),
     require("plugins.pick"),
@@ -70,7 +71,8 @@ require("lazy").setup(opts)
 
 vim.keymap.set("n", "<leader>oL", ":Lazy<CR>", { noremap = true, silent = true, desc = "Lazy" })
 
--- TODO: plugins to add
+-- TODO: plugins to add/visit
+-- Davidyz/VectorCode
 -- ThePrimeagen/refactoring.nvim
 -- folke/ts-comments.nvim
 -- stevearc/overseer.nvim

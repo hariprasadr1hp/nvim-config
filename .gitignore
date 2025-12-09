@@ -1,6 +1,7 @@
 # directories
 .undodir/
 spell/
+deps/
 
 # ai
 .grok

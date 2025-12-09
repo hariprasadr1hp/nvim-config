@@ -71,17 +71,45 @@ local formatters_by_ft = {
     zsh = { "shfmt" },
 }
 
-local formatters = {
-    sqlfluff = {
+local function get_sqlfluff_format_config()
+    local dialects = {
+        "ansi",
+        "athena",
+        "bigquery",
+        "clickhouse",
+        "duckdb",
+        "flink",
+        "hive",
+        "postgres",
+        "redshift",
+        "snowflake",
+        "soql",
+        "sparksql",
+        "sqlite",
+    }
+    local default_dialect = "bigquery"
+    local dialect = vim.env.dbt_dialect
+    if not vim.tbl_contains(dialects, dialect) then
+        dialect = default_dialect
+    end
+
+    local result = {
         command = "sqlfluff",
         args = {
             "fix",
-            "--dialect=ansi",
+            string.format("--dialect=%s", dialect),
             "--disable-progress-bar",
             "-",
         },
         stdin = true,
-    },
+    }
+    return result
+end
+
+local formatters = {
+    sqlfluff = function(bufnr)
+        return get_sqlfluff_format_config()
+    end,
 
     sleek = {
         command = "sleek",

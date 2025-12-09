@@ -258,6 +258,7 @@ function M.show_actions()
         return
     end
 
+    -- TODO: minimize the selection-window size
     fzf_lua.fzf_exec(
         vim.tbl_map(function(action)
             return action.name

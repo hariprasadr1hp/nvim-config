@@ -9,6 +9,8 @@ RUST_PLUGIN ?= oxitools
 RUST_CRATE_DIR := $(RUST_DIR)/$(RUST_PLUGIN)
 RUST_LIB_NAME := $(RUST_PLUGIN)
 
+LUA_TEST_SCRIPT_FILE := $(NVIM_CONFIG_DIR)/scripts/minimal_init.lua
+
 # ============================================
 # Detect OS → choose build ext vs install ext
 # ============================================
@@ -90,6 +92,26 @@ rs-list:
 	@ls -1 "$(RUST_DIR)"
 
 .PHONY: rs-clean rs-plugin rs-plugin-build rs-list\
+## Run all tests
+test: deps
+	@echo Testing...
+	nvim --headless --noplugin -u $(LUA_TEST_SCRIPT_FILE) -c "lua MiniTest.run()"
+
+# Run test-file
+test-file: deps
+	@echo Testing File...
+	nvim --headless --noplugin -u $(LUA_TEST_SCRIPT_FILE) -c "lua MiniTest.run_file('$(FILE)')"
+
+## Run deps/
+deps: deps/mini.nvim
+	@echo Pulling...
+
+#@ Run mini.tests
+deps/mini.nvim:
+	@mkdir -p deps
+	if [ ! -d "$@" ]; then git clone --filter=blob:none https://github.com/echasnovski/mini.nvim $@; fi
+
 	py-clean \
+	test-file deps deps/mini.nvim \
 	all build copy clean temp debug test
 

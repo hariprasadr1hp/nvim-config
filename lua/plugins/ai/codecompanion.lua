@@ -8,6 +8,15 @@
 -- TODO: swap keymaps for allow-once and allow-always (g1,g2) (1,2)
 -- TODO: Keymap to diff changes done by the language model
 
+-- TODO: linking codecompanion-workspace.json to agent.md, cursor/rules etc.,
+-- TODO: additional tools
+-- TODO: additional variables
+-- TODO: vector-code integration
+-- TODO: effectively using codecompanion-workspace.json
+-- TODO: chat-buffer naming
+-- TODO: chat-buffer session-management (lifespan, autocmds etc.,)
+-- TODO: AI version control
+
 local function setup_codecompanion_config()
     local companion = require("codecompanion")
     local companion_adapters = require("codecompanion.adapters")
@@ -274,6 +283,7 @@ local function setup_codecompanion_config()
         strategies = {
             chat = {
                 adapter = {
+                    ---@type "ollama" | "claude_code" | "cursor" | "codex" | "opencode" | "xai" | "venice" | "gemini_cli" | "anthropic"
                     name = "ollama",
                     model = vim.env.OLLAMA_DEFAULT_SERVER_MODEL,
                 },
@@ -318,6 +328,7 @@ local function setup_codecompanion_config()
 
             inline = {
                 adapter = {
+                    ---@type "ollama" | "claude_code" | "cursor" | "codex" | "opencode" | "xai" | "venice" | "gemini_cli" | "anthropic"
                     name = "ollama",
                     model = vim.env.OLLAMA_DEFAULT_SERVER_MODEL,
                 },
@@ -440,8 +451,9 @@ return {
             "CodeCompanionActions",
         },
         keys = {
-            { "<leader>ai", ":CodeCompanionChat Toggle<CR>", mode = "n", desc = "ai-chat-companion" },
-            { "<leader>ai", ":CodeCompanionChat Toggle<CR>", mode = "v", desc = "ai-chat-companion" },
+            { "<leader>ai", ":CodeCompanionChat Toggle<CR>", mode = { "n", "v" }, desc = "ai-chat-companion" },
+            { "<leader>aI", ":CodeCompanionChat<CR>", mode = "n", desc = "ai-chat-companion" },
+            { "<leader>aI", ":CodeCompanion<CR>", mode = "v", desc = "ai-chat-companion" },
         },
         dependencies = {
             "nvim-lua/plenary.nvim",

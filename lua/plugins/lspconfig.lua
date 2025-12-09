@@ -129,7 +129,7 @@ local function setup_lsp_config()
             settings = {
                 json = {
                     schemas = {
-                        ["./src/validate/json-schema/instance.schema.json"] = "data/instances/**/*.jsonld",
+                        ["https://github.com/olimorris/codecompanion.nvim/blob/main/lua/codecompanion/workspace-schema.json"] = "./codecompanion-workspace.json",
                     },
                 },
             },

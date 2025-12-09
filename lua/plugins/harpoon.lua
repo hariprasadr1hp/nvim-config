@@ -5,14 +5,6 @@ local function setup_keymaps()
     local harpoon_list = require("harpoon"):list()
     local set_usercmd = vim.api.nvim_create_user_command
 
-    keymap_set("n", "[n", function()
-        harpoon_list:prev()
-    end, "prev-harpoon")
-
-    keymap_set("n", "]n", function()
-        harpoon_list:next()
-    end, "next-harpoon")
-
     keymap_set("n", "<leader>hla", function()
         harpoon_list:add()
     end, "harpoon-add")

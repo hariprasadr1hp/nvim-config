@@ -153,6 +153,8 @@ keymap_set("n", "<leader>tr", ":setl ro!<CR>", "read-only")
 keymap_set("n", "<leader>ts", ":setl spell!<CR>", "spell-check")
 keymap_set("n", "<leader>tw", ":setl nowrap! linebreak breakindent<CR>", "wrap-text")
 
+-- TODO: `<leader>w{1-5}` to switch between windows
+-- TODO: also `<C-w>{1-5}` to switch between windows
 keymap_set("n", "<leader>w6", ":wincmd +<CR>", "increase-height")
 keymap_set("n", "<leader>w7", ":wincmd -<CR>", "decrease-height")
 keymap_set("n", "<leader>w9", ":wincmd <<CR>", "decrease-width")
@@ -248,6 +250,8 @@ keymap_set("n", "[j", ":tabprevious<CR>", "prev-tab")
 keymap_set("n", "]j", ":tabnext<CR>", "next-tab")
 keymap_set("n", "[J", ":tabfirst<CR>", "first-tab")
 keymap_set("n", "]J", ":tablast<CR>", "last-tab")
+
+-- TODO: keymap_set("x", "]d", "", "next-diagnostic")
 
 -- TERMINAL
 -------------------------------------------------------------------
