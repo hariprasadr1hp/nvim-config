@@ -106,7 +106,7 @@ local function setup_mini_config()
     --     desc = "generate a theme using random fg and bg colors",
     -- })
 
-    -- map("n", "<leader>tt", ":RandomThemeGenerate<CR>", "random-theme")
+    -- map("n", "<leader>yy", ":RandomThemeGenerate<CR>", "random-theme")
 end
 
 return {

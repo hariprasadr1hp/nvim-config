@@ -9,13 +9,16 @@
 -- TODO: Keymap to diff changes done by the language model
 
 -- TODO: linking codecompanion-workspace.json to agent.md, cursor/rules etc.,
--- TODO: additional tools
--- TODO: additional variables
 -- TODO: vector-code integration
 -- TODO: effectively using codecompanion-workspace.json
 -- TODO: chat-buffer naming
 -- TODO: chat-buffer session-management (lifespan, autocmds etc.,)
 -- TODO: AI version control
+
+-- TODO: additional tools
+-- TODO: additional variables
+-- TODO: variable: directory
+-- TODO: variable: TODO-list
 
 local function setup_codecompanion_config()
     local companion = require("codecompanion")
@@ -127,6 +130,7 @@ local function setup_codecompanion_config()
                 vision = false,
             },
             commands = {
+                -- TODO: possible to get the content under "reasoning", or is it obscured?
                 default = {
                     "cursor-agent-acp",
                 },

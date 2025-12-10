@@ -3,12 +3,13 @@ name = "nvim"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.13.7"
+requires-python = ">=3.13.1"
 dependencies = [
-    "httpx>=0.28.1",
-    "pandas>=2.3.3",
-    "polars>=1.35.2",
-    "pyarrow>=22.0.0",
-    "pydantic>=2.12.5",
-    "pynvim>=0.6.0",
+  "httpx>=0.28.1",
+  "msgspec>=0.20.0",
+  "pandas>=2.3.3",
+  "polars>=1.35.2",
+  "pyarrow>=22.0.0",
+  "pydantic>=2.12.5",
+  "pynvim>=0.6.0",
 ]

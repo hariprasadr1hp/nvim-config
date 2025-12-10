@@ -54,51 +54,54 @@ local function get_actions_sql()
     local dbt_actions = {
         {
             name = "Jump to `compiled` file [DBT]",
-            action = function()
-                dbt.jump_to_compiled()
-            end,
+            action = dbt.jump_to_compiled,
         },
 
         {
             name = "Jump to `run` file [DBT]",
-            action = function()
-                dbt.jump_to_run()
-            end,
+            action = dbt.jump_to_run,
         },
 
         {
             name = "Jump to `model` file [DBT]",
-            action = function()
-                dbt.jump_to_model()
-            end,
+            action = dbt.jump_to_model,
         },
 
         {
             name = "Select upstream `models` [DBT]",
-            action = function()
-                dbt.select_upstream_models()
-            end,
+            action = dbt.select_upstream_models,
         },
 
         {
             name = "Select downstream `models` [DBT]",
-            action = function()
-                dbt.select_downstream_models()
-            end,
+            action = dbt.select_downstream_models,
         },
 
         {
             name = "Diff: `model` vs `compiled` [DBT]",
-            action = function()
-                dbt.diff_model_vs_compiled()
-            end,
+            action = dbt.diff_model_vs_compiled,
         },
 
         {
             name = "Jump between `model` and `schema` [DBT]",
-            action = function()
-                dbt.jump_between_model_and_schema()
-            end,
+            action = dbt.jump_between_model_and_schema,
+        },
+
+        {
+            name = "List all models [DBT]",
+            action = dbt.list_all_dbt_models,
+        },
+        {
+            name = "List only enabled models [DBT]",
+            action = dbt.list_only_enabled_models,
+        },
+        {
+            name = "List all compiled sql files [DBT]",
+            action = dbt.list_compiled_sql_files,
+        },
+        {
+            name = "List all target run sql files [DBT]",
+            action = dbt.list_target_run_sql_files,
         },
     }
 

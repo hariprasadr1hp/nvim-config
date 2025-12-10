@@ -245,3 +245,5 @@ return {
     dependencies = { "kyazdani42/nvim-web-devicons" },
     opts = opts,
 }
+
+-- TODO: jump to current file on the explorer

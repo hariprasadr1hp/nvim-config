@@ -48,6 +48,7 @@ local opts = {
     require("plugins.snapshot"),
     require("plugins.dashboard"),
     require("plugins.oil"),
+    require("plugins.overseer"),
     require("plugins.images"),
     require("plugins.flash"),
 
@@ -75,4 +76,3 @@ vim.keymap.set("n", "<leader>oL", ":Lazy<CR>", { noremap = true, silent = true, 
 -- Davidyz/VectorCode
 -- ThePrimeagen/refactoring.nvim
 -- folke/ts-comments.nvim
--- stevearc/overseer.nvim
