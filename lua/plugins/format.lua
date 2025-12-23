@@ -114,7 +114,7 @@ local formatters = {
     sleek = {
         command = "sleek",
         args = {
-            "--indent-spaces=2",
+            "--indent-spaces=4",
             "--uppercase=false",
             "--trailing-newline=false",
             "--lines-between-queries=2",
@@ -125,7 +125,7 @@ local formatters = {
         command = "yamlfix",
         args = {
             "--config-file",
-            vim.fn.expand("~/.config/yamlfix.toml"),
+            vim.fn.expand("~/.config/nvim/yamlfix.toml"),
             "$FILENAME",
         },
         stdin = false,

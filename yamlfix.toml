@@ -5,3 +5,4 @@ line_ending = "lf"             # or "crlf" (Windows)
 quote_type = "double"
 preserve_quotes = false
 remove_comments = false
+whitelines = 1

@@ -39,4 +39,5 @@ lazy-lock.json
 lua/plugins/custom/cursor.nvim
 lua/plugins/custom/dagster.nvim
 lua/plugins/custom/dbt.nvim
+lua/plugins/custom/minimacs.nvim
 lua/temp.lua

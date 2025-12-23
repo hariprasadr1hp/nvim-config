@@ -7,7 +7,7 @@ return {
         opts = {},
     },
     -- for toggling tests
-    -- TODO: the below plugin jumps to test files in an alphabetical order, when multiple matching
+    -- BUG: the below plugin jumps to test files in an alphabetical order, when multiple matching
     -- test files are found.
     -- current: for `src/api/routes/login.py`, `tests/aaa/routes/test_login.py` instead of `tests/api/routes/test_login.py`
     -- expected: instead should try to prioritize matching path, as much as possible

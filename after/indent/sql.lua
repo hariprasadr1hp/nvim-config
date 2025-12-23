@@ -2,12 +2,12 @@
 
 -- INDENTATION
 -------------------------------------------------------------------
--- insert 2 spaces for a tab
-vim.o.tabstop = 2
-vim.o.softtabstop = 2
+-- insert 4 spaces for a tab
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
 
 -- change the number of space characters inserted for indentation
-vim.o.shiftwidth = 2
+vim.o.shiftwidth = 4
 
 -- converts tabs to spaces (if true)
 vim.o.expandtab = true

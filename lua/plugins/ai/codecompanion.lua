@@ -264,7 +264,7 @@ local function setup_codecompanion_config()
 
                 opts = {
                     show_model_choices = true,
-                    show_defaults = true,
+                    show_presets = true,
                 },
             },
 
@@ -283,8 +283,8 @@ local function setup_codecompanion_config()
             },
         },
 
-        ---@module "codecompanion.strategies"
-        strategies = {
+        ---@module "codecompanion.interactions"
+        interactions = {
             chat = {
                 adapter = {
                     ---@type "ollama" | "claude_code" | "cursor" | "codex" | "opencode" | "xai" | "venice" | "gemini_cli" | "anthropic"
@@ -320,7 +320,7 @@ local function setup_codecompanion_config()
             -- roles = {},
             slash_commands = {
                 ["image"] = {
-                    callback = "strategies.chat.slash_commands.catalog.image",
+                    callback = "interactions.chat.slash_commands.builtin.image",
                     description = "Insert an image",
                     ---@param opts { adapter: CodeCompanion.HTTPAdapter }
                     ---@return boolean
@@ -331,6 +331,7 @@ local function setup_codecompanion_config()
             },
 
             inline = {
+                -- FIX: control changes-diff
                 adapter = {
                     ---@type "ollama" | "claude_code" | "cursor" | "codex" | "opencode" | "xai" | "venice" | "gemini_cli" | "anthropic"
                     name = "ollama",
@@ -368,7 +369,7 @@ local function setup_codecompanion_config()
             },
         },
 
-        memory = {
+        rules = {
             claude = {
                 description = "Memory files for Claude Code users",
                 files = {
@@ -401,7 +402,7 @@ local function setup_codecompanion_config()
         display = {
             chat = {
                 auto_scroll = true,
-                child_window = {
+                floating_window = {
                     width = vim.o.columns - 5,
                     height = vim.o.lines - 2,
                     row = "center",
@@ -448,7 +449,7 @@ end
 return {
     {
         "olimorris/codecompanion.nvim",
-        version = "17.33.0",
+        version = "18.0.0",
         cmd = {
             "CodeCompanion",
             "CodeCompanionChat",
@@ -457,6 +458,7 @@ return {
         keys = {
             { "<leader>ai", ":CodeCompanionChat Toggle<CR>", mode = { "n", "v" }, desc = "ai-chat-companion" },
             { "<leader>aI", ":CodeCompanionChat<CR>", mode = "n", desc = "ai-chat-companion" },
+            -- TODO: choose adapter while executing inline suggestions/corrections
             { "<leader>aI", ":CodeCompanion<CR>", mode = "v", desc = "ai-chat-companion" },
         },
         dependencies = {

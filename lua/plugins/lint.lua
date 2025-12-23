@@ -13,7 +13,21 @@ local disable_linters_for_ft = {
     "text",
 }
 
+local function get_sql_linter()
+    if not vim.env.DBT_PROJECT_DIR then
+        return nil
+    end
+
+    local bufname = vim.api.nvim_buf_get_name(0)
+    if bufname:find(vim.env.DBT_PROJECT_DIR, 1, true) then
+        return { "sqlfluff" }
+    else
+        return nil
+    end
+end
+
 local linters_by_ft = {
+    ansible = { "ansiblelint" },
     bash = { "shellcheck" },
     gdscript = { "gdtoolkit" },
     javascript = { "eslint_d" },
@@ -23,7 +37,7 @@ local linters_by_ft = {
     markdown = { "markdownlint" },
     python = { "ruff" },
     ruby = { "standardrb" },
-    sql = { "sqlfluff" },
+    sql = get_sql_linter,
     svelte = { "eslint_d" },
     terraform = { "tflint" },
     toml = { "taplo" },

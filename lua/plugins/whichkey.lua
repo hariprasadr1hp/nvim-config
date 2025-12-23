@@ -179,11 +179,11 @@ local key_maps = {
 
         -- [G]IT --------------------
         { "<leader>g", group = "git", nowait = false, remap = false },
-        { "<leader>gh", group = "github", nowait = false, remap = false },
+        { "<leader>gh", group = "gitHub", nowait = false, remap = false },
 
         -- [H]ELP -------------------
         { "<leader>h", group = "help", nowait = false, remap = false },
-        { "<leader>hh", group = "git-hunk", nowait = false, remap = false },
+        { "<leader>hh", group = "gitHunk", nowait = false, remap = false },
         { "<leader>hl", group = "harpoon", nowait = false, remap = false },
 
         -- [I]NFO / [I]NSERT --------
@@ -220,6 +220,9 @@ local key_maps = {
         -- [Q]UIT / [Q]UICKFIX  -------------------
         { "<leader>q", group = "quit", nowait = false, remap = false },
 
+        ---- trou[b]le ---------------
+        { "<leader>qb", group = "trouBle", nowait = false, remap = false },
+
         -- [R]ELOAD ----------------
         { "<leader>r", group = "reload", nowait = false, remap = false },
 
@@ -254,7 +257,7 @@ local key_maps = {
         { "<leader>g", group = "git", nowait = false, remap = false },
 
         -- [H]UNK ------------------
-        { "<leader>hh", group = "git-hunk", nowait = false, remap = false },
+        { "<leader>hh", group = "gitHunk", nowait = false, remap = false },
 
         -- [S]EARCH -------------
 

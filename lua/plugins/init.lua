@@ -51,6 +51,8 @@ local opts = {
     require("plugins.overseer"),
     require("plugins.images"),
     require("plugins.flash"),
+    require("plugins.trouble"),
+    require("plugins.persistence"),
 
     require("plugins.ai.mcphub"),
     require("plugins.ai.codecompanion"),
@@ -75,4 +77,5 @@ vim.keymap.set("n", "<leader>oL", ":Lazy<CR>", { noremap = true, silent = true, 
 -- TODO: plugins to add/visit
 -- Davidyz/VectorCode
 -- ThePrimeagen/refactoring.nvim
+-- ryan-ressmeyer/quench.nvim
 -- folke/ts-comments.nvim

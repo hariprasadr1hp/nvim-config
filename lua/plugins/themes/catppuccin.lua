@@ -112,7 +112,7 @@ local opts = {
 
 local function setup_catpuccin_config()
     require("catppuccin").setup(opts)
-    vim.cmd.colorscheme("catppuccin")
+    -- vim.cmd.colorscheme("catppuccin")
 end
 
 return {
