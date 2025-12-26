@@ -11,7 +11,10 @@
       when: ansible_facts['os_family'] == 'Darwin'
       homebrew:
         name:
-          - make cmake git ripgrep
+          - make
+          - cmake
+          - git
+          - ripgrep
           - fd
           - jq
           - bat
@@ -29,19 +32,56 @@
           - yamlfix
           - yamlfmt
         state: present
-    - name: Install packages on (Debian/Ubuntu)
+    - name: Install packages (Arch Linux)
+      when: ansible_facts['os_family'] == 'Archlinux'
+      become: true
+      pacman:
+        name:
+          - make
+          - cmake
+          - git
+          - ripgrep
+          - fd
+          - jq
+          - bat
+          - go
+          - nodejs
+          - npm
+          - github-cli
+          - curl
+          - grpcurl
+          - xclip
+          - sox
+          - ffmpeg
+          - tidy
+          - python-yamlfix
+        state: present
+        update_cache: true
+    - name: Install glab on Arch Linux
+      when: ansible_facts['os_family'] == 'Archlinux'
+      become: true
+      shell: |
+        if ! command -v glab &> /dev/null; then
+          pacman -S --noconfirm glab || yay -S --noconfirm glab
+        fi
+      args:
+        executable: /bin/bash
+    - name: Install packages (Debian/Ubuntu)
       when: ansible_facts['os_family'] == 'Debian'
+      become: true
       apt:
         name:
-          - make cmake git ripgrep
+          - make
+          - cmake
+          - git
+          - ripgrep
           - fd-find
           - jq
           - bat
           - golang
           - nodejs
-          - gh
           - npm
-          - glab
+          - gh
           - curl
           - xclip
           - sox
@@ -49,25 +89,75 @@
           - tidy
         state: present
         update_cache: true
-    - name: Install global npm packages
-      npm:
-        name:
-          - typescript
-          - eslint
-          - prettier
-          - typescript-language-server
-          - bash-language-server
-          - vim-language-server
-          - zed-industries/claude-code-acp
-          - zed-industries/codex-acp
-          - blowmage/cursor-agent-acp
-        global: true
+    - name: Install glab on Debian/Ubuntu
+      when: ansible_facts['os_family'] == 'Debian'
+      become: true
+      shell: |
+        if ! command -v glab &> /dev/null; then
+          curl -s https://raw.githubusercontent.com/gitlab-org/cli/main/scripts/install.sh | sh
+        fi
+      args:
+        executable: /bin/bash
+    - name: Install grpcurl on Debian/Ubuntu
+      when: ansible_facts['os_family'] == 'Debian'
+      become: true
+      shell: |
+        if ! command -v grpcurl &> /dev/null; then
+          GRPCURL_VERSION=$(curl -s https://api.github.com/repos/fullstorydev/grpcurl/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+          curl -sSL "https://github.com/fullstorydev/grpcurl/releases/download/${GRPCURL_VERSION}/grpcurl_${GRPCURL_VERSION#v}_linux_x86_64.tar.gz" | tar -xz -C /usr/local/bin grpcurl
+        fi
+      args:
+        executable: /bin/bash
+    - name: Check if cargo is installed
+      shell: command -v cargo
+      register: cargo_check
+      ignore_errors: true
+      changed_when: false
     - name: Install Rust using rustup
       shell: |
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-        when: cargo_check.rc != 0
-    - name: Install cargo-based tools
-      shell: |
-        {{ cargo_path }}/cargo install stylua taplo
+      when: cargo_check.rc != 0
+      args:
+        executable: /bin/bash
+    - name: Source cargo environment
+      shell: source {{ ansible_env.HOME }}/.cargo/env
+      when: cargo_check.rc != 0
+      args:
+        executable: /bin/bash
+    - name: Check if stylua is installed
+      shell: command -v stylua
+      register: stylua_check
+      ignore_errors: true
+      changed_when: false
       environment:
         PATH: '{{ cargo_path }}:{{ ansible_env.PATH }}'
+    - name: Check if taplo is installed
+      shell: command -v taplo
+      register: taplo_check
+      ignore_errors: true
+      changed_when: false
+      environment:
+        PATH: '{{ cargo_path }}:{{ ansible_env.PATH }}'
+    - name: Install cargo-based tools
+      shell: |
+        {{ cargo_path }}/cargo install {{ item }}
+      loop: [stylua, taplo]
+      when: (item == 'stylua' and stylua_check.rc != 0) or (item == 'taplo' and
+        taplo_check.rc != 0)
+      environment:
+        PATH: '{{ cargo_path }}:{{ ansible_env.PATH }}'
+    - name: Install global npm packages
+      npm:
+        name: '{{ item }}'
+        global: true
+      loop:
+        - typescript
+        - eslint
+        - prettier
+        - typescript-language-server
+        - bash-language-server
+        - vim-language-server
+        - '@zed-industries/claude-code-acp'
+        - '@zed-industries/codex-acp'
+        - '@blowmage/cursor-agent-acp'
+      ignore_errors: true

@@ -82,6 +82,7 @@ local function setup_lsp_config()
     local mason_lspconfig = require("mason-lspconfig")
     local mason_tool_installer = require("mason-tool-installer")
     local blink_cmp = require("blink.cmp")
+    local schemastore = require("schemastore")
 
     vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("hp-lsp-attach", { clear = true }),
@@ -91,7 +92,6 @@ local function setup_lsp_config()
     local capabilities = blink_cmp.get_lsp_capabilities()
 
     local servers = {
-        ansiblels = {},
         arduino_language_server = {},
         clangd = {},
         cypher_ls = {},
@@ -99,13 +99,44 @@ local function setup_lsp_config()
         gdtoolkit = {},
         jinja_lsp = {},
         julials = {},
-        sqls = {},
+        -- sqls = {},
         ts_ls = {},
-        terraformls = {
-            filetypes = { "terraform", "tf" },
-        },
         tflint = {},
         vimls = {},
+
+        ansiblels = {
+            cmd = { "ansible-language-server", "--stdio" },
+        },
+
+        -- bqls = {
+        --     filetypes = {
+        --         "sql",
+        --         "bqsql",
+        --     },
+        --     settings = {
+        --         project_id = "dc-int-dataform-dev",
+        --         location = "EU",
+        --     },
+        -- },
+
+        -- TODO: spell-checker for code
+        -- only for text files (.txt, markdown, org etc.,)
+        -- codebook = {},
+
+        awk_ls = {
+            cmd = { "awk-language-server" },
+            filetypes = { "awk" },
+            handlers = {
+                ["workspace/workspaceFolders"] = function()
+                    return {
+                        {
+                            uri = "file://" .. vim.fn.getcwd(),
+                            name = "current_dir",
+                        },
+                    }
+                end,
+            },
+        },
 
         emmet_ls = {
             filetypes = {
@@ -125,12 +156,27 @@ local function setup_lsp_config()
         },
 
         jsonls = {
-            filetypes = { "json", "jsonc", "jsonld" },
+            -- lazy-load schemastore when needed
+            before_init = function(_, new_config)
+                new_config.settings.json.schemas = new_config.settings.json.schemas or {}
+                vim.list_extend(new_config.settings.json.schemas, require("schemastore").json.schemas())
+            end,
+            init_options = {
+                provideFormatter = true,
+            },
+            filetypes = { "json", "jsonc", "jsonld", "json5" },
             settings = {
                 json = {
-                    schemas = {
-                        ["https://github.com/olimorris/codecompanion.nvim/blob/main/lua/codecompanion/workspace-schema.json"] = "./codecompanion-workspace.json",
-                    },
+                    format = { enable = true },
+                    validate = { enable = true },
+                    schemas = schemastore.json.schemas({
+                        -- `select=` and `ignore=` keys are mutually exclusive
+                        ignore = {
+                            ".eslintrc",
+                            "package.json",
+                        },
+                        extra = {},
+                    }),
                 },
             },
         },
@@ -215,51 +261,69 @@ local function setup_lsp_config()
 
         taplo = {
             -- Refer: https://taplo.tamasfe.dev/configuration/file.html
+            cmd = { "taplo", "lsp", "stdio" },
             filetypes = { "toml" },
+            root_markers = { ".taplo.toml", "taplo.toml", ".git" },
             settings = {
-                evenBetterToml = {
-                    schema = {
-                        associations = {
-                            ["example\\.toml$"] = "https://json.schemastore.org/example.json",
-                        },
-                    },
-                },
+                -- evenBetterToml = {
+                --     schema = {
+                --         associations = {
+                --             ["example\\.toml$"] = "https://json.schemastore.org/example.json",
+                --         },
+                --     },
+                -- },
             },
+        },
+
+        terraformls = {
+            filetypes = { "terraform", "tf", "terraform-vars" },
+            root_markers = { ".terraform" },
         },
 
         yamlls = {
             filetypes = { "yaml", "yml" },
             settings = {
+                redhat = { telemetry = { enabled = false } },
                 yaml = {
-                    schemas = {
-                        kubernetes = "k8s-*.yaml",
-                        ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/**/*.{yml,yaml}",
-                        ["https://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
-                        ["https://json.schemastore.org/circleciconfig"] = ".circleci/**/*.{yml,yaml}",
-                        ["https://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
-                        ["https://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
-                        ["https://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
-                        ["https://json.schemastore.org/github-workflow"] = ".github/workflows/*",
-                        ["https://json.schemastore.org/mkdocs-1.6"] = "mkdocs.{yml,yaml}",
-                        ["https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/dbt_yml_files-latest.json"] = {
-                            "/**/*.yml",
-                            "!profiles.yml",
-                            "!dbt_project.yml",
-                            "!packages.yml",
-                            "!selectors.yml",
-                            "!profile_template.yml",
-                            "!package-lock.yml",
-                        },
-                        ["https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/dbt_project-latest.json"] = "dbt_project.yml",
-                        ["https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/selectors-latest.json"] = "selectors.yml",
-                        ["https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/packages-latest.json"] = "packages.yml",
+                    schemaStore = {
+                        -- You must disable built-in schemaStore support if you want to use
+                        -- this plugin and its advanced options like `ignore`.
+                        enable = false,
+                        -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+                        url = "",
                     },
+                    { format = { enable = true } },
+                    schemas = require("schemastore").yaml.schemas(),
+                    -- schemas = {
+                    --     kubernetes = "k8s-*.yaml",
+                    --     ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/**/*.{yml,yaml}",
+                    --     ["https://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
+                    --     ["https://json.schemastore.org/circleciconfig"] = ".circleci/**/*.{yml,yaml}",
+                    --     ["https://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
+                    --     ["https://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
+                    --     ["https://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
+                    --     ["https://json.schemastore.org/github-workflow"] = ".github/workflows/*",
+                    --     ["https://json.schemastore.org/mkdocs-1.6"] = "mkdocs.{yml,yaml}",
+                    --     ["https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/dbt_yml_files-latest.json"] = {
+                    --         "/**/*.yml",
+                    --         "!profiles.yml",
+                    --         "!dbt_project.yml",
+                    --         "!packages.yml",
+                    --         "!selectors.yml",
+                    --         "!profile_template.yml",
+                    --         "!package-lock.yml",
+                    --     },
+                    --     ["https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/dbt_project-latest.json"] = "dbt_project.yml",
+                    --     ["https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/selectors-latest.json"] = "selectors.yml",
+                    --     ["https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/packages-latest.json"] = "packages.yml",
+                    -- },
                 },
             },
         },
     }
 
     local tools = {
+        "ansible-lint",
         "biome",
         "black",
         "codelldb",
@@ -273,7 +337,7 @@ local function setup_lsp_config()
         "shfmt",
         "sleek",
         "sqlfluff",
-        "sqlfmt",
+        -- "sqlfmt",
         "stylua",
         "taplo",
         "yamlfix",
@@ -295,6 +359,8 @@ local function setup_lsp_config()
             end,
         },
     })
+
+    -- vim.lsp.enable("bqls")
 end
 
 return {
@@ -320,8 +386,9 @@ return {
             },
             "williamboman/mason-lspconfig.nvim",
             "WhoIsSethDaniel/mason-tool-installer.nvim",
-            { "j-hui/fidget.nvim", opts = {} },
             "saghen/blink.cmp",
+            { "b0o/schemastore.nvim", lazy = true, vaersion = false },
+            { "j-hui/fidget.nvim", opts = {} },
         },
         config = setup_lsp_config,
     },

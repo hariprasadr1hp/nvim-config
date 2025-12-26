@@ -23,7 +23,7 @@ local M = {}
 --- @param content string  String to split.
 --- @param sep? string     Separator to split on, default: "\n".
 --- @return string[]       Array of split parts.
-function M.tbl_split(content, sep)
+function M.split(content, sep)
     if sep == "" then
         local t = {}
         for i = 1, #content do
@@ -49,7 +49,7 @@ end
 --- @param values T[]                     Input list.
 --- @param cmp? fun(a: T, b: T): boolean  Optional comparator for table.sort.
 --- @return T[]                           New sorted list.
-function M.tbl_sorted(values, cmp)
+function M.sorted(values, cmp)
     local new = {}
     for i = 1, #values do
         new[i] = values[i]
@@ -63,7 +63,7 @@ end
 --- @generic T
 --- @param t T[]     Input list.
 --- @return T[]      Unique values.
-function M.tbl_unique(t)
+function M.unique(t)
     local seen = {}
     local out = {}
     for _, v in ipairs(t) do
@@ -82,7 +82,7 @@ end
 --- @param t T[]               Input list.
 --- @param pred fun(v: T): boolean
 --- @return boolean
-function M.tbl_any(t, pred)
+function M.any(t, pred)
     for _, v in ipairs(t) do
         if pred(v) then
             return true
@@ -98,7 +98,7 @@ end
 --- @param t T[]
 --- @param pred fun(v: T): boolean
 --- @return boolean
-function M.tbl_all(t, pred)
+function M.all(t, pred)
     for _, v in ipairs(t) do
         if not pred(v) then
             return false
@@ -111,7 +111,7 @@ end
 ---
 --- Example:
 --- ```lua
---- tbl_group_by({"a","bb","c"}, function(s) return #s end)
+--- group_by({"a","bb","c"}, function(s) return #s end)
 --- -- { [1] = {"a","c"}, [2] = {"bb"} }
 --- ```
 ---
@@ -119,7 +119,7 @@ end
 --- @param t T[]                   Input list.
 --- @param key_fn fun(v: T): K     Computes group key.
 --- @return table<K, T[]>          Map of groups.
-function M.tbl_group_by(t, key_fn)
+function M.group_by(t, key_fn)
     local groups = {}
     for _, v in ipairs(t) do
         local k = key_fn(v)
@@ -138,7 +138,7 @@ end
 --- @generic T
 --- @param t T[]
 --- @return T[]
-function M.tbl_copy(t)
+function M.copy(t)
     local out = {}
     for i = 1, #t do
         out[i] = t[i]
@@ -152,7 +152,7 @@ end
 --- @generic T
 --- @param t table     Nested list (array-like).
 --- @return T[]        Flattened list.
-function M.tbl_flatten(t)
+function M.flatten(t)
     local out = {}
     local function rec(sub)
         for _, v in ipairs(sub) do
@@ -175,7 +175,7 @@ end
 --- @param last? integer   Ending index inclusive (default: #t)
 --- @param step? integer   Step increment (default: 1). Supports negative.
 --- @return T[]
-function M.tbl_slice(t, first, last, step)
+function M.slice(t, first, last, step)
     local out = {}
     local n = #t
     first = first or 1

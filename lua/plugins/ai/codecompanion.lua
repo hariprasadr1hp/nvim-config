@@ -275,6 +275,7 @@ local function setup_codecompanion_config()
                 venice = setup_venice_http_adapter,
                 xai = setup_xai_http_adapter,
                 -- TODO: perplexity http adapter
+                -- TODO: copilot http adapter
 
                 opts = {
                     show_model_choices = true,
@@ -449,7 +450,7 @@ end
 return {
     {
         "olimorris/codecompanion.nvim",
-        version = "18.0.0",
+        version = "18.3.0",
         cmd = {
             "CodeCompanion",
             "CodeCompanionChat",
