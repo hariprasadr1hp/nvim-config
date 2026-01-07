@@ -185,7 +185,19 @@ local function setup_lsp_config()
             settings = {
                 Lua = {
                     completion = { callSnippet = "Replace" },
-                    diagnostics = { disable = { "missing-fields" } },
+                    diagnostics = {
+                        disable = { "missing-fields" },
+                        globals = { "vim", "hs" },
+                    },
+                    workspace = {
+                        library = {
+                            [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+                            [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+                            ["/Applications/Hammerspoon.app/Contents/Resources/extensions/hs/"] = true,
+
+                            ["~/.hammerspoon/Spoons/EmmyLua.spoon/annotations"] = true,
+                        },
+                    },
                 },
             },
         },

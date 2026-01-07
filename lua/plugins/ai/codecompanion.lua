@@ -371,6 +371,19 @@ local function setup_codecompanion_config()
         },
 
         rules = {
+            default = {
+                description = "Collection of common files for all projects",
+                files = {
+                    ".cursor/rules.md",
+                    "AGENT.md",
+                    "AGENTS.md",
+                    { path = "CLAUDE.md", parser = "claude" },
+                    { path = "CLAUDE.local.md", parser = "claude" },
+                    { path = "~/.claude/CLAUDE.md", parser = "claude" },
+                },
+                is_preset = true,
+            },
+
             claude = {
                 description = "Memory files for Claude Code users",
                 files = {

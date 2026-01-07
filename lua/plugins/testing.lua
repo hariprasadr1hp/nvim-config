@@ -14,6 +14,9 @@ return {
     {
         "herisetiawan00/jtt.nvim",
         cmd = "JumpTest",
+        keys = {
+            { "<leader>ct", "<cmd>JumpTest<CR>", desc = "test-jump" },
+        },
         config = function()
             require("jtt").setup({
                 languages = {
