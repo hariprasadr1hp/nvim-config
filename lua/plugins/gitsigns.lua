@@ -61,17 +61,17 @@ local function setup_on_attach()
         -- keymap_set("x", "<leader>hhR", gitsigns.reset_hunk, "reset-hunk")
 
         keymap_set("n", "<leader>hhp", function()
-            gitsigns.nav_hunk({ direction = "prev" })
+            gitsigns.nav_hunk("prev")
         end, "preview-hunk")
         keymap_set("n", "<leader>hhn", function()
-            gitsigns.nav_hunk({ direction = "next" })
+            gitsigns.nav_hunk("next")
         end, "preview-hunk")
 
         keymap_set("n", "]h", function()
             if vim.wo.diff then
                 vim.cmd.normal({ "]h", bang = true })
             else
-                gitsigns.nav_hunk({ direction = "next" })
+                gitsigns.nav_hunk("next")
             end
         end, "next-git-hunk")
 
@@ -79,7 +79,7 @@ local function setup_on_attach()
             if vim.wo.diff then
                 vim.cmd.normal({ "[h", bang = true })
             else
-                gitsigns.nav_hunk({ direction = "prev" })
+                gitsigns.nav_hunk("prev")
             end
         end, "prev-git-hunk")
     end

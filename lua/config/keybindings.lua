@@ -63,6 +63,8 @@ keymap_set("n", "<leader>gC", ":e .git/config<CR>", ".git/config")
 keymap_set("n", "<leader>gE", ":e .git/info/exclude<CR>", ".git/info/exclude")
 keymap_set("n", "<leader>gi", ":e .gitignore<CR>", ".gitignore")
 
+keymap_set("n", "<leader>G", function() end, ".git/config")
+
 keymap_set("n", "<leader>hrr", ":echo '`emacs` command 🫠'<CR>")
 keymap_set("n", "<leader>hs", vim.lsp.buf.signature_help, "lsp-signature-help")
 

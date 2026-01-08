@@ -99,17 +99,44 @@ local function get_sqlfluff_format_config()
             "fix",
             string.format("--dialect=%s", dialect),
             "--disable-progress-bar",
-            "-",
+            "$FILENAME",
         },
-        stdin = true,
+        stdin = false,
+        exit_codes = { 0, 1 },
     }
     return result
 end
 
+local function get_yamlfix_args()
+    -- Check for project-level configs (in order of priority)
+    local project_configs = {
+        ".yamlfix.toml",
+        "yamlfix.toml",
+        "pyproject.toml",
+    }
+
+    for _, config in ipairs(project_configs) do
+        if vim.fn.filereadable(config) == 1 then
+            -- if the project has its own config, let yamlfix auto-discover it
+            return { "$FILENAME" }
+        end
+    end
+
+    -- No project config found, use global or nvim-local config
+    local global_config = vim.fn.expand("~/.yamlfix.toml")
+    local local_config = vim.fn.expand("~/.config/nvim/yamlfix.toml")
+
+    local config_path = vim.fn.filereadable(global_config) == 1 and global_config or local_config
+
+    return {
+        "--config-file",
+        config_path,
+        "$FILENAME",
+    }
+end
+
 local formatters = {
-    sqlfluff = function(bufnr)
-        return get_sqlfluff_format_config()
-    end,
+    sqlfluff = get_sqlfluff_format_config(),
 
     sleek = {
         command = "sleek",
@@ -123,11 +150,7 @@ local formatters = {
 
     yamlfix = {
         command = "yamlfix",
-        args = {
-            "--config-file",
-            vim.fn.expand("~/.config/nvim/yamlfix.toml"),
-            "$FILENAME",
-        },
+        args = get_yamlfix_args(),
         stdin = false,
     },
 
