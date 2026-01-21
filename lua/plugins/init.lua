@@ -79,3 +79,5 @@ vim.keymap.set("n", "<leader>oL", ":Lazy<CR>", { noremap = true, silent = true, 
 -- ThePrimeagen/refactoring.nvim
 -- ryan-ressmeyer/quench.nvim
 -- folke/ts-comments.nvim
+-- code-biscuits/nvim-biscuits
+-- esmuellert/codediff.nvim

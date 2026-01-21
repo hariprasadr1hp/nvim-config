@@ -19,8 +19,11 @@
 -- TODO: additional variables
 -- TODO: variable: directory
 -- TODO: variable: TODO-list
+-- TODO: variable: .cursor/rules
+-- TODO: variable: agents.md
 
 local function setup_codecompanion_config()
+    local keymap_set = require("config.helpers").keymap_set
     local companion = require("codecompanion")
     local companion_adapters = require("codecompanion.adapters")
 
@@ -318,19 +321,6 @@ local function setup_codecompanion_config()
                 },
             },
 
-            -- roles = {},
-            slash_commands = {
-                ["image"] = {
-                    callback = "interactions.chat.slash_commands.builtin.image",
-                    description = "Insert an image",
-                    ---@param opts { adapter: CodeCompanion.HTTPAdapter }
-                    ---@return boolean
-                    enabled = function(opts)
-                        return opts.adapter.opts and (opts.adapter.opts.vision == true) or false
-                    end,
-                },
-            },
-
             inline = {
                 -- FIX: control changes-diff
                 adapter = {
@@ -354,7 +344,7 @@ local function setup_codecompanion_config()
                         description = "Reject change",
                     },
                     always_accept = {
-                        modes = { n = "gcy" },
+                        modes = { n = "gcA" },
                         opts = { nowait = true },
                         index = 3,
                         callback = "keymaps.always_accept",
@@ -368,13 +358,45 @@ local function setup_codecompanion_config()
                     },
                 },
             },
+
+            cmd = {
+                adapter = {
+                    name = "ollama",
+                    model = vim.env.OLLAMA_DEFAULT_SERVER_MODEL,
+                },
+            },
+
+            background = {
+                name = "ollama",
+                model = vim.env.OLLAMA_DEFAULT_SERVER_MODEL,
+            },
+
+            -- roles = {},
+            slash_commands = {
+                ["image"] = {
+                    callback = "interactions.chat.slash_commands.builtin.image",
+                    description = "Insert an image",
+                    ---@param opts { adapter: CodeCompanion.HTTPAdapter }
+                    ---@return boolean
+                    enabled = function(opts)
+                        return opts.adapter.opts and (opts.adapter.opts.vision == true) or false
+                    end,
+                },
+
+                ["dummy"] = {
+                    description = "Insert filetype",
+                    callback = function(chat)
+                        return "I am dummmmmmmy!!!!"
+                    end,
+                },
+            },
         },
 
         rules = {
             default = {
                 description = "Collection of common files for all projects",
                 files = {
-                    ".cursor/rules.md",
+                    ".cursor/rules",
                     "AGENT.md",
                     "AGENTS.md",
                     { path = "CLAUDE.md", parser = "claude" },
@@ -450,6 +472,18 @@ local function setup_codecompanion_config()
                     },
                 },
             },
+            inline = {
+                layout = "buffer",
+            },
+        },
+
+        prompt_library = {
+            markdown = {
+                dirs = {
+                    vim.fn.stdpath("config") .. "/prompts",
+                    vim.fn.getcwd() .. "/.prompts",
+                },
+            },
         },
 
         opts = {
@@ -458,6 +492,10 @@ local function setup_codecompanion_config()
     }
 
     companion.setup(companion_opts)
+
+    keymap_set("n", "<leader>ap", function()
+        companion.prompt("docs")
+    end, "ai-prompts")
 end
 
 return {
