@@ -146,6 +146,7 @@ local key_maps = {
 
         -- [C]ODE -------------------
         { "<leader>c", group = "code", nowait = false, remap = false },
+        { "<leader>cn", group = "neotest", nowait = false, remap = false },
 
         -- [D]EBUG ------------------
         { "<leader>d", group = "debug", nowait = false, remap = false },
