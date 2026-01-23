@@ -226,6 +226,7 @@ local key_maps = {
 
         -- [R]ELOAD ----------------
         { "<leader>r", group = "reload", nowait = false, remap = false },
+        { "<leader>rs", group = "session", nowait = false, remap = false },
 
         -- [S]EARCH ----------------
         { "<leader>s", group = "search", nowait = false, remap = false },
@@ -235,11 +236,20 @@ local key_maps = {
         -- { "<leader>tb", "<cmd>DapToggleBreakpoint<CR>", desc = "toggle-Breakpoint", nowait = false, remap = false },
         -- { "<leader>tz", "<cmd>ZenMode<CR>", desc = "wrap-text", nowait = false, remap = false },
 
+        -- [U]NDO ----------------
+        { "<leader>u", group = "undo", nowait = false, remap = false },
+
+        -- [V]ERBOSE ----------------
+        { "<leader>v", group = "validate/test", nowait = false, remap = false },
+
         -- [W]INDOW ----------------
         { "<leader>w", group = "window", nowait = false, remap = false },
 
         -- MISC ----------------------
-        { "<leader>x", group = "misc", nowait = false, remap = false },
+        { "<leader>x", group = "clear", nowait = false, remap = false },
+
+        -- MISC ----------------------
+        { "<leader>y", group = "misc", nowait = false, remap = false },
 
         -- FU[Z]ZY ---------------
         { "<leader>z", group = "fuzzy", nowait = false, remap = false },

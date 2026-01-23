@@ -60,10 +60,6 @@ local function setup_dap_python_config()
         end
     end
 
-    -- notify user of detected paths
-    vim.notify("DAP adapter using: " .. adapter_python, vim.log.levels.INFO)
-    vim.notify("DAP running code with: " .. python_path, vim.log.levels.INFO)
-
     require("dap-python").setup(adapter_python)
 
     require("dap").configurations.python = {
@@ -159,6 +155,98 @@ local function setup_dap_python_config()
     -- TODO: add DAP adapters for lua, rust, haskell
 end
 
+local function show_dap_info()
+    local dap = require("dap")
+    local lines = {
+        "Debug Adapter Protocol Info",
+        string.rep("─", 60),
+        "",
+    }
+
+    -- Python-specific information
+    local python_path = resolve_python_path()
+    local nvim_config_debugpy = vim.fn.stdpath("config") .. "/.venv/bin/python"
+    local adapter_python = nvim_config_debugpy
+
+    -- determine adapter python path with same logic as setup
+    if vim.fn.executable(nvim_config_debugpy) == 0 then
+        adapter_python = python_path
+    else
+        local check_debugpy = vim.fn.system(nvim_config_debugpy .. " -c 'import debugpy' 2>&1")
+        if vim.v.shell_error ~= 0 then
+            adapter_python = python_path
+        end
+    end
+
+    table.insert(lines, "Python:")
+    table.insert(lines, string.format("  %-18s %s", "Adapter:", adapter_python))
+    table.insert(
+        lines,
+        string.format("  %-18s %s", "Executable:", vim.fn.executable(adapter_python) == 1 and "✔" or "✘")
+    )
+    table.insert(lines, string.format("  %-18s %s", "Runtime:", python_path))
+    table.insert(
+        lines,
+        string.format("  %-18s %s", "Executable:", vim.fn.executable(python_path) == 1 and "✔" or "✘")
+    )
+    table.insert(lines, "")
+
+    -- Show all configured adapters
+    table.insert(lines, "Configured Adapters:")
+    local adapter_count = 0
+    for name, _ in pairs(dap.adapters or {}) do
+        adapter_count = adapter_count + 1
+        table.insert(lines, string.format("  • %s", name))
+    end
+    if adapter_count == 0 then
+        table.insert(lines, "  (No adapters configured)")
+    end
+    table.insert(lines, "")
+
+    -- Show all configurations by filetype
+    table.insert(lines, "Configurations by Filetype:")
+    local config_count = 0
+    for ft, configs in pairs(dap.configurations or {}) do
+        config_count = config_count + 1
+        table.insert(lines, string.format("  %s:", ft))
+        for i, config in ipairs(configs) do
+            table.insert(lines, string.format("    %d. %s", i, config.name))
+        end
+    end
+    if config_count == 0 then
+        table.insert(lines, "  (No configurations loaded)")
+    end
+
+    table.insert(lines, "")
+    table.insert(lines, string.rep("─", 60))
+    table.insert(lines, "Press 'q' to close this window.")
+
+    local info_buf = vim.api.nvim_create_buf(false, true)
+    vim.bo[info_buf].filetype = "DapInfo"
+    vim.api.nvim_buf_set_lines(info_buf, 0, -1, false, lines)
+
+    local width, height = 62, #lines
+    local row = math.floor((vim.o.lines - height) / 2)
+    local col = math.floor((vim.o.columns - width) / 2)
+
+    local win = vim.api.nvim_open_win(info_buf, true, {
+        relative = "editor",
+        width = width,
+        height = height,
+        row = row,
+        col = col,
+        style = "minimal",
+        border = "rounded",
+    })
+
+    vim.wo[win].wrap = false
+    vim.wo[win].cursorline = true
+    vim.bo[info_buf].modifiable = false
+    vim.bo[info_buf].readonly = true
+
+    vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = info_buf, silent = true })
+end
+
 local function setup_dap_config()
     local dap = require("dap")
     local dapui = require("dapui")
@@ -191,6 +279,11 @@ local function setup_dap_config()
     -- Close UI when DAP session ends
     dap.listeners.before.event_terminated.dapui_config = dapui.close
     dap.listeners.before.event_exited.dapui_config = dapui.close
+
+    -- Create user command to show DAP info
+    vim.api.nvim_create_user_command("DapInfo", function()
+        show_dap_info()
+    end, { desc = "Show DAP adapter and path information" })
 end
 
 return {
@@ -220,122 +313,58 @@ return {
             "DapToggleBreakpoint",
             "DapToggleRepl",
         },
-        keys = {
-            {
-                "<leader>db",
-                function()
-                    require("dap").toggle_breakpoint()
-                end,
-                desc = "breakpoint-toggle",
-            },
-            {
-                "<leader>dc",
-                function()
-                    require("dap").continue()
-                end,
-                desc = "continue",
-            },
-            {
-                "<leader>dd",
-                function()
-                    require("dapui").toggle()
-                end,
-                desc = "dap-ui-toggle",
-            },
-            {
-                "<leader>de",
-                function()
-                    local ok, err = pcall(function()
-                        require("dapui").eval(nil, { enter = true })
-                    end)
-                    if not ok then
-                        vim.notify("DAP Eval failed: " .. tostring(err), vim.log.levels.WARN)
-                    end
-                end,
-                desc = "eval",
-            },
-            {
-                "<leader>di",
-                function()
-                    require("dap").step_into()
-                end,
-                desc = "step-into",
-            },
-            {
-                "<leader>dl",
-                ":DapShowLog<CR>",
-                desc = "logs",
-            },
-            {
-                "<leader>do",
-                function()
-                    require("dap").step_over()
-                end,
-                desc = "step-over",
-            },
-            {
-                "<leader>dp",
-                function()
-                    require("dap").pause()
-                end,
-                desc = "pause",
-            },
-            {
-                "<leader>dr",
-                function()
-                    require("dap").repl.toggle()
-                end,
-                desc = "repl-toggle",
-            },
-            {
-                "<leader>ds",
-                function()
-                    require("dap").step_out()
-                end,
-                desc = "step-out",
-            },
-            {
-                "<leader>dt",
-                function()
-                    require("dap").terminate()
-                end,
-                desc = "terminate",
-            },
-            {
-                "<leader>du",
-                function()
-                    require("dap").run_to_cursor()
-                end,
-                desc = "run-to-cursor",
-            },
-            {
-                "<leader>dU",
-                function()
-                    require("dap").run_last()
-                end,
-                desc = "run-last",
-            },
-            {
-                "<leader>d1",
-                function()
-                    require("dap").step_into()
-                end,
-                desc = "step-into",
-            },
-            {
-                "<leader>d2",
-                function()
-                    require("dap").step_over()
-                end,
-                desc = "step-over",
-            },
-            {
-                "<leader>d3",
-                function()
-                    require("dap").step_out()
-                end,
-                desc = "step-out",
-            },
-        },
+        keys = function()
+            local dap = require("dap")
+            local dapui = require("dapui")
+
+            return {
+                { "<leader>db", dap.toggle_breakpoint, desc = "breakpoint-toggle" },
+                { "<leader>dB", dap.clear_breakpoints, desc = "breakpoint-clear-all" },
+                { "<leader>dc", dap.continue, desc = "continue" },
+                { "<leader>dd", dapui.toggle, desc = "dap-ui-toggle" },
+                {
+                    "<leader>de",
+                    function()
+                        local ok, err = pcall(function()
+                            dapui.eval(nil, { enter = true })
+                        end)
+                        if not ok then
+                            vim.notify("DAP Eval failed: " .. tostring(err), vim.log.levels.WARN)
+                        end
+                    end,
+                    desc = "eval",
+                },
+                --TODO: `<leader>dg` to goto line
+
+                -- {
+                --     "<leader>dg",
+                --     function()
+                --         vim.ui.input({ prompt = "goto-line" }, function(line)
+                --             dap.goto_(line)
+                --         end)
+                --     end,
+                --     desc = "step-into",
+                -- },
+                { "<leader>di", dap.step_into, desc = "step-into" },
+                { "<leader>dj", dap.down, desc = "down" },
+                { "<leader>dk", dap.up, desc = "up" },
+                { "<leader>dl", ":DapShowLog<CR>", desc = "logs" },
+                { "<leader>do", dap.step_over, desc = "step-over" },
+                { "<leader>dp", dap.pause, desc = "pause" },
+                { "<leader>dr", dap.repl.toggle, desc = "repl-toggle" },
+                { "<leader>ds", dap.step_out, desc = "step-out" },
+                { "<leader>dS", dap.session, desc = "session" },
+                { "<leader>dt", dap.terminate, desc = "terminate" },
+                { "<leader>dx", dap.set_exception_breakpoints, desc = "exception-breakpoints" },
+                { "<leader>du", dap.run_to_cursor, desc = "run-to-cursor" },
+                { "<leader>dU", dap.run_last, desc = "run-last" },
+                { "<leader>d1", dap.step_into, desc = "step-into" },
+                { "<leader>d2", dap.step_over, desc = "step-over" },
+                { "<leader>d3", dap.step_out, desc = "step-out" },
+                { "<leader>id", show_dap_info, desc = "debug-info" },
+                { "<leader>qb", dap.list_breakpoints, desc = "breakpoints-to-quickfix" },
+                { "<leader>xb", dap.clear_breakpoints, desc = "breakpoints" },
+            }
+        end,
     },
 }

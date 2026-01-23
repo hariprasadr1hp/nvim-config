@@ -90,7 +90,7 @@ function M.show_buffer_info()
     local buf_id = vim.api.nvim_get_current_buf()
     local items = get_buffer_metadata(buf_id)
 
-    local lines = { "🔍 Current Buffer Info", string.rep("─", 50) }
+    local lines = { "Current Buffer Info", string.rep("─", 50) }
     for _, pair in ipairs(items) do
         table.insert(lines, string.format("%-15s %s", pair[1], pair[2]))
     end

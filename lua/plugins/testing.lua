@@ -38,19 +38,23 @@ local function setup_neotest_config()
     neotest.setup(opts)
 
     keymap_set("n", "<leader>cnf", function()
-        pcall(neotest.run.run, vim.fn.expand("%"))
-    end, "file-current")
+        neotest.run.run(vim.fn.expand("%"))
+    end, "run-current-file")
 
     keymap_set("n", "<leader>cnF", function()
         -- TODO: fuzzy-select file, to run tests
         vim.ui.input({ prompt = "Enter filepath" }, function(fpath)
             pcall(neotest.run.run, fpath)
         end)
-    end, "file-current")
+    end, "run-selected-file")
 
-    keymap_set("n", "<leader>cns", function()
-        pcall(neotest.run.run)
-    end, "symbol")
+    keymap_set("n", "<leader>cnn", neotest.run.run, "run-nearest-symbol")
+    keymap_set("n", "<leader>cno", function()
+        pcall(neotest.output.open)
+    end, "show-output")
+
+    keymap_set("n", "<leader>cnO", neotest.output_panel.toggle, "toggle-output-panel")
+    keymap_set("n", "<leader>cns", neotest.run.run, "run-nearest-symbol")
 
     keymap_set("n", "<leader>cnw", function()
         neotest.run.run(vim.fn.getcwd())
@@ -81,7 +85,6 @@ return {
         config = setup_neotest_config,
         keys = {
             { "<leader>cc", "<cmd>Neotest summary<CR>", desc = "neotest-summary" },
-            { "<leader>cno", "<cmd>Neotest output<CR>", desc = "neotest-summary" },
         },
     },
 

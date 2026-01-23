@@ -1,4 +1,4 @@
--- lua/plugins/persistence.lua
+-- lua/plugins/sessions.lua
 
 local keymap_set = require("config.helpers").keymap_set
 
@@ -13,11 +13,12 @@ local function setup_persistence_config()
     persistence.setup(opts)
 
     -- TODO: enable notifications if session-reloaded, or decided not-to-be-saved
-    keymap_set("n", "<leader>rs", function()
+    keymap_set("n", "<leader>rsl", function()
         persistence.load({ last = true })
     end, "session-last")
-    keymap_set("n", "<leader>rS", persistence.select, "sessions-list")
-    keymap_set("n", "<leader>rK", persistence.stop, "dont-store-current-session")
+    keymap_set("n", "<leader>rsz", persistence.select, "sessions-list")
+    keymap_set("n", "<leader>rsK", persistence.stop, "dont-store-current-session")
+    keymap_set("n", "<leader>xs", persistence.stop, "dont-store-current-session")
 end
 
 return {

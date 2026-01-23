@@ -247,3 +247,4 @@ return {
 }
 
 -- TODO: jump to current file on the explorer
+-- TODO: function and keymap to open file as a floating window

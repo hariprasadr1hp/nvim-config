@@ -33,7 +33,6 @@ local opts = {
     require("plugins.autopairs"),
     require("plugins.comment"),
     require("plugins.harpoon"),
-    require("plugins.multicursors"),
     require("plugins.explorer"),
     require("plugins.gitsigns"),
     require("plugins.lualine"),
@@ -52,7 +51,7 @@ local opts = {
     require("plugins.images"),
     require("plugins.flash"),
     require("plugins.trouble"),
-    require("plugins.persistence"),
+    require("plugins.sessions"),
 
     require("plugins.ai.mcphub"),
     require("plugins.ai.codecompanion"),

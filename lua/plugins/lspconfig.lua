@@ -202,6 +202,17 @@ local function setup_lsp_config()
             },
         },
 
+        nil_ls = {
+            filetypes = { "nix" },
+            settings = {
+                ["nil"] = {
+                    formatting = {
+                        command = { "nixfmt" },
+                    },
+                },
+            },
+        },
+
         pyright = {
             cmd = { "pyright-langserver", "--stdio" },
             filetypes = { "python", "ipynb" },
