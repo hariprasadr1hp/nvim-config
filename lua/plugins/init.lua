@@ -52,19 +52,21 @@ local opts = {
     require("plugins.flash"),
     require("plugins.trouble"),
     require("plugins.sessions"),
+    require("plugins.roam"),
+    require("plugins.colors"),
 
     require("plugins.ai.mcphub"),
     require("plugins.ai.codecompanion"),
     require("plugins.ai.windsurf"),
     -- require("plugins.ai.avante"),
-    require("plugins.ai.cursor"),
+    -- require("plugins.ai.cursor"),
 
     require("plugins.dbt"),
     require("plugins.dagster"),
 
     require("plugins.custom"),
     require("plugins.whichkey"),
-    require("plugins.finally"),
+    -- require("plugins.finally"),
 
     -- require("plugins.tabline"),
 }
@@ -75,8 +77,12 @@ vim.keymap.set("n", "<leader>oL", ":Lazy<CR>", { noremap = true, silent = true, 
 
 -- TODO: plugins to add/visit
 -- Davidyz/VectorCode
+-- saghen/blink.pairs
 -- ThePrimeagen/refactoring.nvim
 -- ryan-ressmeyer/quench.nvim
 -- folke/ts-comments.nvim
 -- code-biscuits/nvim-biscuits
 -- esmuellert/codediff.nvim
+-- nosduco/remote-sshfs.nvim
+-- esmuellert/codediff.nvim
+-- linux-cultist/venv-selector.nvim
