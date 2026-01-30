@@ -30,5 +30,15 @@ return {
         version = "*",
         dependencies = { "nvim-lua/plenary.nvim" },
         config = setup_text_transform,
+        cmd = {
+            "TtTitle",
+            "TtCamel",
+            "TtConst",
+            "TtDot",
+            "TtKebab",
+            "TtPascal",
+            "TtSnake",
+            "TtSelect",
+        },
     },
 }

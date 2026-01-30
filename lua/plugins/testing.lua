@@ -48,12 +48,12 @@ local function setup_neotest_config()
         end)
     end, "run-selected-file")
 
-    keymap_set("n", "<leader>cnn", neotest.run.run, "run-nearest-symbol")
     keymap_set("n", "<leader>cno", function()
         pcall(neotest.output.open)
     end, "show-output")
 
     keymap_set("n", "<leader>cnO", neotest.output_panel.toggle, "toggle-output-panel")
+    keymap_set("n", "<leader>cnr", neotest.run.run, "run-nearest-symbol")
     keymap_set("n", "<leader>cns", neotest.run.run, "run-nearest-symbol")
 
     keymap_set("n", "<leader>cnw", function()
@@ -84,7 +84,7 @@ return {
         },
         config = setup_neotest_config,
         keys = {
-            { "<leader>cc", "<cmd>Neotest summary<CR>", desc = "neotest-summary" },
+            { "<leader>cnn", "<cmd>Neotest summary<CR>", desc = "neotest-summary" },
         },
     },
 
@@ -97,7 +97,7 @@ return {
         "herisetiawan00/jtt.nvim",
         cmd = "JumpTest",
         keys = {
-            { "<leader>ct", "<cmd>JumpTest<CR>", desc = "test-jump" },
+            { "<leader>ct", "<cmd>JumpTest<CR>", desc = "test-file-toggle" },
         },
         config = function()
             require("jtt").setup({

@@ -66,7 +66,7 @@ local function setup_dap_python_config()
         {
             type = "python",
             request = "launch",
-            name = "Launch current file",
+            name = "__main__",
             program = "${file}",
             args = function()
                 local args_string = vim.fn.input("Arguments: ")
@@ -83,7 +83,48 @@ local function setup_dap_python_config()
         {
             type = "python",
             request = "launch",
-            name = "Launch current file (no-third-party step-into)",
+            name = "pytest (current file)",
+            module = "pytest",
+            args = function()
+                local args = { "${file}", "-v" }
+                local extra_args = vim.fn.input("Additional pytest args: ")
+                if extra_args ~= "" then
+                    vim.list_extend(args, vim.split(extra_args, " +"))
+                end
+                return args
+            end,
+            pythonPath = resolve_python_path,
+            console = "integratedTerminal",
+            cwd = "${workspaceFolder}",
+            env = {
+                PYTHONUNBUFFERED = "1",
+            },
+        },
+
+        {
+            type = "python",
+            request = "launch",
+            name = "pytest (all tests)",
+            module = "pytest",
+            args = function()
+                local args = { "-v" }
+                local extra_args = vim.fn.input("Additional pytest args: ", "")
+                if extra_args ~= "" then
+                    vim.list_extend(args, vim.split(extra_args, " +"))
+                end
+                return args
+            end,
+            pythonPath = resolve_python_path,
+            console = "integratedTerminal",
+            cwd = "${workspaceFolder}",
+            env = {
+                PYTHONUNBUFFERED = "1",
+            },
+        },
+        {
+            type = "python",
+            request = "launch",
+            name = "__main__ (no-third-party step-into)",
             program = "${file}",
             pythonPath = resolve_python_path,
             args = function()
@@ -101,7 +142,7 @@ local function setup_dap_python_config()
         {
             type = "python",
             request = "launch",
-            name = "Launch module",
+            name = "launch module",
             module = function()
                 return vim.fn.input("Module name: ")
             end,
@@ -113,7 +154,7 @@ local function setup_dap_python_config()
         {
             type = "python",
             request = "launch",
-            name = "Launch script",
+            name = "launch script",
             program = function()
                 return vim.fn.input("Python script: ", vim.fn.getcwd() .. "/", "file")
             end,
@@ -217,6 +258,10 @@ local function show_dap_info()
         table.insert(lines, "  (No configurations loaded)")
     end
 
+    --TODO: add `dap.status`
+    --TODO: add `dap.defaults` (fallbacks)
+    --TODO: add `dap.providers`
+
     table.insert(lines, "")
     table.insert(lines, string.rep("─", 60))
     table.insert(lines, "Press 'q' to close this window.")
@@ -318,9 +363,25 @@ return {
             local dapui = require("dapui")
 
             return {
+                { "<leader>d1", dap.step_into, desc = "step-into" },
+                { "<leader>d2", dap.step_over, desc = "step-over" },
+                { "<leader>d3", dap.step_out, desc = "step-out" },
+                { "<leader>d4", dap.step_back, desc = "step-back" },
+
+                {
+                    "<leader>da",
+                    function()
+                        vim.ui.input({ prompt = "dap repl execute" }, function(val)
+                            dap.repl.execute(val)
+                        end)
+                    end,
+                    desc = "add-repl-input",
+                },
+                { "<leader>dA", dap.repl.toggle, desc = "repl-toggle" },
                 { "<leader>db", dap.toggle_breakpoint, desc = "breakpoint-toggle" },
-                { "<leader>dB", dap.clear_breakpoints, desc = "breakpoint-clear-all" },
+                { "<leader>dB", dap.set_exception_breakpoints, desc = "breakpoint-exception" },
                 { "<leader>dc", dap.continue, desc = "continue" },
+                { "<leader>dC", dap.reverse_continue, desc = "reverse-continue" },
                 { "<leader>dd", dapui.toggle, desc = "dap-ui-toggle" },
                 {
                     "<leader>de",
@@ -334,37 +395,87 @@ return {
                     end,
                     desc = "eval",
                 },
-                --TODO: `<leader>dg` to goto line
+                { "<leader>df", dap.focus_frame, desc = "focus-frame" },
+                {
+                    "<leader>dg",
+                    function()
+                        vim.ui.input({ prompt = "Goto line (+/-N for relative): " }, function(input)
+                            if input and input ~= "" then
+                                local current_line = vim.fn.line(".")
+                                local target_line
 
-                -- {
-                --     "<leader>dg",
-                --     function()
-                --         vim.ui.input({ prompt = "goto-line" }, function(line)
-                --             dap.goto_(line)
-                --         end)
-                --     end,
-                --     desc = "step-into",
-                -- },
+                                -- Check for relative line numbers (+N or -N)
+                                if input:match("^[+-]%d+$") then
+                                    local offset = tonumber(input)
+                                    if offset then
+                                        target_line = current_line + offset
+                                    end
+                                else
+                                    -- Absolute line number
+                                    target_line = tonumber(input)
+                                end
+
+                                if target_line and target_line > 0 then
+                                    dap.goto_(target_line)
+                                else
+                                    vim.notify("Invalid line number: " .. input, vim.log.levels.ERROR)
+                                end
+                            end
+                        end)
+                    end,
+                    desc = "goto-line",
+                },
                 { "<leader>di", dap.step_into, desc = "step-into" },
                 { "<leader>dj", dap.down, desc = "down" },
                 { "<leader>dk", dap.up, desc = "up" },
-                { "<leader>dl", ":DapShowLog<CR>", desc = "logs" },
+                { "<leader>dl", dap.run_to_cursor, desc = "run-to-line" },
+                { "<leader>dL", dap.run_last, desc = "run-last-debug-session" },
                 { "<leader>do", dap.step_over, desc = "step-over" },
+                { "<leader>dO", dap.step_out, desc = "step-out" },
                 { "<leader>dp", dap.pause, desc = "pause" },
-                { "<leader>dr", dap.repl.toggle, desc = "repl-toggle" },
-                { "<leader>ds", dap.step_out, desc = "step-out" },
-                { "<leader>dS", dap.session, desc = "session" },
+                { "<leader>dr", dap.restart_frame, desc = "Restart" },
+                { "<leader>dR", dap.restart, desc = "Restart" },
+                {
+                    "<leader>ds",
+                    function()
+                        -- TODO: floating-buffer instead of stdout
+                        vim.print(dap.session())
+                    end,
+                    desc = "ongoing-session",
+                },
+                {
+                    "<leader>dS",
+                    function()
+                        vim.print(dap.sessions())
+                    end,
+                    desc = "all-active-sessions",
+                },
                 { "<leader>dt", dap.terminate, desc = "terminate" },
-                { "<leader>dx", dap.set_exception_breakpoints, desc = "exception-breakpoints" },
-                { "<leader>du", dap.run_to_cursor, desc = "run-to-cursor" },
-                { "<leader>dU", dap.run_last, desc = "run-last" },
-                { "<leader>d1", dap.step_into, desc = "step-into" },
-                { "<leader>d2", dap.step_over, desc = "step-over" },
-                { "<leader>d3", dap.step_out, desc = "step-out" },
+                { "<leader>dv", ":DapShowLog<CR>", desc = "verbose-logs" },
+                { "<leader>dx", dap.close, desc = "close-not-terminate" },
                 { "<leader>id", show_dap_info, desc = "debug-info" },
-                { "<leader>qb", dap.list_breakpoints, desc = "breakpoints-to-quickfix" },
+                {
+                    "<leader>qb",
+                    function()
+                        dap.list_breakpoints(true)
+                    end,
+                    desc = "breakpoints-to-quickfix",
+                },
+                { "<leader>rdl", dap.run_last, desc = "last-debug-session" },
                 { "<leader>xb", dap.clear_breakpoints, desc = "breakpoints" },
             }
         end,
     },
 }
+
+-- focus_frame
+-- pause
+-- stop
+-- terminate
+-- disconnect
+-- attach
+-- restart
+-- restart_frame
+-- reverse_continue
+-- run_last
+-- run_to_cursor

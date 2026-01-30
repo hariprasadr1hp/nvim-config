@@ -43,11 +43,10 @@ local opts = {
 
 local function setup_windsurf_config()
     local codeium = require("codeium")
-    codeium.setup(opts)
-
-    codeium.toggle()
-
     local keymap_set = require("config.helpers").keymap_set
+
+    codeium.setup(opts)
+    codeium.toggle()
     keymap_set("n", "<leader>ta", codeium.toggle, "ai-completion")
 end
 
@@ -58,6 +57,13 @@ return {
             "nvim-lua/plenary.nvim",
             "saghen/blink.cmp",
         },
+        cmd = { "Codeium" },
+        keys = function()
+            local codeium = require("codeium")
+            return {
+                { "<leader>ta", codeium.toggle, "ai-completion" },
+            }
+        end,
         config = setup_windsurf_config,
     },
 }

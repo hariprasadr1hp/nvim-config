@@ -87,11 +87,24 @@ local function setup_snacks_config()
         { desc = "toggle hightlight for the indent lines" }
     )
 
-    keymap_set("n", "<leader>ghi", snacks.picker.gh_issue, "gh-pull-requests")
-    keymap_set("n", "<leader>ghp", snacks.picker.gh_pr, "gh-issues")
+    keymap_set("n", "<leader>gha", snacks.picker.gh_actions, "gh-actions")
+    -- TODO: keymap_set("n", "<leader>ghd", snacks.picker.gh_diff, "gh-diff")
+    -- TODO: keymap_set("n", "<leader>ghr", snacks.picker.gh_reactions, "gh-reactions")
+    keymap_set("n", "<leader>ghi", snacks.picker.gh_issue, "gh-issues-open")
+    keymap_set("n", "<leader>ghI", function()
+        Snacks.picker.gh_issue({ state = "all" })
+    end, "gh-issues-all")
+    -- TODO: keymap_set("n", "<leader>ghl", snacks.picker.gh_labels, "gh-labels")
+    keymap_set("n", "<leader>ghp", snacks.picker.gh_pr, "gh-pr-open")
+    keymap_set("n", "<leader>ghP", function()
+        Snacks.picker.gh_pr({ state = "all" })
+    end, "gh-pr-all")
+
     keymap_set("n", "<leader>lc", snacks.picker.lsp_config, "lsp_config")
     keymap_set("n", "<leader>ti", toggle_indent_hl, "indent-hl")
     keymap_set("n", "<leader>tz", snacks.zen.zen, "zen-mode")
+    keymap_set("n", "<leader>ze", snacks.picker.icons, "emojis")
+    keymap_set("n", "<leader>zi", snacks.picker.icons, "icons")
 end
 
 return {

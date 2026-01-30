@@ -498,7 +498,7 @@ return {
         lazy = true,
         dependencies = {
             -- { "Kaiser-Yang/blink-cmp-avante" },
-            { "Exafunction/windsurf.nvim" },
+            { "Exafunction/windsurf.nvim", event = "VeryLazy" },
             { "rafamadriz/friendly-snippets" },
             { "echasnovski/mini.snippets" },
             {

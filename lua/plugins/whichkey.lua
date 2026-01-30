@@ -1,23 +1,5 @@
 -- lua/plugins/whichkey.lua
 
-local function setup_delay_function()
-    return function(ctx)
-        return ctx.plugin and 0 or 200
-    end
-end
-
-local function setup_filter_function()
-    return function(mapping)
-        return mapping == true
-    end
-end
-
-local function setup_defer_function()
-    return function(ctx)
-        return ctx.mode == "V" or ctx.mode == "<C-V>"
-    end
-end
-
 local plugins = {
     marks = true,
     registers = true,
@@ -60,10 +42,27 @@ local keys = {
 local icons = {
     breadcrumb = "»",
     separator = "➜",
-    group = "+",
+    group = "",
     ellipsis = "…",
     mappings = true,
-    rules = {},
+    rules = {
+        { pattern = "action", icon = "󱌣 ", color = "red" },
+        { pattern = "clear", icon = " ", color = "yellow" },
+        { pattern = "debug", icon = "󰃤 ", color = "red" },
+        { pattern = "eval", icon = " ", color = "cyan" },
+        { pattern = "fuzzy", icon = " ", color = "cyan" },
+        { pattern = "help", icon = " ", color = "cyan" },
+        { pattern = "info", icon = "󰙎 ", color = "cyan" },
+        { pattern = "lang", icon = "󱌯 ", color = "cyan" },
+        { pattern = "make", icon = "󱌣", color = "red" },
+        { pattern = "misc", icon = "󰸿 ", color = "cyan" },
+        { pattern = "notes", icon = " ", color = "yellow" },
+        { pattern = "open", icon = " ", color = "cyan" },
+        { pattern = "project", icon = " ", color = "cyan" },
+        { pattern = "quickfix", icon = "󰁨 ", color = "cyan" },
+        { pattern = "reload", icon = "󰑓 ", color = "cyan" },
+        { pattern = "undo", icon = "󰕍 ", color = "cyan" },
+    },
     colors = true,
     keys = {
         Up = " ",
@@ -100,19 +99,26 @@ local icons = {
 local opts = {
     ---@type false | "classic" | "modern" | "helix"
     preset = "classic",
-    delay = setup_delay_function(),
-    filter = setup_filter_function(),
+    delay = function(ctx)
+        return ctx.plugin and 0 or 200
+    end,
+    filter = function(mapping)
+        return mapping.desc ~= nil or mapping.group ~= nil
+    end,
+    defer = function(ctx)
+        return ctx.mode == "V" or ctx.mode == "\22"
+    end,
     spec = {},
     notify = true,
     triggers = {
         { "<auto>", mode = "nxsot" },
     },
-    defer = setup_defer_function(),
     plugins = plugins,
     win = win,
     layout = layout,
     keys = keys,
-    sort = { "local", "order", "group", "alphanum", "mod" },
+    -- sort = { "local", "order", "group", "alphanum", "mod" },
+    sort = { "alphanum" },
     expand = 0,
     icons = icons,
     show_help = true,
@@ -129,161 +135,159 @@ local key_maps = {
     {
         mode = "n",
 
-        { ",p", group = "swap-prev", nowait = false, remap = false },
-        { ",n", group = "swap-next", nowait = false, remap = false },
+        { ",p", group = "swap-prev+", nowait = false, remap = false },
+        { ",n", group = "swap-next+", nowait = false, remap = false },
 
         { "<leader>0", "0", desc = "^", nowait = false, remap = false },
         { "<leader>9", "$", desc = "$", nowait = false, remap = false },
 
         -- [A]CTION ----------------
-        { "<leader>a", group = "action", nowait = false, remap = false },
-        { "<leader>ac", group = "+copy", nowait = false, remap = false },
-        { "<leader>av", group = "+paste", nowait = false, remap = false },
-        { "<leader>ax", group = "+cut", nowait = false, remap = false },
+        { "<leader>a", group = "action+", nowait = false, remap = false },
+        { "<leader>ac", group = "copy+", nowait = false, remap = false },
+        { "<leader>ac", group = "ai-prompts+", nowait = false, remap = false },
+        { "<leader>av", group = "paste+", nowait = false, remap = false },
+        { "<leader>ax", group = "cut+", nowait = false, remap = false },
 
         -- [B]UFFER ----------------
-        { "<leader>b", group = "buffer", nowait = false, remap = false },
+        { "<leader>b", group = "buffer+", nowait = false, remap = false },
 
         -- [C]ODE -------------------
-        { "<leader>c", group = "code", nowait = false, remap = false },
-        { "<leader>cn", group = "neotest", nowait = false, remap = false },
+        { "<leader>c", group = "code+", nowait = false, remap = false },
+        { "<leader>cn", group = "neotest+", nowait = false, remap = false },
 
         -- [D]EBUG ------------------
-        { "<leader>d", group = "debug", nowait = false, remap = false },
-        -- {
-        --     "<leader>db",
-        --     function()
-        --         dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
-        --     end,
-        --     desc = "set-breakpoint",
-        --     nowait = false,
-        --     remap = false,
-        -- },
-        -- { "<leader>dd", "<cmd>DapContinue<CR>", desc = "continue", nowait = false, remap = false },
-        -- { "<leader>di", "<cmd>DapStepInto<CR>", desc = "step-into", nowait = false, remap = false },
-        -- { "<leader>do", "<cmd>DapStepOver<CR>", desc = "step-over", nowait = false, remap = false },
-        -- {
-        --     "<leader>dm",
-        --     "<cmd>FloatermNew --autoclose=0 make debug<CR>",
-        --     desc = "make debug",
-        --     nowait = false,
-        --     remap = false,
-        -- },
-        -- { "<leader>dr", "<cmd>DapToggleRepl<CR>", desc = "open-repl", nowait = false, remap = false },
+        { "<leader>d", group = "debug+", nowait = false, remap = false },
 
         -- [E]VAL / [E]DIT -------
-        { "<leader>e", group = "edit/eval", nowait = false, remap = false },
+        { "<leader>e", group = "edit/eval+", nowait = false, remap = false },
 
         -- [F]ILE -------------------
-        { "<leader>f", group = "file", nowait = false, remap = false },
-        { "<leader>fl", group = "logs", nowait = false, remap = false },
+        { "<leader>f", group = "file+", nowait = false, remap = false },
+        { "<leader>fl", group = "logs+", nowait = false, remap = false },
 
         -- [G]IT --------------------
-        { "<leader>g", group = "git", nowait = false, remap = false },
-        { "<leader>gh", group = "gitHub", nowait = false, remap = false },
+        { "<leader>g", group = "git+", nowait = false, remap = false },
+        { "<leader>gh", group = "gitHub+", nowait = false, remap = false },
 
         -- [H]ELP -------------------
-        { "<leader>h", group = "help", nowait = false, remap = false },
-        { "<leader>hh", group = "gitHunk", nowait = false, remap = false },
-        { "<leader>hl", group = "harpoon", nowait = false, remap = false },
+        { "<leader>h", group = "help+", nowait = false, remap = false },
+        { "<leader>hh", group = "gitHunk+", nowait = false, remap = false },
+        { "<leader>hl", group = "harpoon+", nowait = false, remap = false },
+        { "<leader>hr", group = "reload+", nowait = false, remap = false },
 
         -- [I]NFO / [I]NSERT --------
-        { "<leader>i", group = "info", nowait = false, remap = false },
+        { "<leader>i", group = "info+", nowait = false, remap = false },
 
         -- [J]TABS ------------
-        { "<leader>j", group = "tabs", nowait = false, remap = false },
+        { "<leader>j", group = "tabs+", nowait = false, remap = false },
+
+        -- [K]MISC ------------
+        { "<leader>k", group = "misc+", nowait = false, remap = false },
 
         -- [L]ANGUAGE ----------------
-        { "<leader>l", group = "lang", nowait = false, remap = false },
+        { "<leader>l", group = "lang+", nowait = false, remap = false },
 
         -- [M]AKE -------------------
-        { "<leader>m", group = "make", nowait = false, remap = false },
-        { "<leader>ml", group = "link", nowait = false, remap = false },
+        { "<leader>m", group = "make+", nowait = false, remap = false },
+        { "<leader>ml", group = "link+", nowait = false, remap = false },
 
         -- [N]OTES -------------------
-        { "<leader>n", group = "notes", nowait = false, remap = false },
+        { "<leader>n", group = "notes+", nowait = false, remap = false },
 
         ---- [j]ournal ---------------
-        { "<leader>nj", group = "journal", nowait = false, remap = false },
+        { "<leader>nj", group = "journal+", nowait = false, remap = false },
 
         ---- [r]oam ------------------
-        { "<leader>nr", group = "roam", nowait = false, remap = false },
+        { "<leader>nr", group = "roam+", nowait = false, remap = false },
 
         ---- [t]odo ------------------
-        { "<leader>nt", group = "todo", nowait = false, remap = false },
+        { "<leader>nt", group = "todo+", nowait = false, remap = false },
 
         -- [O]PEN -------------------
-        { "<leader>o", group = "open", nowait = false, remap = false },
+        { "<leader>o", group = "open+", nowait = false, remap = false },
 
         -- [P]ROJECT ----------------
-        { "<leader>p", group = "project", nowait = false, remap = false },
+        { "<leader>p", group = "project+", nowait = false, remap = false },
 
         -- [Q]UIT / [Q]UICKFIX  -------------------
-        { "<leader>q", group = "quit", nowait = false, remap = false },
-
-        ---- trou[b]le ---------------
-        { "<leader>qb", group = "trouBle", nowait = false, remap = false },
+        { "<leader>q", group = "quickfix+", nowait = false, remap = false },
+        { "<leader>qd", group = "diagnostics+", nowait = false, remap = false },
+        { "<leader>ql", group = "loclist+", nowait = false, remap = false },
+        { "<leader>qld", group = "diagnostics+", nowait = false, remap = false },
 
         -- [R]ELOAD ----------------
-        { "<leader>r", group = "reload", nowait = false, remap = false },
-        { "<leader>rs", group = "session", nowait = false, remap = false },
+        { "<leader>r", group = "reload+", nowait = false, remap = false },
+        { "<leader>rd", group = "debug-session+", nowait = false, remap = false },
+        { "<leader>rs", group = "session+", nowait = false, remap = false },
 
         -- [S]EARCH ----------------
-        { "<leader>s", group = "search", nowait = false, remap = false },
+        { "<leader>s", group = "search/stash+", nowait = false, remap = false },
+        { "<leader>sc", group = "current+", nowait = false, remap = false },
+        { "<leader>st", group = "trouble+", nowait = false, remap = false },
 
         -- [T]OGGLE ----------------
-        { "<leader>t", group = "toggle", nowait = false, remap = false },
-        -- { "<leader>tb", "<cmd>DapToggleBreakpoint<CR>", desc = "toggle-Breakpoint", nowait = false, remap = false },
-        -- { "<leader>tz", "<cmd>ZenMode<CR>", desc = "wrap-text", nowait = false, remap = false },
+        { "<leader>t", group = "toggle+", nowait = false, remap = false },
 
         -- [U]NDO ----------------
-        { "<leader>u", group = "undo", nowait = false, remap = false },
+        { "<leader>u", group = "undo+", nowait = false, remap = false },
 
         -- [V]ERBOSE ----------------
-        { "<leader>v", group = "validate/test", nowait = false, remap = false },
+        { "<leader>v", group = "verbose+", nowait = false, remap = false },
+        { "<leader>vd", group = "diagnostics+", nowait = false, remap = false },
+        { "<leader>vl", group = "lsp+", nowait = false, remap = false },
 
         -- [W]INDOW ----------------
-        { "<leader>w", group = "window", nowait = false, remap = false },
+        { "<leader>w", group = "window+", nowait = false, remap = false },
 
         -- MISC ----------------------
-        { "<leader>x", group = "clear", nowait = false, remap = false },
+        { "<leader>x", group = "clear+", nowait = false, remap = false },
 
         -- MISC ----------------------
-        { "<leader>y", group = "misc", nowait = false, remap = false },
+        { "<leader>y", group = "misc+", nowait = false, remap = false },
 
         -- FU[Z]ZY ---------------
-        { "<leader>z", group = "fuzzy", nowait = false, remap = false },
+        { "<leader>z", group = "fuzzy+", nowait = false, remap = false },
 
         ---- [g]it ----------------
-        { "<leader>zg", group = "git", nowait = false, remap = false },
+        { "<leader>zg", group = "git+", nowait = false, remap = false },
 
         ---- [s]earch ---------------
-        { "<leader>zs", group = "search", nowait = false, remap = false },
+        { "<leader>zs", group = "search+", nowait = false, remap = false },
     },
 
     --- VISUAL MODE
     {
         mode = "v",
+        -- [A]CTION ----------------
+        { "<leader>a", group = "action+", nowait = false, remap = false },
+        { "<leader>ac", group = "copy+", nowait = false, remap = false },
+        { "<leader>av", group = "paste+", nowait = false, remap = false },
+        { "<leader>ax", group = "cut+", nowait = false, remap = false },
+
         -- [G]IT ------------------
-        { "<leader>g", group = "git", nowait = false, remap = false },
+        { "<leader>g", group = "git+", nowait = false, remap = false },
 
         -- [H]UNK ------------------
-        { "<leader>hh", group = "gitHunk", nowait = false, remap = false },
+        { "<leader>hh", group = "gitHunk+", nowait = false, remap = false },
 
         -- [S]EARCH -------------
+        { "<leader>s", group = "search/stash+", nowait = false, remap = false },
 
         -- [T]OGGLE -------------
+        { "<leader>t", group = "toggle+", nowait = false, remap = false },
     },
 }
 
 local function setup_whichkey_config()
     local wk = require("which-key")
+    wk.setup(opts)
     wk.add(key_maps)
+    -- wk.show({ global = true })
 end
 
 return {
     "folke/which-key.nvim",
     event = "VeryLazy",
-    opts = opts,
+    -- opts = opts,
     config = setup_whichkey_config,
 }

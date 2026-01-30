@@ -1,14 +1,12 @@
--- lua/plugins/ai/codecompanion.lua
+-- lua/plugins/ai/codecompanion/init.lua
 
 -- refer: https://codecompanion.olimorris.dev/
 
 -- TODO: add model name besides adapter on chat
 -- TODO: add a header on top for codecompanion buffers, describing model-info
 -- TODO: UI updates (markdown, bgcolor, fidget-spinner etc.,)
--- TODO: swap keymaps for allow-once and allow-always (g1,g2) (1,2)
 -- TODO: Keymap to diff changes done by the language model
 
--- TODO: linking codecompanion-workspace.json to agent.md, cursor/rules etc.,
 -- TODO: vector-code integration
 -- TODO: effectively using codecompanion-workspace.json
 -- TODO: chat-buffer naming
@@ -18,7 +16,6 @@
 -- TODO: additional tools
 -- TODO: additional variables
 -- TODO: variable: directory
--- TODO: variable: TODO-list
 -- TODO: variable: .cursor/rules
 -- TODO: variable: agents.md
 
@@ -26,6 +23,8 @@ local function setup_codecompanion_config()
     local keymap_set = require("config.helpers").keymap_set
     local companion = require("codecompanion")
     local companion_adapters = require("codecompanion.adapters")
+
+    local companion_dir = vim.fn.stdpath("config") .. "/lua/plugins/ai/codecompanion"
 
     local function setup_claude_code_acp_adapter()
         ---@type CodeCompanion.ACPAdapter.ClaudeCode
@@ -319,6 +318,21 @@ local function setup_codecompanion_config()
                         description = "Show Super Diff",
                     },
                 },
+
+                slash_commands = {
+                    ["dummy"] = {
+                        description = "Insert filetype",
+                        callback = "lua.plugins.ai.codecompanion.slash_commands.dummy",
+                        -- callback = function(chat)
+                        --     chat:add_buf_message({ content = "this is a dummy message!" })
+                        -- end,
+                        contains_code = false,
+                    },
+                },
+
+                opts = {
+                    log_level = "DEBUG",
+                },
             },
 
             inline = {
@@ -372,24 +386,6 @@ local function setup_codecompanion_config()
             },
 
             -- roles = {},
-            slash_commands = {
-                ["image"] = {
-                    callback = "interactions.chat.slash_commands.builtin.image",
-                    description = "Insert an image",
-                    ---@param opts { adapter: CodeCompanion.HTTPAdapter }
-                    ---@return boolean
-                    enabled = function(opts)
-                        return opts.adapter.opts and (opts.adapter.opts.vision == true) or false
-                    end,
-                },
-
-                ["dummy"] = {
-                    description = "Insert filetype",
-                    callback = function(chat)
-                        return "I am dummmmmmmy!!!!"
-                    end,
-                },
-            },
         },
 
         rules = {
@@ -478,9 +474,10 @@ local function setup_codecompanion_config()
         },
 
         prompt_library = {
+            -- FIX: comment-out content in markdown prompts
             markdown = {
                 dirs = {
-                    vim.fn.stdpath("config") .. "/prompts",
+                    companion_dir .. "/prompts",
                     vim.fn.getcwd() .. "/.prompts",
                 },
             },
@@ -492,10 +489,6 @@ local function setup_codecompanion_config()
     }
 
     companion.setup(companion_opts)
-
-    keymap_set("n", "<leader>ap", function()
-        companion.prompt("docs")
-    end, "ai-prompts")
 end
 
 return {
@@ -511,6 +504,14 @@ return {
             { "<leader>ai", ":CodeCompanionChat Toggle<CR>", mode = { "n", "v" }, desc = "ai-chat-companion" },
             { "<leader>aI", ":CodeCompanionChat<CR>", mode = "n", desc = "ai-chat-companion" },
             -- TODO: choose adapter while executing inline suggestions/corrections
+            { "<leader>app", ":CodeCompanionActions refresh<CR>", mode = "n", desc = "prompts-list" },
+            {
+                "<leader>chl",
+                ":! tail -n 500 ~/.local/state/nvim/codecompanion.log<CR>",
+                mode = "n",
+                desc = "chat-logs",
+            },
+
             { "<leader>aI", ":CodeCompanion<CR>", mode = "v", desc = "ai-chat-companion" },
         },
         dependencies = {
