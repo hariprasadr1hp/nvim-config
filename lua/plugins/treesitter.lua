@@ -33,6 +33,7 @@ local ensure_installed = {
     "markdown",
     "markdown_inline",
     "make",
+    "nix",
     "org",
     "python",
     "query",

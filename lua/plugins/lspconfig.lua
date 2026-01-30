@@ -207,6 +207,8 @@ local function setup_lsp_config()
             settings = {
                 ["nil"] = {
                     formatting = {
+                        -- TODO: mason's doesn't work atm
+                        -- so installing system-wide, using `brew install nixfmt`
                         command = { "nixfmt" },
                     },
                 },
