@@ -62,7 +62,7 @@ function M.as_floating_window(content)
     vim.bo[dummy_buf].modifiable = false
     vim.bo[dummy_buf].readonly = true
 
-    vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = dummy_buf, silent = true })
+    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = dummy_buf, silent = true })
 end
 
 --- Save the current visual selection to a temporary file under ~/.temp/zzz_XXXX.

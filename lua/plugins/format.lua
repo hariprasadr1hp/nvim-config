@@ -195,17 +195,16 @@ local function setup_format_config()
 
         vim.api.nvim_create_user_command("FormatDisable", function(args)
             if args.bang then
-                -- NOTE: FormatDisable! will disable formatting just for this buffer
                 vim.b.disable_autoformat = true
             else
                 vim.g.disable_autoformat = true
             end
         end, {
-            desc = "disable-autoformat-on-save",
+            desc = "disable-autoformat-on-save (only for the current buffer)",
             bang = true,
         })
 
-        -- BUG: enabling formatting after disabling requires an additional modify to start working again
+        -- FIX: enabling formatting after disabling requires an additional modify to start working again
         -- i.e) the formatter doesn't correct unformatted code, unless a new change is induced
         vim.api.nvim_create_user_command("FormatEnable", function()
             vim.b.disable_autoformat = false

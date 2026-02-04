@@ -4,6 +4,6 @@ return {
     "dstein64/vim-startuptime",
     cmd = "StartupTime",
     keys = {
-        { "<leader>is", "<cmd>StartupTime<CR>", desc = "startup" },
+        { "<leader>is", "<cmd>StartupTime<cr>", desc = "startup" },
     },
 }

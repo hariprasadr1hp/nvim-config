@@ -8,11 +8,16 @@ local opts = {
     branch = true,
 }
 
+-- TODO: persist breakpoints from previous session
+
 local function setup_persistence_config()
     local persistence = require("persistence")
     persistence.setup(opts)
 
     -- TODO: enable notifications if session-reloaded, or decided not-to-be-saved
+    keymap_set("n", "<leader>rls", function()
+        persistence.load({ last = true })
+    end, "nvim-session")
     keymap_set("n", "<leader>rsl", function()
         persistence.load({ last = true })
     end, "session-last")

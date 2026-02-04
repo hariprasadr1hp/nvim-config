@@ -4,6 +4,10 @@ if vim.g.vscode then
     return
 end
 
+--- Handle CLI Commands
+---@class CLIModule
+local M = {}
+
 local keymap_set = require("config.helpers").keymap_set
 local fzf_lua = require("fzf-lua")
 local toggleterm_exec = require("toggleterm").exec
@@ -27,7 +31,45 @@ local function select_cli_tool(on_choice)
     end)
 end
 
+local function trim(s)
+    return (s:gsub("%s+$", ""))
+end
+
+local function gcloud_cfg_get(expr)
+    local obj = vim.system({ "gcloud", "config", "list", "--format=get(" .. expr .. ")" }, { text = true }):wait()
+
+    if obj.code ~= 0 then
+        return "" -- or return nil, obj.stderr if you prefer
+    end
+    -- return trim(obj.stdout or "")
+    return obj.stdout or ""
+end
+
 local actions_gcloud = {
+    -- {
+    --     name = "list roles by user and project",
+    --     action = function()
+    --         local cmd =
+    --             [[gcloud projects get-iam-policy --project=%s --flatten="bindings[].members" --filter="bindings.members:user:%s" --format="value(bindings.role)"]]
+    --
+    --         local default_project_id = gcloud_cfg_get("core.project")
+    --         local default_user_id = gcloud_cfg_get("core.account")
+    --
+    --         vim.ui.input({
+    --             prompt = "Enter `project-id`",
+    --             default = default_project_id,
+    --         }, function(project_id)
+    --             vim.ui.input({
+    --                 prompt = "Enter `user_id`",
+    --                 default = default_user_id,
+    --             }, function(user_id)
+    --                 vim.print(cmd:format(project_id, user_id))
+    --                 -- pcall(toggleterm_exec, cmd:format(project_id, user_id))
+    --             end)
+    --         end)
+    --     end,
+    -- },
+
     {
         name = "list permissions by role",
         action = function()
@@ -68,7 +110,7 @@ local cli_tool_actions = {
     gcloud = actions_gcloud,
 }
 
-local function run_cli_tool()
+function M.run_cli_tool()
     select_cli_tool(function(cli_tool)
         local actions = cli_tool_actions[cli_tool]
         fzf_lua.fzf_exec(
@@ -92,4 +134,14 @@ local function run_cli_tool()
     end)
 end
 
-keymap_set("n", "<leader>pr", run_cli_tool, "program-run")
+function M.setup_keymaps()
+    keymap_set("n", "<leader>pr", M.run_cli_tool, "program-run")
+end
+
+function M.setup()
+    M.setup_keymaps()
+end
+
+M.setup()
+
+return M

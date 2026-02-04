@@ -238,9 +238,9 @@ return {
     "kyazdani42/nvim-tree.lua",
     cmd = { "NvimTreeToggle", "NvimTreeRefresh" },
     keys = {
-        { "<C-.><C-.>", "<cmd>NvimTreeToggle<CR>", desc = "toggle-explorer" },
-        { "<leader>oe", "<cmd>NvimTreeToggle<CR>", desc = "toggle-explorer" },
-        { "<leader>re", "<cmd>NvimTreeRefresh<CR>", desc = "explorer-reload" },
+        { "<C-.><C-.>", "<cmd>NvimTreeToggle<cr>", desc = "toggle-explorer" },
+        { "<leader>oe", "<cmd>NvimTreeToggle<cr>", desc = "toggle-explorer" },
+        { "<leader>re", "<cmd>NvimTreeRefresh<cr>", desc = "explorer-reload" },
     },
     dependencies = { "kyazdani42/nvim-web-devicons" },
     opts = opts,

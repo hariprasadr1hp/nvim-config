@@ -196,3 +196,5 @@ _G.T = M.tprint
 M.load_env_file(vim.fn.stdpath("config") .. "/.env")
 
 return M
+
+-- TODO: maintaining "visual-select" history (last 5). `gv` can only retain the last visual-selection.

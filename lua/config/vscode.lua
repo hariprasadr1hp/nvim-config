@@ -64,7 +64,9 @@ end
 ----------------------------------------------------------------
 
 local vsaction = require("vscode").action
-local vsnotify = require("vscode").notify
+-- local vsnotify = require("vscode").notify
+-- local.vsget = require("vscode").get_config
+-- local.vsset = require("vscode").update_config
 
 -- `Y` yanks till the end of the line from the cursor
 keymap_set("n", "Y", "y$")
@@ -98,12 +100,12 @@ keymap_set("n", "<C-w><C-Down>", "<C-w>j", "goto-bottom-window")
 -- Move selected line / block of text in visual mode
 -- shift + k to move up
 -- shift + j to move down
-keymap_set("x", "J", "move '<+1<CR>gv-gv", "move-select-lines-down")
-keymap_set("x", "K", "move '<-2<CR>gv-gv", "move-select-lines-up")
+keymap_set("x", "J", "move '<+1<cr>gv-gv", "move-select-lines-down")
+keymap_set("x", "K", "move '<-2<cr>gv-gv", "move-select-lines-up")
 
 -- visually select text for searching, mapped to //
 -- using \V (no-magic)
-keymap_set("x", "//", [[y/\V<C-R>=escape(@", '/\')<CR><CR>]], "search-selected")
+keymap_set("x", "<leader>sv", [[y/\V<C-R>=escape(@", '/\')<cr><cr>]], "search-selected")
 
 -- JUMPS
 -------------------------------------------------------------------
@@ -153,7 +155,7 @@ keymap_set("n", "yix", "yi`")
 
 -- META-KEYS
 -------------------------------------------------------------------
-keymap_set("n", "<M-s>", ":update<CR>")
+keymap_set("n", "<M-s>", ":update<cr>")
 
 -- CLIPBOARD
 -------------------------------------------------------------------
@@ -226,7 +228,7 @@ end, "toggle-explorer")
 keymap_set("n", "<leader>oM", function()
     vsaction("workbench.action.openMCPSettings")
 end, "MCP-settings")
-keymap_set("n", "<leader>on", ":messages<CR>", "notifications")
+keymap_set("n", "<leader>on", ":messages<cr>", "notifications")
 keymap_set("n", "<leader>ot", function()
     vsaction("workbench.action.terminal.toggleTerminal")
 end, "toggle-terminal")
@@ -239,9 +241,6 @@ _G.pprint = M.pprint
 _G.P = M.pprint
 _G.tprint = M.tprint
 _G.T = M.tprint
-_G.vsget = require("vscode").get_config
-_G.vsset = require("vscode").update_config
-_G.vsnotify = vsnotify
 
 -- load nvim-config .env variables
 M.load_env_file(vim.fn.stdpath("config") .. "/.env")

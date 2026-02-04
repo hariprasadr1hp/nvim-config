@@ -1,11 +1,51 @@
 {
-  "jbash": {
-    "prefix": "jbash",
+  "<s": {
+    "prefix": "<s",
+    "body": [
+      "```${1:language}",
+      "$0",
+      "```"
+    ],
+    "description": "code block with language specifier"
+  },
+
+  "srcb": {
+    "prefix": "srcb",
     "body": [
       "```bash",
       "$0",
       "```"
     ],
     "description": "code snippet for bash"
+  },
+
+  "srcj": {
+    "prefix": "srcj",
+    "body": [
+      "```json",
+      "$0",
+      "```"
+    ],
+    "description": "code snippet for json"
+  },
+
+  "srcp": {
+    "prefix": "srcp",
+    "body": [
+      "```python",
+      "$0",
+      "```"
+    ],
+    "description": "code snippet for python"
+  },
+
+  "srcy": {
+    "prefix": "srcy",
+    "body": [
+      "```yaml",
+      "$0",
+      "```"
+    ],
+    "description": "code snippet for yaml"
   }
 }

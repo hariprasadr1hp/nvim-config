@@ -15,12 +15,12 @@ vnoremap <C-x> <C-x>gv
 
 
 " buffer chain
-" nnoremap [b :bp<CR>
-" nnoremap ]b :bn<CR>
+" nnoremap [b :bp<cr>
+" nnoremap ]b :bn<cr>
 
 " tab chain
-" nnoremap [j :tabprevious<CR>
-" nnoremap ]j :tabnext<CR>
+" nnoremap [j :tabprevious<cr>
+" nnoremap ]j :tabnext<cr>
 
 " alias for 'escape' to NORMAL from INSERT
 " inoremap klk <Esc>
@@ -29,15 +29,15 @@ vnoremap <C-x> <C-x>gv
 " " Move selected line / block of text in visual mode
 " " shift + k to move up
 " " shift + j to move down
-xnoremap K :move '<-2<CR>gv-gv
-xnoremap J :move '>+1<CR>gv-gv
+xnoremap K :move '<-2<cr>gv-gv
+xnoremap J :move '>+1<cr>gv-gv
 
 
 " move lines using 'Alt', vscode-like
-nnoremap <M-Up> :move -2<CR>
-nnoremap <M-Down> :move +1<CR>
+nnoremap <M-Up> :move -2<cr>
+nnoremap <M-Down> :move +1<cr>
 
 
 " visually select text for searching, mapped to //
-vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
+vnoremap // y/\V<C-R>=escape(@",'/\')<cr><cr>
 

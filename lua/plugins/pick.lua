@@ -10,7 +10,7 @@ local opts = {
         caret_left = "<Left>",
         caret_right = "<Right>",
 
-        choose = "<CR>",
+        choose = "<cr>",
         choose_in_split = "<C-s>",
         choose_in_tabpage = "<C-t>",
         choose_in_vsplit = "<C-v>",
@@ -74,9 +74,9 @@ local function setup_mini_pick_config()
 
     local keymap_set = require("config.helpers").keymap_set
 
-    keymap_set("n", "<leader>,", ":Pick files<CR>", "files")
-    keymap_set("n", "<leader>bb", ":Pick buffers<CR>", "buffers")
-    keymap_set("n", "<leader>bB", ":Pick buffers<CR>", "buffers")
+    keymap_set("n", "<leader>,", ":Pick files<cr>", "files")
+    keymap_set("n", "<leader>bb", ":Pick buffers<cr>", "buffers")
+    keymap_set("n", "<leader>bB", ":Pick buffers<cr>", "buffers")
 end
 
 return {

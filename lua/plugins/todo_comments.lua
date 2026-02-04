@@ -1,19 +1,23 @@
 -- lua/plugins/todo_comments.lua
 
 local keywords = {
-    FIX = {
-        icon = " ",
-        color = "error",
-        alt = { "BUG", "ISSUE" },
-    },
-    TODO = { icon = " ", color = "info" },
-    HACK = { icon = " ", color = "warning" },
-    WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-    PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-    NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
-    TEST = { icon = "⏲ ", color = "test", alt = { "PASSED", "FAILED" } },
-    LEARN = { icon = " ", color = "info" },
-    REFER = { icon = "󰏢", color = "info" },
+    -- FIX = { icon = "󱢇 ", color = "error", alt = { "BUG", "ISSUE" } },
+    -- WARN = { icon = " ", color = "warning" },
+    -- TODO = { icon = " ", color = "info" },
+    -- PERF = { icon = " ", alt = { "OPTIM" } },
+    -- NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+    -- TEST = { icon = "⏲ ", color = "test", alt = { "PASSED", "FAILED" } },
+    -- LEARN = { icon = " ", color = "info" },
+    -- REFER = { icon = "󰏢", color = "info" },
+
+    FIX = { icon = "", color = "error", alt = { "BUG", "ISSUE" } },
+    WARN = { icon = "", color = "warning" },
+    TODO = { icon = "", color = "info" },
+    PERF = { icon = "", alt = { "OPTIM" } },
+    NOTE = { icon = "", color = "hint", alt = { "INFO" } },
+    TEST = { icon = "", color = "test", alt = { "PASSED", "FAILED" } },
+    LEARN = { icon = "", color = "info" },
+    REFER = { icon = "", color = "info" },
 }
 
 local gui_style = {
@@ -74,17 +78,18 @@ local function setup_keymaps()
     -- BUG: jumplists for todo comments need to cycle-through after reaching the last one
     keymap_set("n", "]t", todo_comments.jump_next, "Next todo comment")
     keymap_set("n", "[t", todo_comments.jump_prev, "Previous todo comment")
-    keymap_set("n", "<leader>qlt", ":TodoLocList<CR>", "todos-to-loclist")
-    keymap_set("n", "<leader>qt", ":TodoQuickFix<CR>", "todos-to-quickfix")
-    keymap_set("n", "<leader>zt", ":TodoFzfLua keywords=TODO,FIX<CR>", "todos")
+    -- BUG: `:TodoLocList` collects todo-comment across project, not local to the file
+    keymap_set("n", "<leader>qlt", ":TodoLocList<cr>", "todos-to-loclist")
+    keymap_set("n", "<leader>qt", ":TodoQuickFix<cr>", "todos-to-quickfix")
+    keymap_set("n", "<leader>zt", ":TodoFzfLua keywords=TODO,FIX<cr>", "todos")
 end
 
 return {
     "folke/todo-comments.nvim",
     -- cmd = { "TodoFzfLua", "TodoQuickFix" },
     -- keys = {
-    --     { "<leader>pq", "<cmd>TodoQuickFix<CR>", desc = "quickfix-todo" },
-    --     { "<leader>zt", "<cmd>TodoFzfLua keywords=TODO,FIX<CR>", desc = "todos" },
+    --     { "<leader>pq", "<cmd>TodoQuickFix<cr>", desc = "quickfix-todo" },
+    --     { "<leader>zt", "<cmd>TodoFzfLua keywords=TODO,FIX<cr>", desc = "todos" },
     -- },
     dependencies = {
         "nvim-lua/plenary.nvim",

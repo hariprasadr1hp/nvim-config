@@ -20,249 +20,18 @@
 -- TODO: variable: agents.md
 
 local function setup_codecompanion_config()
-    local keymap_set = require("config.helpers").keymap_set
     local companion = require("codecompanion")
-    local companion_adapters = require("codecompanion.adapters")
-
     local companion_dir = vim.fn.stdpath("config") .. "/lua/plugins/ai/codecompanion"
-
-    local function setup_claude_code_acp_adapter()
-        ---@type CodeCompanion.ACPAdapter.ClaudeCode
-        local claude_acp_opts = {
-            env = {
-                CLAUDE_CODE_OAUTH_TOKEN = vim.env.CLAUDE_CODE_OAUTH_TOKEN,
-            },
-
-            -- FIX: choose between haiku and sonnet models, with default as haiku
-            -- refer how the models are named for claude code
-            commands = {
-                default = {
-                    -- https://github.com/zed-industries/claude-code-acp
-                    "claude-code-acp",
-                },
-            },
-        }
-
-        return companion_adapters.extend("claude_code", claude_acp_opts)
-    end
-
-    -- FIX: model selection, and default model
-
-    local function setup_codex_acp_adapter()
-        ---@type CodeCompanion.ACPAdapter.Codex
-        local codex_acp_opts = {
-            defaults = {
-                ---@type "openai-api-key" | "codex-api-key" | "chatgpt"
-                auth_method = "chatgpt",
-            },
-            commands = {
-                default = {
-                    -- https://github.com/zed-industries/codex-acp
-                    "codex-acp",
-                },
-            },
-        }
-        return companion_adapters.extend("codex", codex_acp_opts)
-    end
-
-    -- FIX: get gemini acp adapter working, along with model selection, and default model
-
-    local function setup_gemini_acp_adapter()
-        ---@type CodeCompanion.ACPAdapter.GeminiCLI
-        local gemini_acp_opts = {
-            defaults = {
-                ---@type "oauth-personal" | "gemini-api-key" | "vertex-ai"
-                auth_method = "oauth-personal",
-            },
-            schema = {
-                model = {
-                    ---@type "gemini-2.5-flash" | "gemini-2.5-flash-lite" | "gemini-2.5-pro"
-                    default = "gemini-2.5-flash",
-                },
-            },
-        }
-        return companion_adapters.extend("gemini_cli", gemini_acp_opts)
-    end
-
-    local function setup_opencode_acp_adapter()
-        ---@type CodeCompanion.ACPAdapter.OpenCode
-        local opencode_acp_opts = {
-            model = {
-                default = vim.env.OLLAMA_DEFAULT_SERVER_MODEL,
-            },
-        }
-        return companion_adapters.extend("opencode", opencode_acp_opts)
-    end
-
-    local function setup_ollama_http_adapter()
-        ---@type CodeCompanion.HTTPAdapter.Ollama
-        local ollama_http_adapter = {
-            env = {
-                url = vim.env.OLLAMA_SERVER_HOST,
-            },
-            headers = {
-                ["Content-Type"] = "application/json",
-                -- ["Authorization"] = string.format("Bearer %s", vim.env.OLLAMA_API_KEY),
-            },
-            parameters = {
-                sync = true,
-            },
-            schema = {
-                model = {
-                    default = vim.env.OLLAMA_DEFAULT_SERVER_MODEL,
-                },
-            },
-        }
-        return companion_adapters.extend("ollama", ollama_http_adapter)
-    end
-
-    local function setup_cursor_acp_adapter()
-        local helpers = require("codecompanion.adapters.acp.helpers")
-
-        ---@class CodeCompanion.ACPAdapter.Cursor: CodeCompanion.ACPAdapter
-        return {
-            name = "cursor",
-            formatted_name = "Cursor",
-            type = "acp",
-            roles = {
-                llm = "assistant",
-                user = "user",
-            },
-            opts = {
-                vision = false,
-            },
-            commands = {
-                -- TODO: possible to get the content under "reasoning", or is it obscured?
-                default = {
-                    "cursor-agent-acp",
-                },
-            },
-            defaults = {
-                mcpServers = {},
-                timeout = 20000, -- 20 seconds
-            },
-            parameters = {
-                protocolVersion = 1,
-                clientCapabilities = {
-                    fs = { readTextFile = true, writeTextFile = true },
-                },
-                clientInfo = {
-                    name = "CodeCompanion.nvim",
-                    version = "1.0.0",
-                },
-            },
-            handlers = {
-                ---@param self CodeCompanion.ACPAdapter
-                ---@return boolean
-                ---@diagnostic disable-next-line: unused-local
-                setup = function(self)
-                    return true
-                end,
-
-                ---@param self CodeCompanion.ACPAdapter
-                ---@return boolean
-                ---@diagnostic disable-next-line: unused-local
-                auth = function(self)
-                    -- authentication handled externally via cursor-agent CLI
-                    -- via `cursor-agent login`
-                    return true
-                end,
-
-                ---@param self CodeCompanion.ACPAdapter
-                ---@param messages table
-                ---@param capabilities table
-                ---@return table
-                form_messages = function(self, messages, capabilities)
-                    return helpers.form_messages(self, messages, capabilities)
-                end,
-
-                ---@param self CodeCompanion.ACPAdapter
-                ---@param code number
-                ---@return nil
-                ---@diagnostic disable-next-line: unused-local
-                on_exit = function(self, code) end,
-            },
-        }
-    end
-
-    -- FIX: gracefully exit, when the API key is not available
-    local function setup_anthropic_http_adapter()
-        local api_key = vim.env.ANTHROPIC_API_KEY
-        ---@type CodeCompanion.HTTPAdapter.Anthropic
-        local anthropic_http_opts = {
-            env = {
-                api_key = api_key,
-            },
-        }
-        return companion_adapters.extend("anthropic", anthropic_http_opts)
-    end
-
-    local function setup_gemini_http_adapter()
-        ---@type CodeCompanion.HTTPAdapter.Gemini
-        local gemini_http_opts = {
-            defaults = {
-                ---@type "oauth-personal" | "gemini-api-key" | "vertex-ai"
-                auth_method = "oauth-personal",
-            },
-            schema = {
-                model = {
-                    ---@type "gemini-2.5-flash" | "gemini-2.5-flash-lite" | "gemini-2.5-pro"
-                    default = "gemini-2.5-flash",
-                },
-            },
-        }
-        return companion_adapters.extend("gemini", gemini_http_opts)
-    end
-
-    local function setup_xai_http_adapter()
-        ---@type CodeCompanion.HTTPAdapter.xAI
-        local xai_http_opts = {
-            env = {
-                api_key = vim.env.XAI_API_KEY,
-            },
-            opts = {
-                stream = true,
-                vision = false,
-            },
-            schema = {
-                model = {
-                    ---@type "grok-4-1-fast-reasoning" | "grok-4-1-fast-non-reasoning"
-                    default = "grok-4-1-fast-reasoning",
-                },
-            },
-        }
-        return companion_adapters.extend("xai", xai_http_opts)
-    end
-
-    local function setup_venice_http_adapter()
-        ---@type CodeCompanion.HTTPAdapter.OpenAICompatible
-        local venice_http_opts = {
-            env = {
-                url = "https://api.venice.ai/api",
-                chat_url = "/v1/chat/completions",
-                api_key = vim.env.VENICE_API_KEY,
-            },
-            schema = {
-                model = {
-                    default = "venice-uncensored",
-                },
-            },
-            opts = {
-                vision = false,
-            },
-        }
-        return companion_adapters.extend("openai_compatible", venice_http_opts)
-    end
 
     ---@module "codecompanion"
     local companion_opts = {
         adapters = {
             acp = {
-                claude_code = setup_claude_code_acp_adapter,
-                codex = setup_codex_acp_adapter,
-                gemini_cli = setup_gemini_acp_adapter,
-                opencode = setup_opencode_acp_adapter,
-                cursor = setup_cursor_acp_adapter,
+                claude_code = require("plugins.ai.codecompanion.adapters.mcp_claude"),
+                codex = require("plugins.ai.codecompanion.adapters.mcp_codex"),
+                gemini_cli = require("plugins.ai.codecompanion.adapters.mcp_gemini"),
+                opencode = require("plugins.ai.codecompanion.adapters.mcp_opencode"),
+                cursor = require("plugins.ai.codecompanion.adapters.mcp_cursor"),
 
                 opts = {
                     show_model_choices = true,
@@ -271,11 +40,11 @@ local function setup_codecompanion_config()
             },
 
             http = {
-                anthropic = setup_anthropic_http_adapter,
-                ollama = setup_ollama_http_adapter,
-                gemini = setup_gemini_http_adapter,
-                venice = setup_venice_http_adapter,
-                xai = setup_xai_http_adapter,
+                anthropic = require("plugins.ai.codecompanion.adapters.http_anthropic"),
+                ollama = require("plugins.ai.codecompanion.adapters.http_ollama"),
+                gemini = require("plugins.ai.codecompanion.adapters.http_gemini"),
+                venice = require("plugins.ai.codecompanion.adapters.http_venice"),
+                xai = require("plugins.ai.codecompanion.adapters.http_grok"),
                 -- TODO: perplexity http adapter
                 -- TODO: copilot http adapter
 
@@ -332,6 +101,14 @@ local function setup_codecompanion_config()
 
                 opts = {
                     log_level = "DEBUG",
+                    ---Decorate the user message before it's sent to the LLM
+                    ---@param message string
+                    ---@param adapter CodeCompanion.Adapter
+                    ---@param context table
+                    ---@return string
+                    prompt_decorator = function(message, adapter, context)
+                        return string.format([[<prompt>%s</prompt>]], message)
+                    end,
                 },
             },
 
@@ -485,6 +262,8 @@ local function setup_codecompanion_config()
 
         opts = {
             log_level = "DEBUG",
+            language = "English",
+            send_code = true,
         },
     }
 
@@ -501,18 +280,18 @@ return {
             "CodeCompanionActions",
         },
         keys = {
-            { "<leader>ai", ":CodeCompanionChat Toggle<CR>", mode = { "n", "v" }, desc = "ai-chat-companion" },
-            { "<leader>aI", ":CodeCompanionChat<CR>", mode = "n", desc = "ai-chat-companion" },
+            { "<leader>ai", ":CodeCompanionChat Toggle<cr>", mode = { "n", "v" }, desc = "ai-chat-companion" },
+            { "<leader>aI", ":CodeCompanionChat<cr>", mode = "n", desc = "ai-chat-companion" },
             -- TODO: choose adapter while executing inline suggestions/corrections
-            { "<leader>app", ":CodeCompanionActions refresh<CR>", mode = "n", desc = "prompts-list" },
+            { "<leader>app", ":CodeCompanionActions refresh<cr>", mode = "n", desc = "prompts-list" },
             {
                 "<leader>chl",
-                ":! tail -n 500 ~/.local/state/nvim/codecompanion.log<CR>",
+                ":! tail -n 500 ~/.local/state/nvim/codecompanion.log<cr>",
                 mode = "n",
                 desc = "chat-logs",
             },
 
-            { "<leader>aI", ":CodeCompanion<CR>", mode = "v", desc = "ai-chat-companion" },
+            { "<leader>aI", ":CodeCompanion<cr>", mode = "v", desc = "ai-chat-companion" },
         },
         dependencies = {
             "nvim-lua/plenary.nvim",

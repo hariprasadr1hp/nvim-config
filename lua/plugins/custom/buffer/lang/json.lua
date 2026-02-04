@@ -249,7 +249,7 @@ return M
 --     vim.bo[buf_id].modifiable = false
 --     vim.bo[buf_id].readonly = true
 --
---     vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = buf_id, silent = true })
+--     vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = buf_id, silent = true })
 -- end
 --
 -- function M.run_jq_on_sibling_nodes()

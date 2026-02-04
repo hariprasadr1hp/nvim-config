@@ -1,10 +1,10 @@
 use chrono::Local;
 use nvim_oxi as oxi;
+use oxi::Result;
 use oxi::api;
 use oxi::api::opts::{CreateCommandOpts, EchoOpts, SetKeymapOpts};
 use oxi::api::types::CommandArgs;
 use oxi::api::types::Mode;
-use oxi::Result;
 
 pub fn register() -> Result<()> {
     let cmd_opts = CreateCommandOpts::builder().build();
@@ -35,7 +35,7 @@ pub fn register() -> Result<()> {
 
     let km_opts = SetKeymapOpts::builder().noremap(true).silent(true).build();
 
-    api::set_keymap(Mode::Normal, "<leader>pd", ":PrintDate<CR>", &km_opts)?;
+    api::set_keymap(Mode::Normal, "<leader>pd", ":PrintDate<cr>", &km_opts)?;
 
     Ok(())
 }

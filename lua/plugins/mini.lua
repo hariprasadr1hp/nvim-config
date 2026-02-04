@@ -1,24 +1,5 @@
 -- lua/plugins/mini.lua
 
-local mini_ai_opts = {
-    custom_textobjects = nil,
-    mappings = {
-        around = "a",
-        inside = "i",
-
-        around_next = "an",
-        inside_next = "in",
-        around_last = "al",
-        inside_last = "il",
-
-        goto_left = "g[",
-        goto_right = "g]",
-    },
-    n_lines = 50,
-    search_method = "cover_or_next",
-    silent = false,
-}
-
 local mini_surrround_opts = {
     custom_surroundings = nil,
     highlight_duration = 500,
@@ -40,16 +21,41 @@ local mini_surrround_opts = {
     silent = false,
 }
 
-local mini_icon_opts = {
-    style = "glyph",
-    default = {},
-    directory = {},
-    extension = {},
-    file = {},
-    filetype = {},
-    lsp = {},
-    os = {},
-}
+local function setup_mini_ai_config()
+    local opts = {
+        custom_textobjects = nil,
+        mappings = {
+            around = "a",
+            inside = "i",
+
+            around_next = "an",
+            inside_next = "in",
+            around_last = "al",
+            inside_last = "il",
+
+            goto_left = "g[",
+            goto_right = "g]",
+        },
+        n_lines = 50,
+        search_method = "cover_or_next",
+        silent = false,
+    }
+    require("mini.ai").setup(opts)
+end
+
+local function setup_mini_icons_config()
+    local opts = {
+        style = "glyph",
+        default = {},
+        directory = {},
+        extension = {},
+        file = {},
+        filetype = {},
+        lsp = {},
+        os = {},
+    }
+    require("mini.icons").setup(opts)
+end
 
 local function setup_mini_hipatterns_config()
     local mini_hipatterns = require("mini.hipatterns")
@@ -82,8 +88,43 @@ local function setup_mini_hipatterns_config()
     })
 end
 
+local function setup_mini_pairs_config()
+    local opts = {
+        modes = { insert = true, command = false, terminal = false },
+
+        mappings = {
+            ["("] = { action = "open", pair = "()", neigh_pattern = "^[^\\]" },
+            ["["] = { action = "open", pair = "[]", neigh_pattern = "^[^\\]" },
+            ["{"] = { action = "open", pair = "{}", neigh_pattern = "^[^\\]" },
+
+            [")"] = { action = "close", pair = "()", neigh_pattern = "^[^\\]" },
+            ["]"] = { action = "close", pair = "[]", neigh_pattern = "^[^\\]" },
+            ["}"] = { action = "close", pair = "{}", neigh_pattern = "^[^\\]" },
+
+            ['"'] = { action = "closeopen", pair = '""', neigh_pattern = '[^%w"][^"]', register = { cr = false } },
+            ["'"] = { action = "closeopen", pair = "''", neigh_pattern = "[^%a'][^']", register = { cr = false } },
+            ["`"] = { action = "closeopen", pair = "``", neigh_pattern = "[^%w`][^`]", register = { cr = false } },
+        },
+    }
+    require("mini.pairs").setup(opts)
+
+    -- Filetype-specific pairs using mini.pairs' built-in API
+    vim.api.nvim_create_autocmd("FileType", {
+        pattern = "tex",
+        callback = function()
+            -- Use MiniPairs.map_buf() to add buffer-local pairs
+            require("mini.pairs").map_buf(0, "i", "$", {
+                action = "closeopen",
+                pair = "$$",
+                neigh_pattern = "[^\\$][^$]",
+                register = { cr = false },
+            })
+        end,
+        desc = "Add $$ autopair for TeX files",
+    })
+end
+
 local function setup_mini_config()
-    require("mini.ai").setup(mini_ai_opts)
     require("mini.extra").setup()
     require("mini.trailspace").setup()
     require("mini.operators").setup()
@@ -92,10 +133,12 @@ local function setup_mini_config()
     require("mini.doc").setup()
     require("mini.sessions").setup()
     require("mini.colors").setup()
-    require("mini.icons").setup(mini_icon_opts)
     require("mini.fuzzy").setup()
 
+    setup_mini_ai_config()
+    setup_mini_icons_config()
     setup_mini_hipatterns_config()
+    setup_mini_pairs_config()
 
     -- local hues = require("mini.hues")
     -- hues.setup(hues.gen_random_base_colors())
@@ -106,7 +149,7 @@ local function setup_mini_config()
     --     desc = "generate a theme using random fg and bg colors",
     -- })
 
-    -- map("n", "<leader>yy", ":RandomThemeGenerate<CR>", "random-theme")
+    -- map("n", "<leader>yy", ":RandomThemeGenerate<cr>", "random-theme")
 end
 
 return {

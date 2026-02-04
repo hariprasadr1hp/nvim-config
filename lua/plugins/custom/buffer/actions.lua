@@ -4,12 +4,13 @@ M = {}
 
 -- local keymap_set = require("config.helpers").keymap_set
 
+-- local df = require("plugins.custom.buffer.dataframes")
 local fzf_lua = require("fzf-lua")
 local formatters = require("conform").formatters
 -- local formatters_by_ft = require("conform").formatters_by_ft
 -- local lint = require("lint")
 
-local jq_sibling_action = require("plugins.custom.buffer.lang.json").jq_sibling_action
+-- local jq_sibling_action = require("plugins.custom.buffer.lang.json").jq_sibling_action
 
 local actions_lua = {
     {
@@ -132,10 +133,15 @@ local actions_markdown = {
 }
 
 local actions_json = {
-    {
-        name = "Run JQ on sibling nodes [JSON]",
-        action = jq_sibling_action,
-    },
+    -- {
+    --     name = "Run JQ on sibling nodes [JSON]",
+    --     action = jq_sibling_action,
+    -- },
+    --
+    -- {
+    --     name = "Describe file [JSON]",
+    --     action = df.pl_describe_current_json,
+    -- },
 }
 
 local function actions_http()
@@ -163,8 +169,13 @@ local function actions_http()
         },
 
         {
-            name = "Show Stats [http]",
-            action = kulala.show_stats,
+            name = "Copy as CURL [http]",
+            action = kulala.copy,
+        },
+
+        {
+            name = "Paste from CURL [http]",
+            action = kulala.from_curl,
         },
 
         {
@@ -183,8 +194,8 @@ local function actions_http()
         },
 
         {
-            name = "Toggle View [http]",
-            action = kulala.toggle_view,
+            name = "Set Env",
+            action = kulala.set_selected_env,
         },
 
         {
@@ -213,6 +224,13 @@ local actions_turtle = {
             local file = vim.fn.expand("%")
             vim.cmd(("! riot %s"):format(file))
         end,
+    },
+}
+
+local actions_sparql = {
+    {
+        name = "Run ",
+        action = function() end,
     },
 }
 
@@ -249,6 +267,7 @@ _G.ft_actions = {
     http = actions_http(),
     mermaid = actions_mermaid,
     turtle = actions_turtle,
+    sparql = actions_sparql,
     hurl = actions_hurl,
 }
 

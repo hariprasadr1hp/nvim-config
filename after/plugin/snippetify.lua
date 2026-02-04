@@ -4,7 +4,12 @@ if vim.g.vscode then
     return
 end
 
--- Function to escape special characters for JSON strings
+--- Text to vscode-style snippet module
+---@class SnippetifyModule
+local M = {}
+
+--- Function to escape special characters for JSON strings
+---@return string
 local function escape_json_string(str)
     str = str:gsub("\\", "\\\\")
     str = str:gsub('"', '\\"')
@@ -13,8 +18,8 @@ local function escape_json_string(str)
     return str
 end
 
--- Function to convert visually selected text into a VSCode snippet
-local function convert_to_vscode_snippet()
+--- Function to convert visually selected text into a VSCode snippet
+function M.convert_to_vscode_snippet()
     -- Get the starting and ending positions of the visual selection
     local start_pos = vim.fn.getpos("'<")
     local end_pos = vim.fn.getpos("'>")
@@ -48,5 +53,14 @@ local function convert_to_vscode_snippet()
     print("Body of the Snippet, copied to the clipboard!")
 end
 
--- Create a command to call the function
-vim.api.nvim_create_user_command("SnippetConvert", convert_to_vscode_snippet, { range = true })
+function M.setup_commands()
+    vim.api.nvim_create_user_command("SnippetConvert", M.convert_to_vscode_snippet, { range = true })
+end
+
+function M.setup()
+    M.setup_commands()
+end
+
+M.setup()
+
+return M

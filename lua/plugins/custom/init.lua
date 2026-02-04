@@ -11,8 +11,8 @@ return {
             "ProjectCopyEnv",
         },
         keys = {
-            { "<leader>aa", "<cmd>BufferActions<CR>", desc = "actions-by-ft" },
-            { "<leader>ib", "<cmd>BufferInfo<CR>", desc = "buffer-info" },
+            { "<leader>aa", "<cmd>BufferActions<cr>", desc = "actions-by-ft" },
+            { "<leader>ib", "<cmd>BufferInfo<cr>", desc = "buffer-info" },
         },
         dependencies = {
             { "saghen/blink.cmp" },

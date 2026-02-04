@@ -8,11 +8,7 @@ local function setup_mcphub()
 
         auto_approve = false,
         auto_toggle_mcp_servers = true,
-        extensions = {
-            avante = {
-                make_slash_commands = true,
-            },
-        },
+        extensions = {},
 
         ui = {
             window = {
@@ -50,7 +46,7 @@ return {
     },
     cmd = "MCPHub",
     keys = {
-        { "<leader>oM", "<cmd>MCPHub<CR>", desc = "MCPHub" },
+        { "<leader>oM", "<cmd>MCPHub<cr>", desc = "MCPHub" },
     },
     build = "bundled_build.lua",
     config = setup_mcphub,

@@ -30,7 +30,6 @@ local opts = {
     require("plugins.dadbod"),
     require("plugins.kulala"),
     require("plugins.snippets"),
-    require("plugins.autopairs"),
     require("plugins.comment"),
     require("plugins.harpoon"),
     require("plugins.explorer"),
@@ -58,11 +57,11 @@ local opts = {
     require("plugins.ai.mcphub"),
     require("plugins.ai.codecompanion"),
     require("plugins.ai.windsurf"),
-    -- require("plugins.ai.avante"),
     -- require("plugins.ai.cursor"),
 
     require("plugins.dbt"),
     require("plugins.dagster"),
+    -- require("plugins.minimacs"),
 
     require("plugins.custom"),
     require("plugins.whichkey"),
@@ -73,7 +72,7 @@ local opts = {
 
 require("lazy").setup(opts)
 
-vim.keymap.set("n", "<leader>oL", ":Lazy<CR>", { noremap = true, silent = true, desc = "Lazy" })
+vim.keymap.set("n", "<leader>oL", ":Lazy<cr>", { noremap = true, silent = true, desc = "Lazy" })
 
 -- TODO: plugins to add/visit
 -- Davidyz/VectorCode

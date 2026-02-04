@@ -598,7 +598,7 @@ return {
         "sindrets/diffview.nvim",
         cmd = { "DiffviewOpen", "DiffviewFileHistory" },
         keys = {
-            { "<leader>gG", "<cmd>DiffviewOpen --selected-file<CR>", desc = "open-diffview" },
+            { "<leader>gG", "<cmd>DiffviewOpen --selected-file<cr>", desc = "open-diffview" },
         },
         config = setup_diffview_config,
     },

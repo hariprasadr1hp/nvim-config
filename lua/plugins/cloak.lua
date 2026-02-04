@@ -30,8 +30,8 @@ local function setup_cloak_config()
     require("cloak").setup(opts)
 
     local keymap_set = require("config.helpers").keymap_set
-    keymap_set("n", "<leader>tc", "<cmd>CloakPreviewLine<CR>", "cloak-line")
-    keymap_set("n", "<leader>tC", "<cmd>CloakToggle<CR>", "cloak-buffer")
+    keymap_set("n", "<leader>tc", "<cmd>CloakPreviewLine<cr>", "cloak-line")
+    keymap_set("n", "<leader>tC", "<cmd>CloakToggle<cr>", "cloak-buffer")
 end
 
 return {

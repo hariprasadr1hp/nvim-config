@@ -63,7 +63,7 @@ vim.api.nvim_create_autocmd("User", {
     end,
 })
 
-vim.api.nvim_buf_set_keymap(0, "n", "<space>bk", ":CodeCompanionChat Toggle<CR>", {
+vim.api.nvim_buf_set_keymap(0, "n", "<space>bk", ":CodeCompanionChat Toggle<cr>", {
     noremap = true,
     silent = true,
     desc = "codecompanion-chat-toggle",

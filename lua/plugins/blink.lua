@@ -2,6 +2,7 @@
 
 local function setup_blink_config()
     local blink_cmp = require("blink.cmp")
+    local blink_cmp_types = require("blink.cmp.types")
 
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
@@ -364,12 +365,13 @@ local function setup_blink_config()
         "snippets",
         "buffer",
         "emoji",
-        -- "avante",
         "codeium",
+        "env",
     }
 
     opts.sources.per_filetype = {
-        -- sql = { "snippets", "dadbod", "buffer" },
+        markdown = { "snippets", "path", "git", "emoji", "buffer" },
+        sql = { "snippets", "dadbod", "buffer" },
         oil = { "path", "buffer" },
         codecompanion = { "codecompanion" },
         dap_repl = {},
@@ -384,7 +386,7 @@ local function setup_blink_config()
         module = "blink.cmp.sources.lsp",
         transform_items = function(_, items)
             return vim.tbl_filter(function(item)
-                return item.kind ~= require("blink.cmp.types").CompletionItemKind.Text
+                return item.kind ~= blink_cmp_types.CompletionItemKind.Text
             end, items)
         end,
         opts = { tailwind_color_icon = "██" },
@@ -445,6 +447,15 @@ local function setup_blink_config()
         end,
     }
 
+    opts.sources.providers.git = {
+        module = "blink-cmp-git",
+        name = "Git",
+        opts = {},
+        should_show_items = function()
+            return vim.tbl_contains({ "gitcommit", "markdown" }, vim.o.filetype)
+        end,
+    }
+
     opts.sources.providers.omni = {
         module = "blink.cmp.sources.complete_func",
         enabled = function()
@@ -466,11 +477,16 @@ local function setup_blink_config()
         end,
     }
 
-    -- opts.sources.providers.avante = {
-    --     module = "blink-cmp-avante",
-    --     name = "Avante",
-    --     opts = {},
-    -- }
+    opts.sources.providers.env = {
+        name = "Env",
+        module = "blink-cmp-env",
+        ---@type blink-cmp-env.Options
+        opts = {
+            item_kind = blink_cmp_types.CompletionItemKind.Variable,
+            show_braces = false,
+            show_documentation_window = true,
+        },
+    }
 
     opts.sources.providers.codeium = {
         name = "Codeium",
@@ -497,7 +513,6 @@ return {
         -- event = "VimEnter",
         lazy = true,
         dependencies = {
-            -- { "Kaiser-Yang/blink-cmp-avante" },
             { "Exafunction/windsurf.nvim", event = "VeryLazy" },
             { "rafamadriz/friendly-snippets" },
             { "echasnovski/mini.snippets" },
@@ -507,6 +522,8 @@ return {
                 lazy = true,
             },
             { "moyiz/blink-emoji.nvim" },
+            { "bydlw98/blink-cmp-env" },
+            { "Kaiser-Yang/blink-cmp-git" },
         },
         version = "1.*",
         config = setup_blink_config,

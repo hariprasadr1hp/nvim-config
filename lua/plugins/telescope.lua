@@ -4,7 +4,7 @@ local function setup_mappings(actions, actions_layout)
     return {
         i = {
             ["<c-enter>"] = "to_fuzzy_refine",
-            ["<CR>"] = actions.select_default,
+            ["<cr>"] = actions.select_default,
             ["<Down>"] = actions.move_selection_next,
             ["<Up>"] = actions.move_selection_previous,
 

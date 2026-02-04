@@ -340,7 +340,7 @@ local opts = {
         preview = false,
         -- Keymaps in the nav window
         keymaps = {
-            ["<CR>"] = "actions.jump",
+            ["<cr>"] = "actions.jump",
             ["<2-LeftMouse>"] = "actions.jump",
             ["<C-v>"] = "actions.jump_vsplit",
             ["<C-s>"] = "actions.jump_split",
@@ -394,8 +394,8 @@ return {
     "stevearc/aerial.nvim",
     cmd = { "AerialToggle", "AerialInfo" },
     keys = {
-        { "<leader>kj", "<cmd>AerialToggle<CR>", desc = "outline" },
-        { "<leader>oA", "<cmd>AerialInfo<CR>", desc = "outline-info" },
+        { "<leader>kj", "<cmd>AerialToggle<cr>", desc = "outline" },
+        { "<leader>oA", "<cmd>AerialInfo<cr>", desc = "outline-info" },
     },
     dependencies = {
         "nvim-treesitter/nvim-treesitter",

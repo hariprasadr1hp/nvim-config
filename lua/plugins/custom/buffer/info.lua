@@ -120,7 +120,7 @@ function M.show_buffer_info()
     vim.bo[info_buf].modifiable = false
     vim.bo[info_buf].readonly = true
 
-    vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = info_buf, silent = true })
+    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = info_buf, silent = true })
 end
 
 if ... == nil then

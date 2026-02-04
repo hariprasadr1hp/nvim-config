@@ -1,6 +1,6 @@
 -- lua/plugins/color.lua
 
--- TODO: make the plugin work
+-- FIX: make the plugin work
 
 return {
     "uhs-robert/color-chameleon.nvim",

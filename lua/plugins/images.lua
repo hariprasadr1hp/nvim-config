@@ -15,6 +15,6 @@ return {
     event = "VeryLazy",
     opts = opts,
     keys = {
-        { "<leader>ip", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
+        { "<leader>yi", "<cmd>PasteImage<cr>", desc = "yank-image" },
     },
 }

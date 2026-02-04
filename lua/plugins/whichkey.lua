@@ -62,6 +62,8 @@ local icons = {
         { pattern = "quickfix", icon = "󰁨 ", color = "cyan" },
         { pattern = "reload", icon = "󰑓 ", color = "cyan" },
         { pattern = "undo", icon = "󰕍 ", color = "cyan" },
+        { pattern = "verbose", icon = " ", color = "cyan" },
+        { pattern = "yank", icon = "󰆒 ", color = "cyan" },
     },
     colors = true,
     keys = {
@@ -141,10 +143,13 @@ local key_maps = {
         { "<leader>0", "0", desc = "^", nowait = false, remap = false },
         { "<leader>9", "$", desc = "$", nowait = false, remap = false },
 
+        -- LOCAL
+        { "<leader>;", group = "filetype+", nowait = false, remap = false },
+
         -- [A]CTION ----------------
         { "<leader>a", group = "action+", nowait = false, remap = false },
         { "<leader>ac", group = "copy+", nowait = false, remap = false },
-        { "<leader>ac", group = "ai-prompts+", nowait = false, remap = false },
+        { "<leader>ap", group = "ai-prompts+", nowait = false, remap = false },
         { "<leader>av", group = "paste+", nowait = false, remap = false },
         { "<leader>ax", group = "cut+", nowait = false, remap = false },
 
@@ -171,7 +176,7 @@ local key_maps = {
 
         -- [H]ELP -------------------
         { "<leader>h", group = "help+", nowait = false, remap = false },
-        { "<leader>hh", group = "gitHunk+", nowait = false, remap = false },
+        { "<leader>hh", group = "hunk+", nowait = false, remap = false },
         { "<leader>hl", group = "harpoon+", nowait = false, remap = false },
         { "<leader>hr", group = "reload+", nowait = false, remap = false },
 
@@ -193,14 +198,8 @@ local key_maps = {
 
         -- [N]OTES -------------------
         { "<leader>n", group = "notes+", nowait = false, remap = false },
-
-        ---- [j]ournal ---------------
         { "<leader>nj", group = "journal+", nowait = false, remap = false },
-
-        ---- [r]oam ------------------
         { "<leader>nr", group = "roam+", nowait = false, remap = false },
-
-        ---- [t]odo ------------------
         { "<leader>nt", group = "todo+", nowait = false, remap = false },
 
         -- [O]PEN -------------------
@@ -218,6 +217,7 @@ local key_maps = {
         -- [R]ELOAD ----------------
         { "<leader>r", group = "reload+", nowait = false, remap = false },
         { "<leader>rd", group = "debug-session+", nowait = false, remap = false },
+        { "<leader>rl", group = "last+", nowait = false, remap = false },
         { "<leader>rs", group = "session+", nowait = false, remap = false },
 
         -- [S]EARCH ----------------
@@ -233,25 +233,19 @@ local key_maps = {
 
         -- [V]ERBOSE ----------------
         { "<leader>v", group = "verbose+", nowait = false, remap = false },
-        { "<leader>vd", group = "diagnostics+", nowait = false, remap = false },
-        { "<leader>vl", group = "lsp+", nowait = false, remap = false },
 
         -- [W]INDOW ----------------
         { "<leader>w", group = "window+", nowait = false, remap = false },
 
-        -- MISC ----------------------
+        -- CLEAR ---------------------
         { "<leader>x", group = "clear+", nowait = false, remap = false },
 
-        -- MISC ----------------------
-        { "<leader>y", group = "misc+", nowait = false, remap = false },
+        -- [Y]ANK --------------------
+        { "<leader>y", group = "yank+", nowait = false, remap = false },
 
         -- FU[Z]ZY ---------------
         { "<leader>z", group = "fuzzy+", nowait = false, remap = false },
-
-        ---- [g]it ----------------
         { "<leader>zg", group = "git+", nowait = false, remap = false },
-
-        ---- [s]earch ---------------
         { "<leader>zs", group = "search+", nowait = false, remap = false },
     },
 
@@ -268,7 +262,7 @@ local key_maps = {
         { "<leader>g", group = "git+", nowait = false, remap = false },
 
         -- [H]UNK ------------------
-        { "<leader>hh", group = "gitHunk+", nowait = false, remap = false },
+        { "<leader>hh", group = "hunk+", nowait = false, remap = false },
 
         -- [S]EARCH -------------
         { "<leader>s", group = "search/stash+", nowait = false, remap = false },
@@ -282,12 +276,10 @@ local function setup_whichkey_config()
     local wk = require("which-key")
     wk.setup(opts)
     wk.add(key_maps)
-    -- wk.show({ global = true })
 end
 
 return {
     "folke/which-key.nvim",
     event = "VeryLazy",
-    -- opts = opts,
     config = setup_whichkey_config,
 }

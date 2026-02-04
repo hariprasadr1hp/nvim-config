@@ -1,7 +1,17 @@
--- lua/plugins/debug.lua
+-- lua/plugins/debug/init.lua
+
+-- Path to temp file when running "buffer" config; cleared and deleted on session end.
+local dap_buffer_temp_file = nil
+
+local function cleanup_dap_buffer_temp_file()
+    if dap_buffer_temp_file and vim.fn.filereadable(dap_buffer_temp_file) == 1 then
+        pcall(vim.fn.delete, dap_buffer_temp_file)
+        dap_buffer_temp_file = nil
+    end
+end
 
 local function resolve_python_path()
-    -- try project-local venv first
+    -- try project's local `.venv/` first
     local cwd = vim.fn.getcwd()
     local venv_paths = {
         cwd .. "/.venv/bin/python",
@@ -121,6 +131,7 @@ local function setup_dap_python_config()
                 PYTHONUNBUFFERED = "1",
             },
         },
+
         {
             type = "python",
             request = "launch",
@@ -189,11 +200,7 @@ local function setup_dap_python_config()
             cwd = "${workspaceFolder}",
             jinja = true,
         },
-        --TODO: custom command as entrypoint
-        --TODO: read targets from a makefile
-        --TODO: read `overseer.nvim` actions
     }
-    -- TODO: add DAP adapters for lua, rust, haskell
 end
 
 local function show_dap_info()
@@ -289,7 +296,63 @@ local function show_dap_info()
     vim.bo[info_buf].modifiable = false
     vim.bo[info_buf].readonly = true
 
-    vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = info_buf, silent = true })
+    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = info_buf, silent = true })
+end
+
+local function dap_goto_line()
+    local dap = require("dap")
+    vim.ui.input({ prompt = "Goto line (+/-N for relative): " }, function(input)
+        if input and input ~= "" then
+            local current_line = vim.fn.line(".")
+            local target_line
+
+            local relative_line_num_pattern = "^[+-]%d+$"
+            -- Check for relative line numbers (+N or -N)
+            if input:match(relative_line_num_pattern) then
+                local offset = tonumber(input)
+                if offset then
+                    target_line = current_line + offset
+                end
+            else
+                -- Absolute line number
+                target_line = tonumber(input)
+            end
+
+            if target_line and target_line > 0 then
+                dap.goto_(target_line)
+            else
+                vim.notify("Invalid line number: " .. input, vim.log.levels.ERROR)
+            end
+        end
+    end)
+end
+
+---@param show_message boolean
+local function cleanup_interactive_mode(show_message)
+    if not vim.g.dap_interactive_mode_active then
+        return
+    end
+    vim.g.dap_interactive_mode_active = false
+
+    -- Delete global keymaps using tracked keys
+    if vim.g.dap_interactive_keys then
+        for _, key in ipairs(vim.g.dap_interactive_keys) do
+            pcall(vim.keymap.del, "n", key)
+        end
+        vim.g.dap_interactive_keys = nil
+    end
+
+    -- Clear the persistent notification if it exists
+    if vim.g.dap_interactive_notif_id then
+        pcall(function()
+            require("mini.notify").remove(vim.g.dap_interactive_notif_id)
+        end)
+        vim.g.dap_interactive_notif_id = nil
+    end
+
+    if show_message then
+        vim.api.nvim_echo({ { "-- interactive-debug-mode auto-exited (session terminated) --", "InfoMsg" } }, false, {})
+    end
 end
 
 local function setup_dap_config()
@@ -298,6 +361,9 @@ local function setup_dap_config()
 
     -- Setup DAP UI with default configuration
     dapui.setup()
+
+    vim.fn.sign_define("DapBreakpoint", { text = " ", texthl = "SignColumn" })
+    vim.fn.sign_define("DapBreakpointCondition", { text = "󰃤 ", texthl = "SignColumn" })
 
     -- Setup virtual text for inline variable display
     require("nvim-dap-virtual-text").setup({
@@ -322,13 +388,21 @@ local function setup_dap_config()
     dap.listeners.after.event_initialized.dapui_config = dapui.open
 
     -- Close UI when DAP session ends
-    dap.listeners.before.event_terminated.dapui_config = dapui.close
-    dap.listeners.before.event_exited.dapui_config = dapui.close
+    dap.listeners.before.event_terminated.dapui_config = function()
+        dapui.close()
+        cleanup_dap_buffer_temp_file()
+        -- Auto-cleanup interactive mode keymaps if active (with notification)
+        cleanup_interactive_mode(true)
+    end
+    dap.listeners.before.event_exited.dapui_config = function()
+        dapui.close()
+        cleanup_dap_buffer_temp_file()
+        -- Auto-cleanup interactive mode keymaps if active (with notification)
+        cleanup_interactive_mode(true)
+    end
 
     -- Create user command to show DAP info
-    vim.api.nvim_create_user_command("DapInfo", function()
-        show_dap_info()
-    end, { desc = "Show DAP adapter and path information" })
+    -- vim.api.nvim_create_user_command("DapInfo", show_dap_info, { desc = "Show DAP adapter and path information" })
 end
 
 return {
@@ -339,6 +413,7 @@ return {
             "nvim-neotest/nvim-nio",
             "theHamsta/nvim-dap-virtual-text",
             "mfussenegger/nvim-dap-python",
+            "echasnovski/mini.notify",
         },
         config = setup_dap_config,
         cmd = {
@@ -359,6 +434,8 @@ return {
             "DapToggleRepl",
         },
         keys = function()
+            local nvim_echo = vim.api.nvim_echo
+            local keymap_set = require("config.helpers").keymap_set
             local dap = require("dap")
             local dapui = require("dapui")
 
@@ -396,38 +473,11 @@ return {
                     desc = "eval",
                 },
                 { "<leader>df", dap.focus_frame, desc = "focus-frame" },
-                {
-                    "<leader>dg",
-                    function()
-                        vim.ui.input({ prompt = "Goto line (+/-N for relative): " }, function(input)
-                            if input and input ~= "" then
-                                local current_line = vim.fn.line(".")
-                                local target_line
-
-                                -- Check for relative line numbers (+N or -N)
-                                if input:match("^[+-]%d+$") then
-                                    local offset = tonumber(input)
-                                    if offset then
-                                        target_line = current_line + offset
-                                    end
-                                else
-                                    -- Absolute line number
-                                    target_line = tonumber(input)
-                                end
-
-                                if target_line and target_line > 0 then
-                                    dap.goto_(target_line)
-                                else
-                                    vim.notify("Invalid line number: " .. input, vim.log.levels.ERROR)
-                                end
-                            end
-                        end)
-                    end,
-                    desc = "goto-line",
-                },
+                { "<leader>dg", dap_goto_line, desc = "goto-line" },
                 { "<leader>di", dap.step_into, desc = "step-into" },
                 { "<leader>dj", dap.down, desc = "down" },
                 { "<leader>dk", dap.up, desc = "up" },
+                { "<leader>dK", dap.step_back, desc = "step-bacK" },
                 { "<leader>dl", dap.run_to_cursor, desc = "run-to-line" },
                 { "<leader>dL", dap.run_last, desc = "run-last-debug-session" },
                 { "<leader>do", dap.step_over, desc = "step-over" },
@@ -451,7 +501,79 @@ return {
                     desc = "all-active-sessions",
                 },
                 { "<leader>dt", dap.terminate, desc = "terminate" },
-                { "<leader>dv", ":DapShowLog<CR>", desc = "verbose-logs" },
+
+                {
+                    "<leader>du",
+                    function()
+                        -- Store mode state in a more persistent location
+                        if not vim.g.dap_interactive_mode_active then
+                            vim.g.dap_interactive_mode_active = false
+                        end
+
+                        local function exit_mode()
+                            cleanup_interactive_mode(false)
+                            nvim_echo({ { "-- interactive-debug-mode successfully exited!", "InfoMsg" } }, false, {})
+                        end
+
+                        local function enter_mode()
+                            if vim.g.dap_interactive_mode_active then
+                                nvim_echo({ { "-- interactive-debug-mode already active!", "WarningMsg" } }, false, {})
+                                return
+                            end
+                            vim.g.dap_interactive_mode_active = true
+
+                            local keymaps = {
+                                { key = "k", fn = dap.up, desc = "stack up" },
+                                { key = "j", fn = dap.down, desc = "stack down" },
+                                { key = "i", fn = dap.step_into, desc = "step into" },
+                                { key = "o", fn = dap.step_over, desc = "step over" },
+                                { key = "O", fn = dap.step_out, desc = "step out" },
+                                { key = "K", fn = dap.step_back, desc = "step back" },
+                                { key = "c", fn = dap.continue, desc = "continue" },
+                                { key = "t", fn = dapui.toggle, desc = "continue" },
+                                { key = "T", fn = dap.terminate, desc = "terminate" },
+                                { key = "g", fn = dap_goto_line, desc = "goto line" },
+                                { key = "q", fn = exit_mode, desc = "quit mode" },
+                            }
+
+                            -- Track which keys we're setting for cleanup
+                            local tracked_keys = {}
+                            for _, km in ipairs(keymaps) do
+                                table.insert(tracked_keys, km.key)
+                            end
+                            vim.g.dap_interactive_keys = tracked_keys
+
+                            -- Set global keymaps
+                            for _, km in ipairs(keymaps) do
+                                keymap_set("n", km.key, km.fn, km.desc)
+                            end
+
+                            -- Generate cheatsheet dynamically from keymaps
+                            local cheatsheet_lines = { "Interactive Debug Mode", "" }
+                            for _, km in ipairs(keymaps) do
+                                table.insert(cheatsheet_lines, string.format("  %s - %s", km.key, km.desc))
+                            end
+
+                            local cheatsheet = table.concat(cheatsheet_lines, "\n")
+
+                            -- Use MiniNotify.add() for persistent notification
+                            local ok, result = pcall(function()
+                                local mini_notify = require("mini.notify")
+                                -- MiniNotify.add(msg, level, hl_group, data)
+                                return mini_notify.add(cheatsheet, "INFO", "DiagnosticInfo", {})
+                            end)
+
+                            if ok and result then
+                                vim.g.dap_interactive_notif_id = result
+                            end
+                        end
+
+                        enter_mode()
+                    end,
+                    desc = "user-interactive",
+                },
+
+                { "<leader>dv", ":DapShowLog<cr>", desc = "verbose-logs" },
                 { "<leader>dx", dap.close, desc = "close-not-terminate" },
                 { "<leader>id", show_dap_info, desc = "debug-info" },
                 {
@@ -468,14 +590,9 @@ return {
     },
 }
 
--- focus_frame
--- pause
--- stop
--- terminate
--- disconnect
--- attach
--- restart
--- restart_frame
--- reverse_continue
--- run_last
--- run_to_cursor
+-- TODO: reflect file-modifications during an on-going debug session?
+-- TODO: identigying iteration count in a loop? (for/while)
+-- TODO: add DAP adapters for lua, rust, haskell
+-- TODO: custom command as entrypoint
+-- TODO: read targets from a makefile
+-- TODO: read `overseer.nvim` actions

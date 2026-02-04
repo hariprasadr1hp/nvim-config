@@ -3,9 +3,9 @@
 local mason_opts = {
     ui = {
         icons = {
-            package_installed = "✓",
-            package_pending = "➜",
-            package_uninstalled = "✗",
+            package_installed = " ",
+            package_pending = " ",
+            package_uninstalled = " ",
         },
     },
 }
@@ -42,7 +42,7 @@ local function setup_lsp_autocmds(event)
         client.server_capabilities.hoverProvider = false
     end
 
-    buf_keymap_set("n", "<leader>il", ":LspInfo<CR>", current_buffer, "lsp-info")
+    buf_keymap_set("n", "<leader>il", ":LspInfo<cr>", current_buffer, "lsp-info")
 
     -- Document Highlight
     if client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, current_buffer) then
@@ -184,7 +184,12 @@ local function setup_lsp_config()
         lua_ls = {
             settings = {
                 Lua = {
-                    completion = { callSnippet = "Replace" },
+                    runtime = {
+                        version = "LuaJIT",
+                    },
+                    completion = {
+                        callSnippet = "Replace",
+                    },
                     diagnostics = {
                         disable = { "missing-fields" },
                         globals = { "vim", "hs" },
@@ -197,6 +202,9 @@ local function setup_lsp_config()
 
                             ["~/.hammerspoon/Spoons/EmmyLua.spoon/annotations"] = true,
                         },
+                    },
+                    telemetry = {
+                        enable = false,
                     },
                 },
             },
@@ -300,6 +308,17 @@ local function setup_lsp_config()
             },
         },
 
+        ts_query_ls = {
+            cmd = { "ts_query_ls" },
+            filetypes = { "query" },
+            root_dir = vim.fs.root(0, { ".tsqueryrc.json", "queries" }),
+            settings = {
+                parser_install_directories = {
+                    vim.fn.stdpath("data") .. "/site/parser/",
+                },
+            },
+        },
+
         terraformls = {
             filetypes = { "terraform", "tf", "terraform-vars" },
             root_markers = { ".terraform" },
@@ -386,6 +405,7 @@ local function setup_lsp_config()
     })
 
     -- vim.lsp.enable("bqls")
+    vim.lsp.enable("tsqueryls")
 end
 
 return {
@@ -405,7 +425,7 @@ return {
             {
                 "williamboman/mason.nvim",
                 keys = {
-                    { "<leader>oT", "<cmd>Mason<CR>", desc = "tools-mason" },
+                    { "<leader>oT", "<cmd>Mason<cr>", desc = "tools-mason" },
                 },
                 opts = mason_opts,
             },

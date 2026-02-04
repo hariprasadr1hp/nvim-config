@@ -4,12 +4,14 @@ if vim.g.vscode then
     return
 end
 
+local M = {}
+
 local keymap_set = require("config.helpers").keymap_set
 
 local float_win = nil
 local float_buf = nil
 
-local function toggle_float()
+function M.toggle_float()
     if float_win ~= nil and vim.api.nvim_win_is_valid(float_win) then
         -- Close floating window and return to normal layout
         vim.api.nvim_win_close(float_win, true)
@@ -35,5 +37,15 @@ local function toggle_float()
     })
 end
 
-keymap_set("n", "<leader>wf", toggle_float, "float-window")
-keymap_set("n", "<C-w>f", toggle_float, "float-window")
+function M.setup_keymaps()
+    keymap_set("n", "<leader>wf", M.toggle_float, "float-window")
+    keymap_set("n", "<C-w>f", M.toggle_float, "float-window")
+end
+
+function M.setup()
+    M.setup_keymaps()
+end
+
+M.setup()
+
+return M

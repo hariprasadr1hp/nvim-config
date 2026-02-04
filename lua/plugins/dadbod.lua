@@ -46,7 +46,7 @@ return {
         "DBUIFindBuffer",
     },
     keys = {
-        { "<leader>oq", "<cmd>DBUIToggle<CR>", desc = "DBUI" },
+        { "<leader>oq", "<cmd>DBUIToggle<cr>", desc = "DBUI" },
     },
     init = setup_dadbod_ui_init,
     config = function() end,

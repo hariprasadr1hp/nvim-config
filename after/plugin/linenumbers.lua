@@ -23,7 +23,7 @@ local colors = {
 
 local function set_normal_mode_colors()
     vim.api.nvim_set_hl(0, "LineNr", { fg = colors.red, bold = true })
-    vim.api.nvim_set_hl(0, "LineNrAbove", { fg = colors.yellowish_green })
+    vim.api.nvim_set_hl(0, "LineNrAbove", { fg = colors.green })
     vim.api.nvim_set_hl(0, "LineNrBelow", { fg = colors.green })
 end
 
@@ -82,7 +82,7 @@ vim.api.nvim_create_autocmd("ModeChanged", {
             set_terminal_mode_colors()
         elseif mode == "R" then
             set_replace_mode_colors()
-        elseif mode == "v" or "V" then
+        elseif mode == "v" or mode == "V" then
             set_visual_mode_colors()
         elseif mode == "c" then
             set_cmdline_mode_colors()

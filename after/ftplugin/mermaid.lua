@@ -1,12 +1,10 @@
 -- after/ftplugin/mermaid.lua
 
-local v = vim.opt_local
-
-v.tabstop = 2
-v.shiftwidth = 2
-v.expandtab = true
-v.wrap = true
-v.linebreak = true
+vim.opt_local.tabstop = 2
+vim.opt_local.shiftwidth = 2
+vim.opt_local.expandtab = true
+vim.opt_local.wrap = true
+vim.opt_local.linebreak = true
 
 -- local open_cmd = vim.fn.has("mac") == 1 and "open" or "xdg-open"
 --

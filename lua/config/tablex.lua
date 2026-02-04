@@ -19,10 +19,9 @@ local M = {}
 --- - If `sep` is empty (`""`), the string is split into individual characters.
 --- - If `sep` is omitted, `"\n"` is used.
 --- - Empty fields are not preserved (simple pattern-based split).
----
---- @param content string  String to split.
---- @param sep? string     Separator to split on, default: "\n".
---- @return string[]       Array of split parts.
+---@param content string  String to split.
+---@param sep? string     Separator to split on, default: "\n".
+---@return string[]       Array of split parts.
 function M.split(content, sep)
     if sep == "" then
         local t = {}
@@ -44,11 +43,10 @@ end
 
 --- Return a sorted copy of a list without mutating the original.
 --- Equivalent to Python's `sorted(values)`.
----
---- @generic T
---- @param values T[]                     Input list.
---- @param cmp? fun(a: T, b: T): boolean  Optional comparator for table.sort.
---- @return T[]                           New sorted list.
+---@generic T
+---@param values T[]                     Input list.
+---@param cmp? fun(a: T, b: T): boolean  Optional comparator for table.sort.
+---@return T[]                           New sorted list.
 function M.sorted(values, cmp)
     local new = {}
     for i = 1, #values do
@@ -59,10 +57,9 @@ function M.sorted(values, cmp)
 end
 
 --- Return a list with duplicate values removed, preserving first-seen order.
----
---- @generic T
---- @param t T[]     Input list.
---- @return T[]      Unique values.
+---@generic T
+---@param t T[]     Input list.
+---@return T[]      Unique values.
 function M.unique(t)
     local seen = {}
     local out = {}
@@ -77,11 +74,10 @@ end
 
 --- Return true if *any* element of the list satisfies `pred`.
 --- Equivalent to Python's `any(pred(x) for x in list)`.
----
---- @generic T
---- @param t T[]               Input list.
---- @param pred fun(v: T): boolean
---- @return boolean
+---@generic T
+---@param t T[]               Input list.
+---@param pred fun(v: T): boolean
+---@return boolean
 function M.any(t, pred)
     for _, v in ipairs(t) do
         if pred(v) then
@@ -93,11 +89,10 @@ end
 
 --- Return true if *all* list elements satisfy `pred`.
 --- Equivalent to Python's `all(...)`.
----
---- @generic T
---- @param t T[]
---- @param pred fun(v: T): boolean
---- @return boolean
+---@generic T
+---@param t T[]
+---@param pred fun(v: T): boolean
+---@return boolean
 function M.all(t, pred)
     for _, v in ipairs(t) do
         if not pred(v) then
@@ -114,11 +109,10 @@ end
 --- group_by({"a","bb","c"}, function(s) return #s end)
 --- -- { [1] = {"a","c"}, [2] = {"bb"} }
 --- ```
----
---- @generic T, K
---- @param t T[]                   Input list.
---- @param key_fn fun(v: T): K     Computes group key.
---- @return table<K, T[]>          Map of groups.
+---@generic T, K
+---@param t T[]                   Input list.
+---@param key_fn fun(v: T): K     Computes group key.
+---@return table<K, T[]>          Map of groups.
 function M.group_by(t, key_fn)
     local groups = {}
     for _, v in ipairs(t) do
@@ -134,10 +128,9 @@ function M.group_by(t, key_fn)
 end
 
 --- Shallow copy of a list (1-based array).
----
---- @generic T
---- @param t T[]
---- @return T[]
+---@generic T
+---@param t T[]
+---@return T[]
 function M.copy(t)
     local out = {}
     for i = 1, #t do
@@ -148,10 +141,9 @@ end
 
 --- Flatten a nested list structure recursively.
 --- Non-table values are collected as-is.
----
---- @generic T
---- @param t table     Nested list (array-like).
---- @return T[]        Flattened list.
+---@generic T
+---@param t table     Nested list (array-like).
+---@return T[]        Flattened list.
 function M.flatten(t)
     local out = {}
     local function rec(sub)
@@ -168,13 +160,12 @@ function M.flatten(t)
 end
 
 --- Slice a list, similar to Python's `list[start:stop:step]`.
----
---- @generic T
---- @param t T[]           Input list.
---- @param first? integer  Starting index (default: 1)
---- @param last? integer   Ending index inclusive (default: #t)
---- @param step? integer   Step increment (default: 1). Supports negative.
---- @return T[]
+---@generic T
+---@param t T[]           Input list.
+---@param first? integer  Starting index (default: 1)
+---@param last? integer   Ending index inclusive (default: #t)
+---@param step? integer   Step increment (default: 1). Supports negative.
+---@return T[]
 function M.slice(t, first, last, step)
     local out = {}
     local n = #t
@@ -190,10 +181,9 @@ end
 
 --- Enumerate list values, returning `{ index = i, value = v }` entries.
 --- Equivalent to Python's `enumerate(list)`.
----
---- @generic T
---- @param t T[]
---- @return { index: integer, value: T }[]
+---@generic T
+---@param t T[]
+---@return { index: integer, value: T }[]
 function M.tbl_enumerate(t)
     local out = {}
     for i, v in ipairs(t) do
@@ -204,11 +194,10 @@ end
 
 --- Zip two lists together into pairs.
 --- Stops at the shorter list length.
----
---- @generic A, B
---- @param a A[]
---- @param b B[]
---- @return { [1]: A, [2]: B }[]
+---@generic A, B
+---@param a A[]
+---@param b B[]
+---@return { [1]: A, [2]: B }[]
 function M.tbl_zip(a, b)
     local out = {}
     local n = math.min(#a, #b)

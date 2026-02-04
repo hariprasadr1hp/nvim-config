@@ -84,7 +84,7 @@ return {
         },
         config = setup_neotest_config,
         keys = {
-            { "<leader>cnn", "<cmd>Neotest summary<CR>", desc = "neotest-summary" },
+            { "<leader>cnn", "<cmd>Neotest summary<cr>", desc = "neotest-summary" },
         },
     },
 
@@ -97,7 +97,7 @@ return {
         "herisetiawan00/jtt.nvim",
         cmd = "JumpTest",
         keys = {
-            { "<leader>ct", "<cmd>JumpTest<CR>", desc = "test-file-toggle" },
+            { "<leader>ct", "<cmd>JumpTest<cr>", desc = "test-file-toggle" },
         },
         config = function()
             require("jtt").setup({

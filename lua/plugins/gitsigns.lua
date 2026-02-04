@@ -43,6 +43,7 @@ local function setup_on_attach()
         keymap_set("n", "<leader>gb", gitsigns.blame_line, "blame-line")
         keymap_set("n", "<leader>gB", gitsigns.blame, "blame")
         keymap_set("n", "<leader>gg", gitsigns.preview_hunk, "preview-hunk")
+        -- BUG: `hunks-to-quickfix` only add the current buffer's hunks to qf, not all
         keymap_set("n", "<leader>qh", gitsigns.setqflist, "hunks-to-quickfix")
         keymap_set("n", "<leader>qlh", gitsigns.setloclist, "hunks-to-quickfix")
         -- BUG: toggling git signs doesn't work once turned-off
@@ -123,7 +124,7 @@ return {
     opts = opts,
 }
 
--- TODO: git signs shouldn't intervene with the coloring of the line numbers
+-- BUG: git signs shouldn't intervene with the coloring of the line numbers
 
 -- TODO: functionality/keymap for unstaging hunks
 

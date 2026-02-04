@@ -4,6 +4,8 @@ if vim.g.vscode then
     return
 end
 
+local M = {}
+
 local keymap_set = require("config.helpers").keymap_set
 
 ---@param filepath (string | nil)
@@ -114,7 +116,7 @@ local function display_makefile_target(entries)
     })
 end
 
-local function make_fzf()
+function M.make_fzf()
     -- FIX: update makefile loading mechanism
     -- instead of extracting TS from buffer, use fpath
     -- therefore, no need for an active Makefile buffer
@@ -130,6 +132,19 @@ local function make_fzf()
 end
 
 -- TODO: Selection always on the last-run target, by default
-keymap_set("n", "<leader>mz", make_fzf, "make-fzf")
+function M.setup_commands()
+    vim.api.nvim_create_user_command("MakeFzf", M.make_fzf, {})
+end
 
-vim.api.nvim_create_user_command("MakeFzf", make_fzf, {})
+function M.setup_keymaps()
+    keymap_set("n", "<leader>mz", M.make_fzf, "make-fzf")
+end
+
+function M.setup()
+    M.setup_commands()
+    M.setup_keymaps()
+end
+
+M.setup()
+
+return M

@@ -1,9 +1,7 @@
 -- after/ftplugin/qf.lua
 
-local opt = vim.opt_local
-
-opt.spell = false
-opt.wrap = false
-opt.signcolumn = "no"
-opt.buflisted = false
-opt.winfixheight = true
+vim.opt_local.spell = false
+vim.opt_local.wrap = false
+vim.opt_local.signcolumn = "no"
+vim.opt_local.buflisted = false
+vim.opt_local.winfixheight = true

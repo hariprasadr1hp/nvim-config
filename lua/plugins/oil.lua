@@ -48,7 +48,7 @@ local opts = {
 
     keymaps = {
         ["g?"] = "actions.show_help",
-        ["<CR>"] = "actions.select",
+        ["<cr>"] = "actions.select",
         ["<C-s>"] = { "actions.select", opts = { vertical = true }, desc = "Open in vertical split" },
         ["<C-h>"] = { "actions.select", opts = { horizontal = true }, desc = "Open in horizontal split" },
         ["<C-t>"] = { "actions.select", opts = { tab = true }, desc = "Open in new tab" },
@@ -173,7 +173,7 @@ return {
     },
     cmd = "Oil",
     keys = {
-        { "<leader>oi", "<cmd>Oil --float<CR>", desc = "oil" },
+        { "<leader>oi", "<cmd>Oil --float<cr>", desc = "oil" },
     },
     config = setup_oil_config,
 }
