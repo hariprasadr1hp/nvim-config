@@ -35,7 +35,8 @@ local function setup_codecompanion_config()
 
                 opts = {
                     show_model_choices = true,
-                    show_presets = true,
+                    show_defaults = true,
+                    show_presets = false,
                 },
             },
 
@@ -51,6 +52,10 @@ local function setup_codecompanion_config()
                 opts = {
                     show_model_choices = true,
                     show_defaults = true,
+                    show_presets = false,
+                    --TODO: setting proxy
+                    -- https://codecompanion.olimorris.dev/configuration/adapters-http#setting-a-proxy
+                    -- FIX: an option to persist/copy current chat history while switching models/adapters
                 },
             },
         },
@@ -62,9 +67,23 @@ local function setup_codecompanion_config()
                     ---@type "ollama" | "claude_code" | "cursor" | "codex" | "opencode" | "xai" | "venice" | "gemini_cli" | "anthropic"
                     name = "ollama",
                     model = vim.env.OLLAMA_DEFAULT_SERVER_MODEL,
+                    opts = {
+                        completion_provider = "blink",
+                    },
+                },
+
+                roles = {
+                    llm = function(adapter)
+                        return string.format("LLM -- %s (%s)", adapter.model.name, string.upper(adapter.name))
+                    end,
+
+                    user = "USER",
                 },
 
                 keymaps = {
+                    fold_code = false,
+                    goto_file_under_cursor = false,
+                    copilot_stats = false,
                     next_chat = {
                         modes = { n = "]c" },
                         index = 11,
@@ -77,14 +96,18 @@ local function setup_codecompanion_config()
                         callback = "keymaps.previous_chat",
                         description = "Previous chat",
                     },
-                    fold_code = false,
-                    goto_file_under_cursor = false,
-                    copilot_stats = false,
                     super_diff = {
-                        modes = { n = "gk" },
+                        modes = { n = "gK" },
                         index = 22,
                         callback = "keymaps.super_diff",
                         description = "Show Super Diff",
+                    },
+                    change_model = {
+                        modes = { n = "gm" },
+                        description = "Change Model",
+                        callback = function(chat)
+                            require("codecompanion.interactions.chat.keymaps.change_adapter").select_model(chat)
+                        end,
                     },
                 },
 
@@ -161,8 +184,6 @@ local function setup_codecompanion_config()
                 name = "ollama",
                 model = vim.env.OLLAMA_DEFAULT_SERVER_MODEL,
             },
-
-            -- roles = {},
         },
 
         rules = {
@@ -210,10 +231,37 @@ local function setup_codecompanion_config()
 
         display = {
             chat = {
+                fold_context = true,
+                fold_reasoning = true,
+                hide_reasoning = true,
                 auto_scroll = true,
+                intro_message = "Welcome to CodeCompanion ✨! Press ? for options",
+                separator = "────────────────────────────────────────────────────", -- The separator between the different messages in the chat buffer
+                -- FIX: how to undo an attachment?
+                show_context = true,
+                show_header_separator = true, -- provided there is no external markdown rendering
+                show_settings = false, -- since setting true would disable `ga` (adapter change)                show_token_count = true, -- Show the token count for each response?
+                show_tools_processing = true, -- Show the loading message when tools are being executed?
+                start_in_insert_mode = false,
+                icons = {
+                    buffer_sync_all = "󰪴 ",
+                    buffer_sync_diff = " ",
+                    chat_context = " ",
+                    chat_fold = " ",
+                    tool_pending = "  ",
+                    tool_in_progress = "  ",
+                    tool_failure = "  ",
+                    tool_success = "  ",
+                },
                 floating_window = {
-                    width = vim.o.columns - 5,
-                    height = vim.o.lines - 2,
+                    ---@return number|fun(): number
+                    width = function()
+                        return vim.o.columns - 5
+                    end,
+                    ---@return number|fun(): number
+                    height = function()
+                        return vim.o.lines - 2
+                    end,
                     row = "center",
                     col = "center",
                     relative = "editor",
@@ -227,6 +275,7 @@ local function setup_codecompanion_config()
                     -- layout = "float",
                     layout = "buffer",
                     position = "right",
+                    buflisted = true,
                     sticky = false,
                     relative = "editor",
                     height = 0.9,
@@ -245,6 +294,7 @@ local function setup_codecompanion_config()
                     },
                 },
             },
+
             inline = {
                 layout = "buffer",
             },

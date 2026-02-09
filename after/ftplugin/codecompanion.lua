@@ -1,44 +1,49 @@
 -- after/ftplugin/codecompanion.lua
 
 _G.companion_buf_list = _G.companion_buf_list or {}
+_G.codecompanion_chat_metadata = _G.codecompanion_chat_metadata or {}
 
-local function set_header_str(bufnr)
-    -- Use buffer-scoped vars for this specific buffer
-    local b = vim.b[bufnr] or {}
-
-    local session_type = b.codecompanion_session_type or "General"
-    local session_model = b.codecompanion_model or "Unknown"
-
-    local header = {
-        "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓",
-        "┃  Code Companion                    ┃",
-        "┠────────────────────────────────────┨",
-        "┃ Session Type : " .. "",
-        "┃ Model        : " .. "",
-        "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛",
-        "",
-    }
-
-    -- Make sure buffer is modifiable while we write
-    local was_modifiable = vim.bo[bufnr].modifiable
-    if not was_modifiable then
-        vim.bo[bufnr].modifiable = true
-    end
-
-    -- Insert at the top of the buffer
-    vim.api.nvim_buf_set_lines(bufnr, 0, 0, false, header)
-
-    -- Restore original modifiable state
-    if not was_modifiable then
-        vim.bo[bufnr].modifiable = false
-    end
-end
+-- local function set_header_str(bufnr)
+--     -- Use buffer-scoped vars for this specific buffer
+--     local b = vim.b[bufnr] or {}
+--
+--     local session_type = b.codecompanion_session_type or "General"
+--     local session_model = b.codecompanion_model or "Unknown"
+--
+--     local adapter = _G.codecompanion_chat_metadata[bufnr].adapter
+--
+--     local model = string.format("%s (%s)", adapter.model, adapter.name)
+--
+--     local header = {
+--         "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓",
+--         "┃  Code Companion                                       ┃",
+--         "┠───────────────────────────────────────────────────────┨",
+--         "┃ Session Type : " .. "",
+--         "┃ Default Model: " .. model,
+--         "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛",
+--         "",
+--     }
+--
+--     -- Make sure buffer is modifiable while we write
+--     local was_modifiable = vim.bo[bufnr].modifiable
+--     if not was_modifiable then
+--         vim.bo[bufnr].modifiable = true
+--     end
+--
+--     -- Insert at the top of the buffer
+--     vim.api.nvim_buf_set_lines(bufnr, 0, 0, false, header)
+--
+--     -- Restore original modifiable state
+--     if not was_modifiable then
+--         vim.bo[bufnr].modifiable = false
+--     end
+-- end
 
 -- Autocmd: run AFTER CodeCompanion has created/opened the chat buffer
-local group = vim.api.nvim_create_augroup("CompanionHeader", { clear = true })
+local companion_header_group = vim.api.nvim_create_augroup("CompanionHeader", { clear = true })
 
 vim.api.nvim_create_autocmd("User", {
-    group = group,
+    group = companion_header_group,
     pattern = { "CodeCompanionChatCreated", "CodeCompanionChatOpened" },
     callback = function(ev)
         local bufnr = ev.buf
@@ -58,7 +63,7 @@ vim.api.nvim_create_autocmd("User", {
                 return
             end
 
-            set_header_str(bufnr)
+            -- set_header_str(bufnr)
         end)
     end,
 })

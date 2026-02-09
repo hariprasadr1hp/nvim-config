@@ -367,10 +367,11 @@ local function setup_blink_config()
         "emoji",
         "codeium",
         "env",
+        "lazydev",
     }
 
     opts.sources.per_filetype = {
-        markdown = { "snippets", "path", "git", "emoji", "buffer" },
+        markdown = { "snippets", "path", "git", "emoji", "buffer", "nerdfont", "latex" },
         sql = { "snippets", "dadbod", "buffer" },
         oil = { "path", "buffer" },
         codecompanion = { "codecompanion" },
@@ -378,8 +379,6 @@ local function setup_blink_config()
     }
 
     opts.sources.providers = {}
-
-    --TODO: all text completion for markdown files
 
     opts.sources.providers.lsp = {
         name = "LSP",
@@ -443,7 +442,7 @@ local function setup_blink_config()
         score_offset = 15,
         opts = { insert = true },
         should_show_items = function()
-            return vim.tbl_contains({ "gitcommit", "markdown" }, vim.o.filetype)
+            return vim.tbl_contains({ "octo", "gitcommit", "markdown" }, vim.bo.filetype)
         end,
     }
 
@@ -452,8 +451,23 @@ local function setup_blink_config()
         name = "Git",
         opts = {},
         should_show_items = function()
-            return vim.tbl_contains({ "gitcommit", "markdown" }, vim.o.filetype)
+            return vim.tbl_contains({ "octo", "gitcommit", "markdown" }, vim.bo.filetype)
         end,
+    }
+
+    opts.sources.providers.latex = {
+        name = "Latex",
+        module = "blink-cmp-latex",
+        opts = {
+            -- set to true to insert the latex command instead of the symbol
+            insert_command = false,
+        },
+    }
+
+    opts.sources.providers.lazydev = {
+        name = "LazyDev",
+        module = "lazydev.integrations.blink",
+        score_offset = 100,
     }
 
     opts.sources.providers.omni = {
@@ -461,7 +475,6 @@ local function setup_blink_config()
         enabled = function()
             return vim.bo.omnifunc ~= "v:lua.vim.lsp.omnifunc"
         end,
-        ---@type blink.cmp.CompleteFuncOpts
         opts = {
             complete_func = function()
                 return vim.bo.omnifunc
@@ -485,6 +498,16 @@ local function setup_blink_config()
             item_kind = blink_cmp_types.CompletionItemKind.Variable,
             show_braces = false,
             show_documentation_window = true,
+        },
+    }
+
+    opts.sources.providers.nerdfont = {
+        module = "blink-nerdfont",
+        name = "Nerd Fonts",
+        score_offset = 15, -- Tune by preference
+        opts = {
+            insert = true, -- Insert nerdfont icon (default) or complete its name
+            trigger = ":", -- Customize the trigger. Defaults to ":"
         },
     }
 
@@ -524,6 +547,9 @@ return {
             { "moyiz/blink-emoji.nvim" },
             { "bydlw98/blink-cmp-env" },
             { "Kaiser-Yang/blink-cmp-git" },
+            { "folke/lazydev.nvim" },
+            { "MahanRahmati/blink-nerdfont.nvim" },
+            { "erooke/blink-cmp-latex" },
         },
         version = "1.*",
         config = setup_blink_config,

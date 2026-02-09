@@ -43,7 +43,6 @@ local opts = {
     require("plugins.cloak"),
     require("plugins.notify"),
     require("plugins.git"),
-    require("plugins.snapshot"),
     require("plugins.dashboard"),
     require("plugins.oil"),
     require("plugins.overseer"),
@@ -52,6 +51,8 @@ local opts = {
     require("plugins.trouble"),
     require("plugins.sessions"),
     require("plugins.roam"),
+    require("plugins.spinner"),
+    require("plugins.snapshot"),
     require("plugins.colors"),
 
     require("plugins.ai.mcphub"),
@@ -85,3 +86,7 @@ vim.keymap.set("n", "<leader>oL", ":Lazy<cr>", { noremap = true, silent = true, 
 -- nosduco/remote-sshfs.nvim
 -- esmuellert/codediff.nvim
 -- linux-cultist/venv-selector.nvim
+-- pwntester/octo.nvim
+-- ThePrimeagen/99
+-- milanglacier/minuet-ai.nvim
+-- LionyxML/gitlineage.nvim

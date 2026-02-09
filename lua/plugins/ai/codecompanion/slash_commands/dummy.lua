@@ -14,8 +14,8 @@ end
 
 ---@return nil
 function SlashCommand:execute()
-    local Chat = self.Chat
-    Chat:add_buf_message({ content = "This is a test prompt" })
+    local chat = self.Chat
+    chat:add_buf_message({ content = "This is a test prompt" })
 end
 
 return SlashCommand

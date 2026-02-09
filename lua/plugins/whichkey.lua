@@ -262,6 +262,7 @@ local key_maps = {
         { "<leader>g", group = "git+", nowait = false, remap = false },
 
         -- [H]UNK ------------------
+        { "<leader>h", group = "help+", nowait = false, remap = false },
         { "<leader>hh", group = "hunk+", nowait = false, remap = false },
 
         -- [S]EARCH -------------

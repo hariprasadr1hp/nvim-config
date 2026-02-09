@@ -94,6 +94,7 @@ keymap_set("n", "<leader>jk", ":tabclose<cr>", "kill-tab")
 keymap_set("n", "<leader>jl", ":+tabmove<cr>", "move-right")
 keymap_set("n", "<leader>jL", ":tablast<cr>", "last-tab")
 keymap_set("n", "<leader>jn", ":tabnew<cr>", "new-tab")
+keymap_set("n", "<leader>jo", ":tabonly<cr>", "only-current-tab")
 keymap_set("n", "<leader>jO", ":tabonly<cr>", "only-current-tab")
 
 keymap_set("n", "<leader>l0", vim.lsp.buf.outgoing_calls, "lsp-incoming-calls")
@@ -243,8 +244,12 @@ keymap_set("n", "<leader>w|", ":wincmd <<cr>", "max-out-width")
 keymap_set("n", "<leader>xm", ":messages clear<cr>", "clear-messages")
 -------------------------------------------------------------------
 --- VISUAL MODE
-keymap_set("x", "<leader>tG", "g?", "gibberish-rot13")
+-- TODO: do git operation for visual-select, not hunks
+-- keymap_set("x", "<leader>gs", "", "stage-select")
+-- keymap_set("x", "<leader>gu", "", "unstage-select")
+-- keymap_set("x", "<leader>gR", "", "git-reset-select")
 keymap_set("x", "<leader>sq", HP.SaveVisualSelection, "save-vselect-as-file")
+keymap_set("x", "<leader>tG", "g?", "gibberish-rot13")
 
 -- SANE DEFAULTS
 -------------------------------------------------------------------

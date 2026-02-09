@@ -39,6 +39,16 @@
     "description": "code snippet for python"
   },
 
+  "srcq": {
+    "prefix": "srcq",
+    "body": [
+      "```sql",
+      "$0",
+      "```"
+    ],
+    "description": "code snippet for sql"
+  },
+
   "srcy": {
     "prefix": "srcy",
     "body": [

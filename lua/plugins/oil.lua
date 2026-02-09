@@ -179,9 +179,7 @@ return {
 }
 
 -- TODO: date in ISO format
-
 -- TODO: a keybinding to view file stats (access/modified/created etc.,)
-
 -- TODO: add a keybinding to default to the original file location
-
+-- TODO: support marks like `dired`?
 -- LEARN: how to open/manage 2 oil buffer besides?

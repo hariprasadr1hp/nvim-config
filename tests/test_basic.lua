@@ -1,6 +1,7 @@
 -- tests/test_basic.lua
 
-local T = MiniTest.new_set()
+local minitest = require("mini.test")
+local T = minitest.new_set()
 
 T["works"] = function()
     local x = 1 + 1

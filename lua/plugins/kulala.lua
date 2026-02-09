@@ -210,7 +210,6 @@ local function setup_kulala_config()
                 require("kulala.ui.auth_manager").open_auth_config,
                 ft = { "http", "rest" },
             },
-            ["run-all-requests"] = { "<leader>;a", kulala.run_all, ft = { "http", "rest" }, mode = { "n", "v" } },
             ["copy-as-curl"] = { "<leader>;c", kulala.copy, ft = { "http", "rest" } },
             ["paste-from-curl"] = { "<leader>;C", kulala.from_curl, ft = { "http", "rest" } },
             ["select-env"] = { "<leader>;e", kulala.set_selected_env, ft = { "http", "rest" } },
@@ -247,6 +246,7 @@ local function setup_kulala_config()
                 ft = { "http", "rest" },
             },
             ["run-current-request"] = { "<leader>;r", kulala.run, ft = { "http", "rest" }, mode = { "n", "v" } },
+            ["run-all-requests"] = { "<leader>;R", kulala.run_all, ft = { "http", "rest" }, mode = { "n", "v" } },
             ["terminate-current-request"] = {
                 "<leader>;t",
                 kulala_ui.interrupt_requests,

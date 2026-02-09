@@ -6,7 +6,7 @@ local opts = {
     enable_cmp_source = true,
 
     virtual_text = {
-        enabled = true,
+        enabled = false,
         manual = false,
         filetypes = {
             bash = false,
@@ -20,7 +20,7 @@ local opts = {
             accept = "<C-g>",
             accept_word = nil,
             accept_line = nil,
-            clear = "<C-x>",
+            clear = "<C-k>",
             next = "<M-]>",
             prev = "<M-[>",
         },
@@ -59,9 +59,8 @@ return {
         },
         cmd = { "Codeium" },
         keys = function()
-            local codeium = require("codeium")
             return {
-                { "<leader>ta", codeium.toggle, "ai-completion" },
+                { "<leader>ta", "Codeium Toggle", "ai-completion" },
             }
         end,
         config = setup_windsurf_config,
