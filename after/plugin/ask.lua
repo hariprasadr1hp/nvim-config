@@ -93,4 +93,4 @@ function HP.ask_ai()
     end)
 end
 
-keymap_set("x", "<leader>aq", HP.ask_ai, "ask-ai")
+keymap_set("x", "<leader>ab", HP.ask_ai, "browse-ai")

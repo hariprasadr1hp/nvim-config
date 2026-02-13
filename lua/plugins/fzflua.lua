@@ -60,9 +60,9 @@ local keymap = {
         ["<F8>"] = "preview-ts-ctx-dec",
         ["<F9>"] = "preview-ts-ctx-inc",
 
-        ["<M-p>"] = "toggle-preview-cw",
-        ["<M-S-p>"] = "toggle-preview-ccw",
-        ["<M-t>"] = "toggle-preview",
+        ["<M-p>"] = "toggle-preview",
+        ["<M-t>"] = "toggle-preview-cw",
+        ["<M-S-t>"] = "toggle-preview-ccw",
         ["<M-/>"] = "toggle-help",
     },
 
@@ -76,6 +76,8 @@ local keymap = {
         ["alt-a"] = "toggle-all",
         ["alt-g"] = "first",
         ["alt-G"] = "last",
+        ["alt-j"] = "preview-page-down",
+        ["alt-k"] = "preview-page-up",
         ["alt-t"] = "toggle-preview",
         ["f3"] = "toggle-preview-wrap",
         ["f4"] = "toggle-preview",
@@ -101,7 +103,7 @@ local function setup_actions(actions)
             ["ctrl-s"] = actions.file_split,
             ["ctrl-t"] = actions.file_tabedit,
             ["ctrl-v"] = actions.file_vsplit,
-            ["ctrl-y"] = function(selected)
+            ["ctrl-y"] = function(selected) -- yank result
                 vim.fn.setreg("*", selected[1])
             end,
         },
@@ -109,6 +111,7 @@ local function setup_actions(actions)
 end
 
 local fzf_opts = {
+    ["--multi"] = true,
     ["--ansi"] = true,
     ["--info"] = "inline-right",
     ["--height"] = "100%",
@@ -184,7 +187,11 @@ local function setup_fzflua_keymaps()
     keymap_set("n", "gr", fzflua.lsp_references, "lsp-references")
     keymap_set("n", "gI", fzflua.lsp_implementations, "lsp-implementations")
 
+    -- TODO: `<leader>;z` to file-search only of filetype, same as the current file
+    -- TODO: `<leader>;Z` to text-search in files of filetype, same as the current file
+
     keymap_set("n", "<leader>.", fzflua.files, "files")
+    keymap_set("n", "<leader>agz", fzflua.args, "fzf-args")
     keymap_set("n", "<leader>bz", fzflua.grep_curbuf, "fzf-buffer-contents")
 
     keymap_set("n", "<leader>cF", fzflua.filetypes, "filetypes")
@@ -216,15 +223,18 @@ local function setup_fzflua_keymaps()
     keymap_set("n", "<leader>gc", fzflua.git_commits, "commits")
     keymap_set("n", "<leader>gf", fzflua.git_bcommits, "buffer-commits")
     keymap_set("n", "<leader>gF", fzflua.git_files, "Files")
-    keymap_set("n", "<leader>gS", fzflua.git_stash, "Stashes")
-    keymap_set("n", "<leader>gT", fzflua.git_tags, "Tags")
     keymap_set("n", "<leader>ghw", function()
         fzflua.files({ cwd = "./.github/workflows" })
     end, "gh-workflows")
+    keymap_set("n", "<leader>gld", fzflua.git_diff, "last-commit-diffs")
+    keymap_set("n", "<leader>gS", fzflua.git_stash, "Stashes")
+    keymap_set("n", "<leader>gT", fzflua.git_tags, "Tags")
+    keymap_set("n", "<leader>gW", fzflua.git_worktrees, "Worktrees")
     keymap_set("n", "<leader>gy", fzflua.git_branches, "branches")
     keymap_set("n", "<leader>g.", fzflua.git_files, "files")
 
     keymap_set("n", "<leader>hf", fzflua.builtin, "builtins")
+    keymap_set("n", "<leader>hhz", fzflua.git_hunks, "git-hunks")
     keymap_set("n", "<leader>hk", fzflua.keymaps, "keymaps")
     keymap_set("n", "<leader>ht", fzflua.colorschemes, "themes")
 
@@ -276,13 +286,16 @@ local function setup_fzflua_keymaps()
     keymap_set("n", "<leader>z2", fzflua.registers, "registers")
     keymap_set("n", "<leader>z@", fzflua.registers, "registers")
     keymap_set("n", "<leader>za", fzflua.autocmds, "autocmds")
-    keymap_set("n", "<leader>zb", fzflua.buffers, "buffers")
+    keymap_set("n", "<leader>zb", fzflua.blines, "buffer-lines")
+    keymap_set("n", "<leader>zc", fzflua.commands, "user-commands")
     keymap_set("n", "<leader>zd", fzflua.dap_commands, "dap-commands")
     keymap_set("n", "<leader>zf", fzflua.filetypes, "filetypes")
     keymap_set("n", "<leader>zF", function()
         fzflua.files({ cwd = "~/my/sample/filetypes/" })
     end, "sample-lang-files")
-    keymap_set("n", "<leader>zg", fzflua.git_status, "git-status")
+    keymap_set("n", "<leader>zgb", fzflua.git_blame, "git-blame")
+    keymap_set("n", "<leader>zgd", fzflua.git_diff, "git-last-diff")
+    keymap_set("n", "<leader>zgg", fzflua.git_status, "git-status")
     keymap_set("n", "<leader>zh", fzflua.help_tags, "help-tags")
     keymap_set("n", "<leader>zj", fzflua.jumps, "jumps")
     keymap_set("n", "<leader>zl", fzflua.loclist, "llist")
@@ -296,8 +309,8 @@ local function setup_fzflua_keymaps()
     keymap_set("n", "<leader>zu", fzflua.undotree, "undo-tree")
     keymap_set("n", "<leader>zv", fzflua.commands, "vim-commands")
     keymap_set("n", "<leader>zV", fzflua.command_history, "vim-command-history")
-    keymap_set("n", "<leader>zx", fzflua.resume, "resume")
-    --TODO: a toggling option for hidden/ignore files on live-grep
+    keymap_set("n", "<leader>zw", fzflua.lines, "workspace")
+    keymap_set("n", "<leader>zx", fzflua.resume, "fzf-resume")
     keymap_set("n", "<leader>zz", function()
         fzflua.live_grep({ cwd = ".", resume = true })
     end, "live-grep")

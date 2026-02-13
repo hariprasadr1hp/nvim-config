@@ -174,8 +174,15 @@ vim.o.undofile = true
 -- DICTIONARY
 -------------------------------------------------------------------
 -- set a dictionary file
+
 vim.o.spelllang = "en"
-vim.o.dictionary = "/usr/share/dict/american-english"
+local os = require("config.helpers").get_os()
+
+if os == "macos" then
+    vim.o.dictionary = "/usr/share/dict/words"
+else
+    vim.o.dictionary = "/usr/share/dict/american-english"
+end
 
 -- STARTUP
 -------------------------------------------------------------------

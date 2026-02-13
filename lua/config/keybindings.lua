@@ -1,6 +1,7 @@
 -- lua/keybindings.lua
 
 local helpers = require("config.helpers")
+local tblx = require("core.tablex")
 
 local config_dir = vim.fn.stdpath("config")
 local data_dir = vim.fn.stdpath("data")
@@ -11,6 +12,39 @@ local keymap_set = require("config.helpers").keymap_set
 -------------------------------------------------------------------
 --- NORMAL MODE
 keymap_set("n", "<leader>;;", ":set ft?<cr>", "filetype")
+
+keymap_set("n", "<leader>ag;", function()
+    local ext = vim.fn.expand("%:e")
+    local cmd = string.format("arga **/*.%s | arga *.%s", ext, ext)
+    vim.cmd(cmd)
+end, "argadd-current-ft-files")
+
+keymap_set("n", "<leader>ag:", function()
+    local ext = vim.fn.expand("%:e")
+    local cmd = string.format("argd *.%s", ext)
+    vim.cmd(cmd)
+end, "argdel-current-ft-files")
+
+keymap_set("n", "<leader>aga", ":argadd %<cr>", "argadd-cfile")
+-- TODO: keymap_set("n", "<leader>agc", "", "cmd-to-argsadd")
+-- TODO: keymap_set("n", "<leader>agC", "", "cmd-to-argsdel")
+keymap_set("n", "<leader>agd", ":argdelete %<cr>", "argdel-cfile")
+keymap_set("n", "<leader>agf", ":argdelete %<cr>", "argadd-by-ft")
+-- TODO: keymap_set("n", "<leader>agg", "", "argdo")
+
+keymap_set("n", "<leader>agq", function()
+    local qf = vim.fn.getqflist()
+    local buflist = vim.tbl_map(function(item)
+        return vim.api.nvim_buf_get_name(item.bufnr)
+    end, qf)
+    vim.api.nvim_cmd({ cmd = "arga", args = tblx.unique(buflist) }, {})
+end, "argadd-qf-files")
+
+--TODO: keymap_set("n", "<leader>agQ", "", "argdel-qf-files")
+
+-- TODO: keymap_set("n", "<leader>agQ", "", "argdelete-qf-files")
+keymap_set("n", "<leader>agu", ":argdedupe<cr>", "unique-args")
+keymap_set("n", "<leader>agx", ":argdelete *<cr>", "clear-args")
 
 keymap_set("n", "<leader>b0", ":bfirst<cr>", "first-buffer")
 keymap_set("n", "<leader>b1", ":1bnext<cr>", "buffer-1")
@@ -68,7 +102,9 @@ keymap_set("n", "<leader>fX", ":! rm -f " .. data_dir .. "/undodir/*<cr>", "dele
 keymap_set("n", "<leader>gC", ":e .git/config<cr>", ".git/config")
 keymap_set("n", "<leader>gE", ":e .git/info/exclude<cr>", ".git/info/exclude")
 keymap_set("n", "<leader>gi", ":e .gitignore<cr>", ".gitignore")
+--TODO: `<leader>gly` to yank the last commit
 
+keymap_set("n", "<leader>hc", ":checkhealth config<cr>", "check-config-health")
 keymap_set("n", "<leader>hrr", ":echo '`emacs` command 🫠'<cr>", "n/a")
 keymap_set("n", "<leader>hs", vim.lsp.buf.signature_help, "lsp-signature-help")
 
@@ -185,6 +221,7 @@ keymap_set("n", "<leader>qlq", function()
 end, "loclist-to-quickfix")
 keymap_set("n", "<leader>qlx", function()
     vim.fn.setloclist(0, {})
+    vim.cmd("lclose")
 end, "clear-loclist")
 
 keymap_set("n", "<leader>qo", ":copen<cr>", "open-quickfix")
@@ -192,8 +229,10 @@ keymap_set("n", "<leader>qr", ":echo '`emacs` command 🫠'<cr>", "n/a")
 -- TODO: keymap_set("n", "<leader>qv", "", "visual-select-to-qf")
 keymap_set("n", "<leader>qx", function()
     vim.fn.setqflist({})
+    vim.cmd("cclose")
 end, "clear-quickfix")
 
+keymap_set("n", "<leader>rf", ":edit!<cr>", "reload-file")
 keymap_set("n", "<leader>rp", ":UpdateRemotePlugins<cr>", "remote-plugins-reload")
 keymap_set("n", "<leader>sp", "/\\%V", "pattern-in-visual-select")
 
@@ -302,6 +341,12 @@ keymap_set("x", "<leader>sv", [[y/\V<C-R>=escape(@", '/\')<cr><cr>]], "search-se
 
 -- JUMPS
 -------------------------------------------------------------------
+-- [a] args chain
+keymap_set("n", "[a", ":prev<cr>", "prev-arg")
+keymap_set("n", "]a", ":next<cr>", "next-arg")
+keymap_set("n", "[A", ":first<cr>", "first-arg")
+keymap_set("n", "]A", ":last<cr>", "last-arg")
+
 -- [b] buffer chain
 keymap_set("n", "[b", ":bprevious<cr>", "prev-buffer")
 keymap_set("n", "]b", ":bnext<cr>", "next-buffer")
@@ -432,7 +477,7 @@ keymap_set("i", "<M-s>", "<C-c>:update<cr>")
 
 -- CLIPBOARD
 -------------------------------------------------------------------
--- format: <leader> (+) [a]ction (+) {{ [c]opy | [x]cut | [v]paste }} (+) register
+-- format: <leader> (+) [a]ction (+) {{ [c]opy | [x]cut | [v]paste [q]macro-replay }} (+) register
 -- ex: `<leader>acf` copies (c) contents to the register `f`
 
 -- Basic mappings
@@ -468,6 +513,10 @@ do
     keymap_set("v", "<leader>a" .. "x" .. r, '"' .. r .. "d")
     keymap_set("n", "<leader>a" .. "v" .. r, '"' .. r .. "P")
     keymap_set("v", "<leader>a" .. "v" .. r, '"' .. r .. "P")
+
+    -- Replay as macros
+    keymap_set("n", "<leader>a" .. "q" .. r, ":norm @" .. r .. "<cr>")
+    keymap_set("v", "<leader>a" .. "q" .. r, ":norm @" .. r .. "<cr>")
 end
 
 ------------------------------------------------------------------

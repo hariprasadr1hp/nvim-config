@@ -83,6 +83,7 @@ local function setup_mini_hipatterns_config()
         else
             highlighters.hex_color = nil
         end
+        vim.cmd("edit!")
     end, {
         desc = "toggle-hex-color-highlight",
     })

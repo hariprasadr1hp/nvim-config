@@ -74,7 +74,12 @@ local function setup_codecompanion_config()
 
                 roles = {
                     llm = function(adapter)
-                        return string.format("LLM -- %s (%s)", adapter.model.name, string.upper(adapter.name))
+                        local model = adapter.model or "unknown"
+                        return string.format(
+                            "LLM -- %s (%s)",
+                            model.name or "unknown",
+                            string.upper(adapter.name) or "UNKNOWN"
+                        )
                     end,
 
                     user = "USER",
@@ -231,18 +236,19 @@ local function setup_codecompanion_config()
 
         display = {
             chat = {
-                fold_context = true,
+                fold_context = false,
                 fold_reasoning = true,
-                hide_reasoning = true,
+                hide_reasoning = false,
                 auto_scroll = true,
                 intro_message = "Welcome to CodeCompanion ✨! Press ? for options",
-                separator = "────────────────────────────────────────────────────", -- The separator between the different messages in the chat buffer
+                separator = "────────────────────────",
                 -- FIX: how to undo an attachment?
                 show_context = true,
-                show_header_separator = true, -- provided there is no external markdown rendering
-                show_settings = false, -- since setting true would disable `ga` (adapter change)                show_token_count = true, -- Show the token count for each response?
-                show_tools_processing = true, -- Show the loading message when tools are being executed?
-                start_in_insert_mode = false,
+                show_header_separator = true,
+                show_settings = false, -- since setting true would disable `ga` (adapter change)
+                show_token_count = true,
+                show_tools_processing = true,
+                start_in_insert_mode = true,
                 icons = {
                     buffer_sync_all = "󰪴 ",
                     buffer_sync_diff = " ",

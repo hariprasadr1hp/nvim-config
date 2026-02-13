@@ -1,9 +1,9 @@
 -- lua/config/user_commands.lua
 
 local helpers = require("config.helpers")
+local textx = require("core.textx")
 
 local user_cmd = vim.api.nvim_create_user_command
-local autocmd = vim.api.nvim_create_autocmd
 
 -- USER-COMMANDS
 ------------------------------------------------------------------------------------------------
@@ -31,10 +31,6 @@ user_cmd("DoesItComeInBlack", function()
     vim.api.nvim_set_hl(0, "Normal", { bg = "#000000" })
 end, { desc = "sets the background color to black" })
 
-vim.api.nvim_create_user_command("WriteVisualSelectionAsTempFile", function()
-    HP.SaveVisualSelection()
-end, { range = true, desc = "write the visual selection to `~/.temp/zz_*`" })
-
 user_cmd("GetFilePath", function()
     print(vim.fn.expand("%:p"))
 end, {})
@@ -51,4 +47,16 @@ user_cmd("GetFileExt", function()
     print(vim.fn.expand("%:e"))
 end, {})
 
-vim.api.nvim_create_user_command("ToggleAutocmdDebug", helpers.toggle_autocmd_debug, {})
+-- Sort lines by character count (line length).
+-- Usage:
+--   :SortWC            -> whole buffer, shortest -> longest
+--   :SortWC!           -> whole buffer, longest  -> shortest
+--   :'<,'>SortWC       -> visual/range, shortest -> longest
+--   :'<,'>SortWC!      -> visual/range, longest  -> shortest
+user_cmd("SortWC", textx.sort_wc, {
+    range = true,
+    bang = true,
+    desc = "Sort lines by character count (length)",
+})
+
+user_cmd("ToggleAutocmdDebug", helpers.toggle_autocmd_debug, {})
