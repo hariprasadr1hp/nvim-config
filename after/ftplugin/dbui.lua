@@ -1,27 +1,24 @@
 -- after/ftplugin/dbui.lua
 
-vim.opt.cursorline = true
+local keymap_set = require("config.helpers").keymap_set
+local ftplugin_helpers = require("core.ftplugin_helpers")
 
-vim.keymap.set("n", "<Tab>", "<Plug>(DBUI_SelectLine)", { buffer = true, silent = true })
-
--- Set initial window highlight
-vim.wo.winhighlight = "Normal:DBUIWindowBg"
-
--- Set up dynamic highlight for focus
-vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
-    buffer = 0,
-    callback = function()
-        vim.wo.winhighlight = "Normal:DBUIActiveWindowBg"
-    end,
-})
-
-vim.api.nvim_create_autocmd("WinLeave", {
-    buffer = 0,
-    callback = function()
-        vim.wo.winhighlight = "Normal:DBUIWindowBg"
-    end,
+-- Setup reversible filetype-specific settings
+ftplugin_helpers.setup_reversible_settings("dbui", {
+    win_opts = {
+        cursorline = true,
+    },
+    winhighlight = {
+        active = "Normal:DBUIActiveWindowBg",
+        inactive = "Normal:DBUIWindowBg",
+    },
 })
 
 -- Define highlight groups (use `default`, to not override plugin themes)
 -- vim.cmd("highlight default DBUIWindowBg guibg=#2a2e36")
 -- vim.cmd("highlight default DBUIActiveWindowBg guibg=#3b4252")
+
+-- Buffer-local keymaps
+vim.keymap.set("n", "<Tab>", "<Plug>(DBUI_SelectLine)", { buffer = true, silent = true })
+keymap_set("n", "<leader>;l", ":DBUILastQueryInfo<cr>", "dbui-last-query-info", { buffer = true })
+keymap_set("n", "<leader>xq", ":DBUIHideNotifications<cr>", "dbui-hide-notifications", { buffer = true })

@@ -10,8 +10,15 @@ return {
             tag = "0.7.0",
             ft = { "org" },
             config = function()
+                -- FIX: do not hijack angular brackets functionality
                 require("orgmode").setup({
                     org_agenda_files = vim.env.ORG_DIR .. "/agenda",
+                    mappings = {
+                        global = {
+                            org_agenda = false,
+                            org_capture = false,
+                        },
+                    },
                 })
             end,
         },

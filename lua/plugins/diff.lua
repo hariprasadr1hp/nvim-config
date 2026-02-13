@@ -602,9 +602,4 @@ return {
         },
         config = setup_diffview_config,
     },
-    {
-        "echasnovski/mini.diff",
-        version = false,
-        opts = {},
-    },
 }

@@ -203,7 +203,7 @@ local function setup_fzflua_keymaps()
     keymap_set("n", "<leader>dv", fzflua.dap_variables, "dap-variables")
     keymap_set("n", "<leader>dz", fzflua.dap_commands, "dap-commands")
 
-    keymap_set("n", "<leader>fc", function()
+    keymap_set("n", "<leader>fC", function()
         fzflua.files({ cwd = vim.env.ORG_DIR .. "/http" })
     end, "http-collections")
     keymap_set("n", "<leader>ff", fzflua.oldfiles, "recent-files")

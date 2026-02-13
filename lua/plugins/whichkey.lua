@@ -143,7 +143,7 @@ local key_maps = {
         { "<leader>0", "0", desc = "^", nowait = false, remap = false },
         { "<leader>9", "$", desc = "$", nowait = false, remap = false },
 
-        -- LOCAL
+        -- FILETYPE
         { "<leader>;", group = "filetype+", nowait = false, remap = false },
 
         -- [A]CTION ----------------
@@ -255,6 +255,9 @@ local key_maps = {
     --- VISUAL MODE
     {
         mode = "v",
+        -- FILETYPE
+        { "<leader>;", group = "filetype+", nowait = false, remap = false },
+
         -- [A]CTION ----------------
         { "<leader>a", group = "action+", nowait = false, remap = false },
         { "<leader>ac", group = "copy+", nowait = false, remap = false },

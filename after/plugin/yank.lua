@@ -46,7 +46,7 @@ function M.yank_to_register(text, reg)
     vim.fn.setreg(reg, text)
     -- Also set to unnamed register for easier pasting
     vim.fn.setreg('"', text)
-    vim.notify(("Yanked virtual text to register %s"):format(reg), vim.log.levels.INFO)
+    vim.notify(("Yanked text to register %s"):format(reg), vim.log.levels.INFO)
 end
 
 --- Get the comment string for the current buffer's filetype
@@ -197,11 +197,20 @@ function M.setup_commands()
 end
 
 function M.setup_keymaps()
-    keymap_set("n", "<leader>ye", "<cmd>YankExtMark<cr>", "yank-extmark")
-    keymap_set("n", "<leader>yE", "<cmd>YankActualAndExtMark<cr>", "yank-act-and-extmark")
+    keymap_set("n", "<leader>ye", function()
+        M.yank_to_register(vim.fn.expand("%:e"))
+    end, "yank-file-ext")
+    keymap_set("n", "<leader>yf", function()
+        M.yank_to_register(vim.fn.expand("%:t"))
+    end, "yank-file-name")
+    keymap_set("n", "<leader>yp", function()
+        M.yank_to_register(vim.fn.expand("%:p"))
+    end, "yank-file-path")
+    keymap_set("n", "<leader>yv", "<cmd>YankExtMark<cr>", "yank-virt-text")
+    keymap_set("n", "<leader>yV", "<cmd>YankActualAndExtMark<cr>", "yank-act-and-virt-text")
 
-    keymap_set("x", "<leader>ye", ":'<,'>YankExtMarks<cr>", "yank-extmarks")
-    keymap_set("x", "<leader>yE", ":'<,'>YankActualAndExtMarks<cr>", "yank-act-and-extmarks")
+    keymap_set("x", "<leader>yv", ":'<,'>YankExtMarks<cr>", "yank-virt-texts")
+    keymap_set("x", "<leader>yV", ":'<,'>YankActualAndExtMarks<cr>", "yank-act-and-virt-texts")
 end
 
 function M.setup()

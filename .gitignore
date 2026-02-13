@@ -27,7 +27,8 @@ __pycache__/
 node_modules/
 package-lock.json
 
-#files
+# files/folders
+.vscode
 .netrwhist
 tags
 .env

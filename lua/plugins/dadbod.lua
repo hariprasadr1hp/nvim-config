@@ -12,8 +12,17 @@ local function setup_dadbod_ui_init()
             List = "select * from {table} limit 200;",
         },
 
+        jq = {
+            Root = ".",
+        },
+
+        sqlite = {
+            Count = 'select count(*) from "{table}";',
+        },
+
         postgresql = {
             Count = 'select count(*) from "{table}";',
+            Explain = "EXPLAIN ANALYZE {last_query};",
         },
     }
 

@@ -5,7 +5,7 @@ local M = {}
 local fzflua = require("fzf-lua")
 
 local function create_floating_window()
-    --TODO: create a floating
+    -- TODO: create a floating
 end
 
 M = {

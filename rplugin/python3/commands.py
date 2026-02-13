@@ -9,7 +9,7 @@ class PyPlugin:
         self.nvim = nvim
 
     @pynvim.function("ExCommand", sync=True)
-    def ex_command_str(self, args: list[str]) -> str:
+    def ex_command_str(self, args: list[str]) -> str | None:
         if not args:
             raise pynvim.NvimError("Error: need to pass `ex_str` as arg!")
         try:

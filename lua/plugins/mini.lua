@@ -126,11 +126,9 @@ local function setup_mini_pairs_config()
 end
 
 local function setup_mini_config()
-    require("mini.extra").setup()
     require("mini.trailspace").setup()
     require("mini.operators").setup()
     require("mini.splitjoin").setup()
-    require("mini.align").setup()
     require("mini.doc").setup()
     require("mini.sessions").setup()
     require("mini.colors").setup()

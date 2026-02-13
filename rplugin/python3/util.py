@@ -2,7 +2,7 @@ import re
 from errors import PluginError
 
 
-def get_ex_cmd_str(value: str):
+def get_ex_cmd_str(value: str) -> str:
     """
     a custom pattern to form the `ex-command` string
     """

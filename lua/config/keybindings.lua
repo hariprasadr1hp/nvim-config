@@ -40,7 +40,7 @@ keymap_set("n", "<leader>agq", function()
     vim.api.nvim_cmd({ cmd = "arga", args = tblx.unique(buflist) }, {})
 end, "argadd-qf-files")
 
---TODO: keymap_set("n", "<leader>agQ", "", "argdel-qf-files")
+-- TODO: keymap_set("n", "<leader>agQ", "", "argdel-qf-files")
 
 -- TODO: keymap_set("n", "<leader>agQ", "", "argdelete-qf-files")
 keymap_set("n", "<leader>agu", ":argdedupe<cr>", "unique-args")
@@ -102,7 +102,7 @@ keymap_set("n", "<leader>fX", ":! rm -f " .. data_dir .. "/undodir/*<cr>", "dele
 keymap_set("n", "<leader>gC", ":e .git/config<cr>", ".git/config")
 keymap_set("n", "<leader>gE", ":e .git/info/exclude<cr>", ".git/info/exclude")
 keymap_set("n", "<leader>gi", ":e .gitignore<cr>", ".gitignore")
---TODO: `<leader>gly` to yank the last commit
+-- TODO: `<leader>gly` to yank the last commit
 
 keymap_set("n", "<leader>hc", ":checkhealth config<cr>", "check-config-health")
 keymap_set("n", "<leader>hrr", ":echo '`emacs` command 🫠'<cr>", "n/a")

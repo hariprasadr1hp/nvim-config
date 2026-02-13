@@ -193,14 +193,21 @@ local function setup_lsp_config()
                     diagnostics = {
                         disable = { "missing-fields" },
                         globals = { "vim", "hs" },
+                        neededFileStatus = {
+                            ["codestyle-check"] = "Any",
+                        },
+                    },
+                    type = {
+                        castNumberToInteger = true,
+                        weakUnionCheck = false, -- Stricter union type checking
+                        weakNilCheck = false, -- Stricter nil checking
                     },
                     workspace = {
                         library = {
-                            [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-                            [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-                            ["/Applications/Hammerspoon.app/Contents/Resources/extensions/hs/"] = true,
-
-                            ["~/.hammerspoon/Spoons/EmmyLua.spoon/annotations"] = true,
+                            vim.fn.expand("$VIMRUNTIME/lua"),
+                            vim.fn.expand("$VIMRUNTIME/lua/vim/lsp"),
+                            vim.fn.expand("~/.hammerspoon/Spoons/EmmyLua.spoon/annotations"),
+                            vim.fn.expand("/Applications/Hammerspoon.app/Contents/Resources/extensions/hs/"),
                         },
                     },
                     telemetry = {
@@ -412,9 +419,16 @@ return {
     {
         "folke/lazydev.nvim",
         ft = "lua",
+        dependencies = {
+            {
+                "DrKJeff16/wezterm-types",
+                version = false,
+            },
+        },
         opts = {
             library = {
                 { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+                { path = "wezterm-types", mods = { "wezterm" } },
             },
         },
     },
