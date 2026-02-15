@@ -2,22 +2,9 @@
 
 -- refer: https://codecompanion.olimorris.dev/
 
--- TODO: add model name besides adapter on chat
--- TODO: add a header on top for codecompanion buffers, describing model-info
--- TODO: UI updates (markdown, bgcolor, fidget-spinner etc.,)
--- TODO: Keymap to diff changes done by the language model
-
 -- TODO: vector-code integration
--- TODO: effectively using codecompanion-workspace.json
--- TODO: chat-buffer naming
 -- TODO: chat-buffer session-management (lifespan, autocmds etc.,)
 -- TODO: AI version control
-
--- TODO: additional tools
--- TODO: additional variables
--- TODO: variable: directory
--- TODO: variable: .cursor/rules
--- TODO: variable: agents.md
 
 local function setup_codecompanion_config()
     local companion = require("codecompanion")
@@ -27,11 +14,11 @@ local function setup_codecompanion_config()
     local companion_opts = {
         adapters = {
             acp = {
-                claude_code = require("plugins.ai.codecompanion.adapters.mcp_claude"),
-                codex = require("plugins.ai.codecompanion.adapters.mcp_codex"),
-                gemini_cli = require("plugins.ai.codecompanion.adapters.mcp_gemini"),
-                opencode = require("plugins.ai.codecompanion.adapters.mcp_opencode"),
-                cursor = require("plugins.ai.codecompanion.adapters.mcp_cursor"),
+                claude_code = require("plugins.ai.codecompanion.adapters.acp_claude"),
+                codex = require("plugins.ai.codecompanion.adapters.acp_codex"),
+                gemini_cli = require("plugins.ai.codecompanion.adapters.acp_gemini"),
+                opencode = require("plugins.ai.codecompanion.adapters.acp_opencode"),
+                cursor = require("plugins.ai.codecompanion.adapters.acp_cursor"),
 
                 opts = {
                     show_model_choices = true,
@@ -43,9 +30,10 @@ local function setup_codecompanion_config()
             http = {
                 anthropic = require("plugins.ai.codecompanion.adapters.http_anthropic"),
                 ollama = require("plugins.ai.codecompanion.adapters.http_ollama"),
+                openai = require("plugins.ai.codecompanion.adapters.http_openai"),
                 gemini = require("plugins.ai.codecompanion.adapters.http_gemini"),
                 venice = require("plugins.ai.codecompanion.adapters.http_venice"),
-                xai = require("plugins.ai.codecompanion.adapters.http_grok"),
+                xai = require("plugins.ai.codecompanion.adapters.http_xai"),
                 -- TODO: perplexity http adapter
                 -- TODO: copilot http adapter
 
@@ -53,9 +41,83 @@ local function setup_codecompanion_config()
                     show_model_choices = true,
                     show_defaults = true,
                     show_presets = false,
-                    --TODO: setting proxy
+                    -- TODO: setting proxy
                     -- https://codecompanion.olimorris.dev/configuration/adapters-http#setting-a-proxy
                     -- FIX: an option to persist/copy current chat history while switching models/adapters
+                },
+            },
+        },
+
+        extensions = {
+            mcphub = {
+                callback = "mcphub.extensions.codecompanion",
+                opts = {
+                    make_slash_commands = true,
+                    make_tools = true,
+                    make_vars = true,
+                },
+            },
+            history = {
+                enabled = true,
+                opts = {
+                    keymap = "gh",
+                    auto_save = true,
+                    expiration_days = 0,
+                    picker = "snacks",
+                    chat_filter = function(chat_data)
+                        -- local seven_days_ago = os.time() - (7 * 24 * 60 * 60)
+                        -- return chat_data.updated_at >= seven_days_ago
+                        return chat_data.cwd == vim.fn.getcwd()
+                    end,
+                    picker_keymaps = {
+                        rename = { n = "r", i = "<M-r>" },
+                        delete = { n = "d", i = "<M-d>" },
+                        duplicate = { n = "<C-y>", i = "<C-y>" },
+                    },
+                    auto_generate_title = true,
+                    title_generation_opts = {
+                        adapter = nil,
+                        model = nil,
+                        refresh_every_n_prompts = 0,
+                        max_refreshes = 3,
+                        format_title = function(original_title)
+                            return original_title
+                        end,
+                    },
+                    continue_last_chat = false,
+                    delete_on_clearing_chat = false,
+                    dir_to_save = vim.fn.stdpath("data") .. "/codecompanion_history",
+                    enable_logging = false,
+                    summary = {
+                        create_summary_keymap = "gcs",
+                        browse_summaries_keymap = "gbs",
+
+                        generation_opts = {
+                            adapter = "ollama",
+                            model = vim.env.OLLAMA_DEFAULT_SERVER_MODEL,
+                            context_size = 90000,
+                            include_references = true,
+                            include_tool_outputs = true,
+                            system_prompt = nil,
+                            format_summary = nil,
+                        },
+                    },
+                    memory = {
+                        auto_create_memories_on_summary_generation = true,
+                        vectorcode_exe = "vectorcode",
+                        tool_opts = {
+                            default_num = 10,
+                        },
+                        notify = true,
+                        index_on_startup = false,
+                    },
+                },
+            },
+            attachments = {
+                callback = "codecompanion._extensions.attachments",
+                enabled = true,
+                opts = {
+                    adapters = {},
                 },
             },
         },
@@ -77,12 +139,36 @@ local function setup_codecompanion_config()
                         local model = adapter.model or "unknown"
                         return string.format(
                             "LLM -- %s (%s)",
-                            model.name or "unknown",
+                            model["name"] or "unknown",
                             string.upper(adapter.name) or "UNKNOWN"
                         )
                     end,
 
                     user = "USER",
+                },
+
+                tools = {
+                    groups = {
+                        ["github_pr_workflow"] = {
+                            description = "GitHub operations from issue to PR",
+                            tools = {
+                                -- File operations
+                                "neovim__read_multiple_files",
+                                -- "neovim__write_file",
+                                -- "neovim__edit_file",
+
+                                -- GitHub operations
+                                "github__list_issues",
+                                "github__get_issue",
+                                "github__get_issue_comments",
+                                -- "github__create_issue",
+                                -- "github__create_pull_request",
+                                "github__get_file_contents",
+                                -- "github__create_or_update_file",
+                                "github__search_code",
+                            },
+                        },
+                    },
                 },
 
                 keymaps = {
@@ -119,7 +205,7 @@ local function setup_codecompanion_config()
                 slash_commands = {
                     ["dummy"] = {
                         description = "Insert filetype",
-                        callback = "lua.plugins.ai.codecompanion.slash_commands.dummy",
+                        callback = "plugins.ai.codecompanion.slash_commands.dummy",
                         -- callback = function(chat)
                         --     chat:add_buf_message({ content = "this is a dummy message!" })
                         -- end,
@@ -127,13 +213,22 @@ local function setup_codecompanion_config()
                     },
                 },
 
+                variables = {
+                    ["xx"] = {
+                        description = "redact content",
+                        callback = "plugins.ai.codecompanion.variables.xx",
+                    },
+                    opts = {
+                        contains_code = false,
+                        -- has_params = false,
+                        -- default_params = nil,
+                    },
+                },
+
                 opts = {
                     log_level = "DEBUG",
-                    ---Decorate the user message before it's sent to the LLM
-                    ---@param message string
-                    ---@param adapter CodeCompanion.Adapter
-                    ---@param context table
-                    ---@return string
+                    --TODO: system prompt can be a function
+                    system_prompt = require("plugins.ai.codecompanion.prompts.system_prompt.neovim"),
                     prompt_decorator = function(message, adapter, context)
                         return string.format([[<prompt>%s</prompt>]], message)
                     end,
@@ -248,7 +343,7 @@ local function setup_codecompanion_config()
                 show_settings = false, -- since setting true would disable `ga` (adapter change)
                 show_token_count = true,
                 show_tools_processing = true,
-                start_in_insert_mode = true,
+                start_in_insert_mode = false,
                 icons = {
                     buffer_sync_all = "󰪴 ",
                     buffer_sync_diff = " ",
@@ -307,7 +402,7 @@ local function setup_codecompanion_config()
         },
 
         prompt_library = {
-            -- FIX: comment-out content in markdown prompts
+            -- FIX: commented-out content in markdown prompts should be removed
             markdown = {
                 dirs = {
                     companion_dir .. "/prompts",
@@ -354,6 +449,8 @@ return {
             "nvim-treesitter/nvim-treesitter",
             "ravitemer/mcphub.nvim",
             "j-hui/fidget.nvim",
+            "ravitemer/codecompanion-history.nvim",
+            "georgeharker/codecompanion-attachments.nvim",
         },
         config = setup_codecompanion_config,
     },

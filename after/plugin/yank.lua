@@ -6,6 +6,7 @@ if vim.g.vscode then
 end
 
 local keymap_set = require("config.helpers").keymap_set
+local redact = require("core.redact")
 
 --- ExtMark virtual text module
 ---@class VirtTextModule
@@ -163,6 +164,70 @@ function M.handle_yank_actual_and_extmarks(opts)
     M.yank_to_register(text, reg)
 end
 
+---@param content_str string
+---@return string
+local function _get_unredacted_message(content_str)
+    local redact_map = vim.b.xx or {}
+
+    for k, v in pairs(redact_map) do
+        redact:new({ value = k, mask_func = v })
+    end
+    local unredacted_str = redact.unredact(content_str)
+    return unredacted_str
+end
+
+---@param content_str string
+---@return string
+local function _get_redacted_message(content_str)
+    local redact_map = vim.b.xx or {}
+
+    for k, v in pairs(redact_map) do
+        redact:new({ value = k, mask_func = v })
+    end
+    local unredacted_str = redact.redact(content_str)
+    return unredacted_str
+end
+
+---@param opts table
+---@return nil
+local function handle_yank_redacted_message(opts)
+    local buf = 0
+    local start_lnum1 = opts.line1
+    local end_lnum1 = opts.line2
+    local reg = opts.args ~= "" and opts.args or "+"
+    local lines = {} ---@type string[]
+    for lnum1 = start_lnum1, end_lnum1 do
+        local lnum0 = lnum1 - 1
+
+        local line_text = vim.api.nvim_buf_get_lines(buf, lnum0, lnum0 + 1, false)[1] or ""
+        lines[#lines + 1] = line_text
+    end
+
+    local content_str = table.concat(lines, "\n")
+    local redacted_str = _get_redacted_message(content_str)
+    M.yank_to_register(redacted_str, reg)
+end
+
+---@param opts table
+---@return nil
+local function handle_yank_unredacted_message(opts)
+    local buf = 0
+    local start_lnum1 = opts.line1
+    local end_lnum1 = opts.line2
+    local reg = opts.args ~= "" and opts.args or "+"
+    local lines = {} ---@type string[]
+    for lnum1 = start_lnum1, end_lnum1 do
+        local lnum0 = lnum1 - 1
+
+        local line_text = vim.api.nvim_buf_get_lines(buf, lnum0, lnum0 + 1, false)[1] or ""
+        lines[#lines + 1] = line_text
+    end
+
+    local redacted_str = table.concat(lines, "\n")
+    local unredacted_str = _get_unredacted_message(redacted_str)
+    M.yank_to_register(unredacted_str, reg)
+end
+
 --- Setup user commands for virtual text yanking
 function M.setup_commands()
     -- :YankExtMark [reg] -> yanks virt text of current line (defaults to +)
@@ -194,6 +259,18 @@ function M.setup_commands()
         range = true,
         desc = "Yank both actual and `extmark` from each line in range",
     })
+
+    vim.api.nvim_create_user_command("YankRedacted", handle_yank_redacted_message, {
+        nargs = "?",
+        range = true,
+        desc = "Yank redacted content",
+    })
+
+    vim.api.nvim_create_user_command("YankUnredacted", handle_yank_unredacted_message, {
+        nargs = "?",
+        range = true,
+        desc = "Yank unredacted content",
+    })
 end
 
 function M.setup_keymaps()
@@ -206,6 +283,8 @@ function M.setup_keymaps()
     keymap_set("n", "<leader>yp", function()
         M.yank_to_register(vim.fn.expand("%:p"))
     end, "yank-file-path")
+    keymap_set("x", "<leader>yr", ":'<,'>YankRedacted<cr>", "yank-redacted")
+    keymap_set("x", "<leader>yu", ":'<,'>YankUnredacted<cr>", "yank-unredacted")
     keymap_set("n", "<leader>yv", "<cmd>YankExtMark<cr>", "yank-virt-text")
     keymap_set("n", "<leader>yV", "<cmd>YankActualAndExtMark<cr>", "yank-act-and-virt-text")
 

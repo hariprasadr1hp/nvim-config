@@ -80,6 +80,11 @@ keymap_set("n", "<leader>bo", "%bd | e#<cr>", "only-current-buffer")
 keymap_set("n", "<leader>bO", "%bd | e#<cr>", "only-current-buffer")
 keymap_set("n", "<leader>bt", "<C-^>", "toggle-buffer")
 
+-- TODO: `vars-buffer` in a buffer
+keymap_set("n", "<leader>bv", function()
+    vim.print(vim.fn.eval("b:"))
+end, "vars-buffer")
+
 keymap_set("n", "<leader>cm", ":make<cr>", "make-prg")
 
 keymap_set("n", "<leader>eb", ":Runme<cr>", "eval-buffer")
@@ -132,6 +137,9 @@ keymap_set("n", "<leader>jL", ":tablast<cr>", "last-tab")
 keymap_set("n", "<leader>jn", ":tabnew<cr>", "new-tab")
 keymap_set("n", "<leader>jo", ":tabonly<cr>", "only-current-tab")
 keymap_set("n", "<leader>jO", ":tabonly<cr>", "only-current-tab")
+keymap_set("n", "<leader>jv", function()
+    vim.print(vim.fn.eval("t:"))
+end, "vars-tab")
 
 keymap_set("n", "<leader>l0", vim.lsp.buf.outgoing_calls, "lsp-incoming-calls")
 keymap_set("n", "<leader>l1", vim.lsp.buf.incoming_calls, "lsp-outgoing-calls")
@@ -257,6 +265,11 @@ keymap_set("n", "<leader>tr", ":setl ro!<cr>", "read-only")
 keymap_set("n", "<leader>ts", ":setl spell!<cr>", "spell-check")
 keymap_set("n", "<leader>tw", ":setl nowrap! linebreak breakindent<cr>", "wrap-text")
 
+-- TODO: `vars-global` in a buffer
+keymap_set("n", "<leader>vG", function()
+    vim.print(vim.fn.eval("g:"))
+end, "vars-global")
+
 -- TODO: `<leader>w{1-5}` and `<C-w>{1-5}` to switch between windows
 keymap_set("n", "<leader>w6", ":wincmd +<cr>", "increase-height")
 keymap_set("n", "<leader>w7", ":wincmd -<cr>", "decrease-height")
@@ -276,6 +289,9 @@ keymap_set("n", "<leader>wO", ":only<cr>", "only-current-window")
 keymap_set("n", "<leader>wq", ":wincmd q<cr>", "quit-window")
 keymap_set("n", "<leader>ws", ":wincmd s<cr>", "split-window-below")
 keymap_set("n", "<leader>wv", ":wincmd v<cr>", "split-window-right")
+keymap_set("n", "<leader>wV", function()
+    vim.print(vim.fn.eval("w:"))
+end, "vars-window")
 keymap_set("n", "<leader>ww", ":wincmd w<cr>", "switch-window")
 keymap_set("n", "<leader>wx", ":wincmd x<cr>", "swap-window")
 keymap_set("n", "<leader>w|", ":wincmd <<cr>", "max-out-width")

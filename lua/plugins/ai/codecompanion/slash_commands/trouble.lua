@@ -2,7 +2,6 @@
 
 local SlashCommand = {}
 
----@param args CodeCompanion.SlashCommand
 function SlashCommand.new(args)
     local self = setmetatable({
         Chat = args.Chat,

@@ -1,8 +1,9 @@
--- lua/plugins/ai/codecompanion/adapters/mcp_opencode.lua
+-- lua/plugins/ai/codecompanion/adapters/acp_opencode.lua
+
+-- REFER: https://opencode.ai/docs/acp/#codecompanionnvim
 
 local companion_adapters = require("codecompanion.adapters")
 
----@type CodeCompanion.ACPAdapter.OpenCode
 local opts = {
     model = {
         default = vim.env.OLLAMA_DEFAULT_SERVER_MODEL,

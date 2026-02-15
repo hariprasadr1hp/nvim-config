@@ -45,82 +45,94 @@ local actions_python = {
 }
 
 local function get_actions_sql()
-    local dbt = require("dbt")
     local actions = {}
 
     if vim.env.DBT_PROJECT_DIR == nil then
         return actions
     end
 
-    local dbt_actions = {
-        {
-            name = "Jump to `compiled` file [DBT]",
-            action = dbt.jump_to_compiled,
-        },
+    local get_actions_sql_dbt = function()
+        local dbt = require("dbt")
+        return {
+            {
+                name = "Jump to `compiled` file [DBT]",
+                action = dbt.jump_to_compiled,
+            },
 
-        {
-            name = "Jump to `run` file [DBT]",
-            action = dbt.jump_to_run,
-        },
+            {
+                name = "Jump to `run` file [DBT]",
+                action = dbt.jump_to_run,
+            },
 
-        {
-            name = "Jump to `model` file [DBT]",
-            action = dbt.jump_to_model,
-        },
+            {
+                name = "Jump to `model` file [DBT]",
+                action = dbt.jump_to_model,
+            },
 
-        {
-            name = "Select upstream `models` [DBT]",
-            action = dbt.select_upstream_models,
-        },
+            {
+                name = "Select upstream `models` [DBT]",
+                action = dbt.select_upstream_models,
+            },
 
-        {
-            name = "Select downstream `models` [DBT]",
-            action = dbt.select_downstream_models,
-        },
+            {
+                name = "Select downstream `models` [DBT]",
+                action = dbt.select_downstream_models,
+            },
 
-        {
-            name = "Diff: `model` vs `compiled` [DBT]",
-            action = dbt.diff_model_vs_compiled,
-        },
+            {
+                name = "Diff: `model` vs `compiled` [DBT]",
+                action = dbt.diff_model_vs_compiled,
+            },
 
-        {
-            name = "Jump between `model` and `schema` [DBT]",
-            action = dbt.jump_between_model_and_schema,
-        },
+            {
+                name = "Jump between `model` and `schema` [DBT]",
+                action = dbt.jump_between_model_and_schema,
+            },
 
-        {
-            name = "List all models [DBT]",
-            action = dbt.list_all_dbt_models,
-        },
-        {
-            name = "List only enabled models [DBT]",
-            action = dbt.list_only_enabled_models,
-        },
-        {
-            name = "List all compiled sql files [DBT]",
-            action = dbt.list_compiled_sql_files,
-        },
-        {
-            name = "List all target run sql files [DBT]",
-            action = dbt.list_target_run_sql_files,
-        },
-    }
+            {
+                name = "List all models [DBT]",
+                action = dbt.list_all_dbt_models,
+            },
+            {
+                name = "List only enabled models [DBT]",
+                action = dbt.list_only_enabled_models,
+            },
+            {
+                name = "List all compiled sql files [DBT]",
+                action = dbt.list_compiled_sql_files,
+            },
+            {
+                name = "List all target run sql files [DBT]",
+                action = dbt.list_target_run_sql_files,
+            },
+        }
+    end
 
-    actions = vim.tbl_extend("keep", actions, dbt_actions)
+    actions = vim.tbl_extend("keep", actions, get_actions_sql_dbt())
     return actions
 end
 
 local function get_actions_yaml()
-    local dbt = require("dbt")
+    local actions = {}
 
-    return {
-        {
-            name = "Jump between `model` and `schema` [DBT]",
-            action = function()
-                dbt.jump_between_model_and_schema()
-            end,
-        },
-    }
+    if vim.env.DBT_PROJECT_DIR == nil then
+        return actions
+    end
+
+    local function get_actions_yaml_dbt()
+        local dbt = require("dbt")
+        return {
+            {
+                name = "Jump between `model` and `schema` [DBT]",
+                action = function()
+                    dbt.jump_between_model_and_schema()
+                end,
+            },
+        }
+    end
+
+    actions = vim.tbl_extend("keep", actions, get_actions_yaml_dbt())
+    return actions
 end
 
 local actions_markdown = {
@@ -276,7 +288,10 @@ function M.show_actions()
     local actions = ft_actions[ft]
 
     if not actions then
-        vim.notify(string.format("No actions defined for filetype `%s`!", ft), vim.log.levels.INFO)
+        vim.notify(
+            string.format("No actions defined for filetype `%s`!", ft == ("" or nil) and "UNKNOWN" or ft),
+            vim.log.levels.INFO
+        )
         return
     end
 

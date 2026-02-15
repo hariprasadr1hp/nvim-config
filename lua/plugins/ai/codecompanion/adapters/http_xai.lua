@@ -1,8 +1,9 @@
--- lua/plugins/ai/codecompanion/adapters/http_grok.lua
+-- lua/plugins/ai/codecompanion/adapters/xai.lua
+
+-- REFER: https://docs.x.ai/developers/models
 
 local companion_adapters = require("codecompanion.adapters")
 
----@type CodeCompanion.HTTPAdapter.xAI
 local opts = {
     env = {
         api_key = vim.env.XAI_API_KEY,
@@ -13,8 +14,11 @@ local opts = {
     },
     schema = {
         model = {
-            ---@type "grok-4-1-fast-reasoning" | "grok-4-1-fast-non-reasoning"
             default = "grok-4-1-fast-reasoning",
+            choices = {
+                "grok-4-1-fast-reasoning",
+                "grok-4-1-fast-non-reasoning",
+            },
         },
     },
 }

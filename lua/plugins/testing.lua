@@ -1,7 +1,20 @@
 -- lua/plugins/testing.lua
 
+local keymap_set = require("config.helpers").keymap_set
+
+local function setup_mini_test_config()
+    local mini_test = require("mini.test")
+    mini_test.setup()
+
+    keymap_set("n", "<leader>et", function()
+        local ok, result = pcall(mini_test.run_file, vim.fn.expand("%"))
+        if not ok then
+            vim.notify(result or "mini test not available!")
+        end
+    end, "tests-run-mini")
+end
+
 local function setup_neotest_config()
-    local keymap_set = require("config.helpers").keymap_set
     local neotest = require("neotest")
 
     local opts = {
@@ -65,7 +78,7 @@ return {
     {
         "echasnovski/mini.test",
         version = false,
-        opts = {},
+        config = setup_mini_test_config,
     },
 
     {
@@ -87,6 +100,8 @@ return {
             { "<leader>cnn", "<cmd>Neotest summary<cr>", desc = "neotest-summary" },
         },
     },
+
+    -- TODO: for lua tests???
 
     -- for toggling tests
     -- BUG: the below plugin jumps to test files in an alphabetical order, when multiple matching

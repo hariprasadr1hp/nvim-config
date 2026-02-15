@@ -1,8 +1,9 @@
--- lua/plugins/ai/codecompanion/adapters/mcp_cursor.lua
+-- lua/plugins/ai/codecompanion/adapters/acp_cursor.lua
+
+-- REFER: https://github.com/blowmage/cursor-agent-acp-npm
 
 local helpers = require("codecompanion.adapters.acp.helpers")
 
----@class CodeCompanion.ACPAdapter.Cursor: CodeCompanion.ACPAdapter
 return {
     name = "cursor",
     formatted_name = "Cursor",
@@ -21,7 +22,7 @@ return {
         },
     },
     defaults = {
-        mcpServers = {},
+        acpServers = {},
         timeout = 20000, -- 20 seconds
     },
     parameters = {

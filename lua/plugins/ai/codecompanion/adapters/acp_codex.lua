@@ -1,10 +1,11 @@
--- lua/plugins/ai/codecompanion/adapters/mcp_codex.lua
+-- lua/plugins/ai/codecompanion/adapters/acp_codex.lua
+
+-- REFER: https://github.com/zed-industries/codex-acp
 
 -- FIX: model selection, and default model
 
 local companion_adapters = require("codecompanion.adapters")
 
----@type CodeCompanion.ACPAdapter.Codex
 local opts = {
     defaults = {
         ---@type "openai-api-key" | "codex-api-key" | "chatgpt"
@@ -12,7 +13,6 @@ local opts = {
     },
     commands = {
         default = {
-            -- https://github.com/zed-industries/codex-acp
             "codex-acp",
         },
     },

@@ -13,6 +13,7 @@ return {
         keys = {
             { "<leader>;a", "<cmd>BufferActions<cr>", desc = "actions-by-ft" },
             { "<leader>ib", "<cmd>BufferInfo<cr>", desc = "buffer-info" },
+            { "<leader>bi", "<cmd>BufferInfo<cr>", desc = "buffer-info" },
         },
         dependencies = {
             { "saghen/blink.cmp" },

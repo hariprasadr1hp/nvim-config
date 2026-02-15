@@ -1,8 +1,9 @@
--- lua/plugins/ai/codecompanion/adapters/mcp_claude.lua
+-- lua/plugins/ai/codecompanion/adapters/acp_claude.lua
+
+-- REFER: https://github.com/zed-industries/claude-code-acp
 
 local companion_adapters = require("codecompanion.adapters")
 
----@type CodeCompanion.ACPAdapter.ClaudeCode
 local opts = {
     env = {
         CLAUDE_CODE_OAUTH_TOKEN = vim.env.CLAUDE_CODE_OAUTH_TOKEN,
@@ -12,7 +13,6 @@ local opts = {
     -- refer how the models are named for claude code
     commands = {
         default = {
-            -- https://github.com/zed-industries/claude-code-acp
             "claude-code-acp",
         },
     },

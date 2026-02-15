@@ -2,7 +2,6 @@
 
 local companion_adapters = require("codecompanion.adapters")
 
----@type CodeCompanion.HTTPAdapter.OpenAICompatible
 local opts = {
     env = {
         url = "https://api.venice.ai/api",
@@ -12,6 +11,7 @@ local opts = {
     schema = {
         model = {
             default = "venice-uncensored",
+            -- choices = nil,
         },
     },
     opts = {
