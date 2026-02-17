@@ -47,13 +47,17 @@ local function check_external_tools()
 
     local tools = {
         { cmd = "git", required = true, desc = "Version control" },
-        { cmd = "rg", required = true, desc = "Ripgrep for telescope/searching" },
+        { cmd = "curl", required = false, desc = "Data Transfer" },
+        { cmd = "rg", required = true, desc = "Fuzzy searching texts" },
         { cmd = "fd", required = false, desc = "Fast file finder" },
         { cmd = "node", required = true, desc = "Node.js for LSP servers" },
         { cmd = "cargo", required = true, desc = "Rust toolchain" },
         { cmd = "python3", required = true, desc = "Python support" },
         { cmd = "lazygit", required = false, desc = "Git TUI" },
         { cmd = "lazydocker", required = false, desc = "Docker TUI" },
+        { cmd = "pandoc", required = false, desc = "Document converter" },
+        { cmd = "w3m", required = false, desc = "Terminal Browser" },
+        { cmd = "zed", required = false, desc = "Zed Editor" },
         { cmd = "jena", required = false, desc = "Semantic Web Framework" },
         { cmd = "mmdc", required = false, desc = "Mermaid CLI" },
     }

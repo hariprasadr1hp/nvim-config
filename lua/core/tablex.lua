@@ -10,7 +10,6 @@
 -- - List slicing & flattening
 --
 -- All functions operate on array-like tables (lists) and avoid mutating inputs.
--- Suitable for use in Neovim config and plugin development.
 
 local M = {}
 
@@ -184,7 +183,7 @@ end
 ---@generic T
 ---@param t T[]
 ---@return { index: integer, value: T }[]
-function M.tbl_enumerate(t)
+function M.enumerate(t)
     local out = {}
     for i, v in ipairs(t) do
         out[#out + 1] = { index = i, value = v }
@@ -198,13 +197,28 @@ end
 ---@param a A[]
 ---@param b B[]
 ---@return { [1]: A, [2]: B }[]
-function M.tbl_zip(a, b)
+function M.zip(a, b)
     local out = {}
     local n = math.min(#a, #b)
     for i = 1, n do
         out[#out + 1] = { a[i], b[i] }
     end
     return out
+end
+
+--- Return a list of keys from a map-like table whose values are truthy.
+---
+--- Example:
+--- ```lua
+--- true_keys({ foo = true, bar = false, faa = true })
+--- -- { "foo", "faa" }
+--- ```
+---@param t table<string, any>   Map-like table.
+---@return string[]              Keys with truthy values.
+function M.true_keys(t)
+    return vim.tbl_filter(function(k)
+        return t[k]
+    end, vim.tbl_keys(t))
 end
 
 return M

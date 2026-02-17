@@ -2,6 +2,7 @@
 
 local companion_adapters = require("codecompanion.adapters")
 
+---@type CodeCompanion.HTTPAdapter.Ollama
 local opts = {
     env = {
         url = vim.env.OLLAMA_SERVER_HOST,

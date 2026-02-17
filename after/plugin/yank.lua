@@ -127,7 +127,7 @@ function M.handle_yank_actual_and_extmark(opts)
     local combined_text = actual_text
     if virt_text ~= "" then
         local comment = M.get_comment_string()
-        combined_text = actual_text .. " " .. comment .. " " .. virt_text
+        combined_text = string.format("%s %s %s", actual_text, comment, virt_text)
     end
 
     M.yank_to_register(combined_text, reg)
@@ -154,7 +154,7 @@ function M.handle_yank_actual_and_extmarks(opts)
         -- actual text + comment delimiter + virtual text (if virtual text exists)
         local combined_text = actual_text
         if virt_text ~= "" then
-            combined_text = actual_text .. " " .. comment .. " " .. virt_text
+            combined_text = string.format("%s %s %s", actual_text, comment, virt_text)
         end
 
         combined_lines[#combined_lines + 1] = combined_text
@@ -228,6 +228,39 @@ local function handle_yank_unredacted_message(opts)
     M.yank_to_register(unredacted_str, reg)
 end
 
+---@param opts table
+---@return nil
+local function handle_yank_message_with_context(opts)
+    local buf = 0
+    local start_lnum1 = opts.line1
+    local end_lnum1 = opts.line2
+    local reg = opts.args ~= "" and opts.args or "+"
+
+    local combined_lines = {} ---@type string[]
+    local comment = M.get_comment_string()
+
+    for lnum1 = start_lnum1, end_lnum1 do
+        local lnum0 = lnum1 - 1
+
+        local actual_text = vim.api.nvim_buf_get_lines(buf, lnum0, lnum0 + 1, false)[1] or ""
+        local virt_text = M.get_virt_text_on_line(buf, lnum0)
+
+        -- actual text + comment delimiter + virtual text (if virtual text exists)
+        local combined_text = actual_text
+        if virt_text ~= "" then
+            combined_text = string.format("%s %s %s", actual_text, comment, virt_text)
+        end
+
+        combined_lines[#combined_lines + 1] = combined_text
+    end
+
+    local content = table.concat(combined_lines, "\n")
+    local template = "file: `%s` line: %s\n```%s\n%s\n```"
+    local context_str =
+        string.format(template, vim.fn.expand("%"), vim.api.nvim_win_get_cursor(0)[1], vim.bo.filetype, content)
+    M.yank_to_register(context_str, reg)
+end
+
 --- Setup user commands for virtual text yanking
 function M.setup_commands()
     -- :YankExtMark [reg] -> yanks virt text of current line (defaults to +)
@@ -271,6 +304,12 @@ function M.setup_commands()
         range = true,
         desc = "Yank unredacted content",
     })
+
+    vim.api.nvim_create_user_command("YankWithContext", handle_yank_message_with_context, {
+        nargs = "?",
+        range = true,
+        desc = "Yank content with context",
+    })
 end
 
 function M.setup_keymaps()
@@ -283,11 +322,12 @@ function M.setup_keymaps()
     keymap_set("n", "<leader>yp", function()
         M.yank_to_register(vim.fn.expand("%:p"))
     end, "yank-file-path")
-    keymap_set("x", "<leader>yr", ":'<,'>YankRedacted<cr>", "yank-redacted")
-    keymap_set("x", "<leader>yu", ":'<,'>YankUnredacted<cr>", "yank-unredacted")
     keymap_set("n", "<leader>yv", "<cmd>YankExtMark<cr>", "yank-virt-text")
     keymap_set("n", "<leader>yV", "<cmd>YankActualAndExtMark<cr>", "yank-act-and-virt-text")
 
+    keymap_set("x", "<leader>yc", ":'<,'>YankWithContext<cr>", "yank-with-context")
+    keymap_set("x", "<leader>yr", ":'<,'>YankRedacted<cr>", "yank-redacted")
+    keymap_set("x", "<leader>yu", ":'<,'>YankUnredacted<cr>", "yank-unredacted")
     keymap_set("x", "<leader>yv", ":'<,'>YankExtMarks<cr>", "yank-virt-texts")
     keymap_set("x", "<leader>yV", ":'<,'>YankActualAndExtMarks<cr>", "yank-act-and-virt-texts")
 end

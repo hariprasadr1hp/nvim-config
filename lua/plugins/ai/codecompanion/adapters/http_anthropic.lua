@@ -5,6 +5,7 @@
 
 local companion_adapters = require("codecompanion.adapters")
 
+---@type CodeCompanion.HTTPAdapter.Anthropic
 local opts = {
     env = {
         api_key = vim.env.ANTHROPIC_API_KEY,

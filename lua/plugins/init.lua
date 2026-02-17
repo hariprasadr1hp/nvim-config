@@ -54,10 +54,12 @@ local opts = {
     require("plugins.spinner"),
     require("plugins.snapshot"),
     require("plugins.colors"),
+    require("plugins.refactor"),
 
     require("plugins.ai.mcphub"),
     require("plugins.ai.codecompanion"),
     require("plugins.ai.windsurf"),
+    require("plugins.ai.completion"),
     -- require("plugins.ai.cursor"),
 
     require("plugins.dbt"),
@@ -76,17 +78,15 @@ require("lazy").setup(opts)
 vim.keymap.set("n", "<leader>oL", ":Lazy<cr>", { noremap = true, silent = true, desc = "Lazy" })
 
 -- TODO: plugins to add/visit
+
 -- Davidyz/VectorCode
--- saghen/blink.pairs
--- ThePrimeagen/refactoring.nvim
--- ryan-ressmeyer/quench.nvim
--- folke/ts-comments.nvim
+-- ThePrimeagen/99
+-- bajor/nvim-raccoon
 -- code-biscuits/nvim-biscuits
 -- esmuellert/codediff.nvim
--- nosduco/remote-sshfs.nvim
--- esmuellert/codediff.nvim
+-- folke/ts-comments.nvim
 -- linux-cultist/venv-selector.nvim
+-- nosduco/remote-sshfs.nvim
 -- pwntester/octo.nvim
--- ThePrimeagen/99
--- milanglacier/minuet-ai.nvim
--- LionyxML/gitlineage.nvim
+-- ryan-ressmeyer/quench.nvim
+-- saghen/blink.pairs

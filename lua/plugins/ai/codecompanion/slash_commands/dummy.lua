@@ -1,5 +1,6 @@
 -- lua/plugins/ai/codecompanion/slash_commands/dummy.lua
 
+---@class CodeCompanion.SlashCommand
 local SlashCommand = {}
 
 function SlashCommand.new(args)

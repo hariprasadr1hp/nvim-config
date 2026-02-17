@@ -598,8 +598,46 @@ return {
         "sindrets/diffview.nvim",
         cmd = { "DiffviewOpen", "DiffviewFileHistory" },
         keys = {
+            { "<leader>g/", mode = "x", "<cmd>'<,'>DiffviewFileHistory<cr>", desc = "visual-select-git-history" },
+            { "<leader>g/", mode = "n", "<cmd>DiffviewFileHistory %<cr>", desc = "visual-select-git-history" },
             { "<leader>gG", "<cmd>DiffviewOpen --selected-file<cr>", desc = "open-diffview" },
+            {
+                "<leader>gdC",
+                function()
+                    -- TODO: use a picker to select the commit, instead of copying
+                    local commit = vim.fn.getreg("+")
+                    local cmd = string.format("DiffviewOpen %s^!", commit)
+                    vim.notify(cmd)
+                    vim.cmd(cmd)
+                end,
+                desc = "diff-show-commit",
+            },
+            { "<leader>gdm", "<cmd>DiffviewOpen -uno<cr>", desc = "diff-only-modified-no-untracked" },
+            { "<leader>gdM", "<cmd>DiffviewOpen origin/main...HEAD<cr>", desc = "diff-head-against-main" },
+            { "<leader>gdr", "<cmd>DiffviewRefresh<cr>", desc = "refresh-diffview" },
+            {
+                "<leader>gdn",
+                function()
+                    local commit = vim.fn.getreg("+")
+
+                    vim.ui.input({ prompt = "number: ", default = "1" }, function(value)
+                        if not tonumber(value) then
+                            vim.notify("should be a number!")
+                            return
+                        end
+
+                        local cmd = string.format("DiffviewOpen HEAD~%s", value)
+                        vim.notify(cmd)
+                        vim.cmd(cmd)
+                    end)
+                end,
+                desc = "diff-from-last-N-commits",
+            },
+            { "<leader>glo", "<cmd>DiffviewOpen HEAD~1<cr>", desc = "open-diffview" },
+            { "<leader>of", "<cmd>DiffviewToggleFiles<cr>", desc = "open-diffview" },
         },
         config = setup_diffview_config,
     },
 }
+
+-- TODO: replay versioning?

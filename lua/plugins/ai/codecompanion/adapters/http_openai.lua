@@ -4,6 +4,7 @@
 
 local companion_adapters = require("codecompanion.adapters")
 
+---@type CodeCompanion.HTTPAdapter.OpenAI
 local opts = {
     env = {
         api_key = vim.env.OPENAI_API_KEY,

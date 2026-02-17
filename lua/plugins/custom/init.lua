@@ -2,7 +2,7 @@
 
 return {
     {
-        dir = vim.fn.stdpath("config") .. "/lua/plugins/custom/buffer",
+        dir = vim.fn.stdpath("config") .. "/lua/plugins/custom",
         name = "hpcustom",
         cmd = {
             "BufferActions",
@@ -12,8 +12,9 @@ return {
         },
         keys = {
             { "<leader>;a", "<cmd>BufferActions<cr>", desc = "actions-by-ft" },
-            { "<leader>ib", "<cmd>BufferInfo<cr>", desc = "buffer-info" },
+            { "<leader>aa", "<cmd>ProjectActions<cr>", desc = "actions-project" },
             { "<leader>bi", "<cmd>BufferInfo<cr>", desc = "buffer-info" },
+            { "<leader>ib", "<cmd>BufferInfo<cr>", desc = "buffer-info" },
         },
         dependencies = {
             { "saghen/blink.cmp" },

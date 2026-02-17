@@ -47,7 +47,7 @@ local function setup_windsurf_config()
 
     codeium.setup(opts)
     codeium.toggle()
-    keymap_set("n", "<leader>ta", codeium.toggle, "ai-completion")
+    keymap_set("n", "<leader>tz", codeium.toggle, "windsurf-toggle")
 end
 
 return {
@@ -55,12 +55,12 @@ return {
         "Exafunction/windsurf.nvim",
         dependencies = {
             "nvim-lua/plenary.nvim",
-            "saghen/blink.cmp",
         },
         cmd = { "Codeium" },
         keys = function()
             return {
-                { "<leader>ta", "Codeium Toggle", "ai-completion" },
+                -- TODO: the keymap would eventually go inside fzf-toggle mechanism
+                { "<leader>tz", "Codeium Toggle", "windsurf-toggle" },
             }
         end,
         config = setup_windsurf_config,

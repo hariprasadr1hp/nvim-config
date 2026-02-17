@@ -235,6 +235,7 @@ local function setup_kulala_config()
             ["export-path"] = {
                 "<leader>;p",
                 function()
+                    -- TODO: provide a default export path, in the same-directory, and only renmaing the extension
                     vim.ui.input({ prompt = "Enter path: " }, function(path)
                         if path == nil then
                             vim.notify("kulala: export path not provided")

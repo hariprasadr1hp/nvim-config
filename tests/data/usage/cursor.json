@@ -1,0 +1,29 @@
+{
+  "billingCycleStart": "2025-12-03T10:22:14.000Z",
+  "billingCycleEnd": "2026-01-03T10:22:14.000Z",
+  "membershipType": "pro",
+  "limitType": "user",
+  "isUnlimited": false,
+  "autoModelSelectedDisplayMessage": "You've used 1% of your included total usage",
+  "namedModelSelectedDisplayMessage": "You've used 0% of your included API usage",
+  "individualUsage": {
+    "plan": {
+      "enabled": true,
+      "used": 18,
+      "limit": 2000,
+      "remaining": 1982,
+      "breakdown": { "included": 18, "bonus": 0, "total": 18 },
+      "autoSpend": 18,
+      "apiSpend": 0,
+      "autoLimit": 15000,
+      "apiLimit": 4500
+    },
+    "onDemand": {
+      "enabled": false,
+      "used": 0,
+      "limit": null,
+      "remaining": null
+    }
+  },
+  "teamUsage": {}
+}

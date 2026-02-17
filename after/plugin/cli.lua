@@ -13,6 +13,7 @@ local fzf_lua = require("fzf-lua")
 local toggleterm_exec = require("toggleterm").exec
 
 local cli_tool_choices = {
+    "ollama",
     "gcloud",
     "aws",
     "misc",
@@ -73,7 +74,12 @@ local actions_gcloud = {
     {
         name = "list permissions by role",
         action = function()
-            vim.ui.input({ prompt = "Enter `role`" }, function(role)
+            -- TODO: fuzzy suggestions
+            vim.ui.input({ prompt = "Enter `role`: ", default = "bigquery.dataViewer" }, function(role)
+                if role == nil then
+                    vim.notify("`role` not provided!")
+                    return
+                end
                 pcall(toggleterm_exec, string.format(" gcloud iam roles describe roles/%s", role))
             end)
         end,
@@ -103,11 +109,70 @@ local actions_gcloud = {
     },
 }
 
+local function get_actions_ollama()
+    return {
+        {
+            name = "ollama ps (server)",
+            action = function()
+                pcall(
+                    toggleterm_exec,
+                    string.format(" curl -s %s/api/ps | jq '.models[].name'", vim.env.OLLAMA_SERVER_HOST)
+                )
+            end,
+        },
+
+        {
+            name = "ollama ps (local)",
+            action = function()
+                pcall(
+                    toggleterm_exec,
+                    string.format(" curl -s %s/api/ps | jq '.models[].name'", vim.env.OLLAMA_LOCAL_HOST)
+                )
+            end,
+        },
+
+        {
+            name = "ollama ls (server)",
+            action = function()
+                pcall(
+                    toggleterm_exec,
+                    string.format(" curl -s %s/api/tags | jq '.models[].name' | sort", vim.env.OLLAMA_SERVER_HOST)
+                )
+            end,
+        },
+
+        {
+            name = "ollama ls (local)",
+            action = function()
+                pcall(
+                    toggleterm_exec,
+                    string.format(" curl -s %s/api/tags | jq '.models[].name' | sort", vim.env.OLLAMA_LOCAL_HOST)
+                )
+            end,
+        },
+
+        {
+            name = "ollama ls (custom)",
+            action = function()
+                vim.ui.input({ prompt = "ollama_url", default = vim.env.OLLAMA_LOCAL_HOST }, function(ollama_url)
+                    pcall(
+                        toggleterm_exec,
+                        string.format(" curl -s %s/api/tags | jq '.models[].name' | sort", ollama_url)
+                    )
+                end)
+            end,
+        },
+    }
+end
+
+local actions_aws = {}
 local actions_misc = {}
 
 local cli_tool_actions = {
-    misc = actions_misc,
+    ollama = get_actions_ollama(),
     gcloud = actions_gcloud,
+    aws = actions_aws,
+    misc = actions_misc,
 }
 
 function M.run_cli_tool()

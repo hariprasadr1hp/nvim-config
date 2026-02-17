@@ -4,6 +4,7 @@
 
 local companion_adapters = require("codecompanion.adapters")
 
+---@type CodeCompanion.HTTPAdapter.Gemini
 local opts = {
     defaults = {
         ---@type "oauth-personal" | "gemini-api-key" | "vertex-ai"

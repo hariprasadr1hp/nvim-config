@@ -93,14 +93,17 @@ local function get_actions_sql()
                 name = "List all models [DBT]",
                 action = dbt.list_all_dbt_models,
             },
+
             {
                 name = "List only enabled models [DBT]",
                 action = dbt.list_only_enabled_models,
             },
+
             {
                 name = "List all compiled sql files [DBT]",
                 action = dbt.list_compiled_sql_files,
             },
+
             {
                 name = "List all target run sql files [DBT]",
                 action = dbt.list_target_run_sql_files,

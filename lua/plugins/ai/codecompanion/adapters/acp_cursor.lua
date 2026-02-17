@@ -4,6 +4,7 @@
 
 local helpers = require("codecompanion.adapters.acp.helpers")
 
+---@type CodeCompanion.ACPAdapter
 return {
     name = "cursor",
     formatted_name = "Cursor",

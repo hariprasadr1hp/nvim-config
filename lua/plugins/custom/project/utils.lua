@@ -2,15 +2,18 @@
 
 local M = {}
 
-local fzflua = require("fzf-lua")
+local fzf_lua = require("fzf-lua")
 
 local function print_env_value()
     -- fuzzy search the environment variables, then print the corresponding value
-    fzflua.fzf_exec(vim.tbl_keys(vim.fn.environ()), {
+    fzf_lua.fzf_exec(vim.tbl_keys(vim.fn.environ()), {
         prompt = "Environment variables> ",
         actions = {
             ["default"] = function(selected)
-                print(selected[1] .. ": " .. vim.env[selected[1]])
+                local ok, _ = pcall(print, string.format("%s: %s", selected[1], vim.env[selected[1]]))
+                if not ok then
+                    vim.notify(string.format("env `%s` not set!", selected[1]))
+                end
             end,
         },
     })
@@ -18,7 +21,7 @@ end
 
 local function copy_env_value()
     -- fuzzy search the environment variables, then copy the corresponding value to the clipboard
-    fzflua.fzf_exec(vim.tbl_keys(vim.fn.environ()), {
+    fzf_lua.fzf_exec(vim.tbl_keys(vim.fn.environ()), {
         prompt = "Environment variables> ",
         actions = {
             ["default"] = function(selected)

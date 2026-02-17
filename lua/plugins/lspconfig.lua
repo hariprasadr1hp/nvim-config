@@ -90,6 +90,10 @@ local function setup_lsp_config()
     })
 
     local capabilities = blink_cmp.get_lsp_capabilities()
+    local lsp_flags = {
+        allow_incremental_sync = true,
+        debounce_text_changes = 150,
+    }
 
     local servers = {
         arduino_language_server = {},
@@ -136,6 +140,11 @@ local function setup_lsp_config()
                     }
                 end,
             },
+        },
+
+        bashls = {
+            -- TODO: ignore `.env`
+            filetypes = { "bash", "sh" },
         },
 
         emmet_ls = {
@@ -191,8 +200,11 @@ local function setup_lsp_config()
                         callSnippet = "Replace",
                     },
                     diagnostics = {
-                        disable = { "missing-fields" },
-                        globals = { "vim", "hs" },
+                        disable = {
+                            -- "missing-fields",
+                            "trailing-space",
+                        },
+                        globals = { "vim", "hs", "require", "io", "table", "string", "pandoc" },
                         neededFileStatus = {
                             ["codestyle-check"] = "Any",
                         },
@@ -406,6 +418,7 @@ local function setup_lsp_config()
             function(server_name)
                 local server = servers[server_name] or {}
                 server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+                server.flags = lsp_flags
                 lspconfig[server_name].setup(server)
             end,
         },

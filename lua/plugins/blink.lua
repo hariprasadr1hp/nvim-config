@@ -253,7 +253,7 @@ local function setup_blink_config()
     }
 
     opts.completion.trigger = {
-        prefetch_on_insert = true,
+        prefetch_on_insert = false,
         show_in_snippet = true,
         show_on_keyword = true,
         show_on_trigger_character = true,
@@ -368,6 +368,7 @@ local function setup_blink_config()
         "codeium",
         "env",
         "lazydev",
+        "minuet",
     }
 
     opts.sources.per_filetype = {
@@ -470,6 +471,16 @@ local function setup_blink_config()
         score_offset = 100,
     }
 
+    opts.sources.providers.minuet = {
+        name = "minuet",
+        module = "minuet.blink",
+        async = true,
+        -- Should match minuet.config.request_timeout * 1000,
+        -- since minuet.config.request_timeout is in seconds
+        timeout_ms = 3000,
+        score_offset = 50, -- Gives minuet higher priority among suggestions
+    }
+
     opts.sources.providers.omni = {
         module = "blink.cmp.sources.complete_func",
         enabled = function()
@@ -536,18 +547,19 @@ return {
         -- event = "VimEnter",
         lazy = true,
         dependencies = {
-            { "Exafunction/windsurf.nvim", event = "VeryLazy" },
             { "rafamadriz/friendly-snippets" },
             { "echasnovski/mini.snippets" },
+            { "folke/lazydev.nvim" },
+            { "bydlw98/blink-cmp-env" },
+            { "moyiz/blink-emoji.nvim" },
+            { "Kaiser-Yang/blink-cmp-git" },
             {
                 "kristijanhusak/vim-dadbod-completion",
                 ft = { "sql", "mysql", "plsql", "bqsql" },
                 lazy = true,
             },
-            { "moyiz/blink-emoji.nvim" },
-            { "bydlw98/blink-cmp-env" },
-            { "Kaiser-Yang/blink-cmp-git" },
-            { "folke/lazydev.nvim" },
+            { "milanglacier/minuet-ai.nvim" },
+            { "Exafunction/windsurf.nvim", event = "VeryLazy" },
             { "MahanRahmati/blink-nerdfont.nvim" },
             { "erooke/blink-cmp-latex" },
         },

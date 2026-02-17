@@ -149,6 +149,7 @@ local key_maps = {
         -- [A]CTION ----------------
         { "<leader>a", group = "action+", nowait = false, remap = false },
         { "<leader>ac", group = "copy+", nowait = false, remap = false },
+        { "<leader>ad", group = "diff+", nowait = false, remap = false },
         { "<leader>ag", group = "args+", nowait = false, remap = false },
         { "<leader>ap", group = "ai-prompts+", nowait = false, remap = false },
         { "<leader>aq", group = "macro-replay+", nowait = false, remap = false },
@@ -174,6 +175,7 @@ local key_maps = {
 
         -- [G]IT --------------------
         { "<leader>g", group = "git+", nowait = false, remap = false },
+        { "<leader>gd", group = "gitdiff+", nowait = false, remap = false },
         { "<leader>gh", group = "gitHub+", nowait = false, remap = false },
         { "<leader>gl", group = "last-commit+", nowait = false, remap = false },
 
@@ -221,6 +223,7 @@ local key_maps = {
         { "<leader>r", group = "reload+", nowait = false, remap = false },
         { "<leader>rd", group = "debug-session+", nowait = false, remap = false },
         { "<leader>rl", group = "last+", nowait = false, remap = false },
+        { "<leader>rr", group = "refactor+", nowait = false, remap = false },
         { "<leader>rs", group = "session+", nowait = false, remap = false },
 
         -- [S]EARCH ----------------

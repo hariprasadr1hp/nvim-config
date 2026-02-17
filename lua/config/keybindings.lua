@@ -171,6 +171,12 @@ keymap_set("n", "<leader>nrs", ":echo '`emacs` command 🫠'<cr>", "n/a")
 keymap_set("n", "<leader>om", ":e Makefile<cr>", "makefile")
 keymap_set("n", "<leader>on", ":messages<cr>", "messages")
 
+keymap_set("n", "<leader>oz", function()
+    local file = vim.fn.expand("%:p")
+    local line = vim.api.nvim_win_get_cursor(0)[1]
+    vim.fn.jobstart({ "zed", "--reuse", string.format("%s:%d", file, line) }, { detach = true })
+end, "zed-cline")
+
 keymap_set("n", "<leader>pc", ":e .nvim.lua<cr>", "config-project")
 keymap_set("n", "<leader>pe", ":e http-client.private.env.json<cr>", "http-client.private.env.json")
 
@@ -247,12 +253,13 @@ keymap_set("n", "<leader>sp", "/\\%V", "pattern-in-visual-select")
 -- TODO: while disabling, instead of switching diagnostics completely off,
 -- turn off only the virtual text. Keep the diagnostic signs on
 keymap_set("n", "<leader>td", function()
-    local status = vim.diagnostic.is_enabled()
-    vim.diagnostic.enable(not status)
+    local bufnr = vim.api.nvim_get_current_buf()
+    local status = vim.diagnostic.is_enabled({ bufnr = bufnr })
+    vim.diagnostic.enable(not status, { bufnr = bufnr })
     if status then
-        vim.notify("diagnotics disabled!", vim.log.levels.INFO)
+        vim.notify("diagnostics disabled for buffer " .. bufnr .. "!", vim.log.levels.INFO)
     else
-        vim.notify("diagnostics enabled!", vim.log.levels.INFO)
+        vim.notify("diagnostics enabled for buffer " .. bufnr .. "!", vim.log.levels.INFO)
     end
 end, "diagnostics")
 keymap_set("n", "<leader>tD", helpers.toggle_autocmd_debug, "debug-autocmds")

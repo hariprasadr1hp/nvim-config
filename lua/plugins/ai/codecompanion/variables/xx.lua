@@ -1,5 +1,3 @@
-local keymap_set = require("config.helpers").keymap_set
-local redact = require("core.redact")
 local config = require("codecompanion.config")
 
 local Variable = {}

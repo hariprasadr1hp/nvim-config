@@ -2,6 +2,7 @@
 
 local companion_adapters = require("codecompanion.adapters")
 
+---@type CodeCompanion.HTTPAdapter.OpenAICompatible
 local opts = {
     env = {
         url = "https://api.venice.ai/api",

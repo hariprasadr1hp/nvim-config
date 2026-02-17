@@ -4,6 +4,7 @@
 
 local companion_adapters = require("codecompanion.adapters")
 
+---@type CodeCompanion.HTTPAdapter.xAI
 local opts = {
     env = {
         api_key = vim.env.XAI_API_KEY,

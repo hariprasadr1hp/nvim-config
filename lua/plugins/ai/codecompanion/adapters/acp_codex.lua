@@ -6,6 +6,7 @@
 
 local companion_adapters = require("codecompanion.adapters")
 
+---@type CodeCompanion.ACPAdapter.Codex
 local opts = {
     defaults = {
         ---@type "openai-api-key" | "codex-api-key" | "chatgpt"

@@ -1,4 +1,4 @@
--- lua/plugins/git/gitsigns.lua
+-- lua/plugins/gitsigns.lua
 
 local signs = {
     add = { text = "" },
