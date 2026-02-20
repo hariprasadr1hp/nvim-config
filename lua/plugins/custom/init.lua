@@ -15,6 +15,7 @@ return {
             { "<leader>aa", "<cmd>ProjectActions<cr>", desc = "actions-project" },
             { "<leader>bi", "<cmd>BufferInfo<cr>", desc = "buffer-info" },
             { "<leader>ib", "<cmd>BufferInfo<cr>", desc = "buffer-info" },
+            { "<leader>ip", "<cmd>ProjectInfo<cr>", desc = "buffer-info" },
         },
         dependencies = {
             { "saghen/blink.cmp" },

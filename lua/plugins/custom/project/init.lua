@@ -13,12 +13,14 @@ local utils = require("plugins.custom.project.utils")
 M.print_env_value = utils.print_env_value
 M.copy_env_value = utils.copy_env_value
 M.show_actions = require("plugins.custom.project.actions").show_actions
+M.show_project_info = require("plugins.custom.project.info").show_project_info
 
 function M.setup(opts)
     opts = vim.tbl_deep_extend("force", {}, defaults_opts, opts or {})
     vim.api.nvim_create_user_command("ProjectPrintEnv", M.print_env_value, {})
     vim.api.nvim_create_user_command("ProjectCopyEnv", M.copy_env_value, {})
     vim.api.nvim_create_user_command("ProjectActions", M.show_actions, {})
+    vim.api.nvim_create_user_command("ProjectInfo", M.show_project_info, {})
 end
 
 return M

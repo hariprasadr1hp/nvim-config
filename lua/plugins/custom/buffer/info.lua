@@ -124,7 +124,7 @@ function M.show_buffer_info()
 end
 
 if ... == nil then
-    M.show_actions()
+    M.show_buffer_info()
 end
 
 return M

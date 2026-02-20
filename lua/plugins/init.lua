@@ -55,6 +55,7 @@ local opts = {
     require("plugins.snapshot"),
     require("plugins.colors"),
     require("plugins.refactor"),
+    require("plugins.rss"),
 
     require("plugins.ai.mcphub"),
     require("plugins.ai.codecompanion"),

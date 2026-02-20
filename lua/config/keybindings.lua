@@ -91,7 +91,6 @@ keymap_set("n", "<leader>eb", ":Runme<cr>", "eval-buffer")
 keymap_set("n", "<leader>el", ":luafile %<cr>", "source-luafile")
 keymap_set("n", "<leader>ev", ":source %<cr>", "source-vimfile")
 
-keymap_set("n", "<leader>fd", ":e ~/.local/share/db_ui/connections.json<cr>", "dbui-file")
 keymap_set("n", "<leader>fe", ":e .env<cr>", ".env")
 keymap_set("n", "<leader>fi", ":e " .. config_dir .. "/lua/plugins/init.lua<cr>", "plugins/init.lua")
 keymap_set("n", "<leader>fI", ":e " .. config_dir .. "/lua/config/init.lua<cr>", "config/init.lua")
@@ -113,7 +112,7 @@ keymap_set("n", "<leader>hc", ":checkhealth config<cr>", "check-config-health")
 keymap_set("n", "<leader>hrr", ":echo '`emacs` command 🫠'<cr>", "n/a")
 keymap_set("n", "<leader>hs", vim.lsp.buf.signature_help, "lsp-signature-help")
 
-keymap_set("n", "<leader>ip", ":!pwd<cr>", "project-info")
+keymap_set("n", "<leader>ig", ":!pwd<cr>", "git-info")
 keymap_set("n", "<leader>it", ":Inspect<cr>", "ts-inspect-element")
 keymap_set("n", "<leader>iT", vim.treesitter.inspect_tree, "ts-inspect-tree")
 
