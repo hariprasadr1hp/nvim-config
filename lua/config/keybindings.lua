@@ -29,8 +29,8 @@ keymap_set("n", "<leader>aga", ":argadd %<cr>", "argadd-cfile")
 -- TODO: keymap_set("n", "<leader>agc", "", "cmd-to-argsadd")
 -- TODO: keymap_set("n", "<leader>agC", "", "cmd-to-argsdel")
 keymap_set("n", "<leader>agd", ":argdelete %<cr>", "argdel-cfile")
-keymap_set("n", "<leader>agf", ":argdelete %<cr>", "argadd-by-ft")
--- TODO: keymap_set("n", "<leader>agg", "", "argdo")
+keymap_set("n", "<leader>agg", ":args<cr>", "show-args")
+-- TODO: keymap_set("n", "<leader>agG", "", "argdo")
 
 keymap_set("n", "<leader>agq", function()
     local qf = vim.fn.getqflist()
@@ -140,8 +140,8 @@ keymap_set("n", "<leader>jv", function()
     vim.print(vim.fn.eval("t:"))
 end, "vars-tab")
 
-keymap_set("n", "<leader>l0", vim.lsp.buf.outgoing_calls, "lsp-incoming-calls")
-keymap_set("n", "<leader>l1", vim.lsp.buf.incoming_calls, "lsp-outgoing-calls")
+keymap_set("n", "<leader>l0", vim.lsp.buf.outgoing_calls, "lsp-outgoing-calls")
+keymap_set("n", "<leader>l1", vim.lsp.buf.incoming_calls, "lsp-incoming-calls")
 keymap_set("n", "<leader>la", vim.lsp.buf.code_action, "lsp-code-Actions")
 keymap_set("n", "<leader>ld", vim.lsp.buf.declaration, "lsp-declaration")
 keymap_set("n", "<leader>lD", vim.lsp.buf.definition, "lsp-definition")
@@ -303,6 +303,8 @@ keymap_set("n", "<leader>wx", ":wincmd x<cr>", "swap-window")
 keymap_set("n", "<leader>w|", ":wincmd <<cr>", "max-out-width")
 
 keymap_set("n", "<leader>xm", ":messages clear<cr>", "clear-messages")
+-- TODO: `<leader>xU` to delete file's undo history
+
 -------------------------------------------------------------------
 --- VISUAL MODE
 -- TODO: do git operation for visual-select, not hunks

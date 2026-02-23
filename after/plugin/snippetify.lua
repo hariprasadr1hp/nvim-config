@@ -15,6 +15,7 @@ local function escape_json_string(str)
     str = str:gsub('"', '\\"')
     str = str:gsub("\n", "\\n")
     str = str:gsub("\t", "\\t")
+    str = str:gsub("%$", "\\\\$")
     return str
 end
 

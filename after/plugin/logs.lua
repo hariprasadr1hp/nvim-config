@@ -32,6 +32,7 @@ local global_fpaths = {
     { name = "nio", desc = "", fpath = "~/.local/state/nvim/nio.log" },
     { name = "overseer", desc = "", fpath = "~/.local/state/nvim/overseer.log" },
     { name = "rplugin", desc = "", fpath = "~/.local/share/nvim/rplugin.vim" },
+    { name = "ruff", desc = "", fpath = "~/.local/share/ruff.log" },
     -- { name = "wezterm", desc = "", fpath = "" },
     -- { name = "aichat", desc = "", fpath = "" },
     -- { name = "starship", desc = "", fpath = "" },

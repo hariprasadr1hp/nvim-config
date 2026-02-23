@@ -98,5 +98,7 @@ return {
     config = setup_keymaps,
 }
 
--- TODO: a function to toggle dimming todo hightlights
 -- TODO: ability to select todo-keyword options
+-- TODO: quickfix options, based on the todo-label
+-- <leader>qtt to add all todo-label
+-- <leader>qtf to add only-fix todo-labels

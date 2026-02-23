@@ -11,5 +11,57 @@
       "},"
     ],
     "description": "snippet for adding snippet"
+  },
+
+  "jhttp-public-env": {
+    "prefix": "jhttp-public-env",
+    "body": [
+      "{",
+      "  \"\\$schema\": \"https://getkulala.net/http-client.env.schema.json\",",
+      "  \"dev\": {",
+      "    \"API_URL\": \"https://httpbin.org/post?env=dev\",",
+      "    \"API_KEY\": \"\"",
+      "  },",
+      "  \"testing\": {",
+      "    \"API_URL\": \"https://httpbin.org/post?env=testing\",",
+      "    \"API_KEY\": \"\"",
+      "  },",
+      "  \"staging\": {",
+      "    \"API_URL\": \"https://httpbin.org/post?env=staging\",",
+      "    \"API_KEY\": \"\"",
+      "  },",
+      "  \"prod\": {",
+      "    \"API_URL\": \"https://httpbin.org/post?env=prod\",",
+      "    \"API_KEY\": \"\"",
+      "  }",
+      "}"
+    ],
+    "description": "snippet for public http-env json"
+  },
+
+  "jhttp-private-env": {
+    "prefix": "jhttp-private-env",
+    "body": [
+      "{",
+      "  \"\\$schema\": \"https://getkulala.net/http-client.private.env.schema.json\",",
+      "  \"dev\": {",
+      "    \"API_URL\": \"https://httpbin.org/post?env=dev\",",
+      "    \"API_KEY\": \"\"",
+      "  },",
+      "  \"testing\": {",
+      "    \"API_URL\": \"https://httpbin.org/post?env=testing\",",
+      "    \"API_KEY\": \"\"",
+      "  },",
+      "  \"staging\": {",
+      "    \"API_URL\": \"https://httpbin.org/post?env=staging\",",
+      "    \"API_KEY\": \"\"",
+      "  },",
+      "  \"prod\": {",
+      "    \"API_URL\": \"https://httpbin.org/post?env=prod\",",
+      "    \"API_KEY\": \"\"",
+      "  }",
+      "}"
+    ],
+    "description": "snippet for private http-env json"
   }
 }

@@ -165,11 +165,6 @@ local function setup_lsp_config()
         },
 
         jsonls = {
-            -- lazy-load schemastore when needed
-            before_init = function(_, new_config)
-                new_config.settings.json.schemas = new_config.settings.json.schemas or {}
-                vim.list_extend(new_config.settings.json.schemas, require("schemastore").json.schemas())
-            end,
             init_options = {
                 provideFormatter = true,
             },
@@ -184,7 +179,20 @@ local function setup_lsp_config()
                             ".eslintrc",
                             "package.json",
                         },
-                        extra = {},
+                        extra = {
+                            {
+                                name = "http-client.env.json",
+                                fileMatch = { "http-client.env.json" },
+                                description = "The environment variables required for the HTTP client",
+                                url = "https://raw.githubusercontent.com/mistweaverco/kulala.nvim/main/schemas/http-client.env.schema.json",
+                            },
+                            {
+                                name = "http-client.private.env.json",
+                                fileMatch = { "http-client.private.env.json" },
+                                description = "he private environment variables required for the HTTP client",
+                                url = "https://raw.githubusercontent.com/mistweaverco/kulala.nvim/refs/heads/main/schemas/http-client.private.env.schema.json",
+                            },
+                        },
                     }),
                 },
             },
@@ -263,10 +271,15 @@ local function setup_lsp_config()
             filetypes = { "python", "ipynb" },
             init_options = {
                 settings = {
-                    trace = "messages",
-                    init_options = {
-                        settings = { logLevel = "debug" },
+                    configurationPreference = "filesystemFirst",
+                    -- configuration = vim.fn.stdpath("config") .. "/specs/ruff.toml",
+                    configuration = {
+                        format = {
+                            ["quote-style"] = "single",
+                        },
                     },
+                    logFile = "~/.local/state/ruff.log",
+                    logLevel = "debug",
                 },
             },
         },
@@ -356,11 +369,11 @@ local function setup_lsp_config()
                         url = "",
                     },
                     { format = { enable = true } },
-                    schemas = require("schemastore").yaml.schemas(),
+                    schemas = vim.tbl_extend("force", schemastore.yaml.schemas(), {}),
                     -- schemas = {
                     --     kubernetes = "k8s-*.yaml",
                     --     ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/**/*.{yml,yaml}",
-                    --     ["https://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
+                    --     ["https://json.schemastore.org/chart"] = "Chart.{yml,yaml}"
                     --     ["https://json.schemastore.org/circleciconfig"] = ".circleci/**/*.{yml,yaml}",
                     --     ["https://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
                     --     ["https://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
@@ -411,7 +424,7 @@ local function setup_lsp_config()
 
     mason_tool_installer.setup({ ensure_installed = ensure_installed })
 
-    mason_lspconfig.setup({
+    local setup_opts = {
         ensure_installed = {},
         automatic_installation = false,
         handlers = {
@@ -422,7 +435,8 @@ local function setup_lsp_config()
                 lspconfig[server_name].setup(server)
             end,
         },
-    })
+    }
+    mason_lspconfig.setup(setup_opts)
 
     -- vim.lsp.enable("bqls")
     vim.lsp.enable("tsqueryls")

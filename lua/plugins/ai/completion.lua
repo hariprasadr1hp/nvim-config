@@ -65,7 +65,7 @@ return {
                 off_func = function()
                     vim.cmd("Minuet blink disable")
                 end,
-                state = true,
+                state = false,
             })
 
             local virt_switch = Switch:new({

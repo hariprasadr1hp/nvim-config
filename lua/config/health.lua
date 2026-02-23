@@ -222,6 +222,7 @@ function M.check()
     -- TODO: check_paths()
     -- TODO: check_envs()
     -- TODO: check_shopts()
+    -- TODO: dictionary and thesaurus paths
 
     start("Summary")
     ok("Health check complete")

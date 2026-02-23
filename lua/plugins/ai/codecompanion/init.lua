@@ -58,6 +58,8 @@ local function setup_codecompanion_config()
                 },
             },
             history = {
+                -- BUG: Message history not passed to ACP adapters on chat restoration
+                -- https://github.com/ravitemer/codecompanion-history.nvim/issues/63
                 enabled = true,
                 opts = {
                     keymap = "gh",
