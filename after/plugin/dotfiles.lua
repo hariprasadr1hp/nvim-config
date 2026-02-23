@@ -41,6 +41,14 @@ local function get_global_fpaths()
         { name = "codex", alias = nil, fpath = "~/.codex/config.toml" },
         { name = "cursor", alias = nil, fpath = "~/.cursor/cli-config.json" },
         { name = "dbui", alias = nil, fpath = "~/.local/share/db_ui/connections.json" },
+        {
+            name = "espanso",
+            alias = nil,
+            fpath = os_path({
+                macos = "~/Library/Application Support/espanso/match/base.yml",
+                linux = "~/.config/espanso/match/base.yml",
+            }),
+        },
         { name = "hammerspoon", alias = nil, fpath = "~/.hammerspoon/init.lua" },
         { name = "gcloud", alias = nil, fpath = "~/.config/gcloud/configurations/config_default" },
         { name = "gemini", alias = nil, fpath = "~/.gemini/settings.json" },
@@ -75,10 +83,13 @@ function M.pick_dotfiles()
     local valid_dotfiles = {}
     for _, entry in ipairs(get_global_fpaths()) do
         local fpath = entry.fpath
+        local name = entry.alias or entry.name
         if fpath then
             local expanded_path = vim.fn.expand(fpath)
             if vim.fn.filereadable(expanded_path) == 1 then
-                table.insert(valid_dotfiles, { name = entry.alias or entry.name, path = expanded_path })
+                table.insert(valid_dotfiles, { name = name or entry.name, path = expanded_path })
+            else
+                vim.notify(string.format("Path for `%s` not found!", name))
             end
         end
     end
