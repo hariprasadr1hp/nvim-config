@@ -14,7 +14,7 @@ local opts = {
     -- refer how the models are named for claude code
     commands = {
         default = {
-            "claude-code-acp",
+            "claude-agent-acp",
         },
     },
 }

@@ -213,6 +213,7 @@ local function setup_codecompanion_config()
                         -- end,
                         contains_code = false,
                     },
+                    -- BUG: `/terminal` share the empty lines and not the previous stdout/stderr
                 },
 
                 variables = {

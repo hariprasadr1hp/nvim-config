@@ -157,7 +157,7 @@
         - typescript-language-server
         - bash-language-server
         - vim-language-server
-        - '@zed-industries/claude-code-acp'
+        - '@zed-industries/claude-agent-acp'
         - '@zed-industries/codex-acp'
         - '@blowmage/cursor-agent-acp'
       ignore_errors: true

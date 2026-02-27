@@ -404,6 +404,7 @@ local function setup_lsp_config()
         "black",
         "codelldb",
         "eslint_d",
+        "firefox-debug-adapter",
         "isort",
         "mypy",
         "prettier",

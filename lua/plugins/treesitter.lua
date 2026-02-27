@@ -121,6 +121,14 @@ local function setup_treesitter_config()
         filetype = "sql",
     }
 
+    parser_config.pgn = {
+        install_info = {
+            url = "https://github.com/rolandwalker/tree-sitter-pgn",
+            files = { "src/parser.c", "src/scanner.c" },
+        },
+        filetype = "pgn",
+    }
+
     vim.treesitter.language.register("sql_bigquery", "sqlx")
     vim.treesitter.language.register("cypher", "cypher")
 
