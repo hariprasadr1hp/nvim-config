@@ -251,7 +251,6 @@ local function setup_fzflua_keymaps()
     keymap_set("n", "<leader>lo", fzflua.lsp_document_symbols, "outline-document")
     keymap_set("n", "<leader>lO", fzflua.lsp_workspace_symbols, "Outline-Workspace")
     keymap_set("n", "<leader>lq", fzflua.loclist, "llist")
-    keymap_set("n", "<leader>lR", fzflua.lsp_references, "lsp-references")
     keymap_set("n", "<leader>l,", fzflua.lsp_type_sub, "lsp-sub-type")
     keymap_set("n", "<leader>l.", fzflua.lsp_type_super, "lsp-super-type")
 
@@ -269,7 +268,7 @@ local function setup_fzflua_keymaps()
     end, "search-org-notes")
 
     keymap_set("n", "<leader>oo", fzflua.lsp_document_symbols, "outline-document")
-    keymap_set("n", "<leader>oO", fzflua.lsp_workspace_symbols, "Outline-Workspace")
+    keymap_set("n", "<leader>oO", fzflua.lsp_live_workspace_symbols, "Outline-Workspace")
 
     keymap_set("n", "<leader>qq", fzflua.quickfix, "list-quickfix")
     keymap_set("n", "<leader>qQ", fzflua.loclist, "list-loclist")

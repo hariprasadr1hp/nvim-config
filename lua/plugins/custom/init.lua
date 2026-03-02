@@ -22,6 +22,7 @@ return {
         dependencies = {
             { "saghen/blink.cmp" },
             { "echasnovski/mini.notify" },
+            { "akinsho/toggleterm.nvim" },
         },
         config = function()
             require("plugins.custom.extract").setup({})

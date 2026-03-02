@@ -62,7 +62,7 @@ local function get_global_fpaths()
         { name = "lazysql", alias = nil, fpath = "~/.config/lazysql/config.toml" },
         { name = "mcphub-servers", alias = nil, fpath = "~/.config/mcphub/servers.json" },
         { name = "nix", alias = nil, fpath = "~/.config/nix/flake.nix" },
-        { name = "opencode", alias = nil, fpath = "~/.config/opencode/opencode.json" },
+        { name = "opencode", alias = nil, fpath = "~/.config/opencode/opencode.jsonc" },
         {
             name = "poetry",
             alias = nil,

@@ -6,6 +6,7 @@ M = {}
 
 -- local df = require("plugins.custom.buffer.dataframes")
 local fzf_lua = require("fzf-lua")
+local toggleterm_exec = require("toggleterm").exec
 local formatters = require("conform").formatters
 -- local formatters_by_ft = require("conform").formatters_by_ft
 -- local lint = require("lint")
@@ -29,6 +30,13 @@ local actions_lua = {
 }
 
 local actions_python = {
+    {
+        name = "uv run python %",
+        action = function()
+            pcall(toggleterm_exec, string.format(" uv run python %s", vim.fn.expand("%")))
+        end,
+    },
+
     {
         name = "Format using `black` [python]",
         action = function()

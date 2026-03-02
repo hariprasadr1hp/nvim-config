@@ -333,6 +333,7 @@ local function setup_codecompanion_config()
         },
 
         display = {
+            -- TODO: completion: symbols from the shared buffer (extend buffer variable)
             chat = {
                 fold_context = false,
                 fold_reasoning = true,

@@ -66,11 +66,37 @@ end
 local function setup_toggleterm_config()
     local toggleterm = require("toggleterm")
 
-    keymap_set("n", "<M-m>", toggleterm.toggle, "toggle-term")
-    keymap_set("n", "<C-`>", toggleterm.toggle, "toggle-term")
+    -- Smart toggle: checks buftype *before* toggling to decide post-action.
+    --   non-terminal → terminal : startinsert (land in terminal mode)
+    --   terminal → non-terminal : stopinsert  (land in normal mode)
+    -- vim.schedule defers the mode change until after toggleterm has finished
+    -- switching focus, since the destination window isn't active yet when
+    -- toggle() returns.
+    local function smart_toggle()
+        local is_terminal = vim.bo.buftype == "terminal"
+        toggleterm.toggle()
+        vim.schedule(function()
+            if is_terminal then
+                vim.cmd("stopinsert")
+            else
+                vim.cmd("startinsert")
+            end
+        end)
+    end
+    keymap_set("n", "<M-m>", smart_toggle, "toggle-term")
+    keymap_set("n", "<C-`>", smart_toggle, "toggle-term")
+    keymap_set("t", "<M-m>", smart_toggle, "toggle-term")
+    keymap_set("t", "<C-`>", smart_toggle, "toggle-term")
 
-    keymap_set("t", "<M-m>", toggleterm.toggle, "toggle-term")
-    keymap_set("t", "<C-`>", toggleterm.toggle, "toggle-term")
+    keymap_set("n", "g4", function()
+        vim.ui.input({
+            prompt = "enter terminal command",
+        }, function(input)
+            if input then
+                pcall(toggleterm.exec, string.format(" %s", input))
+            end
+        end)
+    end, "term-exec")
 
     local function make_runner(target)
         return function()
@@ -150,8 +176,6 @@ return {
         config = setup_toggleterm_config,
     },
 }
-
--- FIX: <C-`> doesn't always work as a toggling mechanism (terminal)
 
 -- TODO: managing multiple terminal tabs
 

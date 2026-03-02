@@ -16,6 +16,7 @@ local cli_tool_choices = {
     "ollama",
     "gcloud",
     "aws",
+    "uv",
     "misc",
 }
 
@@ -165,11 +166,35 @@ local function get_actions_ollama()
     }
 end
 
+local actions_uv = {
+    {
+        name = "uv run python %",
+        action = function()
+            pcall(toggleterm_exec, string.format(" uv run python %s", vim.fn.expand("%")))
+        end,
+    },
+
+    {
+        name = "uv sync",
+        action = function()
+            pcall(toggleterm_exec, " uv sync")
+        end,
+    },
+
+    {
+        name = "uv lock --upgrade",
+        action = function()
+            pcall(toggleterm_exec, " uv lock --upgrade")
+        end,
+    },
+}
+
 local actions_aws = {}
 local actions_misc = {}
 
 local cli_tool_actions = {
     ollama = get_actions_ollama(),
+    uv = actions_uv,
     gcloud = actions_gcloud,
     aws = actions_aws,
     misc = actions_misc,

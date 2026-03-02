@@ -7,6 +7,7 @@ local companion_adapters = require("codecompanion.adapters")
 ---@type CodeCompanion.ACPAdapter.ClaudeCode
 local opts = {
     env = {
+        -- BUG: claudecode uses ANTHROPIC_API_KEY for api usage if claudecode is not oauth authenticated, shouldn't happen
         CLAUDE_CODE_OAUTH_TOKEN = vim.env.CLAUDE_CODE_OAUTH_TOKEN,
     },
 
