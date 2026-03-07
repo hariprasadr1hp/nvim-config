@@ -21,6 +21,7 @@ local function setup_dadbod_ui_init()
         },
 
         postgresql = {
+            Col = "select column_name, data_type from information_schema.columns where table_name = '{table}' and table_schema = '{schema}';",
             Count = 'select count(*) from "{table}";',
             Explain = "EXPLAIN ANALYZE {last_query};",
         },

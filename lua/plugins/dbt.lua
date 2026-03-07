@@ -12,6 +12,8 @@ return {
                 "DBTToggleCyclingFiles",
                 "DBTUpstreamFiles",
                 "DBTDownstreamFiles",
+                "DBTDiffModelAndCompiled",
+                "DBTGoToDefinition",
             },
             dependencies = {
                 { "ibhagwan/fzf-lua" },

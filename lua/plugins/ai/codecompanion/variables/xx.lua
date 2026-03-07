@@ -8,16 +8,16 @@ local counter = 0
 
 -- List of arbitrary placeholder names
 local placeholder_names = {
+    "fred",
+    "waldo",
+    "corge",
+    "grault",
     "foo",
     "bar",
     "baz",
     "qux",
     "quux",
-    "corge",
-    "grault",
     "garply",
-    "waldo",
-    "fred",
     "plugh",
     "xyzzy",
     "thud",

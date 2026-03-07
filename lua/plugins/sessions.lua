@@ -2,6 +2,8 @@
 
 local keymap_set = require("config.helpers").keymap_set
 
+local M = {}
+
 local opts = {
     dir = vim.fn.stdpath("state") .. "/sessions/",
     need = 1,
@@ -26,8 +28,12 @@ local function setup_persistence_config()
     keymap_set("n", "<leader>xs", persistence.stop, "dont-store-current-session")
 end
 
-return {
+M = {
     "folke/persistence.nvim",
     event = "BufReadPre",
     config = setup_persistence_config,
 }
+
+-- local persistence_augroup = vim.api.nvim_create_augroup("Persistence", { clear = true })
+
+return M

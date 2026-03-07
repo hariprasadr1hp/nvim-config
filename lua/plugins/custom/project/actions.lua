@@ -80,11 +80,11 @@ local function check_cube()
 end
 
 local function check_dbt()
-    if vim.env.DBT_PROJECT_DIR then
-        -- FIX: still need to check if the path exists
+    if (vim.env.DBT_PROJECT_DIR == nil) or (vim.env.DBT_PROJECT_NAME == nil) then
+        return false
+    else
         return true
     end
-    return false
 end
 
 local function check_dagster()
@@ -106,7 +106,11 @@ local function get_project_resources()
         terraform = check_terraform,
     }
 
-    return tblx.true_keys(checks)
+    local available_resources = vim.tbl_map(function(check_resource)
+        return check_resource()
+    end, checks)
+
+    return tblx.true_keys(available_resources)
 end
 
 function M.show_actions()
@@ -114,7 +118,7 @@ function M.show_actions()
     local actions = {}
 
     for _, resource in ipairs(resources) do
-        table.insert(actions, resource_actions[resource])
+        actions = vim.tbl_extend("force", actions, resource_actions[resource])
     end
 
     if not actions then

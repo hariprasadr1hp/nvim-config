@@ -9,6 +9,14 @@
     "description": "code block with language specifier"
   },
 
+  "jt": {
+    "prefix": "jt",
+    "body": [
+      "- [ ] $0"
+    ],
+    "description": "todo bulletin"
+  },
+
   "srcb": {
     "prefix": "srcb",
     "body": [

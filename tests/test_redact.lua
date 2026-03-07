@@ -99,6 +99,48 @@ T["unredact()"]["handles percent signs in value"] = function()
     expect.equality(unredacted, content)
 end
 
+T["unredact()"]["case-insensitive unredaction - exact case"] = function()
+    local Redact = setup()
+    Redact:new({
+        value = "romeo",
+        mask_func = function(_) return "fred" end,
+    })
+
+    expect.equality(Redact.unredact("fred"), "romeo")
+end
+
+T["unredact()"]["case-insensitive unredaction - mixed case"] = function()
+    local Redact = setup()
+    Redact:new({
+        value = "romeo",
+        mask_func = function(_) return "fred" end,
+    })
+
+    expect.equality(Redact.unredact("Fred"), "romeo")
+end
+
+T["unredact()"]["case-insensitive unredaction - all caps"] = function()
+    local Redact = setup()
+    Redact:new({
+        value = "romeo",
+        mask_func = function(_) return "fred" end,
+    })
+
+    expect.equality(Redact.unredact("FRED"), "romeo")
+end
+
+T["unredact()"]["redact is still case-sensitive"] = function()
+    local Redact = setup()
+    Redact:new({
+        value = "romeo",
+        mask_func = function(_) return "fred" end,
+    })
+
+    -- Only lowercase "romeo" should redact; "Romeo" should not
+    expect.equality(Redact.redact("romeo"), "fred")
+    expect.equality(Redact.redact("Romeo"), "Romeo")
+end
+
 T["unredact()"]["handles special characters in masked value"] = function()
     local Redact = setup()
     Redact:new({

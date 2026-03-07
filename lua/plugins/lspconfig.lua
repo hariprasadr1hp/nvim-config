@@ -103,7 +103,8 @@ local function setup_lsp_config()
         gdtoolkit = {},
         jinja_lsp = {},
         julials = {},
-        -- sqls = {},
+        sqls = {},
+        texlab = {},
         ts_ls = {},
         tflint = {},
         vimls = {},
@@ -320,7 +321,7 @@ local function setup_lsp_config()
         },
 
         ["turtle-language-server"] = {
-            cmd = "turtle_languageserver",
+            cmd = { "turtle-language-server", "--stdio" },
             filetypes = { "turtle", "ttl" },
         },
 
@@ -417,6 +418,7 @@ local function setup_lsp_config()
         -- "sqlfmt",
         "stylua",
         "taplo",
+        "tex-fmt",
         "yamlfix",
     }
 

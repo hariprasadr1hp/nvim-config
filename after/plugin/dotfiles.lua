@@ -30,7 +30,7 @@ end
 ---@class GlobalFpath
 ---@field name string
 ---@field alias string | nil
----@field fpath OSPath | string
+---@field fpath string
 
 ---@return GlobalFpath[]
 local function get_global_fpaths()
@@ -72,6 +72,7 @@ local function get_global_fpaths()
             }),
         },
         { name = "sqlfluff", alias = nil, fpath = "~/.sqlfluff" },
+        { name = "sqls", alias = nil, fpath = "~/.config/sqls/config.yml" },
         { name = "starship", alias = nil, fpath = "~/.config/starship/starship.toml" },
         { name = "wezterm", alias = nil, fpath = "~/.config/wezterm/wezterm.lua" },
         { name = "zellij", alias = nil, fpath = "~/.config/zellij/config.kdl" },

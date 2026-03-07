@@ -2,108 +2,128 @@
   "RDF": {
     "prefix": "RDF",
     "body": ["@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ."],
-    "description": "rdf IRI"
+    "description": "rdf IRI (core RDF properties)"
   },
+
   "RDFS": {
     "prefix": "RDFS",
     "body": ["@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> ."],
-    "description": "rdfs IRI"
+    "description": "rdfs IRI (labels, comments, classes)"
   },
+
   "OWL": {
     "prefix": "OWL",
     "body": ["@prefix owl: <http://www.w3.org/2002/07/owl#> ."],
-    "description": "owl IRI"
+    "description": "owl IRI (OWL ontology features ex:sameAs, restrictions)"
   },
+
   "XSD": {
     "prefix": "XSD",
     "body": ["@prefix xsd: <http://www.w3.org/2001/XMLSchema#> ."],
-    "description": "xsd IRI"
+    "description": "xsd IRI (datatypes ex: integer, string, dateTime, etc.,)"
   },
+
   "FOAF": {
     "prefix": "FOAF",
     "body": ["@prefix foaf: <http://xmlns.com/foaf/0.1/> ."],
-    "description": "foaf IRI"
+    "description": "foaf IRI (people, names, ages, friends)"
   },
+
   "VCARD": {
     "prefix": "VCARD",
     "body": ["@prefix vcard: <http://www.w3.org/2006/vcard/ns#> ."],
-    "description": "vcard IRI"
+    "description": "vcard IRI (contact information, addresses)"
   },
+
   "DC": {
     "prefix": "DC",
     "body": ["@prefix dc: <http://purl.org/dc/elements/1.1/> ."],
-    "description": "dc IRI"
+    "description": "dc IRI (basic dublin core metadata)"
   },
+
   "DCTERMS": {
     "prefix": "DCTERMS",
     "body": ["@prefix dcterms: <http://purl.org/dc/terms/> ."],
-    "description": "dcterms IRI"
+    "description": "dcterms IRI (richer dublin core items)"
   },
+
   "BIBO": {
     "prefix": "BIBO",
     "body": ["@prefix bibo: <http://purl.org/ontology/bibo/> ."],
-    "description": "bibo IRI"
+    "description": "bibo IRI (books, articles, citations)"
   },
+
   "SCHEMA": {
     "prefix": "SCHEMA",
     "body": ["@prefix schema: <https://schema.org/> ."],
-    "description": "schema IRI"
+    "description": "schema IRI (web metatdata ex: people, orgs, products, places etc.,)"
   },
+
   "SKOS": {
     "prefix": "SKOS",
     "body": ["@prefix skos: <http://www.w3.org/2004/02/skos/core#> ."],
-    "description": "skos IRI"
+    "description": "skos IRI (controlled vocabularies and taxonomies)"
   },
+
   "SKOSXL": {
     "prefix": "SKOSXL",
     "body": ["@prefix skosxl: <http://www.w3.org/2008/05/skos-xl#> ."],
-    "description": "skosxl IRI"
+    "description": "skosxl IRI (extended SKOS labels)"
   },
+
   "GEO": {
     "prefix": "GEO",
     "body": ["@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> ."],
-    "description": "geo IRI"
+    "description": "geo IRI (simple WGS84 latitude/longitude)"
   },
+
   "GEOSPARQL": {
     "prefix": "GEOSPARQL",
     "body": ["@prefix geosparql: <http://www.opengis.net/ont/geosparql#> ."],
-    "description": "geosparql IRI"
+    "description": "geosparql IRI (full GeoSPARQL features)"
   },
+
   "ORG": {
     "prefix": "ORG",
     "body": ["@prefix org: <http://www.w3.org/ns/org#> ."],
-    "description": "org IRI"
+    "description": "org IRI (organizations, membership, roles)"
   },
+
   "VOID": {
     "prefix": "VOID",
     "body": ["@prefix void: <http://rdfs.org/ns/void#> ."],
-    "description": "void IRI"
+    "description": "void IRI (metadata about datasets)"
   },
+
   "DCAT": {
     "prefix": "DCAT",
     "body": ["@prefix dcat: <http://www.w3.org/ns/dcat#> ."],
-    "description": "dcat IRI"
+    "description": "dcat IRI (data catalogs and distributions)"
   },
+
   "PROV": {
     "prefix": "PROV",
     "body": ["@prefix prov: <http://www.w3.org/ns/prov#> ."],
-    "description": "prov IRI"
+    "description": "prov IRI (lineage, who created what, when, how)"
   },
+
   "LDP": {
     "prefix": "LDP",
     "body": ["@prefix ldp: <http://www.w3.org/ns/ldp#> ."],
-    "description": "ldp IRI"
+    "description": "ldp IRI (linked Data Platform, containers/resources)"
   },
+
   "SD": {
     "prefix": "SD",
     "body": [
       "@prefix sd: <http://www.w3.org/ns/sparql-service-description#> ."
     ],
-    "description": "sd IRI"
+    "description": "sd IRI (SPARQL service metadata)"
   },
+
   "EX": {
     "prefix": "EX",
     "body": ["@prefix ex: <http://example.org/> ."],
-    "description": "ex IRI"
+    "description": "ex IRI (general-purpose placeholder)"
   }
 }

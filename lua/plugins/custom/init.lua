@@ -12,7 +12,7 @@ return {
         },
         keys = {
             { "<leader>;a", "<cmd>BufferActions<cr>", desc = "actions-by-ft" },
-            { "<leader>aa", "<cmd>ProjectActions<cr>", desc = "actions-project" },
+            { "<leader>pa", "<cmd>ProjectActions<cr>", desc = "project-actions" },
             { "<leader>bi", "<cmd>BufferInfo<cr>", desc = "buffer-info" },
             { "<leader>ib", "<cmd>BufferInfo<cr>", desc = "buffer-info" },
             { "<leader>ip", "<cmd>ProjectInfo<cr>", desc = "buffer-info" },

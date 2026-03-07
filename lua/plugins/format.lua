@@ -56,6 +56,7 @@ local formatters_by_ft = {
         end
     end,
     svelte = { "prettier", stop_after_first = true },
+    tex = { "tex-fmt" },
     toml = { "taplo" },
     typescript = { "prettier", stop_after_first = true },
     typescriptreact = { "prettier", stop_after_first = true },
@@ -142,10 +143,21 @@ local formatters = {
     sleek = {
         command = "sleek",
         args = {
-            "--indent-spaces=4",
+            "--indent-spaces=2",
             "--uppercase=false",
             "--trailing-newline=false",
             "--lines-between-queries=2",
+        },
+    },
+
+    ["tex-fmt"] = {
+        command = "tex-fmt",
+        args = {
+            "--wraplen 100",
+            "--wrapmin 80",
+            "--tabsize 2",
+            "--wrap-chars []",
+            '--verbosity "error"',
         },
     },
 

@@ -10,6 +10,7 @@ local keymap_set = require("config.helpers").keymap_set
 
 local get_os = require("config.helpers").get_os
 
+---@diagnostic disable-next-line: unused-local, unused-function
 local function os_path(values)
     local os = get_os()
     if os == "linux" then

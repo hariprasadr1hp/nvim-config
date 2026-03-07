@@ -55,13 +55,22 @@ local actions_python = {
 local function get_actions_sql()
     local actions = {}
 
-    if vim.env.DBT_PROJECT_DIR == nil then
+    if
+        (vim.env.DBT_PROJECT_DIR == nil)
+        or (vim.env.DBT_PROJECT_NAME == nil)
+        or (not vim.startswith(vim.fn.expand("%p"), vim.env.DBT_PROJECT_DIR))
+    then
         return actions
     end
 
     local get_actions_sql_dbt = function()
         local dbt = require("dbt")
         return {
+            {
+                name = "Goto Definition [DBT]",
+                action = dbt.go_to_defintion,
+            },
+
             {
                 name = "Jump to `compiled` file [DBT]",
                 action = dbt.jump_to_compiled,
@@ -126,7 +135,11 @@ end
 local function get_actions_yaml()
     local actions = {}
 
-    if vim.env.DBT_PROJECT_DIR == nil then
+    if
+        (vim.env.DBT_PROJECT_DIR == nil)
+        or (vim.env.DBT_PROJECT_NAME == nil)
+        or (not vim.startswith(vim.fn.expand("%p"), vim.env.DBT_PROJECT_DIR))
+    then
         return actions
     end
 

@@ -373,10 +373,13 @@ local function setup_blink_config()
 
     opts.sources.per_filetype = {
         markdown = { "snippets", "path", "git", "emoji", "buffer", "nerdfont", "latex" },
-        sql = { "snippets", "dadbod", "buffer" },
+        sql = { "snippets", "dadbod", "zzsql", "zzjinja", "dbt", "dbt_fn", "buffer" },
         oil = { "path", "buffer" },
         codecompanion = { "codecompanion" },
         dap_repl = {},
+        jinja = { "snippets", "zzjinja", "lsp", "buffer" },
+        jinja2 = { "snippets", "zzjinja", "lsp", "buffer" },
+        htmldjango = { "snippets", "zzjinja", "lsp", "buffer" },
     }
 
     opts.sources.providers = {}
@@ -397,7 +400,7 @@ local function setup_blink_config()
         max_items = nil,
         min_keyword_length = 0,
         fallbacks = {},
-        score_offset = 0,
+        score_offset = 40,
         override = nil,
     }
 
@@ -499,12 +502,50 @@ local function setup_blink_config()
         should_show_items = function()
             return vim.tbl_contains({ "sql", "bqsql", "mysql", "plsql" }, vim.bo.filetype)
         end,
+        score_offset = 35,
+        transform_items = function(_, items)
+            local kind_priority = {
+                [blink_cmp_types.CompletionItemKind.Field] = 20,
+                [blink_cmp_types.CompletionItemKind.Keyword] = 10,
+                [blink_cmp_types.CompletionItemKind.Function] = 0,
+            }
+            for _, item in ipairs(items) do
+                item.score_offset = (item.score_offset or 0) + (kind_priority[item.kind] or 0)
+                if item.kind == blink_cmp_types.CompletionItemKind.Keyword then
+                    item.label = item.label:lower()
+                end
+            end
+            return items
+        end,
+    }
+
+    opts.sources.providers.zzsql = {
+        name = "custom",
+        module = "plugins.blink.sources.sql",
+        score_offset = 50,
+    }
+
+    opts.sources.providers.zzjinja = {
+        name = "Jinja",
+        module = "plugins.blink.sources.jinja",
+        score_offset = 30,
+    }
+
+    opts.sources.providers.dbt_fn = {
+        name = "dbt_fn",
+        module = "dbt.cmp_sources.jinja",
+        score_offset = 55,
+    }
+
+    opts.sources.providers.dbt = {
+        name = "dbt",
+        module = "dbt.cmp_sources.manifest",
+        score_offset = 60,
     }
 
     opts.sources.providers.env = {
         name = "Env",
         module = "blink-cmp-env",
-        ---@type blink-cmp-env.Options
         opts = {
             item_kind = blink_cmp_types.CompletionItemKind.Variable,
             show_braces = false,

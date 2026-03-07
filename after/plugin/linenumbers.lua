@@ -8,7 +8,7 @@ if vim.g.vscode then
 end
 
 local is_recording = require("config.helpers").is_recording
-local line_numbers_augroup = vim.api.nvim_create_augroup("LineNumebers", { clear = true })
+local line_numbers_augroup = vim.api.nvim_create_augroup("LineNumbers", { clear = true })
 
 local colors = {
     red = "#e06c75",

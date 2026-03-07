@@ -4,11 +4,18 @@ local Redact = {}
 
 Redact.values = {}
 
+-- Asymmetric redact/unredact design:
+--   redact   is CASE-SENSITIVE:   only the exact registered value is replaced.
+--   unredact is CASE-INSENSITIVE: any casing of the mask is restored to the
+--            original value. This lets users type a mask in any case (e.g.
+--            "Fred" for a mask "fred") and still recover the original.
+
 ---@param content_string string
 ---@return string
 function Redact.redact(content_string)
+    -- Exact, case-sensitive substitution: value → mask.
     for value, mask_func in pairs(Redact.values) do
-        -- Escape special pattern characters
+        -- Escape special pattern characters so literal text is matched.
         local escaped_value = string.gsub(value, "[%(%)%.%%%+%-%*%?%[%]%^%$]", "%%%1")
         content_string = string.gsub(content_string, escaped_value, mask_func(value))
     end
@@ -18,7 +25,8 @@ end
 ---@param content_string string
 ---@return string
 function Redact.unredact(content_string)
-    -- Sort by masked value length (descending) to avoid substring conflicts
+    -- Process longer masks first to avoid a shorter mask being a substring of a
+    -- longer one and causing a partial, incorrect substitution.
     local sorted_values = {}
     for value, mask_func in pairs(Redact.values) do
         table.insert(sorted_values, { value = value, mask_func = mask_func })
@@ -31,11 +39,16 @@ function Redact.unredact(content_string)
         local value = item.value
         local mask_func = item.mask_func
         local masked_value = mask_func(value)
-        -- Escape special pattern characters in masked value
+        -- Step 1: escape special pattern characters in the mask.
         local escaped_masked = string.gsub(masked_value, "[%(%)%.%%%+%-%*%?%[%]%^%$]", "%%%1")
-        -- Escape % in replacement string (% needs to be doubled in replacement)
+        -- Step 2: convert each letter to a [xX] class for case-insensitive matching.
+        --   e.g. "fred" → "[fF][rR][eE][dD]", so "Fred", "FRED", etc. all match.
+        local ci_pattern = escaped_masked:gsub("%a", function(c)
+            return "[" .. c:lower() .. c:upper() .. "]"
+        end)
+        -- Step 3: double any literal % in the replacement (Lua gsub requirement).
         local escaped_replacement = string.gsub(value, "%%", "%%%%")
-        content_string = string.gsub(content_string, escaped_masked, escaped_replacement)
+        content_string = string.gsub(content_string, ci_pattern, escaped_replacement)
     end
     return content_string
 end

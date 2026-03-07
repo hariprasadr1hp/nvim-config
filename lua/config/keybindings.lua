@@ -180,6 +180,7 @@ end, "zed-at-cline")
 keymap_set("n", "<leader>pc", ":e .nvim.lua<cr>", "config-project")
 keymap_set("n", "<leader>pe", ":e http-client.private.env.json<cr>", "http-client.private.env.json")
 
+keymap_set("n", "<leader>qa", ":qa<cr>", "quit-all")
 keymap_set("n", "<leader>qd1", function()
     vim.diagnostic.setqflist({ severity = vim.diagnostic.severity.ERROR })
 end, "only-errors")

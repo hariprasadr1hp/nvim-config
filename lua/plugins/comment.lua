@@ -4,12 +4,15 @@ local opts = {
     options = {
         custom_commentstring = function()
             local ft = vim.bo.filetype
-            if ft == "sparql" then
-                return "# %s"
-            elseif ft == "lisp" then
+            if ft == "lisp" then
                 return ";; %s"
+            elseif ft == "sparql" then
+                return "# %s"
+            elseif ft == "turtle" then
+                return "# %s"
+            else
+                return vim.bo.commentstring
             end
-            -- return vim.bo.commentstring
         end,
         ignore_blank_line = false,
         start_of_line = false,

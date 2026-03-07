@@ -206,7 +206,7 @@ local function setup_codecompanion_config()
 
                 slash_commands = {
                     ["dummy"] = {
-                        description = "Insert filetype",
+                        description = "dummy",
                         callback = "plugins.ai.codecompanion.slash_commands.dummy",
                         -- callback = function(chat)
                         --     chat:add_buf_message({ content = "this is a dummy message!" })
@@ -232,6 +232,7 @@ local function setup_codecompanion_config()
                     log_level = "DEBUG",
                     --TODO: system prompt can be a function
                     system_prompt = require("plugins.ai.codecompanion.prompts.system_prompt.neovim"),
+                    ---@diagnostic disable-next-line: unused-local
                     prompt_decorator = function(message, adapter, context)
                         return string.format([[<prompt>%s</prompt>]], message)
                     end,
