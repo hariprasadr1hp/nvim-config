@@ -4,7 +4,9 @@ local opts = {
     options = {
         custom_commentstring = function()
             local ft = vim.bo.filetype
-            if ft == "lisp" then
+            if ft == "cypher" then
+                return "// %s"
+            elseif ft == "lisp" then
                 return ";; %s"
             elseif ft == "sparql" then
                 return "# %s"

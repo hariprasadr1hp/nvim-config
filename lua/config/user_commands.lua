@@ -47,6 +47,14 @@ user_cmd("GetFileExt", function()
     print(vim.fn.expand("%:e"))
 end, {})
 
+user_cmd("HexColorToggle", function()
+    local flag = vim.lsp.document_color.is_enabled()
+    vim.lsp.document_color.enable(not flag, nil, { style = "virtual" })
+    vim.cmd("edit!")
+end, {
+    desc = "toggle-hex-color-highlight",
+})
+
 -- Sort lines by character count (line length).
 -- Usage:
 --   :SortWC            -> whole buffer, shortest -> longest

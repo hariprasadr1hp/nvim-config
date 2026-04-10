@@ -209,13 +209,19 @@ end
 vim.opt.exrc = true
 vim.opt.secure = true
 
--- CODING
+-- CODING ENVIRONMENT
 -------------------------------------------------------------------
+-- PYTHON
+---------
 if vim.fn.has("linux") == 1 then
     vim.g.python3_host_prog = vim.fn.expand("~/.config/nvim/.venv/bin/python")
 elseif vim.fn.has("macunix") == 1 then
     vim.g.python3_host_prog = vim.fn.expand("~/.config/nvim/.venv/bin/python")
 end
+
+-- LSP
+-------------------------------------------------------------------
+vim.lsp.document_color.enable(true, nil, { style = "virtual" })
 
 -- MISCELLANEOUS
 -------------------------------------------------------------------

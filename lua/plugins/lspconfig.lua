@@ -22,6 +22,7 @@ local function buf_keymap_set(mode, lhs, rhs, buf, desc, key_opts)
 end
 
 local function client_supports_method(client, method, bufnr)
+    -- TODO: upgrade to 0.12?
     if vim.fn.has("nvim-0.11") == 1 then
         return client:supports_method(method, bufnr)
     else
@@ -83,6 +84,16 @@ local function setup_lsp_config()
     local mason_tool_installer = require("mason-tool-installer")
     local blink_cmp = require("blink.cmp")
     local schemastore = require("schemastore")
+
+    vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(ev)
+            local client = vim.lsp.get_client_by_id(ev.data.client_id)
+            if client and client.name == "pyright" then
+                client.handlers = client.handlers or {}
+                client.handlers["$/progress"] = function() end
+            end
+        end,
+    })
 
     vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("hp-lsp-attach", { clear = true }),
@@ -476,8 +487,8 @@ return {
             "williamboman/mason-lspconfig.nvim",
             "WhoIsSethDaniel/mason-tool-installer.nvim",
             "saghen/blink.cmp",
-            { "b0o/schemastore.nvim", lazy = true, vaersion = false },
-            { "j-hui/fidget.nvim", opts = {} },
+            { "b0o/schemastore.nvim", lazy = true, version = false },
+            { "j-hui/fidget.nvim" },
         },
         config = setup_lsp_config,
     },

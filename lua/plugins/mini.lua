@@ -57,38 +57,6 @@ local function setup_mini_icons_config()
     require("mini.icons").setup(opts)
 end
 
-local function setup_mini_hipatterns_config()
-    local mini_hipatterns = require("mini.hipatterns")
-    mini_hipatterns.setup({
-        highlighters = {
-            -- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
-            -- fixme = { pattern = "%f[%w]()FIXME()%f[%W]", group = "MiniHipatternsFixme" },
-            -- hack = { pattern = "%f[%w]()HACK()%f[%W]", group = "MiniHipatternsHack" },
-            -- todo = { pattern = "%f[%w]()TODO()%f[%W]", group = "MiniHipatternsTodo" },
-            -- note = { pattern = "%f[%w]()NOTE()%f[%W]", group = "MiniHipatternsNote" },
-
-            hex_color = mini_hipatterns.gen_highlighter.hex_color(),
-        },
-        delay = {
-            text_change = 200,
-            scroll = 50,
-        },
-    })
-
-    vim.api.nvim_create_user_command("HexColorToggle", function()
-        local highlighters = mini_hipatterns.config.highlighters
-        local hex_color = highlighters.hex_color
-        if hex_color == nil then
-            highlighters.hex_color = mini_hipatterns.gen_highlighter.hex_color()
-        else
-            highlighters.hex_color = nil
-        end
-        vim.cmd("edit!")
-    end, {
-        desc = "toggle-hex-color-highlight",
-    })
-end
-
 local function setup_mini_pairs_config()
     local opts = {
         modes = { insert = true, command = false, terminal = false },
@@ -136,7 +104,6 @@ local function setup_mini_config()
 
     setup_mini_ai_config()
     setup_mini_icons_config()
-    setup_mini_hipatterns_config()
     setup_mini_pairs_config()
 
     -- local hues = require("mini.hues")

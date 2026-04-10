@@ -8,6 +8,8 @@ local data_dir = vim.fn.stdpath("data")
 local state_dir = vim.fn.stdpath("state")
 local keymap_set = require("config.helpers").keymap_set
 
+local select = require("vim.treesitter._select")
+
 -- LEADER KEY-BINDINGS
 -------------------------------------------------------------------
 --- NORMAL MODE
@@ -149,6 +151,11 @@ keymap_set("n", "<leader>lD", vim.lsp.buf.definition, "lsp-definition")
 keymap_set("n", "<leader>lf", vim.lsp.buf.references, "lsp-references")
 keymap_set("n", "<leader>lh", vim.lsp.buf.hover, "hover-docs")
 keymap_set("n", "<leader>li", vim.lsp.buf.implementation, "lsp-implementations")
+
+keymap_set("n", "<leader>lk", function()
+    select.select_parent(1)
+end, "node-visual-select")
+
 keymap_set("n", "<leader>ll", vim.diagnostic.open_float, "show-diagnostics")
 keymap_set("n", "<leader>lq", vim.lsp.buf.workspace_symbol, "lsp-query-symbol")
 keymap_set("n", "<leader>lr", vim.lsp.buf.rename, "lsp-rename")
@@ -310,10 +317,28 @@ keymap_set("n", "<leader>xm", ":messages clear<cr>", "clear-messages")
 
 -------------------------------------------------------------------
 --- VISUAL MODE
+
+keymap_set({ "x", "o" }, ".", function()
+    if vim.treesitter.get_parser(nil, nil, { error = false }) then
+        select.select_parent(1)
+    else
+        vim.lsp.buf.selection_range(vim.v.count1)
+    end
+end, "increment-node-select")
+
+keymap_set({ "x", "o" }, ",", function()
+    if vim.treesitter.get_parser(nil, nil, { error = false }) then
+        select.select_child(1)
+    else
+        vim.lsp.buf.selection_range(-vim.v.count1)
+    end
+end, "decrement-node-select")
+
 -- TODO: do git operation for visual-select, not hunks
 -- keymap_set("x", "<leader>gs", "", "stage-select")
 -- keymap_set("x", "<leader>gu", "", "unstage-select")
 -- keymap_set("x", "<leader>gR", "", "git-reset-select")
+
 keymap_set("x", "<leader>sq", HP.SaveVisualSelection, "save-vselect-as-file")
 keymap_set("x", "<leader>tG", "g?", "gibberish-rot13")
 

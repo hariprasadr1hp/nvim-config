@@ -163,6 +163,8 @@ local function get_actions_ollama()
                 end)
             end,
         },
+
+        -- TODO: update all installed ollama models (pull)
     }
 end
 

@@ -2,18 +2,19 @@
   "jrequest": {
     "prefix": "jrequest",
     "body": [
-      "### Scratchpad",
+      "### ${1:name}",
       "",
-      "@MY_TOKEN_NAME=my_token_value",
+      "@MY_TOKEN_NAME = my_token_value",
       "",
-      "# @name scratchpad",
       "# @jq .",
+      "# @name ${1:name}",
+      "$0",
       "POST https://httpbin.org/post HTTP/1.1",
       "accept: application/json",
       "content-type: application/json",
       "",
       "{",
-      "\"foo\": \"bar\"",
+      "\t\"foo\": \"bar\"",
       "}"
     ],
     "description": "Snippet for http request"

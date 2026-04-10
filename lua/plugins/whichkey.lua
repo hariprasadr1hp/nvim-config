@@ -275,11 +275,18 @@ local key_maps = {
         { "<leader>h", group = "help+", nowait = false, remap = false },
         { "<leader>hh", group = "hunk+", nowait = false, remap = false },
 
+        -- [R]ELOAD ----------------
+        { "<leader>r", group = "reload+", nowait = false, remap = false },
+        { "<leader>rr", group = "refactor+", nowait = false, remap = false },
+
         -- [S]EARCH -------------
         { "<leader>s", group = "search/stash+", nowait = false, remap = false },
 
         -- [T]OGGLE -------------
         { "<leader>t", group = "toggle+", nowait = false, remap = false },
+
+        -- [Y]ANK --------------------
+        { "<leader>y", group = "yank+", nowait = false, remap = false },
     },
 }
 

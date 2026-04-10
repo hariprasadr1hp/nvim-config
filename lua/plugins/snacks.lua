@@ -23,7 +23,7 @@ local bigfile_opts = {
 
 ---@class snacks.quickfile.Config
 local quickfile_opts = {
-    exclude = { "latex" },
+    exclude = {},
     enabled = true,
 }
 

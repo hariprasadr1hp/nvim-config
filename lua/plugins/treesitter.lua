@@ -6,13 +6,13 @@ local ensure_installed = {
     "bash",
     "beancount",
     "bibtex",
-    "bruno",
+    -- "bruno",
     "c",
     "cmake",
     "cpp",
     "css",
     "csv",
-    "cypher",
+    -- "cypher",
     "diff",
     "dockerfile",
     "gdscript",
@@ -26,7 +26,7 @@ local ensure_installed = {
     "hurl",
     "javascript",
     "json",
-    "jsonc",
+    -- "jsonc",
     "julia",
     "kdl",
     "lua",
@@ -35,7 +35,7 @@ local ensure_installed = {
     "markdown_inline",
     "make",
     "nix",
-    "org",
+    -- "org",
     "python",
     "query",
     "regex",
@@ -55,90 +55,65 @@ local ensure_installed = {
     "yaml",
 }
 
-local highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = { "ruby", "sqlx" },
-}
-
-local indent = {
-    enable = true,
-    disable = {
-        "ruby",
-    },
-}
-
-local incremental_selection = {
-    enable = true,
-    keymaps = {
-        init_selection = "<leader>lk",
-        node_incremental = ".",
-        node_decremental = ",",
-        scope_incremental = "<c-space>",
-    },
-}
-
-local autotag = {
-    enable = true,
-}
-
-local opts = {
-    ensure_installed = ensure_installed,
-    sync_install = false,
-    auto_install = true,
-    ignore_install = { "org", "latex" },
-    highlight = highlight,
-    indent = indent,
-    incremental_selection = incremental_selection,
-    autotag = autotag,
-}
-
 local function setup_treesitter_config()
-    local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+    -- local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
 
-    parser_config.bruno = {
-        install_info = {
-            url = "https://github.com/Scalamando/tree-sitter-bruno",
-            files = { "src/parser.c", "src/scanner.c" },
-            branch = "main",
-        },
-        filetype = "bruno",
+    -- local parsers = require("nvim-treesitter.parsers")
+    --
+    -- parsers.bruno = {
+    --     install_info = {
+    --         url = "https://github.com/Scalamando/tree-sitter-bruno",
+    --         files = { "src/parser.c", "src/scanner.c" },
+    --         branch = "main",
+    --     },
+    --     filetype = "bruno",
+    -- }
+    --
+    -- parsers.cypher = {
+    --     install_info = {
+    --         url = "https://github.com/simplificare-org/tree-sitter-cypher",
+    --         files = { "src/parser.c" },
+    --         branch = "main",
+    --     },
+    --     filetype = "cypher",
+    -- }
+    --
+    -- parsers.sql_bigquery = {
+    --     install_info = {
+    --         url = "https://github.com/takegue/tree-sitter-sql-bigquery",
+    --         files = { "src/parser.c", "src/scanner.c" },
+    --         branch = "main",
+    --     },
+    --     filetype = "sql",
+    -- }
+    --
+    -- parsers.pgn = {
+    --     install_info = {
+    --         url = "https://github.com/rolandwalker/tree-sitter-pgn",
+    --         files = { "src/parser.c", "src/scanner.c" },
+    --     },
+    --     filetype = "pgn",
+    -- }
+
+    local treesitter = require("nvim-treesitter")
+
+    local opts = {
+        install_dir = vim.fn.stdpath("data") .. "/site",
     }
-
-    parser_config.cypher = {
-        install_info = {
-            url = "https://github.com/simplificare-org/tree-sitter-cypher",
-            files = { "src/parser.c" },
-            branch = "main",
-        },
-        filetype = "cypher",
-    }
-
-    parser_config.sql_bigquery = {
-        install_info = {
-            url = "https://github.com/takegue/tree-sitter-sql-bigquery",
-            files = { "src/parser.c", "src/scanner.c" },
-            branch = "main",
-        },
-        filetype = "sql",
-    }
-
-    parser_config.pgn = {
-        install_info = {
-            url = "https://github.com/rolandwalker/tree-sitter-pgn",
-            files = { "src/parser.c", "src/scanner.c" },
-        },
-        filetype = "pgn",
-    }
-
-    vim.treesitter.language.register("sql_bigquery", "sqlx")
-    vim.treesitter.language.register("cypher", "cypher")
-
-    local treesitter = require("nvim-treesitter.configs")
     treesitter.setup(opts)
+    treesitter.install(ensure_installed)
+
+    -- FIX: registering custom TS parsers in version 0.12
+
+    -- vim.treesitter.language.register("sql_bigquery", { "sqlx" })
+    -- vim.treesitter.language.register("cypher", { "cypher" })
+    -- vim.treesitter.language.register("markdown", { "codecompanion" })
 end
 
 return {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
+    lazy = false,
     event = { "BufReadPre", "BufNewFile" },
     build = ":TSUpdate",
     dependencies = {
@@ -146,9 +121,5 @@ return {
     },
     config = setup_treesitter_config,
 }
-
--- TODO: extend selection to neighbouring-node (prev/next)?
-
--- TODO: extend selection to [COUNT]neighbouring-node (prev/next)?
 
 -- TODO: export LST as json on a buffer level (using buffer-actions)

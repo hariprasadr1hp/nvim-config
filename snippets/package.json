@@ -106,6 +106,12 @@
       },
       {
         "language": [
+          "http"
+        ],
+        "path": "./http.json"
+      },
+      {
+        "language": [
           "javascript"
         ],
         "path": "./javascript.json"
