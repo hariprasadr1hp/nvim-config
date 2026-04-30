@@ -1,6 +1,6 @@
 -- lua/plugins/ai/codecompanion/adapters/acp_claude.lua
 
--- REFER: https://github.com/zed-industries/claude-code-acp
+-- REFER: https://github.com/agentclientprotocol/claude-agent-acp
 
 local companion_adapters = require("codecompanion.adapters")
 
