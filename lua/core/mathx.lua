@@ -1,4 +1,4 @@
---- mathx.lua
+--- lua/core/mathx.lua
 --- Extensions to the built-in math module.
 
 local M = {}

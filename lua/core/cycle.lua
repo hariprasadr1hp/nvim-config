@@ -1,4 +1,4 @@
---- cycle.lua
+--- lua/core/cycle.lua
 --- A class for cycling through a list of functions.
 
 local Cycle = {}

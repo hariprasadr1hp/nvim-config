@@ -5,6 +5,12 @@
 -- NOTE: default neovim settings at `lua/config/settings.lua` are loaded to vscode
 
 ----------------------------------------------------------------
+-- SETTINGS ----------------------------------------------------
+----------------------------------------------------------------
+
+vim.o.hlsearch = true
+
+----------------------------------------------------------------
 -- HELPERS FUNCTIONS -------------------------------------------
 ----------------------------------------------------------------
 
@@ -63,8 +69,9 @@ end
 -- KEYBINDINGS -------------------------------------------------
 ----------------------------------------------------------------
 
+local select = require("vim.treesitter._select")
 local vsaction = require("vscode").action
--- local vsnotify = require("vscode").notify
+local vsnotify = require("vscode").notify
 -- local.vsget = require("vscode").get_config
 -- local.vsset = require("vscode").update_config
 
@@ -110,15 +117,6 @@ keymap_set("x", "<leader>sv", [[y/\V<C-R>=escape(@", '/\')<cr><cr>]], "search-se
 -- JUMPS
 -------------------------------------------------------------------
 -- [b] buffer chain
-
--- [d] diagnostic chain
-keymap_set("n", "]d", function()
-    vsaction("editor.action.marker.prev")
-end, "next-diagnostic")
-
-keymap_set("n", "[d", function()
-    vsaction("editor.action.marker.next")
-end, "prev-diagnostic")
 
 -- SURROUND
 -------------------------------------------------------------------
@@ -197,41 +195,184 @@ do
     keymap_set("v", "<leader>a" .. "v" .. r, '"' .. r .. "P")
 end
 
--- LEADER-KEY BINDINGS
+-- KEYBINDINGS
 -------------------------------------------------------------------
+--- NORMAL MODE
 
-keymap_set("n", "<leader>,", function()
-    vsaction("workbench.action.quickOpen")
-end, "files")
-keymap_set("n", "<leader>.", function()
-    vsaction("workbench.action.quickOpen")
-end, "files")
+-- TODO: AI mode
+-- keymap_set("n", "<leader>ai", function()
+--     vsaction("aichat.newchataction")
+-- end, "ai-chat")
 
-keymap_set("n", "<leader>ai", function()
-    vsaction("aichat.newchataction")
-end, "ai-chat")
+keymap_set("n", "<leader>fp", function()
+    local cmd = string.format("edit %s", vim.fn.stdpath("config") .. "/lua/config/vscode.lua")
+    vim.cmd(cmd)
+end, "vscode-nvim-config-file")
+keymap_set("n", "<leader>fa", ":e AGENTS.md<cr>", "AGENTS.md")
+keymap_set("n", "<leader>fe", ":e .env<cr>", ".env")
 
-keymap_set("n", "<leader>ff", function()
-    vsaction("workbench.action.openRecent")
-end, "recent-files")
-keymap_set("n", "<leader>fs", function()
-    vsaction("workbench.action.files.save")
-end, "save-file")
+keymap_set("n", "<leader>lk", function()
+    select.select_parent(1)
+end, "ts-incremental-select")
 
-keymap_set("n", "<leader>ht", function()
-    vsaction("workbench.action.selectTheme")
-end, "recent-files")
+keymap_set("n", "<leader>om", function()
+    local cmd = string.format("edit %s", vim.fn.getcwd() .. "/Makefile")
+    vim.cmd(cmd)
+end, "makefile")
 
-keymap_set("n", "<leader>oe", function()
-    vsaction("workbench.action.toggleSidebarVisibility")
-end, "toggle-explorer")
-keymap_set("n", "<leader>oM", function()
-    vsaction("workbench.action.openMCPSettings")
-end, "MCP-settings")
-keymap_set("n", "<leader>on", ":messages<cr>", "notifications")
-keymap_set("n", "<leader>ot", function()
-    vsaction("workbench.action.terminal.toggleTerminal")
-end, "toggle-terminal")
+keymap_set("n", "<leader>pc", ":e .nvim.lua<cr>", "config-project")
+keymap_set("n", "<leader>pe", ":e http-client.private.env.json<cr>", "http-client.private.env.json")
+
+-- TODO: MCP settings
+-- keymap_set("n", "<leader>oM", function()
+--     vsaction("workbench.action.openMCPSettings")
+-- end, "MCP-settings")
+
+-- TODO: print messages
+-- keymap_set("n", "<leader>on", ":messages<cr>", "notifications")
+
+keymap_set("n", "<leader>tG", ":%norm! g??<cr>", "gibberish-rot13")
+keymap_set("n", "<leader>th", ":set hls!<cr>", "hl-search")
+keymap_set("n", "<leader>tn", ":setl nu! rnu!<cr>", "line-numbers")
+keymap_set("n", "<leader>ts", ":setl spell!<cr>", "spell-check")
+
+local normal_action_keys = {
+    ["[d"] = { "editor.action.marker.prev", "prev-diagnostic" },
+    ["]d"] = { "editor.action.marker.next", "next-diagnostic" },
+
+    ["g."] = { "editor.action.sourceAction", "lsp-code-action" },
+    ["gA"] = { "editor.action.sourceAction", "lsp-code-action" },
+    ["gD"] = { "editor.action.goToDeclaration", "lsp-declaration" },
+    ["gI"] = { "editor.action.goToImplementation", "lsp-implementation" },
+    ["gr"] = { "editor.action.goToReferences", "lsp-references" },
+    ["gt"] = { "editor.action.goToTypeDefinition", "lsp-typedef" },
+
+    ["<M-x>"] = { "workbench.action.showCommands", "commands" },
+
+    ["<leader>,"] = { "workbench.action.quickOpen", "files" },
+    ["<leader>."] = { "workbench.action.quickOpen", "files" },
+    ["<leader>/"] = { "editor.action.commentLine", "comment" },
+
+    ["<leader>bb"] = { "workbench.action.quickOpen", "buffers" },
+    ["<leader>bk"] = { "workbench.action.closeActiveEditor", "kill-buffer" },
+    ["<leader>bK"] = { "workbench.action.closeAllEditors", "kill-all-buffer" },
+    ["<leader>bN"] = { "workbench.action.files.newUntitledFile", "new-buffer" },
+    ["<leader>bO"] = { "workbench.action.closeOtherEditors", "kill-other-buffers" },
+
+    ["<leader>cf"] = { "editor.action.formatDocument", "format-buffer" },
+
+    ["<leader>db"] = { "editor.debug.action.toggleBreakpoint", "toggle-breakpoint" },
+
+    ["<leader>ff"] = { "workbench.action.openRecent", "recent-files" },
+    ["<leader>fs"] = { "workbench.action.files.save", "save-file" },
+    ["<leader>fS"] = { "workbench.action.files.saveWithoutFormatting", "save-wo-format" },
+
+    ["<leader>hhs"] = { "git.diff.stageHunk", "stage-hunk" },
+    ["<leader>hrr"] = { "workbench.action.reloadWindow", "reload-window" },
+    ["<leader>ht"] = { "workbench.action.selectTheme", "select-theme" },
+
+    ["<leader>j1"] = { "workbench.action.openEditorAtIndex1", "tab-1" },
+    ["<leader>j2"] = { "workbench.action.openEditorAtIndex2", "tab-2" },
+    ["<leader>j3"] = { "workbench.action.openEditorAtIndex3", "tab-3" },
+    ["<leader>j4"] = { "workbench.action.openEditorAtIndex4", "tab-4" },
+    ["<leader>j5"] = { "workbench.action.openEditorAtIndex5", "tab-5" },
+    ["<leader>j6"] = { "workbench.action.openEditorAtIndex6", "tab-6" },
+    ["<leader>j7"] = { "workbench.action.openEditorAtIndex7", "tab-7" },
+    ["<leader>j8"] = { "workbench.action.openEditorAtIndex8", "tab-8" },
+    ["<leader>jK"] = { "openEditors.closeAll", "kill-all-tabs" },
+    ["<leader>jn"] = { "workbench.action.files.newUntitledFile", "new-tab" },
+
+    ["<leader>la"] = { "editor.action.sourceAction", "lsp-code-action" },
+    ["<leader>ld"] = { "editor.action.goToDeclaration", "lsp-declaration" },
+    ["<leader>lf"] = { "editor.action.goToReferences", "lsp-references" },
+    ["<leader>li"] = { "editor.action.goToImplementation", "lsp-implementation" },
+    ["<leader>lo"] = { "breadcrumbs.focusAndSelect", "outline-document" },
+    ["<leader>lr"] = { "editor.action.rename", "lsp-rename" },
+    ["<leader>lt"] = { "editor.action.goToTypeDefinition", "lsp-typedef" },
+
+    ["<leader>oe"] = { "workbench.action.toggleSidebarVisibility", "toggle-explorer" },
+    ["<leader>oo"] = { "workbench.action.gotoSymbol", "outline-document" },
+    ["<leader>ot"] = { "workbench.action.terminal.toggleTerminal", "toggle-terminal" },
+
+    ["<leader>qr"] = { "workbench.action.reloadWindow", "reload-window" },
+
+    ["<leader>tf"] = { "editor.toggleFold", "toggle-fold" },
+    ["<leader>tr"] = { "workbench.action.files.toggleActiveEditorReadonlyInSession", "read-only" },
+    ["<leader>tt"] = { "workbench.action.terminal.runSelectedText", "send-cline-to-term" },
+    ["<leader>tw"] = { "editor.action.toggleWordWrap", "wrap-text" },
+
+    ["<leader>xm"] = { "workbench.output.action.clearOutput", "clear-messages" },
+
+    ["<leader>zf"] = { "workbench.action.editor.changeLanguageMode", "select-filetype" },
+}
+
+for k, v in pairs(normal_action_keys) do
+    keymap_set("n", k, function()
+        vsaction(v[1])
+    end, v[2])
+end
+
+local normal_na_keys = {
+    "<leader>ib",
+    "<leader>id",
+    "<leader>ig",
+    "<leader>ip",
+    "<leader>is",
+    "<leader>it",
+    "<leader>iT",
+    "<leader>oa",
+    "<leader>oA",
+    "<leader>od",
+    "<leader>oi",
+    "<leader>ok",
+    "<leader>oK",
+    "<leader>ol",
+    "<leader>oL",
+    "<leader>oq",
+    "<leader>or",
+    "<leader>os",
+    "<leader>oT",
+    "<leader>oz",
+}
+
+for _, key in ipairs(normal_na_keys) do
+    keymap_set("n", key, function()
+        vsnotify("`nvim` command 🫠")
+    end, "n/a")
+end
+
+-------------------------------------------------------------------
+--- VISUAL MODE
+
+keymap_set("x", "<leader>tG", "g?", "gibberish-rot13")
+
+local visual_action_keys = {
+    ["<leader>/"] = { "editor.action.commentLine", "comment" },
+
+    ["<leader>tt"] = { "workbench.action.terminal.runSelectedText", "send-vselect-to-term" },
+}
+
+for k, v in pairs(visual_action_keys) do
+    keymap_set("x", k, function()
+        vsaction(v[1])
+    end, v[2])
+end
+
+keymap_set({ "x", "o" }, ".", function()
+    if vim.treesitter.get_parser(nil, nil, { error = false }) then
+        select.select_parent(1)
+    else
+        vim.lsp.buf.selection_range(vim.v.count1)
+    end
+end, "increment-node-select")
+
+keymap_set({ "x", "o" }, ",", function()
+    if vim.treesitter.get_parser(nil, nil, { error = false }) then
+        select.select_child(1)
+    else
+        vim.lsp.buf.selection_range(-vim.v.count1)
+    end
+end, "decrement-node-select")
 
 ----------------------------------------------------------------
 ----------------------------------------------------------------

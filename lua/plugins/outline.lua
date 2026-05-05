@@ -66,6 +66,7 @@ local opts = {
         ["<tab>"] = "actions.tree_toggle",
         ["<esc>"] = "actions.close",
         ["?"] = "actions.show_help",
+        [";"] = "actions.jump",
         ["H"] = "actions.tree_close_recursive",
         ["L"] = "actions.tree_open_recursive",
         ["O"] = "actions.tree_toggle_recursive",

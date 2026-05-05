@@ -633,7 +633,7 @@ return {
                 end,
                 desc = "diff-from-last-N-commits",
             },
-            { "<leader>glo", "<cmd>DiffviewOpen HEAD~1<cr>", desc = "open-diffview" },
+            { "<leader>gLo", "<cmd>DiffviewOpen HEAD~1<cr>", desc = "open-diffview" },
             { "<leader>of", "<cmd>DiffviewToggleFiles<cr>", desc = "open-diffview" },
         },
         config = setup_diffview_config,

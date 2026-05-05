@@ -177,7 +177,8 @@ local key_maps = {
         { "<leader>g", group = "git+", nowait = false, remap = false },
         { "<leader>gd", group = "gitdiff+", nowait = false, remap = false },
         { "<leader>gh", group = "gitHub+", nowait = false, remap = false },
-        { "<leader>gl", group = "last-commit+", nowait = false, remap = false },
+        { "<leader>gl", group = "logs+", nowait = false, remap = false },
+        { "<leader>gL", group = "Last-commit+", nowait = false, remap = false },
 
         -- [H]ELP -------------------
         { "<leader>h", group = "help+", nowait = false, remap = false },

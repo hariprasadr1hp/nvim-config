@@ -52,6 +52,7 @@ local ensure_installed = {
     "vim",
     "vimdoc",
     "vue",
+    "xml",
     "yaml",
 }
 

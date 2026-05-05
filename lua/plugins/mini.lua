@@ -21,28 +21,6 @@ local mini_surrround_opts = {
     silent = false,
 }
 
-local function setup_mini_ai_config()
-    local opts = {
-        custom_textobjects = nil,
-        mappings = {
-            around = "a",
-            inside = "i",
-
-            around_next = "an",
-            inside_next = "in",
-            around_last = "al",
-            inside_last = "il",
-
-            goto_left = "g[",
-            goto_right = "g]",
-        },
-        n_lines = 50,
-        search_method = "cover_or_next",
-        silent = false,
-    }
-    require("mini.ai").setup(opts)
-end
-
 local function setup_mini_icons_config()
     local opts = {
         style = "glyph",
@@ -95,14 +73,11 @@ end
 
 local function setup_mini_config()
     require("mini.trailspace").setup()
-    require("mini.operators").setup()
     require("mini.splitjoin").setup()
     require("mini.doc").setup()
     require("mini.sessions").setup()
     require("mini.colors").setup()
-    require("mini.fuzzy").setup()
 
-    setup_mini_ai_config()
     setup_mini_icons_config()
     setup_mini_pairs_config()
 

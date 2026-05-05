@@ -88,6 +88,7 @@ local function setup_snacks_config()
     )
 
     keymap_set("n", "<leader>fz", snacks.zen.zen, "zen-mode")
+    -- FIX: when github-actions not available for the current PR, supply issue and PR ids
     keymap_set("n", "<leader>gha", snacks.picker.gh_actions, "gh-actions")
     -- TODO: keymap_set("n", "<leader>ghd", snacks.picker.gh_diff, "gh-diff")
     -- TODO: keymap_set("n", "<leader>ghr", snacks.picker.gh_reactions, "gh-reactions")
@@ -100,6 +101,9 @@ local function setup_snacks_config()
     keymap_set("n", "<leader>ghP", function()
         snacks.picker.gh_pr({ state = "all" })
     end, "gh-pr-all")
+    keymap_set("n", "<leader>glf", snacks.picker.git_log_file, "line-logs")
+    keymap_set("n", "<leader>gll", snacks.picker.git_log_line, "file-logs")
+    keymap_set("n", "<leader>glL", snacks.picker.git_log, "all-logs")
 
     keymap_set("n", "<leader>lc", snacks.picker.lsp_config, "lsp_config")
     keymap_set("n", "<leader>ti", toggle_indent_hl, "indent-hl")

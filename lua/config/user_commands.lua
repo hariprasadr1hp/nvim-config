@@ -55,6 +55,12 @@ end, {
     desc = "toggle-hex-color-highlight",
 })
 
+user_cmd("TrustNvimLua", function()
+    vim.secure.trust({ action = "allow", path = vim.fn.getcwd() .. "/.nvim.lua" })
+end, {
+    desc = "trust-local-nvim-lua-config",
+})
+
 -- Sort lines by character count (line length).
 -- Usage:
 --   :SortWC            -> whole buffer, shortest -> longest

@@ -1,4 +1,4 @@
---- textx.lua
+--- lua/core/textx.lua
 
 local M = {}
 

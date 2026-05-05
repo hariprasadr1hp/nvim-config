@@ -1,4 +1,4 @@
---- switch.lua
+--- lua/core/switch.lua
 --- A class for toggling between two states with associated callbacks.
 
 local Switch = {}
