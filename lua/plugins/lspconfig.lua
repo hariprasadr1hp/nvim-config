@@ -22,11 +22,101 @@ local function buf_keymap_set(mode, lhs, rhs, buf, desc, key_opts)
 end
 
 local function client_supports_method(client, method, bufnr)
-    -- TODO: upgrade to 0.12?
-    if vim.fn.has("nvim-0.11") == 1 then
-        return client:supports_method(method, bufnr)
-    else
-        return client.supports_method(method, { bufnr = bufnr })
+    return client:supports_method(method, bufnr)
+end
+
+local lsp_rename_autosave_enabled = true
+
+local function modified_buffers()
+    local bufs = {}
+
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        if vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].modified then
+            bufs[buf] = true
+        end
+    end
+
+    return bufs
+end
+
+local function lsp_rename_with_autosave()
+    local clients = vim.lsp.get_clients({
+        bufnr = 0,
+        method = vim.lsp.protocol.Methods.textDocument_rename,
+    })
+
+    if vim.tbl_isempty(clients) then
+        vim.notify("No LSP client supports rename in this buffer", vim.log.levels.WARN)
+        return
+    end
+
+    local before = modified_buffers()
+
+    vim.lsp.buf.rename(nil, {
+        on_rename = function()
+            if not lsp_rename_autosave_enabled then
+                return
+            end
+
+            for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+                if vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].modified and not before[buf] then
+                    vim.api.nvim_buf_call(buf, function()
+                        vim.cmd("silent noautocmd write")
+                    end)
+                end
+            end
+        end,
+    })
+end
+
+local function workspace_edit_uris(edit)
+    local uris = {}
+
+    if edit.changes then
+        for uri in pairs(edit.changes) do
+            uris[uri] = true
+        end
+    end
+
+    if edit.documentChanges then
+        for _, change in ipairs(edit.documentChanges) do
+            if change.textDocument and change.textDocument.uri then
+                uris[change.textDocument.uri] = true
+            end
+        end
+    end
+
+    return uris
+end
+
+local function save_rename_touched_buffers(edit)
+    for uri in pairs(workspace_edit_uris(edit)) do
+        local bufnr = vim.uri_to_bufnr(uri)
+
+        if vim.api.nvim_buf_is_loaded(bufnr) and vim.bo[bufnr].modified then
+            vim.api.nvim_buf_call(bufnr, function()
+                vim.cmd("silent noautocmd write")
+            end)
+        end
+    end
+end
+
+local function setup_lsp_rename_autosave_handler()
+    local method = vim.lsp.protocol.Methods.textDocument_rename
+    local original_handler = vim.lsp.handlers[method]
+
+    vim.lsp.handlers[method] = function(err, result, ctx, config)
+        if original_handler then
+            original_handler(err, result, ctx, config)
+        end
+
+        if err or not result or not lsp_rename_autosave_enabled then
+            return
+        end
+
+        vim.schedule(function()
+            save_rename_touched_buffers(result)
+        end)
     end
 end
 
@@ -44,6 +134,7 @@ local function setup_lsp_autocmds(event)
     end
 
     buf_keymap_set("n", "<leader>il", ":LspInfo<cr>", current_buffer, "lsp-info")
+    buf_keymap_set("n", "<leader>lr", lsp_rename_with_autosave, current_buffer, "lsp-rename")
 
     -- Document Highlight
     if client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, current_buffer) then
@@ -85,6 +176,8 @@ local function setup_lsp_config()
     local blink_cmp = require("blink.cmp")
     local schemastore = require("schemastore")
 
+    setup_lsp_rename_autosave_handler()
+
     vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(ev)
             local client = vim.lsp.get_client_by_id(ev.data.client_id)
@@ -124,21 +217,6 @@ local function setup_lsp_config()
             cmd = { "ansible-language-server", "--stdio" },
         },
 
-        -- bqls = {
-        --     filetypes = {
-        --         "sql",
-        --         "bqsql",
-        --     },
-        --     settings = {
-        --         project_id = "dc-int-dataform-dev",
-        --         location = "EU",
-        --     },
-        -- },
-
-        -- TODO: spell-checker for code
-        -- only for text files (.txt, markdown, org etc.,)
-        -- codebook = {},
-
         awk_ls = {
             cmd = { "awk-language-server" },
             filetypes = { "awk" },
@@ -155,7 +233,6 @@ local function setup_lsp_config()
         },
 
         bashls = {
-            -- TODO: ignore `.env`
             filetypes = { "bash", "sh" },
         },
 
@@ -186,7 +263,6 @@ local function setup_lsp_config()
                     format = { enable = true },
                     validate = { enable = true },
                     schemas = schemastore.json.schemas({
-                        -- `select=` and `ignore=` keys are mutually exclusive
                         ignore = {
                             ".eslintrc",
                             "package.json",
@@ -221,7 +297,6 @@ local function setup_lsp_config()
                     },
                     diagnostics = {
                         disable = {
-                            -- "missing-fields",
                             "trailing-space",
                         },
                         globals = { "vim", "hs", "require", "io", "table", "string", "pandoc" },
@@ -231,8 +306,8 @@ local function setup_lsp_config()
                     },
                     type = {
                         castNumberToInteger = true,
-                        weakUnionCheck = false, -- Stricter union type checking
-                        weakNilCheck = false, -- Stricter nil checking
+                        weakUnionCheck = false,
+                        weakNilCheck = false,
                     },
                     workspace = {
                         library = {
@@ -254,8 +329,6 @@ local function setup_lsp_config()
             settings = {
                 ["nil"] = {
                     formatting = {
-                        -- TODO: mason's doesn't work atm
-                        -- so installing system-wide, using `brew install nixfmt`
                         command = { "nixfmt" },
                     },
                 },
@@ -284,7 +357,6 @@ local function setup_lsp_config()
             init_options = {
                 settings = {
                     configurationPreference = "filesystemFirst",
-                    -- configuration = vim.fn.stdpath("config") .. "/specs/ruff.toml",
                     configuration = {
                         format = {
                             ["quote-style"] = "single",
@@ -337,19 +409,9 @@ local function setup_lsp_config()
         },
 
         taplo = {
-            -- Refer: https://taplo.tamasfe.dev/configuration/file.html
             cmd = { "taplo", "lsp", "stdio" },
             filetypes = { "toml" },
             root_markers = { ".taplo.toml", "taplo.toml", ".git" },
-            settings = {
-                -- evenBetterToml = {
-                --     schema = {
-                --         associations = {
-                --             ["example\\.toml$"] = "https://json.schemastore.org/example.json",
-                --         },
-                --     },
-                -- },
-            },
         },
 
         ts_query_ls = {
@@ -374,37 +436,11 @@ local function setup_lsp_config()
                 redhat = { telemetry = { enabled = false } },
                 yaml = {
                     schemaStore = {
-                        -- You must disable built-in schemaStore support if you want to use
-                        -- this plugin and its advanced options like `ignore`.
                         enable = false,
-                        -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
                         url = "",
                     },
                     { format = { enable = true } },
                     schemas = vim.tbl_extend("force", schemastore.yaml.schemas(), {}),
-                    -- schemas = {
-                    --     kubernetes = "k8s-*.yaml",
-                    --     ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/**/*.{yml,yaml}",
-                    --     ["https://json.schemastore.org/chart"] = "Chart.{yml,yaml}"
-                    --     ["https://json.schemastore.org/circleciconfig"] = ".circleci/**/*.{yml,yaml}",
-                    --     ["https://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
-                    --     ["https://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
-                    --     ["https://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
-                    --     ["https://json.schemastore.org/github-workflow"] = ".github/workflows/*",
-                    --     ["https://json.schemastore.org/mkdocs-1.6"] = "mkdocs.{yml,yaml}",
-                    --     ["https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/dbt_yml_files-latest.json"] = {
-                    --         "/**/*.yml",
-                    --         "!profiles.yml",
-                    --         "!dbt_project.yml",
-                    --         "!packages.yml",
-                    --         "!selectors.yml",
-                    --         "!profile_template.yml",
-                    --         "!package-lock.yml",
-                    --     },
-                    --     ["https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/dbt_project-latest.json"] = "dbt_project.yml",
-                    --     ["https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/selectors-latest.json"] = "selectors.yml",
-                    --     ["https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/packages-latest.json"] = "packages.yml",
-                    -- },
                 },
             },
         },
@@ -426,7 +462,6 @@ local function setup_lsp_config()
         "shfmt",
         "sleek",
         "sqlfluff",
-        -- "sqlfmt",
         "stylua",
         "taplo",
         "tex-fmt",
@@ -438,7 +473,7 @@ local function setup_lsp_config()
 
     mason_tool_installer.setup({ ensure_installed = ensure_installed })
 
-    local setup_opts = {
+    mason_lspconfig.setup({
         ensure_installed = {},
         automatic_installation = false,
         handlers = {
@@ -449,10 +484,8 @@ local function setup_lsp_config()
                 lspconfig[server_name].setup(server)
             end,
         },
-    }
-    mason_lspconfig.setup(setup_opts)
+    })
 
-    -- vim.lsp.enable("bqls")
     vim.lsp.enable("tsqueryls")
 end
 

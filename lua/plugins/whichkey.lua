@@ -219,6 +219,7 @@ local key_maps = {
         { "<leader>qd", group = "diagnostics+", nowait = false, remap = false },
         { "<leader>ql", group = "loclist+", nowait = false, remap = false },
         { "<leader>qld", group = "diagnostics+", nowait = false, remap = false },
+        { "<leader>qw", group = "write-quit+", nowait = false, remap = false },
 
         -- [R]ELOAD ----------------
         { "<leader>r", group = "reload+", nowait = false, remap = false },

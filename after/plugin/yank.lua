@@ -191,19 +191,8 @@ end
 ---@param opts table
 ---@return nil
 local function handle_yank_redacted_message(opts)
-    local buf = 0
-    local start_lnum1 = opts.line1
-    local end_lnum1 = opts.line2
     local reg = opts.args ~= "" and opts.args or "+"
-    local lines = {} ---@type string[]
-    for lnum1 = start_lnum1, end_lnum1 do
-        local lnum0 = lnum1 - 1
-
-        local line_text = vim.api.nvim_buf_get_lines(buf, lnum0, lnum0 + 1, false)[1] or ""
-        lines[#lines + 1] = line_text
-    end
-
-    local content_str = table.concat(lines, "\n")
+    local content_str = table.concat(HP.GetTextFromRange(opts.line1, opts.line2), "\n")
     local redacted_str = _get_redacted_message(content_str)
     M.yank_to_register(redacted_str, reg)
 end
@@ -211,20 +200,9 @@ end
 ---@param opts table
 ---@return nil
 local function handle_yank_unredacted_message(opts)
-    local buf = 0
-    local start_lnum1 = opts.line1
-    local end_lnum1 = opts.line2
     local reg = opts.args ~= "" and opts.args or "+"
-    local lines = {} ---@type string[]
-    for lnum1 = start_lnum1, end_lnum1 do
-        local lnum0 = lnum1 - 1
-
-        local line_text = vim.api.nvim_buf_get_lines(buf, lnum0, lnum0 + 1, false)[1] or ""
-        lines[#lines + 1] = line_text
-    end
-
-    local redacted_str = table.concat(lines, "\n")
-    local unredacted_str = _get_unredacted_message(redacted_str)
+    local content_str = table.concat(HP.GetTextFromRange(opts.line1, opts.line2), "\n")
+    local unredacted_str = _get_unredacted_message(content_str)
     M.yank_to_register(unredacted_str, reg)
 end
 
@@ -255,9 +233,14 @@ local function handle_yank_message_with_context(opts)
     end
 
     local content = table.concat(combined_lines, "\n")
+
+    local fname = vim.api.nvim_buf_get_name(0)
+    local cwd = vim.fn.getcwd()
+    local relative_path = "./" .. fname:gsub("^" .. vim.pesc(cwd) .. "/", "")
+
     local template = "file: `%s` line: %s\n```%s\n%s\n```"
     local context_str =
-        string.format(template, vim.fn.expand("%"), vim.api.nvim_win_get_cursor(0)[1], vim.bo.filetype, content)
+        string.format(template, relative_path, vim.api.nvim_win_get_cursor(0)[1], vim.bo.filetype, content)
     M.yank_to_register(context_str, reg)
 end
 

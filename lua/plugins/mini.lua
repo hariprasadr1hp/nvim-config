@@ -55,6 +55,8 @@ local function setup_mini_pairs_config()
     }
     require("mini.pairs").setup(opts)
 
+    -- TODO: create`ToggleAutopairs` usercommand
+
     -- Filetype-specific pairs using mini.pairs' built-in API
     vim.api.nvim_create_autocmd("FileType", {
         pattern = "tex",

@@ -7,7 +7,7 @@ local M = {}
 ---@param from_rel_lnum number
 ---@param to_rel_lnum number
 ---@return string[]
-function M.GetTextBetweenLines(from_rel_lnum, to_rel_lnum)
+function M.GetTextRelativeToCursor(from_rel_lnum, to_rel_lnum)
     local current_line = vim.fn.getpos(".")[2]
     local start_line = current_line + from_rel_lnum - 1
     local end_line = current_line + to_rel_lnum
@@ -23,6 +23,14 @@ function M.GetTextFromVisual()
     return vim.api.nvim_buf_get_text(0, start_pos[2] - 1, start_pos[3] - 1, end_pos[2] - 1, end_pos[3], {})
 end
 
+-- Returns contents of an absolute line range as a string[]
+---@param line1 integer 1-indexed start line (from opts.line1)
+---@param line2 integer 1-indexed end line (from opts.line2)
+---@return string[]
+function M.GetTextFromRange(line1, line2)
+    return vim.api.nvim_buf_get_lines(0, line1 - 1, line2, false)
+end
+
 -- Converts the input string or string[] to a floating window
 -- without argument, the contents of the current-line is passed as input
 -- and `q` to quit
@@ -31,7 +39,7 @@ function M.as_floating_window(content)
     local lines = {}
 
     if content == nil then
-        lines = M.GetTextBetweenLines(0, 0)
+        lines = M.GetTextRelativeToCursor(0, 0)
     elseif type(content) == "string" then
         lines = vim.split(content, "\n")
     elseif type(content) == "table" then
