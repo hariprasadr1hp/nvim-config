@@ -299,6 +299,7 @@ end
 return {
     {
         "mistweaverco/kulala.nvim",
+        version = "6.0.0",
         keys = function()
             local kulala = require("kulala")
             return {

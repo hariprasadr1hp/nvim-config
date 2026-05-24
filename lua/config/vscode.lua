@@ -349,6 +349,8 @@ keymap_set("x", "<leader>tG", "g?", "gibberish-rot13")
 local visual_action_keys = {
     ["<leader>/"] = { "editor.action.commentLine", "comment" },
 
+    ["<leader>cf"] = { "editor.action.formatDocument", "format-buffer" },
+
     ["<leader>tt"] = { "workbench.action.terminal.runSelectedText", "send-vselect-to-term" },
 }
 

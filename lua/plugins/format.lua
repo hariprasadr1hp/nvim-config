@@ -43,7 +43,7 @@ local formatters_by_ft = {
     lua = { "stylua" },
     markdown = { "prettier" },
     nix = { "nixfmt" },
-    python = { "ruff_format" },
+    python = { "ruff_format", "isort" },
     ruby = { "standardrb" },
     rust = { "rustfmt", lsp_format = true },
     sh = { "shfmt" },

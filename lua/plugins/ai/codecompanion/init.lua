@@ -177,6 +177,12 @@ local function setup_codecompanion_config()
                     fold_code = false,
                     goto_file_under_cursor = false,
                     copilot_stats = false,
+                    -- BUG: Options "?" throws an error
+                    -- options = {
+                    --     modes = { n = "?" },
+                    --     callback = "keymaps.options",
+                    --     description = "Options",
+                    -- },
                     next_chat = {
                         modes = { n = "]c" },
                         index = 11,
@@ -189,11 +195,12 @@ local function setup_codecompanion_config()
                         callback = "keymaps.previous_chat",
                         description = "Previous chat",
                     },
-                    super_diff = {
-                        modes = { n = "gK" },
-                        index = 22,
-                        callback = "keymaps.super_diff",
-                        description = "Show Super Diff",
+                    add_code_block = {
+                        modes = { n = "gc" },
+                        description = "add code block",
+                        callback = function()
+                            return "```\n\n```"
+                        end,
                     },
                     change_model = {
                         modes = { n = "gm" },
@@ -213,7 +220,6 @@ local function setup_codecompanion_config()
                         -- end,
                         contains_code = false,
                     },
-                    -- BUG: `/terminal` share the empty lines and not the previous stdout/stderr
                 },
 
                 variables = {
@@ -429,7 +435,7 @@ end
 return {
     {
         "olimorris/codecompanion.nvim",
-        version = "18.3.0",
+        version = "^19.0.0",
         cmd = {
             "CodeCompanion",
             "CodeCompanionChat",

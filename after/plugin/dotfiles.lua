@@ -38,6 +38,7 @@ local function get_global_fpaths()
         { name = "acli", alias = "atlassian-cli", fpath = "~/.config/acli/jira_config.yaml" },
         { name = "aichat", alias = nil, fpath = "~/.config/aichat/config.yaml" },
         { name = "claude", alias = nil, fpath = "~/.claude/settings.json" },
+        { name = "cntb", alias = "contabo-cli", fpath = "~/.cntb.yaml" },
         { name = "codex", alias = nil, fpath = "~/.codex/config.toml" },
         { name = "cursor", alias = nil, fpath = "~/.cursor/cli-config.json" },
         { name = "dbui", alias = nil, fpath = "~/.local/share/db_ui/connections.json" },

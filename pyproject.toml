@@ -14,3 +14,8 @@ dependencies = [
   "pydantic>=2.12.5",
   "pynvim>=0.6.0",
 ]
+
+[dependency-groups]
+dev = [
+    "icecream>=2.2.0",
+]
