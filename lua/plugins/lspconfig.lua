@@ -524,5 +524,6 @@ return {
             { "j-hui/fidget.nvim" },
         },
         config = setup_lsp_config,
+        -- TODO: drop all `gr*` keymaps (lsp-related) from both normal and visual mode
     },
 }

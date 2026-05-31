@@ -38,6 +38,7 @@ local function get_global_fpaths()
         { name = "acli", alias = "atlassian-cli", fpath = "~/.config/acli/jira_config.yaml" },
         { name = "aichat", alias = nil, fpath = "~/.config/aichat/config.yaml" },
         { name = "claude", alias = nil, fpath = "~/.claude/settings.json" },
+        { name = "claurst", alias = nil, fpath = "~/.claurst/settings.json" },
         { name = "cntb", alias = "contabo-cli", fpath = "~/.cntb.yaml" },
         { name = "codex", alias = nil, fpath = "~/.codex/config.toml" },
         { name = "cursor", alias = nil, fpath = "~/.cursor/cli-config.json" },
@@ -70,6 +71,13 @@ local function get_global_fpaths()
             fpath = os_path({
                 macos = "~/Library/Application Support/pypoetry/config.toml",
                 linux = "~/.config/pypoetry/config.toml",
+            }),
+        },
+        {
+            name = "osaurus",
+            alias = nil,
+            fpath = os_path({
+                macos = "~/.osaurus/ChatConfiguration.json",
             }),
         },
         { name = "sqlfluff", alias = nil, fpath = "~/.sqlfluff" },

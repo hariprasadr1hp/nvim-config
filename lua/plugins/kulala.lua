@@ -299,6 +299,7 @@ end
 return {
     {
         "mistweaverco/kulala.nvim",
+        -- FIX: jq parsing errors (wait for docs update)
         version = "6.0.0",
         keys = function()
             local kulala = require("kulala")
