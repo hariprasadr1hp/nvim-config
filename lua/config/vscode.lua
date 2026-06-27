@@ -388,5 +388,5 @@ _G.T = M.tprint
 -- load nvim-config .env variables
 M.load_env_file(vim.fn.stdpath("config") .. "/.env")
 
-print("neovim settings succefully loaded!")
+print("neovim settings successfully loaded!")
 return M

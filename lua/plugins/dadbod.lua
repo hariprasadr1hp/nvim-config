@@ -56,7 +56,12 @@ return {
         "DBUIFindBuffer",
     },
     keys = {
-        { "<leader>oq", "<cmd>DBUIToggle<cr>", desc = "DBUI" },
+        {
+            "<leader>oq",
+            "<cmd>DBUIToggle<cr>",
+            desc = "DBUI",
+            -- TODO: handle parsing errors or unparsable dbs
+        },
     },
     init = setup_dadbod_ui_init,
     config = function() end,

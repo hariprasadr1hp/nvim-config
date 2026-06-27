@@ -11,6 +11,9 @@ local provider_choices = {
     "Grok [Twitter X]",
     "OpenCode",
     "Claurst",
+    "Cline",
+    "Pi",
+    "Hermes",
 }
 
 local function select_provider(on_choice)
@@ -43,8 +46,14 @@ local function start_ai_provider()
             prg = "grok"
         elseif provider == "OpenCode" then
             prg = "opencode"
+        elseif provider == "Pi" then
+            prg = "pi"
+        elseif provider == "Hermes" then
+            prg = "Hermes"
         elseif provider == "Claurst" then
             prg = "claurst"
+        elseif provider == "Cline" then
+            prg = "cline"
         else
             vim.notify("Error: not a valid provider!", vim.log.levels.ERROR)
         end

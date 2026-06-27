@@ -19,6 +19,7 @@ local function setup_codecompanion_config()
                 gemini_cli = require("plugins.ai.codecompanion.adapters.acp_gemini"),
                 opencode = require("plugins.ai.codecompanion.adapters.acp_opencode"),
                 cursor = require("plugins.ai.codecompanion.adapters.acp_cursor"),
+                pi = require("plugins.ai.codecompanion.adapters.acp_pi"),
 
                 opts = {
                     show_model_choices = true,

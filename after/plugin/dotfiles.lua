@@ -42,6 +42,7 @@ local function get_global_fpaths()
         { name = "cntb", alias = "contabo-cli", fpath = "~/.cntb.yaml" },
         { name = "codex", alias = nil, fpath = "~/.codex/config.toml" },
         { name = "cursor", alias = nil, fpath = "~/.cursor/cli-config.json" },
+        { name = "cups", alias = nil, fpath = "~/.cups/lpoptions" },
         { name = "dbui", alias = nil, fpath = "~/.local/share/db_ui/connections.json" },
         {
             name = "espanso",
@@ -80,9 +81,11 @@ local function get_global_fpaths()
                 macos = "~/.osaurus/ChatConfiguration.json",
             }),
         },
+        { name = "pi", alias = nil, fpath = "~/.pi/agent/settings.json" },
         { name = "sqlfluff", alias = nil, fpath = "~/.sqlfluff" },
         { name = "sqls", alias = nil, fpath = "~/.config/sqls/config.yml" },
         { name = "starship", alias = nil, fpath = "~/.config/starship/starship.toml" },
+        { name = "tmux", alias = nil, fpath = "~/.tmux.conf" },
         { name = "wezterm", alias = nil, fpath = "~/.config/wezterm/wezterm.lua" },
         { name = "zellij", alias = nil, fpath = "~/.config/zellij/config.kdl" },
     }
