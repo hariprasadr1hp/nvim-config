@@ -79,8 +79,8 @@ local function setup_codecompanion_config()
                     },
                     auto_generate_title = true,
                     title_generation_opts = {
-                        adapter = nil,
-                        model = nil,
+                        adapter = "ollama",
+                        model = vim.env.OLLAMA_TITLE_GENERATION_MODEL,
                         refresh_every_n_prompts = 0,
                         max_refreshes = 3,
                         format_title = function(original_title)
@@ -129,9 +129,9 @@ local function setup_codecompanion_config()
         interactions = {
             chat = {
                 adapter = {
-                    ---@type "ollama" | "claude_code" | "cursor" | "codex" | "opencode" | "xai" | "venice" | "gemini_cli" | "anthropic"
-                    name = "ollama",
-                    model = vim.env.OLLAMA_DEFAULT_SERVER_MODEL,
+                    ---@type "ollama" | "claude_code" | "cursor" | "codex" | "opencode" | "xai" | "venice" | "gemini_cli" | "anthropic" | "pi"
+                    name = "pi",
+                    model = "ollama/" .. vim.env.OLLAMA_DEFAULT_SERVER_MODEL,
                     opts = {
                         completion_provider = "blink",
                     },
@@ -357,8 +357,8 @@ local function setup_codecompanion_config()
                 show_tools_processing = true,
                 start_in_insert_mode = false,
                 icons = {
-                    buffer_sync_all = "󰪴 ",
-                    buffer_sync_diff = " ",
+                    sync_all = "󰪴 ",
+                    sync_diff = " ",
                     chat_context = " ",
                     chat_fold = " ",
                     tool_pending = "  ",

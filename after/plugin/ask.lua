@@ -70,11 +70,8 @@ function HP._finalize_ai_prompt(prompt, code)
     -- 3. `q` to quit, and only then the next block of code is executed
     -- HP.as_floating_window(formatted)
 
-    if vim.env.CHATGPT_URL then
-        open_browser(vim.env.CHATGPT_URL)
-    else
-        vim.notify("URL not set", vim.log.levels.ERROR)
-    end
+    local chatgpt_url = "https://chatgpt.com/?temporary-chat=true"
+    open_browser(chatgpt_url)
 end
 
 function HP.ask_ai()
