@@ -1,7 +1,14 @@
 -- after/plugin/linenumbers.lua
 
--- Render the color of linenumbers based on its mode,
--- or something mimicking a mode (macros for example)
+-- Line numbers act as a mode indicator in the active window.
+--
+-- Active window:
+--   - relative line numbers
+--   - mode-specific colors
+--
+-- Inactive windows:
+--   - absolute line numbers
+--   - muted color
 
 if vim.g.vscode then
     return
@@ -19,7 +26,10 @@ local colors = {
     purple = "#c678dd",
     white = "#ffffff",
     black = "#000000",
+    inactive = "#625e5a",
 }
+
+-- Mode colors ----------------------------------------------------------------
 
 local function set_normal_mode_colors()
     vim.api.nvim_set_hl(0, "LineNr", { fg = colors.red, bold = true })
@@ -63,33 +73,90 @@ local function set_while_recording_colors()
     vim.api.nvim_set_hl(0, "LineNrBelow", { fg = colors.blue })
 end
 
+local function set_mode_colors()
+    local mode = vim.fn.mode()
+
+    if is_recording() then
+        set_while_recording_colors()
+    elseif mode == "n" then
+        set_normal_mode_colors()
+    elseif mode == "i" then
+        set_insert_mode_colors()
+    elseif mode == "t" then
+        set_terminal_mode_colors()
+    elseif mode == "R" then
+        set_replace_mode_colors()
+    elseif mode == "v" or mode == "V" then
+        set_visual_mode_colors()
+    elseif mode == "c" then
+        set_cmdline_mode_colors()
+    else
+        set_normal_mode_colors()
+    end
+end
+
+-- Inactive windows -----------------------------------------------------------
+
+local inactive_mappings = {
+    "LineNr:InactiveLineNr",
+    "LineNrAbove:InactiveLineNr",
+    "LineNrBelow:InactiveLineNr",
+}
+
+local function set_inactive_line_number_colors()
+    vim.api.nvim_set_hl(0, "InactiveLineNr", {
+        fg = colors.inactive,
+    })
+end
+
+local function remove_inactive_mappings(winhighlight)
+    for _, mapping in ipairs(inactive_mappings) do
+        local escaped = vim.pesc(mapping)
+
+        winhighlight = winhighlight:gsub("," .. escaped, "")
+        winhighlight = winhighlight:gsub("^" .. escaped .. ",?", "")
+    end
+
+    return winhighlight
+end
+
+local function add_inactive_mappings(winhighlight)
+    for _, mapping in ipairs(inactive_mappings) do
+        if not winhighlight:find(mapping, 1, true) then
+            winhighlight = winhighlight .. (winhighlight == "" and "" or ",") .. mapping
+        end
+    end
+
+    return winhighlight
+end
+
+local function set_window_active()
+    vim.wo.relativenumber = vim.wo.number
+
+    vim.wo.winhighlight = remove_inactive_mappings(vim.wo.winhighlight)
+end
+
+local function set_window_inactive()
+    vim.wo.relativenumber = false
+
+    vim.wo.winhighlight = add_inactive_mappings(vim.wo.winhighlight)
+end
+
+-- Autocommands ---------------------------------------------------------------
+
 vim.api.nvim_create_autocmd("ColorScheme", {
     pattern = "*",
-    callback = set_normal_mode_colors,
+    group = line_numbers_augroup,
+    callback = function()
+        set_mode_colors()
+        set_inactive_line_number_colors()
+    end,
 })
 
 vim.api.nvim_create_autocmd("ModeChanged", {
     pattern = "*",
-    callback = function()
-        local mode = vim.fn.mode()
-        if is_recording() then
-            set_while_recording_colors()
-        elseif mode == "n" then
-            set_normal_mode_colors()
-        elseif mode == "i" then
-            set_insert_mode_colors()
-        elseif mode == "t" then
-            set_terminal_mode_colors()
-        elseif mode == "R" then
-            set_replace_mode_colors()
-        elseif mode == "v" or mode == "V" then
-            set_visual_mode_colors()
-        elseif mode == "c" then
-            set_cmdline_mode_colors()
-        else
-            set_normal_mode_colors()
-        end
-    end,
+    group = line_numbers_augroup,
+    callback = set_mode_colors,
 })
 
 vim.api.nvim_create_autocmd("RecordingEnter", {
@@ -101,11 +168,27 @@ vim.api.nvim_create_autocmd("RecordingEnter", {
 vim.api.nvim_create_autocmd("RecordingLeave", {
     pattern = "*",
     group = line_numbers_augroup,
-    callback = set_normal_mode_colors,
+    callback = set_mode_colors,
 })
 
 vim.api.nvim_create_autocmd("BufWinEnter", {
     pattern = "*",
     group = line_numbers_augroup,
-    callback = set_normal_mode_colors,
+    callback = set_mode_colors,
 })
+
+vim.api.nvim_create_autocmd("WinEnter", {
+    group = line_numbers_augroup,
+    callback = set_window_active,
+})
+
+vim.api.nvim_create_autocmd("WinLeave", {
+    group = line_numbers_augroup,
+    callback = set_window_inactive,
+})
+
+-- Initial state ---------------------------------------------------------------
+
+set_inactive_line_number_colors()
+set_mode_colors()
+set_window_active()
