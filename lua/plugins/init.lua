@@ -28,7 +28,6 @@ local opts = {
     require("plugins.lang.hurl"),
 
     require("plugins.dadbod"),
-    require("plugins.kulala"),
     require("plugins.snippets"),
     require("plugins.comment"),
     require("plugins.harpoon"),

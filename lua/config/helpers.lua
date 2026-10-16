@@ -46,7 +46,6 @@ function M.eval_cmd_by_ft()
         julia = " julia " .. vim.fn.expand("%:p"),
         lua = " lua " .. vim.fn.expand("%:p"),
         python = string.format(" %s %s", vim.env.python or "python", vim.fn.expand("%:p")),
-        http = string.format(" %s %s", vim.env.kulala, vim.fn.expand("%:p")),
     }
     return cmds_by_ft[vim.bo.filetype] or nil
 end

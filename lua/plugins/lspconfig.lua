@@ -267,20 +267,7 @@ local function setup_lsp_config()
                             ".eslintrc",
                             "package.json",
                         },
-                        extra = {
-                            {
-                                name = "http-client.env.json",
-                                fileMatch = { "http-client.env.json" },
-                                description = "The environment variables required for the HTTP client",
-                                url = "https://raw.githubusercontent.com/mistweaverco/kulala.nvim/main/schemas/http-client.env.schema.json",
-                            },
-                            {
-                                name = "http-client.private.env.json",
-                                fileMatch = { "http-client.private.env.json" },
-                                description = "he private environment variables required for the HTTP client",
-                                url = "https://raw.githubusercontent.com/mistweaverco/kulala.nvim/refs/heads/main/schemas/http-client.private.env.schema.json",
-                            },
-                        },
+                        extra = {},
                     }),
                 },
             },
@@ -359,7 +346,7 @@ local function setup_lsp_config()
                     configurationPreference = "filesystemFirst",
                     configuration = {
                         format = {
-                            ["quote-style"] = "single",
+                            ["quote-style"] = "double",
                         },
                     },
                     logFile = "~/.local/state/ruff.log",
