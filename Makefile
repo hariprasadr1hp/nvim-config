@@ -68,7 +68,7 @@ rs-remove:
 	\shred -uzn3 $(LIB_DEST)
 
 ## clean artifacts
-clean: rs-clean py-clean
+clean: py-clean
 	@echo "Cleaning up..."
 	@echo "Clean up complete."
 

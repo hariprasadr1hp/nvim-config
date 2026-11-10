@@ -151,6 +151,38 @@ local function setup_codecompanion_config()
                 },
 
                 tools = {
+                    opts = {
+                        ---@type "auto" | "ask" | "yolo"
+                        approval_mode = "auto",
+                    },
+
+                    ["edit_file"] = {
+                        opts = {
+                            require_approval_before = {
+                                buffer = false,
+                                file = true,
+                            },
+                        },
+                    },
+
+                    ["run_command"] = {
+                        opts = {
+                            judge = true,
+                            protect = true,
+                            safe_commands = {
+                                "git status",
+                                "git diff",
+                                "ls",
+                            },
+                        },
+                    },
+
+                    ["web_search"] = {
+                        opts = {
+                            adapter = "duckduckgo",
+                        },
+                    },
+
                     groups = {
                         ["github_pr_workflow"] = {
                             description = "GitHub operations from issue to PR",
@@ -243,6 +275,16 @@ local function setup_codecompanion_config()
                     prompt_decorator = function(message, adapter, context)
                         return string.format([[<prompt>%s</prompt>]], message)
                     end,
+                },
+            },
+
+            code_review = {
+                opts = {
+                    auto_accept = {
+                        "**/*.lock",
+                        "**/package-lock.json",
+                        "doc/**/*.txt",
+                    },
                 },
             },
 
