@@ -2,13 +2,7 @@
 
 vim.filetype.add({
     extension = {
+        bru = "bruno",
         bruno = "bruno",
     },
-})
-
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = { "*.bru", "*.bruno" },
-    callback = function()
-        vim.bo.filetype = "bruno"
-    end,
 })

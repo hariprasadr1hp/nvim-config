@@ -6,7 +6,7 @@ local ensure_installed = {
     "bash",
     "beancount",
     "bibtex",
-    -- "bruno",
+    "bruno",
     "c",
     "cmake",
     "cpp",
@@ -56,71 +56,79 @@ local ensure_installed = {
     "yaml",
 }
 
-local function setup_treesitter_config()
-    -- local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+-- Custom (non-bundled) parsers. On the `main` branch these must be registered
+-- inside a `User TSUpdate` autocmd, then installed with `:TSInstall <name>`.
+-- `install_info.files` no longer exists; parsers are compiled from `src/`.
+local custom_parsers = {
+    bruno = {
+        install_info = {
+            url = "https://github.com/Scalamando/tree-sitter-bruno",
+            revision = "dd27fe0eff8e7f8184dfc91e426b886dc8369c46", -- pin; bump to update
+            queries = "queries", -- copy highlights/injections shipped by the repo
+        },
+        tier = 3, -- community/unsupported
+    },
+    -- cypher = {
+    --     install_info = { url = "https://github.com/simplificare-org/tree-sitter-cypher", branch = "main" },
+    -- },
+    -- sql_bigquery = {
+    --     install_info = { url = "https://github.com/takegue/tree-sitter-sql-bigquery", branch = "main" },
+    -- },
+    -- pgn = {
+    --     install_info = { url = "https://github.com/rolandwalker/tree-sitter-pgn" },
+    -- },
+}
 
-    -- local parsers = require("nvim-treesitter.parsers")
-    --
-    -- parsers.bruno = {
-    --     install_info = {
-    --         url = "https://github.com/Scalamando/tree-sitter-bruno",
-    --         files = { "src/parser.c", "src/scanner.c" },
-    --         branch = "main",
-    --     },
-    --     filetype = "bruno",
-    -- }
-    --
-    -- parsers.cypher = {
-    --     install_info = {
-    --         url = "https://github.com/simplificare-org/tree-sitter-cypher",
-    --         files = { "src/parser.c" },
-    --         branch = "main",
-    --     },
-    --     filetype = "cypher",
-    -- }
-    --
-    -- parsers.sql_bigquery = {
-    --     install_info = {
-    --         url = "https://github.com/takegue/tree-sitter-sql-bigquery",
-    --         files = { "src/parser.c", "src/scanner.c" },
-    --         branch = "main",
-    --     },
-    --     filetype = "sql",
-    -- }
-    --
-    -- parsers.pgn = {
-    --     install_info = {
-    --         url = "https://github.com/rolandwalker/tree-sitter-pgn",
-    --         files = { "src/parser.c", "src/scanner.c" },
-    --     },
-    --     filetype = "pgn",
-    -- }
+-- parser -> filetypes, for when the parser name differs from the filetype
+-- (this is core Neovim API, no plugin needed)
+local language_aliases = {
+    -- sql_bigquery = { "sqlx" },
+    -- cypher = { "cypher" },
+    -- markdown = { "codecompanion" },
+}
+
+local function setup_treesitter_config()
+    vim.api.nvim_create_autocmd("User", {
+        pattern = "TSUpdate",
+        group = vim.api.nvim_create_augroup("user_ts_custom_parsers", { clear = true }),
+        callback = function()
+            local parsers = require("nvim-treesitter.parsers")
+            for name, spec in pairs(custom_parsers) do
+                parsers[name] = spec
+            end
+        end,
+    })
+
+    for lang, filetypes in pairs(language_aliases) do
+        vim.treesitter.language.register(lang, filetypes)
+    end
 
     local treesitter = require("nvim-treesitter")
+    treesitter.setup()
 
-    local opts = {
-        install_dir = vim.fn.stdpath("data") .. "/site",
-    }
-    treesitter.setup(opts)
-    treesitter.install(ensure_installed)
-
-    -- FIX: registering custom TS parsers in version 0.12
-
-    -- vim.treesitter.language.register("sql_bigquery", { "sqlx" })
-    -- vim.treesitter.language.register("cypher", { "cypher" })
-    -- vim.treesitter.language.register("markdown", { "codecompanion" })
+    -- only install what's missing; avoids spawning the installer on every startup
+    local installed = treesitter.get_installed("parsers")
+    local missing = vim.tbl_filter(function(lang)
+        return not vim.list_contains(installed, lang)
+    end, ensure_installed)
+    if #missing > 0 then
+        treesitter.install(missing)
+    end
 end
 
 return {
-    "nvim-treesitter/nvim-treesitter",
-    branch = "main",
-    lazy = false,
-    event = { "BufReadPre", "BufNewFile" },
-    build = ":TSUpdate",
-    dependencies = {
-        "windwp/nvim-ts-autotag",
+    {
+        "nvim-treesitter/nvim-treesitter",
+        branch = "main",
+        lazy = false, -- `main` branch does not support lazy-loading
+        build = ":TSUpdate",
+        config = setup_treesitter_config,
     },
-    config = setup_treesitter_config,
+    {
+        "windwp/nvim-ts-autotag",
+        event = { "BufReadPre", "BufNewFile" },
+        opts = {}, -- ensures `require("nvim-ts-autotag").setup()` is called
+    },
 }
 
 -- TODO: export LST as json on a buffer level (using buffer-actions)

@@ -124,15 +124,14 @@ local function check_treesitter()
         return
     end
 
-    local ts_parsers = require("nvim-treesitter.parsers")
-    local installed_parsers = ts_parsers.available_parsers()
+    local installed_parsers = require("nvim-treesitter").get_installed("parsers")
 
     if #installed_parsers > 0 then
         ok(string.format("Installed parsers: %d", #installed_parsers))
 
         local important_parsers = { "lua", "python", "rust", "json", "yaml", "toml" }
         for _, parser in ipairs(important_parsers) do
-            if ts_parsers.has_parser(parser) then
+            if vim.list_contains(installed_parsers, parser) then
                 ok(string.format("Parser '%s': installed", parser))
             else
                 warn(string.format("Parser '%s': not installed", parser))

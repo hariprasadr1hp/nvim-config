@@ -9,8 +9,8 @@ local companion_adapters = require("codecompanion.adapters")
 ---@type CodeCompanion.ACPAdapter.Codex
 local opts = {
     defaults = {
-        ---@type "openai-api-key" | "codex-api-key" | "chatgpt"
-        auth_method = "chatgpt",
+        ---@type "openai-api-key" | "codex-api-key" | "chat-gpt"
+        auth_method = "chat-gpt",
     },
     commands = {
         default = {

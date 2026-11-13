@@ -58,6 +58,7 @@ local function get_global_fpaths()
         { name = "ghostty", alias = nil, fpath = "~/.config/ghostty/config" },
         { name = "gh", alias = "github-cli", fpath = "~/.config/gh/config.yml" },
         { name = "gitconfig", alias = nil, fpath = "~/.gitconfig" },
+        { name = "herdr", alias = nil, fpath = "~/.config/herdr/config.toml" },
         { name = "hermes", alias = nil, fpath = "~/.hermes/config.yaml" },
         { name = "hunspell", alias = nil, fpath = "~/.config/hunspell/hunspell_personal" },
         { name = "kanata", alias = nil, fpath = "~/.config/kanata/kanata.kbd" },
