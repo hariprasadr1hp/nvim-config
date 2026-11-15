@@ -365,7 +365,6 @@ local function setup_blink_config()
         "snippets",
         "buffer",
         "emoji",
-        "codeium",
         "env",
         "lazydev",
         "minuet",
@@ -563,12 +562,6 @@ local function setup_blink_config()
         },
     }
 
-    opts.sources.providers.codeium = {
-        name = "Codeium",
-        module = "codeium.blink",
-        async = true,
-    }
-
     opts.term = {
         enabled = false,
     }
@@ -600,7 +593,6 @@ return {
                 lazy = true,
             },
             { "milanglacier/minuet-ai.nvim" },
-            { "Exafunction/windsurf.nvim", event = "VeryLazy" },
             { "MahanRahmati/blink-nerdfont.nvim" },
             { "erooke/blink-cmp-latex" },
         },

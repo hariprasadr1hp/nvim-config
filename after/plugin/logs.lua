@@ -24,7 +24,6 @@ end
 
 local global_fpaths = {
     { name = "codecompanion", desc = "", fpath = "~/.local/state/nvim/codecompanion.log" },
-    { name = "codeium", desc = "", fpath = "~/.local/state/nvim/codeium/codeium.log" },
     { name = "conform", desc = "", fpath = "~/.local/state/nvim/conform.log" },
     { name = "lsp", desc = "", fpath = "~/.local/state/nvim/lsp.log" },
     { name = "mason", desc = "", fpath = "~/.local/state/nvim/mason.log" },

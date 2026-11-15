@@ -58,7 +58,6 @@ local opts = {
 
     require("plugins.ai.mcphub"),
     require("plugins.ai.codecompanion"),
-    require("plugins.ai.windsurf"),
     require("plugins.ai.completion"),
     -- require("plugins.ai.cursor"),
 

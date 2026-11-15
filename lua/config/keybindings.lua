@@ -110,6 +110,7 @@ keymap_set("n", "<leader>gi", ":e .gitignore<cr>", ".gitignore")
 -- TODO: `<leader>gLy` to yank the last commit
 
 keymap_set("n", "<leader>hc", ":checkhealth config<cr>", "check-config-health")
+--TODO: `<leader>hK` to search by `{mode}_{keychord}` combo. ex: `i_gr`, `n_<leader>ai`
 keymap_set("n", "<leader>hrr", ":echo '`emacs` command 🫠'<cr>", "n/a")
 keymap_set("n", "<leader>hs", vim.lsp.buf.signature_help, "lsp-signature-help")
 
