@@ -2,8 +2,42 @@
 
 -- REFER: https://github.com/svkozak/pi-acp
 
+-- pi-acp sends JSON `null` for fields like `description` in `configOptions`.
+-- codecompanion decodes with `vim.json.decode` (no `luanil`), so those become
+-- `vim.NIL` (truthy userdata) and `/acp_session_options` crashes when it does
+-- `display .. " - " .. val.description`. Strip `vim.NIL` before storing them.
+local patched = false
+
+local function patch_config_options()
+    if patched then
+        return
+    end
+    local Connection = require("codecompanion.acp")
+
+    local function strip_nil(tbl)
+        for k, v in pairs(tbl) do
+            if v == vim.NIL then
+                tbl[k] = nil
+            elseif type(v) == "table" then
+                strip_nil(v)
+            end
+        end
+        return tbl
+    end
+
+    local apply = Connection._apply_config_options
+    Connection._apply_config_options = function(self, config_options)
+        if type(config_options) == "table" then
+            strip_nil(config_options)
+        end
+        return apply(self, config_options)
+    end
+    patched = true
+end
+
 return function()
     local helpers = require("codecompanion.adapters.acp.helpers")
+    patch_config_options()
 
     return {
         name = "pi",
@@ -15,6 +49,10 @@ return function()
             user = "user",
         },
 
+        opts = {
+            vision = true,
+        },
+
         commands = {
             default = {
                 "pi-acp",
@@ -22,15 +60,17 @@ return function()
         },
 
         defaults = {
-            model = "auto",
+            session_config_options = {
+                model = "auto",
+                ---@type "off" | "minimal" | "low" | "medium" | "high"
+                thought_level = "medium",
+            },
             mcpServers = {},
-            timeout = 20000,
+            timeout = 20000, -- 20 seconds
         },
 
-        models = {
-            ["auto"] = {
-                name = "auto",
-            },
+        env = {
+            PI_ACP_ENABLE_EMBEDDED_CONTEXT = "true",
         },
 
         parameters = {
@@ -48,19 +88,18 @@ return function()
         },
 
         handlers = {
-            setup = function()
-                return true
-            end,
+            lifecycle = {
+                ---@diagnostic disable-next-line: unused-local
+                setup = function(self)
+                    return true
+                end,
+            },
 
-            auth = function()
-                return true
-            end,
-
-            form_messages = function(self, messages, capabilities)
-                return helpers.form_messages(self, messages, capabilities)
-            end,
-
-            on_exit = function(_, _) end,
+            request = {
+                build_messages = function(self, args)
+                    return helpers.build_messages(self, args)
+                end,
+            },
         },
     }
 end

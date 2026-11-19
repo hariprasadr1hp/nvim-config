@@ -164,6 +164,5 @@
         - bash-language-server
         - vim-language-server
         - '@agentclientprotocol/claude-agent-acp'
-        - '@zed-industries/codex-acp'
-        - '@blowmage/cursor-agent-acp'
+        - '@agentclientprotocol/codex-acp'
       ignore_errors: true

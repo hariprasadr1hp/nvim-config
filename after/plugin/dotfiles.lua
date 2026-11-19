@@ -130,3 +130,6 @@ vim.api.nvim_create_user_command("Dotfiles", M.pick_dotfiles, { desc = "Fuzzy fi
 keymap_set("n", "<leader>fc", M.pick_dotfiles, "dotfiles")
 
 return M
+
+-- FIX: the picker doesn't work on smaller window sizes
+-- win.lua:810: Invalid 'height': Number is not integral

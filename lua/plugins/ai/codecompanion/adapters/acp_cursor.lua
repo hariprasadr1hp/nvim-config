@@ -1,10 +1,9 @@
 -- lua/plugins/ai/codecompanion/adapters/acp_cursor.lua
 
--- REFER: https://github.com/blowmage/cursor-agent-acp-npm
+-- REFER: https://cursor.com/docs/cli/acp
 
 local helpers = require("codecompanion.adapters.acp.helpers")
 
----@type CodeCompanion.ACPAdapter
 return {
     name = "cursor",
     formatted_name = "Cursor",
@@ -17,9 +16,8 @@ return {
         vision = false,
     },
     commands = {
-        -- TODO: possible to get the content under "reasoning", or is it obscured?
         default = {
-            "cursor-agent-acp",
+            "cursor acp",
         },
     },
     defaults = {
@@ -37,34 +35,21 @@ return {
         },
     },
     handlers = {
-        ---@param self CodeCompanion.ACPAdapter
-        ---@return boolean
-        ---@diagnostic disable-next-line: unused-local
-        setup = function(self)
-            return true
-        end,
+        lifecycle = {
+            setup = function()
+                return true
+            end,
 
-        ---@param self CodeCompanion.ACPAdapter
-        ---@return boolean
-        ---@diagnostic disable-next-line: unused-local
-        auth = function(self)
-            -- authentication handled externally via cursor-agent CLI
-            -- via `cursor-agent login`
-            return true
-        end,
+            auth = function()
+                return true
+            end,
 
-        ---@param self CodeCompanion.ACPAdapter
-        ---@param messages table
-        ---@param capabilities table
-        ---@return table
-        form_messages = function(self, messages, capabilities)
-            return helpers.form_messages(self, messages, capabilities)
-        end,
+            ---@diagnostic disable-next-line: unused-local
+            on_exit = function(self, args) end,
+        },
 
-        ---@param self CodeCompanion.ACPAdapter
-        ---@param code number
-        ---@return nil
-        ---@diagnostic disable-next-line: unused-local
-        on_exit = function(self, code) end,
+        request = {
+            build_messages = helpers.build_messages,
+        },
     },
 }

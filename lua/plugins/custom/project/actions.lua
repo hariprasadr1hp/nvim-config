@@ -2,6 +2,7 @@
 
 local tblx = require("core.tablex")
 local fzf_lua = require("fzf-lua")
+local toggleterm_exec = require("toggleterm").exec
 
 local M = {}
 
@@ -113,9 +114,20 @@ local function get_project_resources()
     return tblx.true_keys(available_resources)
 end
 
+local function get_default_actions()
+    return {
+        {
+            name = "Check Ollama Server",
+            action = function()
+                pcall(toggleterm_exec, string.format(" curl %s", vim.env.OLLAMA_SERVER_HOST))
+            end,
+        },
+    }
+end
+
 function M.show_actions()
     local resources = get_project_resources()
-    local actions = {}
+    local actions = get_default_actions()
 
     for _, resource in ipairs(resources) do
         actions = vim.tbl_extend("force", actions, resource_actions[resource])

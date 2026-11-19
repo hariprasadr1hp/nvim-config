@@ -6,18 +6,20 @@ local companion_adapters = require("codecompanion.adapters")
 
 ---@type CodeCompanion.ACPAdapter.OpenCode
 local opts = {
+    defaults = {
+        session_config_options = {
+            model = "ollama/" .. vim.env.OLLAMA_DEFAULT_SERVER_MODEL,
+            ---@type "Build" | "Plan"
+            mode = "Build",
+        },
+    },
 
-    -- FIX: using schema.model.choices to change the model, just like in http adapters
-    -- using a handler???
-
-    -- schema = {
-    --     model = {
-    --         choices = {
-    --             "ollama/devstral:24b",
-    --             "ollama/llama3.2:3b",
-    --         },
-    --     },
-    -- },
+    commands = {
+        default = {
+            "opencode",
+            "acp",
+        },
+    },
 }
 
 return companion_adapters.extend("opencode", opts)

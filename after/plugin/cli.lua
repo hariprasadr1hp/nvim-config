@@ -33,19 +33,19 @@ local function select_cli_tool(on_choice)
     end)
 end
 
-local function trim(s)
-    return (s:gsub("%s+$", ""))
-end
-
-local function gcloud_cfg_get(expr)
-    local obj = vim.system({ "gcloud", "config", "list", "--format=get(" .. expr .. ")" }, { text = true }):wait()
-
-    if obj.code ~= 0 then
-        return "" -- or return nil, obj.stderr if you prefer
-    end
-    -- return trim(obj.stdout or "")
-    return obj.stdout or ""
-end
+-- local function trim(s)
+--     return (s:gsub("%s+$", ""))
+-- end
+--
+-- local function gcloud_cfg_get(expr)
+--     local obj = vim.system({ "gcloud", "config", "list", "--format=get(" .. expr .. ")" }, { text = true }):wait()
+--
+--     if obj.code ~= 0 then
+--         return "" -- or return nil, obj.stderr if you prefer
+--     end
+--     -- return trim(obj.stdout or "")
+--     return obj.stdout or ""
+-- end
 
 local actions_gcloud = {
     -- {
@@ -117,7 +117,7 @@ local function get_actions_ollama()
             action = function()
                 pcall(
                     toggleterm_exec,
-                    string.format(" curl -s %s/api/ps | jq '.models[].name'", vim.env.OLLAMA_SERVER_HOST)
+                    string.format(" curl -m 5 -s %s/api/ps | jq '.models[].name'", vim.env.OLLAMA_SERVER_HOST)
                 )
             end,
         },
@@ -127,7 +127,7 @@ local function get_actions_ollama()
             action = function()
                 pcall(
                     toggleterm_exec,
-                    string.format(" curl -s %s/api/ps | jq '.models[].name'", vim.env.OLLAMA_LOCAL_HOST)
+                    string.format(" curl -m 5 -s %s/api/ps | jq '.models[].name'", vim.env.OLLAMA_LOCAL_HOST)
                 )
             end,
         },
@@ -137,7 +137,7 @@ local function get_actions_ollama()
             action = function()
                 pcall(
                     toggleterm_exec,
-                    string.format(" curl -s %s/api/tags | jq '.models[].name' | sort", vim.env.OLLAMA_SERVER_HOST)
+                    string.format(" curl -m 5 -s %s/api/tags | jq '.models[].name' | sort", vim.env.OLLAMA_SERVER_HOST)
                 )
             end,
         },
@@ -147,7 +147,7 @@ local function get_actions_ollama()
             action = function()
                 pcall(
                     toggleterm_exec,
-                    string.format(" curl -s %s/api/tags | jq '.models[].name' | sort", vim.env.OLLAMA_LOCAL_HOST)
+                    string.format(" curl -m 5 -s %s/api/tags | jq '.models[].name' | sort", vim.env.OLLAMA_LOCAL_HOST)
                 )
             end,
         },
@@ -158,7 +158,7 @@ local function get_actions_ollama()
                 vim.ui.input({ prompt = "ollama_url", default = vim.env.OLLAMA_LOCAL_HOST }, function(ollama_url)
                     pcall(
                         toggleterm_exec,
-                        string.format(" curl -s %s/api/tags | jq '.models[].name' | sort", ollama_url)
+                        string.format(" curl -m 5 -s %s/api/tags | jq '.models[].name' | sort", ollama_url)
                     )
                 end)
             end,
@@ -237,3 +237,6 @@ end
 M.setup()
 
 return M
+
+-- FIX: the picker doesn't work on smaller window sizes
+-- win.lua:810: Invalid 'height': Number is not integral

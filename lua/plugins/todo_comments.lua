@@ -1,23 +1,16 @@
 -- lua/plugins/todo_comments.lua
 
-local keywords = {
-    -- FIX = { icon = "󱢇 ", color = "error", alt = { "BUG", "ISSUE" } },
-    -- WARN = { icon = " ", color = "warning" },
-    -- TODO = { icon = " ", color = "info" },
-    -- PERF = { icon = " ", alt = { "OPTIM" } },
-    -- NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
-    -- TEST = { icon = "⏲ ", color = "test", alt = { "PASSED", "FAILED" } },
-    -- LEARN = { icon = " ", color = "info" },
-    -- REFER = { icon = "󰏢", color = "info" },
+local grey = "#727169"
 
+local keywords = {
     FIX = { icon = "", color = "error", alt = { "BUG", "ISSUE" } },
     WARN = { icon = "", color = "warning" },
-    TODO = { icon = "", color = "info" },
+    TODO = { icon = "", color = grey },
     PERF = { icon = "", alt = { "OPTIM" } },
-    NOTE = { icon = "", color = "hint", alt = { "INFO" } },
+    NOTE = { icon = "", color = grey, alt = { "INFO" } },
     TEST = { icon = "", color = "test", alt = { "PASSED", "FAILED" } },
-    LEARN = { icon = "", color = "info" },
-    REFER = { icon = "", color = "info" },
+    LEARN = { icon = "", color = grey },
+    REFER = { icon = "", color = grey },
 }
 
 local gui_style = {

@@ -15,11 +15,10 @@ local opts = {
     },
     schema = {
         model = {
-            default = "claude-haiku-4-5",
+            default = "claude-haiku-5-5",
             choices = {
-                "claude-haiku-4-5",
-                "claude-haiku-3-5",
-                "claude-sonnet-4-5",
+                "claude-haiku-5-5",
+                "claude-sonnet-5-5",
             },
         },
     },

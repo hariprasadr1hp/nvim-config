@@ -34,8 +34,8 @@ local function check_neovim_version()
 
     if version.major >= 0 and version.minor >= 11 then
         ok(string.format("Neovim version: %s", version_str))
-    -- elseif version.major >= 0 and version.minor >= 10 then
-    --     warn(string.format("Neovim version: %s (0.11+ recommended)", version_str))
+        -- elseif version.major >= 0 and version.minor >= 10 then
+        --     warn(string.format("Neovim version: %s (0.11+ recommended)", version_str))
     else
         error(string.format("Neovim version: %s (0.11+ required)", version_str))
     end

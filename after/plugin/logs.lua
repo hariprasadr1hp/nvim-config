@@ -112,3 +112,5 @@ end
 M.setup()
 
 return M
+
+-- TODO: handle log buffers (big-files) differently (pager)

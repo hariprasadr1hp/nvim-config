@@ -12,7 +12,7 @@ local opts = {
     },
     schema = {
         model = {
-            default = "gemini-2.5-flash",
+            default = "gemini-3.5-flash-lite",
         },
     },
 }

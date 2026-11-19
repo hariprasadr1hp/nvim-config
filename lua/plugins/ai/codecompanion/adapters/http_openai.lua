@@ -11,10 +11,10 @@ local opts = {
     },
     schema = {
         model = {
-            default = "gpt-5-nano",
+            default = "gpt-6-luna",
             choices = {
-                "gpt-5-nano",
-                "gpt-5-mini",
+                "gpt-6-luna",
+                "gpt-6-sol",
             },
         },
     },
@@ -23,4 +23,4 @@ local opts = {
     },
 }
 
-return companion_adapters.extend("openai", opts)
+return companion_adapters.extend("openai_legacy", opts)

@@ -24,7 +24,7 @@ local function setup_minuet_config()
         },
 
         provider = "openai_fim_compatible",
-        n_completions = 1,
+        n_completions = 2,
         context_window = 512,
         context_ratio = 0.75,
         -- only send the request every x milliseconds, use 0 to disable throttle.
@@ -38,7 +38,7 @@ local function setup_minuet_config()
                 api_key = "TERM",
                 name = "Ollama",
                 end_point = vim.env.OLLAMA_SERVER_HOST .. "/v1/completions",
-                model = vim.env.OLLAMA_DEFAULT_SERVER_MODEL,
+                model = vim.env.OLLAMA_FIM_MODEL,
                 optional = {
                     max_tokens = 56,
                     top_p = 0.9,
@@ -84,14 +84,14 @@ return {
                     function()
                         blink_switch:switch()
                     end,
-                    desc = "ai-completion-blink",
+                    desc = "ai-completion-suggest",
                 },
                 {
                     "<leader>tA",
                     function()
                         virt_switch:switch()
                     end,
-                    desc = "ai-completion-virt",
+                    desc = "ai-completion-virt-text",
                 },
             }
         end,
